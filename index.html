@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Job Swipe · Top 5</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:linear-gradient(160deg,#0f172a,#1e293b 60%,#134e4a);color:#0f172a;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow:hidden}
+header{color:#fff;text-align:center;padding:18px 12px 6px}header h1{font-size:20px}header p{font-size:13px;opacity:.7;margin-top:2px}
+#deck{position:relative;width:min(92vw,400px);height:min(66vh,560px);margin-top:10px}
+.card{position:absolute;inset:0;background:#fff;border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.35);padding:20px;overflow-y:auto;touch-action:none;user-select:none;transition:transform .3s ease}
+.rank{display:inline-block;background:#0d9488;color:#fff;font-weight:700;border-radius:999px;padding:3px 10px;font-size:12px}
+.card h2{font-size:19px;margin:10px 0 4px;line-height:1.25}.org{color:#0d9488;font-weight:600;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.chip{background:#f1f5f9;border-radius:8px;padding:5px 8px;font-size:12px}
+.sec{font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;margin-top:12px;letter-spacing:.04em}.card p{font-size:14px;line-height:1.45;margin-top:4px;color:#334155}
+.card a{color:#0d9488;font-size:14px;font-weight:600}
+.stamp{position:absolute;top:24px;font-size:26px;font-weight:800;border:4px solid;border-radius:10px;padding:2px 10px;opacity:0;pointer-events:none}
+.stamp.yes{left:20px;color:#16a34a;transform:rotate(-14deg)}.stamp.no{right:20px;color:#dc2626;transform:rotate(14deg)}
+.stamp.fav{left:50%;transform:translateX(-50%);color:#ec4899}
+#btns{display:flex;gap:22px;margin:18px 0}
+#btns button{width:62px;height:62px;border-radius:50%;border:none;font-size:26px;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.3);cursor:pointer}
+#btns button:active{transform:scale(.9)}#like{width:72px!important;height:72px!important;font-size:30px!important}
+#done{display:none;color:#fff;width:min(92vw,400px);margin-top:16px}
+#done .box{background:#fff;color:#0f172a;border-radius:18px;padding:18px}
+#done li{list-style:none;padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:14px}
+#done textarea{width:100%;height:120px;margin-top:10px;font-size:12px;border-radius:8px;border:1px solid #cbd5e1;padding:8px}
+#done button{margin-top:10px;width:100%;padding:12px;border:none;border-radius:10px;background:#0d9488;color:#fff;font-weight:700;font-size:15px}
+.why{font-weight:600;color:#0f172a!important}.risk{color:#b45309!important;font-weight:600}details{margin-top:10px}summary{font-size:13px;color:#64748b;cursor:pointer}</style></head><body>
+<header><h1>Your Top 5 · Fri 23 Oct</h1><p>Swipe right = interested · left = pass · ❤️ = love it, show me more like this</p></header>
+<div id="deck"></div>
+<div id="btns"><button id="no" aria-label="Pass">✖️</button><button id="like" aria-label="Love it">❤️</button><button id="yes" aria-label="Interested">✔️</button></div>
+<div id="done"><div class="box"><h2>Your picks</h2><ul id="list"></ul>
+<p style="font-size:13px;margin-top:10px;color:#475569">Copy this and paste it in the Job Seeker App chat so Sheet Updater can log it:</p>
+<textarea id="out" readonly></textarea><button id="copy">Copy results</button><button id="reset" style="background:#475569">Start over</button></div></div>
+<script>
+const jobs=[
+{t:"Senior Executive / Assistant Manager, Student Development",o:"Singapore Polytechnic",id:"JR-10000056400",pay:"Not stated",loc:"Mixed (Dover MRT, far west)",close:"12 Nov 2026",fit:"Strong fit: student-systems side matches your CS degree and AXS project. Catch: about half is facilities, procurement and claims admin.",wel:"Pass. Good after-hours load, good leave, good staffing (3.8). Main risk is the long trip west.",risk:"far-west commute; half is admin",why:"Strong fit: uses your CS degree",R:"https://drive.google.com/file/d/1oqu5lwp_Jz8aAWAp4-IrMqaGdrGpDiA6/view"},
+{t:"Student Life (NUS Business School)",o:"National University of Singapore",id:"",pay:"$4,500 – $5,500",loc:"Mixed (Kent Ridge MRT, far west)",close:"12 Nov 2026",fit:"Moderate fit for your youth mentoring background. Use the clean v2 resume.",wel:"Pass. Good leave and flexibility, good staffing (4.0). Risk: mixed after-hours load plus far-west commute.",risk:"far-west commute",why:"Moderate fit: youth mentoring",R:"https://drive.google.com/file/d/1flDlh44CMLlPt20WYggWc9h2m7NsWhw0/view"},
+{t:"Snr/Lead Exec, Student Experience & Digital Platforms",o:"Nanyang Polytechnic",id:"JR-10000054061",pay:"Not listed",loc:"Good (Ang Mo Kio, direct NS line from Sembawang)",close:"12 Nov 2026",fit:"Best skills match: half CCA and student leaders (PEER, SITTA), half digital platforms (CS, AXS). Gaps: Power BI, product-owner/CRM/LMS. May lead overseas trips.",wel:"Pass, but mixed after-hours load. Staffing is the risk (WLB 3.4, a 'toxic' review), so ask about team culture.",risk:"staffing reviews (WLB 3.4)",why:"Best skills match: CCA + digital",R:"https://drive.google.com/file/d/1xV3LizFI58Xu9NpfPUK6z2cqUqi8XnvX/view"},
+{t:"Training & Quality role",o:"MENDAKI",id:"",pay:"$3,500 – $5,000 (may be contract)",loc:"Unknown (East hybrid; HQ near Kembangan MRT)",close:"No deadline listed",fit:"Strong fit and the calmest MENDAKI role. Accepts IS/CS degrees, wants Excel/Power BI and systems work.",wel:"Pass. Mixed after-hours, good flexibility. Risk: poor staffing reviews (3.0).",risk:"poor staffing reviews (3.0)",why:"Strong fit, calmest MENDAKI role",R:"https://drive.google.com/file/d/1te8zgvi-7_HXgwgXaRApaWm5X1rZftZm/view"},
+{t:"Assistant Manager, Transition & Integration",o:"Nanyang Technological University",id:"R00025087",pay:"Not listed",loc:"Poor (far west, bus from Boon Lay)",close:"No closing date (posted 6 Oct)",fit:"Freshman buddy half fits you well; international-student and MOE reporting half you have no record in. Asks 3–5 yrs (you'll have ~2.5).",wel:"Pass. Good staffing (WLB 4.0), good leave. Risk: commute and NTU-wide 'toxic/blame' reviews.",risk:"far-west commute; asks 3–5 yrs",why:"Good fit for freshman buddy work",R:"https://drive.google.com/file/d/1IbqP_8IbcHGNmojxK8IXj4xXswtjnm9Z/view"}];
+const KEY="jobswipe-23oct";let res=JSON.parse(localStorage.getItem(KEY)||"{}");
+const deck=document.getElementById("deck");
+function render(){deck.innerHTML="";const left=jobs.map((j,i)=>i).filter(i=>!res[i]);
+ if(!left.length)return finish();document.getElementById("btns").style.display="flex";document.getElementById("done").style.display="none";deck.style.display="block";
+ left.slice(0,2).reverse().forEach((i,k,arr)=>{const j=jobs[i],c=document.createElement("div");c.className="card";c.dataset.i=i;
+ if(k===0&&arr.length>1)c.style.transform="scale(.95) translateY(12px)";
+ c.innerHTML=`<div class="stamp yes">YES</div><div class="stamp no">NOPE</div><div class="stamp fav">LOVE</div><span class="rank">#${i+1} of 5</span><h2>${j.t}</h2><div class="org">${j.o}${j.id?" · "+j.id:""}</div>
+ <div class="chips"><span class="chip">💰 ${j.pay}</span><span class="chip">📍 ${j.loc}</span><span class="chip">⏳ ${j.close}</span></div>
+ <p class="why">✅ ${j.why}</p><p class="risk">⚠️ Main risk: ${j.risk}</p>
+ <details><summary>More details</summary><div class="sec">Fit</div><p>${j.fit}</p><div class="sec">Welfare</div><p>${j.wel}</p></details>
+ <p style="margin-top:12px"><a href="${j.R}" target="_blank">📄 Open resume ↗</a></p>`;
+ deck.appendChild(c)});drag(deck.lastChild)}
+function decide(c,v){const i=c.dataset.i;res[i]=v;localStorage.setItem(KEY,JSON.stringify(res));
+ const x=v==="pass"?-600:v==="yes"?600:0,y=v==="love"?-800:0;c.style.transition="transform .35s ease";c.style.transform=`translate(${x}px,${y}px) rotate(${x/20}deg)`;
+ c.querySelector(".stamp."+(v==="pass"?"no":v==="love"?"fav":"yes")).style.opacity=1;if(navigator.vibrate)navigator.vibrate(20);setTimeout(render,330)}
+function drag(c){if(!c)return;let sx=0,sy=0,dx=0,dy=0,on=false;
+ c.addEventListener("pointerdown",e=>{if(["A","SUMMARY"].includes(e.target.tagName))return;on=true;sx=e.clientX;sy=e.clientY;c.style.transition="none";c.setPointerCapture(e.pointerId)});
+ c.addEventListener("pointermove",e=>{if(!on)return;dx=e.clientX-sx;dy=e.clientY-sy;c.style.transform=`translate(${dx}px,${dy}px) rotate(${dx/18}deg)`;
+  c.querySelector(".yes").style.opacity=Math.max(0,dx/100);c.querySelector(".no").style.opacity=Math.max(0,-dx/100);c.querySelector(".fav").style.opacity=Math.max(0,-dy/120)});
+ c.addEventListener("pointerup",()=>{if(!on)return;on=false;if(dx>100)decide(c,"yes");else if(dx<-100)decide(c,"pass");else if(dy<-120)decide(c,"love");
+  else{c.style.transition="transform .3s";c.style.transform="";c.querySelectorAll(".stamp").forEach(s=>s.style.opacity=0)}dx=dy=0})}
+const top=()=>deck.lastChild;
+document.getElementById("no").onclick=()=>top()&&decide(top(),"pass");
+document.getElementById("yes").onclick=()=>top()&&decide(top(),"yes");
+document.getElementById("like").onclick=()=>top()&&decide(top(),"love");
+const lbl={love:"❤️ Love it, show more like this",yes:"✔️ Interested",pass:"✖️ Pass"};
+function finish(){deck.style.display="none";document.getElementById("btns").style.display="none";document.getElementById("done").style.display="block";
+ document.getElementById("list").innerHTML=jobs.map((j,i)=>`<li><b>${lbl[res[i]]}</b><br>${j.t} · ${j.o}</li>`).join("");
+ document.getElementById("out").value="@Sheet Updater my Top 5 swipe results (23 Oct):\n"+jobs.map((j,i)=>`${i+1}. ${j.t}, ${j.o}${j.id?" ("+j.id+")":""}: ${lbl[res[i]]}`).join("\n")}
+document.getElementById("copy").onclick=()=>{const t=document.getElementById("out");t.select();navigator.clipboard?navigator.clipboard.writeText(t.value):document.execCommand("copy");document.getElementById("copy").textContent="Copied ✓"};
+document.getElementById("reset").onclick=()=>{res={};localStorage.removeItem(KEY);render()};
+render();
+</script></body></html>
