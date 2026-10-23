@@ -57,10 +57,10 @@ function drag(c){if(!c)return;let sx=0,sy=0,dx=0,dy=0,on=false;
   c.querySelector(".yes").style.opacity=Math.max(0,dx/100);c.querySelector(".no").style.opacity=Math.max(0,-dx/100);c.querySelector(".fav").style.opacity=Math.max(0,-dy/120)});
  c.addEventListener("pointerup",()=>{if(!on)return;on=false;if(dx>100)decide(c,"yes");else if(dx<-100)decide(c,"pass");else if(dy<-120)decide(c,"love");
   else{c.style.transition="transform .3s";c.style.transform="";c.querySelectorAll(".stamp").forEach(s=>s.style.opacity=0)}dx=dy=0})}
-const top=()=>deck.lastChild;
-document.getElementById("no").onclick=()=>top()&&decide(top(),"pass");
-document.getElementById("yes").onclick=()=>top()&&decide(top(),"yes");
-document.getElementById("like").onclick=()=>top()&&decide(top(),"love");
+const topCard=()=>deck.lastChild;
+document.getElementById("no").onclick=()=>topCard()&&decide(topCard(),"pass");
+document.getElementById("yes").onclick=()=>topCard()&&decide(topCard(),"yes");
+document.getElementById("like").onclick=()=>topCard()&&decide(topCard(),"love");
 const lbl={love:"❤️ Love it, show more like this",yes:"✔️ Interested",pass:"✖️ Pass"};
 function finish(){deck.style.display="none";document.getElementById("btns").style.display="none";document.getElementById("done").style.display="block";
  document.getElementById("list").innerHTML=jobs.map((j,i)=>`<li><b>${lbl[res[i]]}</b><br>${j.t} · ${j.o}</li>`).join("");
