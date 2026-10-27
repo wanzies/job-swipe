@@ -23,7 +23,7 @@ header{color:#fff;text-align:center;padding:18px 12px 6px}header h1{font-size:20
 #done textarea{width:100%;height:120px;margin-top:10px;font-size:12px;border-radius:8px;border:1px solid #cbd5e1;padding:8px}
 #done button{margin-top:10px;width:100%;padding:12px;border:none;border-radius:10px;background:#0d9488;color:#fff;font-weight:700;font-size:15px}
 .why{font-weight:600;color:#0f172a!important}.risk{color:#b45309!important;font-weight:600}details{margin-top:10px}summary{font-size:13px;color:#64748b;cursor:pointer}</style></head><body>
-<header><h1>Your Top 5 · Fri 23 Oct</h1><p>Swipe right = interested · left = pass · ❤️ = love it, show me more like this</p></header>
+<header><h1>Your Top 5 · updated 27 Oct</h1><p>Swipe right = interested · left = pass · ❤️ = love it, show me more like this</p><button id="reset2" style="margin-top:8px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 14px;font-size:13px">↺ Start over</button></header>
 <div id="deck"></div>
 <div id="btns"><button id="no" aria-label="Pass">✖️</button><button id="like" aria-label="Love it">❤️</button><button id="yes" aria-label="Interested">✔️</button></div>
 <div id="done"><div class="box"><h2>Your picks</h2><ul id="list"></ul>
@@ -36,7 +36,7 @@ const jobs=[
 {t:"Snr/Lead Exec, Student Experience & Digital Platforms",o:"Nanyang Polytechnic",id:"JR-10000054061",pay:"Not listed",loc:"Good (Ang Mo Kio, direct NS line from Sembawang)",close:"12 Nov 2026",fit:"Best skills match: half CCA and student leaders (PEER, SITTA), half digital platforms (CS, AXS). Gaps: Power BI, product-owner/CRM/LMS. May lead overseas trips.",wel:"Pass, but mixed after-hours load. Staffing is the risk (WLB 3.4, a 'toxic' review), so ask about team culture.",risk:"staffing reviews (WLB 3.4)",why:"Best skills match: CCA + digital",R:"https://drive.google.com/file/d/1xV3LizFI58Xu9NpfPUK6z2cqUqi8XnvX/view"},
 {t:"Training & Quality role",o:"MENDAKI",id:"",pay:"$3,500 – $5,000 (may be contract)",loc:"Unknown (East hybrid; HQ near Kembangan MRT)",close:"No deadline listed",fit:"Strong fit and the calmest MENDAKI role. Accepts IS/CS degrees, wants Excel/Power BI and systems work.",wel:"Pass. Mixed after-hours, good flexibility. Risk: poor staffing reviews (3.0).",risk:"poor staffing reviews (3.0)",why:"Strong fit, calmest MENDAKI role",R:"https://drive.google.com/file/d/1te8zgvi-7_HXgwgXaRApaWm5X1rZftZm/view"},
 {t:"Assistant Manager, Transition & Integration",o:"Nanyang Technological University",id:"R00025087",pay:"Not listed",loc:"Poor (far west, bus from Boon Lay)",close:"No closing date (posted 6 Oct)",fit:"Freshman buddy half fits you well; international-student and MOE reporting half you have no record in. Asks 3–5 yrs (you'll have ~2.5).",wel:"Pass. Good staffing (WLB 4.0), good leave. Risk: commute and NTU-wide 'toxic/blame' reviews.",risk:"far-west commute; asks 3–5 yrs",why:"Good fit for freshman buddy work",R:"https://drive.google.com/file/d/1IbqP_8IbcHGNmojxK8IXj4xXswtjnm9Z/view"}];
-const KEY="jobswipe-23oct";let res=JSON.parse(localStorage.getItem(KEY)||"{}");
+const KEY="jobswipe-27oct";let res=JSON.parse(localStorage.getItem(KEY)||"{}");
 const deck=document.getElementById("deck");
 function render(){deck.innerHTML="";const left=jobs.map((j,i)=>i).filter(i=>!res[i]);
  if(!left.length)return finish();document.getElementById("btns").style.display="flex";document.getElementById("done").style.display="none";deck.style.display="block";
@@ -67,5 +67,6 @@ function finish(){deck.style.display="none";document.getElementById("btns").styl
  document.getElementById("out").value="@Sheet Updater my Top 5 swipe results (23 Oct):\n"+jobs.map((j,i)=>`${i+1}. ${j.t}, ${j.o}${j.id?" ("+j.id+")":""}: ${lbl[res[i]]}`).join("\n")}
 document.getElementById("copy").onclick=()=>{const t=document.getElementById("out");t.select();navigator.clipboard?navigator.clipboard.writeText(t.value):document.execCommand("copy");document.getElementById("copy").textContent="Copied ✓"};
 document.getElementById("reset").onclick=()=>{res={};localStorage.removeItem(KEY);render()};
+document.getElementById("reset2").onclick=()=>{res={};localStorage.removeItem(KEY);render()};
 render();
 </script></body></html>
