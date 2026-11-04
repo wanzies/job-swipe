@@ -52,7 +52,7 @@ a{color:var(--c3)}.ref{font-size:12px;color:var(--c2)}
 .gd .grow{animation:bob 1s steps(2) infinite}@keyframes bob{50%{transform:translateY(-3px)}}
 .rs button{width:17%}
 </style></head><body>
-<header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div><canvas id="city" width="160" height="44" style="width:100%;height:auto;image-rendering:pixelated;display:block;margin-top:10px;border:2px solid var(--c1)"></canvas><div id="nref" style="font-size:9px;opacity:.45;margin-top:6px;letter-spacing:1px"></div></header>
+<header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div><canvas id="city" width="160" height="44" style="width:100%;min-height:110px;height:auto;image-rendering:pixelated;display:block;margin-top:10px;border:2px solid var(--c1)"></canvas><div id="nref" style="font-size:9px;opacity:.45;margin-top:6px;letter-spacing:1px"></div></header>
 <main>
 <div id="fast"></div>
 <div class="w2"><h3 class="px">⏳ BOND ENDS</h3><div id="bond" class="px" style="font-size:14px"></div><div class="bbar"><i id="bondbar"></i></div><div id="bondsub" style="font-size:11px;color:var(--c2);margin-top:6px"></div></div>
@@ -132,7 +132,7 @@ const RL=["😵","😩","😐","🙂","😄"];function rDraw(){const r=LS("rest"
  $("rtrend").textContent="7 DAYS: "+days.map(d=>r[d]?"▁▂▄▆█"[r[d]-1]:"·").join(" ")}
 function rSet(v){const r=LS("rest")||{};r[sgDay()]=v;LS("rest",r);rDraw();logSheet("rest",{day:sgDay(),score:v})}rDraw();
 </script><script>
-(function(){const q=encodeURIComponent("https://news.google.com/rss/search?q=(nuclear OR NATO OR ceasefire OR missile OR \"world war\" OR Taiwan OR Ukraine OR Gaza OR Iran) when:1d&hl=en-SG&gl=SG&ceid=SG:en");
+(function(){const q=encodeURIComponent("https://news.google.com/rss/search?q="+encodeURIComponent("nuclear OR NATO OR ceasefire OR missile OR Ukraine OR Gaza OR Iran OR Taiwan when:1d")+"&hl=en-SG&gl=SG&ceid=SG:en");
 fetch("https://api.rss2json.com/v1/api.json?rss_url="+q).then(r=>r.json()).then(d=>{const it=(d.items||[]).slice(0,6);if(!it.length)throw 0;
  document.getElementById("nwT").textContent="LAST 24H";
  document.getElementById("news").innerHTML=it.map(x=>{const p=x.title.lastIndexOf(" - "),t=p>0?x.title.slice(0,p):x.title,src=p>0?x.title.slice(p+3):"";const h=Math.max(0,Math.round((Date.now()-new Date(x.pubDate.replace(" ","T")+"Z"))/36e5));
