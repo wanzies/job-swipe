@@ -100,7 +100,7 @@ $("car").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.
 </script><script>
 const LS=(k,v)=>v===undefined?JSON.parse(localStorage.getItem(k)||"null"):localStorage.setItem(k,JSON.stringify(v));
 const sgDay=()=>new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).toISOString().slice(0,10);
-function logSheet(type,data){const u=LS("sheetUrl");const q=LS("pendLog")||[];q.push({type,ts:new Date().toISOString(),...data});if(!u){LS("pendLog",q);return}
+function logSheet(type,data){const u=LS("sheetUrl")||"https://script.google.com/macros/s/AKfycbwNvaaKWn5hJTDxX9PyTDDyEYJIeIJYGfmKHdMNnvX4jQp01SaP1H7ba9VLnVG6iWJjow/exec";const q=LS("pendLog")||[];q.push({type,ts:new Date().toISOString(),...data});if(!u){LS("pendLog",q);return}
  fetch(u,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify(q)}).then(()=>LS("pendLog",[])).catch(()=>LS("pendLog",q))}
 function setSheet(){const u=prompt("Paste your Google Sheet web app link",LS("sheetUrl")||"");if(u!==null){LS("sheetUrl",u.trim());logSheet("ping",{})}}
 // bond
