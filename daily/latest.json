@@ -1,52 +1,63 @@
 {
- "date": "2026-11-04",
- "hijri": "24 Jamadilawal 1448",
+ "date": "2026-11-05",
+ "hijri": "25 Jamadilawal 1448",
  "fast": {
-  "type": "Sunnah fast · Thursday",
+  "type": "Sunnah fast · Thursday (today)",
   "date": "2026-11-05",
-  "why": "The Prophet ﷺ fasted on Mondays and Thursdays and said: \"Deeds are presented on Monday and Thursday, and I love that my deeds be presented while I am fasting.\"",
+  "why": "Today is Thursday. In the Shafi'i school a sunnah fast is still valid if you make the intention before midday (zawal) and haven't eaten or drunk since Subuh. Next one: Monday 9 Nov.",
   "src": "Jami' at-Tirmidhi 747",
   "url": "https://sunnah.com/tirmidhi:747"
  },
- "blessing": "Your rizq. Say Alhamdulillah at your first meal and give a small sadaqah.",
+ "blessing": "Your tongue and the ability to speak. Use it today for one sincere thank-you to a family member or colleague.",
  "verse": {
-  "ref": "Ali 'Imran 3:173",
-  "text": "...Allah alone is sufficient for us and He is the best Protector.",
-  "url": "https://quran.com/3/173"
+  "ref": "At-Talaq 65:3",
+  "text": "...And whoever relies upon Allah, then He is sufficient for him.",
+  "url": "https://quran.com/65/3"
  },
  "hadith": {
-  "ref": "Tirmidhi 2344",
-  "text": "If you were to rely upon Allah with the required reliance, He would provide for you as a bird is provided for: it goes out in the morning empty and returns full.",
-  "url": "https://sunnah.com/tirmidhi:2344"
+  "ref": "Tirmidhi 2516",
+  "text": "Be mindful of Allah and He will protect you... Know that if the entire creation were to gather together to benefit you, you would never get any benefit except that Allah had written for you.",
+  "url": "https://sunnah.com/tirmidhi:2516"
  },
  "lesson": {
-  "title": "Names of Allah part 2: Al-Wakil",
-  "text": "Tawakkul comes from the same root. \"Hasbunallahu wa ni'mal Wakil\" was said by Ibrahim in the fire and by the Prophet ﷺ. Do your part properly, then leave the result to Allah.",
-  "url": "https://sunnah.com/bukhari:4563"
+  "title": "Adab and akhlaq part 2: guarding the tongue",
+  "text": "\"Whoever believes in Allah and the Last Day, let him speak good or keep silent\" (Bukhari 6018). \"Part of the excellence of a person's Islam is leaving what does not concern him\" (Tirmidhi 2317). Before you speak, ask: is it true, is it kind, is it needed? At work, a calm short reply beats a sharp long one.",
+  "url": "https://sunnah.com/bukhari:6018"
  },
  "quote": {
   "by": "Mufti Menk",
-  "date": "3 Nov 2026",
-  "text": "If your success intimidates or upsets others, then they have a problem... mind their own journeys.",
-  "url": "https://x.com/muftimenk/status/2117353485360648431"
+  "date": "4 Nov 2026",
+  "text": "Be mindful of the company you keep... Some may speak ill behind your back and hope for your failure. The Almighty often sends warning signs. Don't ignore them.",
+  "url": "https://x.com/muftimenk/status/2117856959814574392"
  },
  "videos": [
   {
-   "id": "5uHvb8KwQbI",
-   "title": "Omar Suleiman: Hasbunallahu wa Ni'mal Wakeel"
-  },
-  {
-   "id": "K_lqVOuuS04",
-   "title": "Yaqeen: Allah's Names Ep. 12, Al-Wakil",
-   "start": 577
+   "id": "Gp78MQ2_bos",
+   "title": "Omar Suleiman: In Defense of the Quiet Muslim (intentional speech)",
+   "start": 263
   }
  ],
  "name": {
-  "ar": "الوكيل",
-  "tr": "Al-Wakil",
-  "meaning": "The Trustee, the One relied upon",
-  "text": "Tawakkul comes from the same root. \"Hasbunallahu wa ni'mal Wakil\" was said by Ibrahim in the fire and by the Prophet ﷺ. Do your part properly, then leave the result to Allah.",
-  "url": "https://sunnah.com/bukhari:4563"
+  "ar": "السميع",
+  "tr": "As-Sami'",
+  "meaning": "The All-Hearing",
+  "text": "Allah heard the woman who pleaded her case to the Prophet ﷺ. Every word you say, and every quiet dua, is heard. Let that shape your speech and give you hope.",
+  "url": "https://quran.com/58/1"
+ },
+ "pm": {
+  "name": {
+   "ar": "الحليم",
+   "tr": "Al-Halim",
+   "meaning": "The Forbearing",
+   "text": "\"Kind speech and forgiveness are better than charity followed by injury. And Allah is Free of need and Forbearing.\" He doesn't rush to punish; be slow to anger with others tonight.",
+   "url": "https://quran.com/2/263"
+  },
+  "quote": {
+   "by": "Mufti Menk",
+   "date": "28 Oct 2026",
+   "text": "Almighty. Remove our attachment to worldly things. Instead, make our hearts attached to You... Keep our hearts pure and always obedient in Your Path, no matter what's going on in our lives. Aameen.",
+   "url": "https://x.com/muftimenk/status/2115574633818722405"
+  }
  },
  "world": [
   {

@@ -1,0 +1,94 @@
+{
+ "date": "2026-11-05",
+ "hijri": "25 Jamadilawal 1448",
+ "fast": {
+  "type": "Sunnah fast · Thursday (today)",
+  "date": "2026-11-05",
+  "why": "Today is Thursday. In the Shafi'i school a sunnah fast is still valid if you make the intention before midday (zawal) and haven't eaten or drunk since Subuh. Next one: Monday 9 Nov.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "Your tongue and the ability to speak. Use it today for one sincere thank-you to a family member or colleague.",
+ "verse": {
+  "ref": "At-Talaq 65:3",
+  "text": "...And whoever relies upon Allah, then He is sufficient for him.",
+  "url": "https://quran.com/65/3"
+ },
+ "hadith": {
+  "ref": "Tirmidhi 2516",
+  "text": "Be mindful of Allah and He will protect you... Know that if the entire creation were to gather together to benefit you, you would never get any benefit except that Allah had written for you.",
+  "url": "https://sunnah.com/tirmidhi:2516"
+ },
+ "lesson": {
+  "title": "Adab and akhlaq part 2: guarding the tongue",
+  "text": "\"Whoever believes in Allah and the Last Day, let him speak good or keep silent\" (Bukhari 6018). \"Part of the excellence of a person's Islam is leaving what does not concern him\" (Tirmidhi 2317). Before you speak, ask: is it true, is it kind, is it needed? At work, a calm short reply beats a sharp long one.",
+  "url": "https://sunnah.com/bukhari:6018"
+ },
+ "quote": {
+  "by": "Mufti Menk",
+  "date": "4 Nov 2026",
+  "text": "Be mindful of the company you keep... Some may speak ill behind your back and hope for your failure. The Almighty often sends warning signs. Don't ignore them.",
+  "url": "https://x.com/muftimenk/status/2117856959814574392"
+ },
+ "videos": [
+  {
+   "id": "Gp78MQ2_bos",
+   "title": "Omar Suleiman: In Defense of the Quiet Muslim (intentional speech)",
+   "start": 263
+  }
+ ],
+ "name": {
+  "ar": "السميع",
+  "tr": "As-Sami'",
+  "meaning": "The All-Hearing",
+  "text": "Allah heard the woman who pleaded her case to the Prophet ﷺ. Every word you say, and every quiet dua, is heard. Let that shape your speech and give you hope.",
+  "url": "https://quran.com/58/1"
+ },
+ "pm": {
+  "name": {
+   "ar": "الحليم",
+   "tr": "Al-Halim",
+   "meaning": "The Forbearing",
+   "text": "\"Kind speech and forgiveness are better than charity followed by injury. And Allah is Free of need and Forbearing.\" He doesn't rush to punish; be slow to anger with others tonight.",
+   "url": "https://quran.com/2/263"
+  },
+  "quote": {
+   "by": "Mufti Menk",
+   "date": "28 Oct 2026",
+   "text": "Almighty. Remove our attachment to worldly things. Instead, make our hearts attached to You... Keep our hearts pure and always obedient in Your Path, no matter what's going on in our lives. Aameen.",
+   "url": "https://x.com/muftimenk/status/2115574633818722405"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}
