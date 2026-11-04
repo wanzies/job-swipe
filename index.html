@@ -44,7 +44,7 @@ a{color:var(--c3)}.ref{font-size:12px;color:var(--c2)}
 .star{position:absolute;width:4px;height:4px;background:var(--c3);animation:blink 1.4s steps(2) infinite}
 .cd{font-size:14px;margin:6px 0;color:var(--c3)}.fastw p{margin:3px 0;font-size:13px}
 </style></head><body>
-<header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div></header>
+<header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div><div id="nref" style="font-size:9px;opacity:.45;margin-top:6px;letter-spacing:1px"></div></header>
 <main>
 <div id="fast"></div>
 <section class="w"><div class="t px"><span>▶ WATCH</span></div><div id="yt"></div></section>
@@ -82,5 +82,7 @@ fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r
  $("wdots").innerHTML=W.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("");
  const q=d.quote;if(q)$("quote").innerHTML=`<p>“${esc(q.text)}”</p><p class="ref">— ${esc(q.by)} · <a href="${q.url}" target="_blank">${esc(q.date||"source")} ↗</a></p>`});
 $("car").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);e.target.nextElementSibling.querySelectorAll("i").forEach((d,k)=>d.className=k===i?"on":"");const s=e.target.children[i];if(s)$("qhLbl").textContent=s.dataset.l});
+</script><script>
+(function(){const tick=()=>{const n=new Date(),sg=new Date(n.getTime()+(n.getTimezoneOffset()+480)*6e4);const nx=new Date(sg);nx.setHours(Math.floor(sg.getHours()/3)*3+3,0,0,0);const ms=nx-sg;if(ms<1000){location.reload();return}const h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);document.getElementById("nref").textContent=`next refresh ${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`};tick();setInterval(tick,1000)})();
 </script></body></html>
 <script>document.getElementById("wcar").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);document.querySelectorAll("#wdots i").forEach((d,k)=>d.className=k===i?"on":"")})</script>
