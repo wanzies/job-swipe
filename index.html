@@ -43,10 +43,23 @@ a{color:var(--c3)}.ref{font-size:12px;color:var(--c2)}
 .cres{flex:0 0 40px;height:40px;border-radius:50%;box-shadow:-10px 4px 0 0 var(--c3);animation:glow 2s steps(2) infinite;margin-left:8px}@keyframes glow{50%{box-shadow:-10px 4px 0 0 var(--c2)}}
 .star{position:absolute;width:4px;height:4px;background:var(--c3);animation:blink 1.4s steps(2) infinite}
 .cd{font-size:14px;margin:6px 0;color:var(--c3)}.fastw p{margin:3px 0;font-size:13px}
+.w2{border:4px solid var(--c2);background:var(--c1);padding:12px;margin:14px 0}.w2 h3{font-size:10px;margin:0 0 8px;color:var(--c3)}
+.b2{background:var(--c3);color:var(--c0);border:0;padding:9px 11px;font-size:9px;cursor:pointer;box-shadow:3px 3px 0 var(--c0);margin:4px 4px 0 0}
+.bbar{height:12px;border:2px solid var(--c3);margin-top:8px}.bbar i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--c3) 0 6px,var(--c2) 6px 8px)}
+#qr{position:fixed;inset:0;background:var(--c0);z-index:50;display:none;overflow:auto;padding:14px}#qr.on{display:block}
+.ay{border-bottom:2px dashed var(--c1);padding:10px 0}.ay .ar{font-family:Amiri,serif;font-size:24px;direction:rtl;text-align:right;line-height:2}.ay .en{font-size:13px;color:var(--c2)}.ay.cur{background:#1a2a20}
+.gd{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:8px 0}.gd span{height:46px;border:2px solid var(--c2);display:flex;align-items:flex-end;justify-content:center;font-size:22px;line-height:1}
+.gd .grow{animation:bob 1s steps(2) infinite}@keyframes bob{50%{transform:translateY(-3px)}}
+.rs button{width:17%}
 </style></head><body>
 <header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div><div id="nref" style="font-size:9px;opacity:.45;margin-top:6px;letter-spacing:1px"></div></header>
 <main>
 <div id="fast"></div>
+<div class="w2"><h3 class="px">⏳ BOND ENDS</h3><div id="bond" class="px" style="font-size:14px"></div><div class="bbar"><i id="bondbar"></i></div><div id="bondsub" style="font-size:11px;color:var(--c2);margin-top:6px"></div></div>
+<div class="w2"><h3 class="px">📖 QURAN TRACKER</h3><div id="qpos" style="font-size:13px"></div><button class="b2 px" onclick="qOpen()">▶ READ 1 PAGE</button></div>
+<div class="w2"><h3 class="px">🌱 DHIKR GARDEN</h3><div id="dsum" style="font-size:12px"></div><div class="gd" id="gd"></div><button class="b2 px" style="width:100%;padding:18px;font-size:12px" onclick="dTap()">TAP · SUBHANALLAH / SELAWAT</button><button class="b2 px" onclick="dUndo()">−1</button></div>
+<div class="w2"><h3 class="px">🔋 REST CHECK</h3><div style="font-size:12px;margin-bottom:6px">How rested are you today?</div><div class="rs" id="rs"></div><div id="rtrend" class="px" style="font-size:9px;margin-top:8px;color:var(--c2)"></div><div style="margin-top:8px"><button class="b2 px" onclick="setSheet()">⚙ SHEET LINK</button></div></div>
+<div id="qr"><div style="display:flex;justify-content:space-between;align-items:center"><span class="px" id="qhead" style="font-size:10px"></span><button class="b2 px" onclick="qStop()">■ STOP &amp; SAVE</button></div><div id="qbody">Loading…</div><div style="display:flex;justify-content:space-between;margin:14px 0 40px"><button class="b2 px" onclick="qGo(-1)">◀ PREV</button><button class="b2 px" onclick="qGo(1)">NEXT PAGE ▶</button></div></div>
 <section class="w"><div class="t px"><span>▶ WATCH</span></div><div id="yt"></div></section>
 <section class="w"><div class="t px"><span id="qhLbl">📖 QURAN</span><span>◀ SWIPE ▶</span></div><div class="car" id="car"></div><div class="dots" id="qdots"><i class="on"></i><i></i></div></section>
 <section class="w"><div class="t px"><span>✦ NAMES OF ALLAH</span></div><div class="flip" id="flip" onclick="this.classList.toggle('on')"><div class="fi"><div class="fa"><div class="ar" id="nAr"></div><div class="tr px" id="nTr"></div><div class="hint px">TAP TO REVEAL</div></div><div class="fb"><div class="px" style="font-size:10px;margin-bottom:10px" id="nMean"></div><div style="font-size:13px" id="nTxt"></div><div class="ref" id="nRef" style="margin-top:8px"></div></div></div></div></section>
@@ -84,5 +97,38 @@ fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r
 $("car").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);e.target.nextElementSibling.querySelectorAll("i").forEach((d,k)=>d.className=k===i?"on":"");const s=e.target.children[i];if(s)$("qhLbl").textContent=s.dataset.l});
 </script><script>
 (function(){const tick=()=>{const n=new Date(),sg=new Date(n.getTime()+(n.getTimezoneOffset()+480)*6e4);const nx=new Date(sg);{const h=sg.getHours();if(h<6)nx.setHours(6,0,0,0);else if(h<18)nx.setHours(18,0,0,0);else{nx.setDate(nx.getDate()+1);nx.setHours(6,0,0,0)}};const ms=nx-sg;if(ms<1000){location.reload();return}const h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);document.getElementById("nref").textContent=`next refresh ${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`};tick();setInterval(tick,1000)})();
+</script><script>
+const LS=(k,v)=>v===undefined?JSON.parse(localStorage.getItem(k)||"null"):localStorage.setItem(k,JSON.stringify(v));
+const sgDay=()=>new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).toISOString().slice(0,10);
+function logSheet(type,data){const u=LS("sheetUrl");const q=LS("pendLog")||[];q.push({type,ts:new Date().toISOString(),...data});if(!u){LS("pendLog",q);return}
+ fetch(u,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify(q)}).then(()=>LS("pendLog",[])).catch(()=>LS("pendLog",q))}
+function setSheet(){const u=prompt("Paste your Google Sheet web app link",LS("sheetUrl")||"");if(u!==null){LS("sheetUrl",u.trim());logSheet("ping",{})}}
+// bond
+(function(){const end=new Date("2027-10-31T00:00:00+08:00"),st=new Date("2025-10-31T00:00:00+08:00"),now=new Date(),d=Math.ceil((end-now)/864e5);
+ $("bond").textContent=d+" DAYS";$("bondbar").style.width=Math.min(100,(now-st)/(end-st)*100)+"%";$("bondsub").textContent=`About ${Math.round(d/30.4)} months to go · free from Oct 2027`})();
+// quran
+let qp=LS("qpos")||{page:39,ref:"2:238"};
+function qShow(){$("qpos").innerHTML=`Next: <b>Surah ${qp.ref.replace(":"," · verse ")}</b> · page ${qp.page}/604`}qShow();
+async function qLoad(p){$("qhead").textContent="PAGE "+p+"/604";$("qbody").textContent="Loading…";try{
+ const [a,e]=await Promise.all(["quran-uthmani","en.sahih"].map(ed=>fetch(`https://api.alquran.cloud/v1/page/${p}/${ed}`).then(r=>r.json())));
+ const A=a.data.ayahs,E=e.data.ayahs;$("qbody").innerHTML=A.map((x,i)=>`<div class="ay${x.surah.number+":"+x.numberInSurah==qp.ref?" cur":""}"><div class="px" style="font-size:8px;color:var(--c2)">${x.surah.englishName} ${x.surah.number}:${x.numberInSurah}</div><div class="ar">${x.text}</div><div class="en">${E[i].text}</div></div>`).join("");
+ qr.last=A[A.length-1];qr.first=A[0];const c=document.querySelector(".ay.cur");if(c)c.scrollIntoView();else $("qr").scrollTop=0}catch(_){$("qbody").textContent="Couldn't load the page. Check your connection."}}
+function qOpen(){$("qr").classList.add("on");qr.p=qp.page;qLoad(qr.p)}
+function qDone(){const l=qr.last;if(!l)return;logSheet("quran",{day:sgDay(),page:qr.p,upto:l.surah.number+":"+l.numberInSurah});
+ qp={page:Math.min(604,qr.p+1),ref:qr.p>=604?"1:1":""};LS("qpos",qp)}
+function qGo(d){if(d>0){qDone();if(qr.p>=604)return qStop();qr.p++}else if(qr.p>1)qr.p--;qp.page=qr.p;qLoad(qr.p).then(()=>{if(qr.first){qp.ref=qr.first.surah.number+":"+qr.first.numberInSurah;LS("qpos",qp);qShow()}})}
+function qStop(){$("qr").classList.remove("on");LS("qpos",qp);qShow();logSheet("quran-stop",{day:sgDay(),page:qp.page,next:qp.ref})}
+let tx=0;$("qr").addEventListener("touchstart",e=>tx=e.touches[0].clientX);$("qr").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>80)qGo(dx>0?1:-1)});
+// dhikr garden
+let dc=LS("dhikr")||0;const ST=["·","🌱","🌿","🪴","🌳"];
+function dDraw(){const full=Math.floor(dc/100)%10,cur=dc%100;let h="";for(let i=0;i<10;i++)h+=i<full?`<span>🌳</span>`:i==full?`<span class="grow">${ST[Math.min(4,Math.floor(cur/25))]}</span>`:`<span></span>`;
+ $("gd").innerHTML=h;$("dsum").textContent=`${dc} total · plant ${full+1}: ${cur}/100 · garden ${Math.floor(dc/1000)+1}`}
+function dTap(){dc++;LS("dhikr",dc);dDraw();if(navigator.vibrate)navigator.vibrate(dc%100?8:[60,40,60])}
+function dUndo(){if(dc>0){dc--;LS("dhikr",dc);dDraw()}}dDraw();
+// rest
+const RL=["😵","😩","😐","🙂","😄"];function rDraw(){const r=LS("rest")||{},t=sgDay();$("rs").innerHTML=RL.map((e,i)=>`<button class="b2" style="${r[t]==i+1?"outline:3px solid var(--c3)":""}" onclick="rSet(${i+1})">${e}</button>`).join("");
+ const days=[...Array(7)].map((_,i)=>new Date(Date.now()-i*864e5+(new Date().getTimezoneOffset()+480)*6e4).toISOString().slice(0,10)).reverse();
+ $("rtrend").textContent="7 DAYS: "+days.map(d=>r[d]?"▁▂▄▆█"[r[d]-1]:"·").join(" ")}
+function rSet(v){const r=LS("rest")||{};r[sgDay()]=v;LS("rest",r);rDraw();logSheet("rest",{day:sgDay(),score:v})}rDraw();
 </script></body></html>
 <script>document.getElementById("wcar").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);document.querySelectorAll("#wdots i").forEach((d,k)=>d.className=k===i?"on":"")})</script>
