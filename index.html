@@ -52,7 +52,7 @@ a{color:var(--c3)}.ref{font-size:12px;color:var(--c2)}
 .gd .grow{animation:bob 1s steps(2) infinite}@keyframes bob{50%{transform:translateY(-3px)}}
 .rs button{width:17%}
 </style></head><body>
-<header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div><div id="nref" style="font-size:9px;opacity:.45;margin-top:6px;letter-spacing:1px"></div></header>
+<header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div><canvas id="city" width="160" height="44" style="width:100%;height:auto;image-rendering:pixelated;display:block;margin-top:10px;border:2px solid var(--c1)"></canvas><div id="nref" style="font-size:9px;opacity:.45;margin-top:6px;letter-spacing:1px"></div></header>
 <main>
 <div id="fast"></div>
 <div class="w2"><h3 class="px">⏳ BOND ENDS</h3><div id="bond" class="px" style="font-size:14px"></div><div class="bbar"><i id="bondbar"></i></div><div id="bondsub" style="font-size:11px;color:var(--c2);margin-top:6px"></div></div>
@@ -75,7 +75,7 @@ const now=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Singapore"}
 const ymd=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
 $("greg").textContent=now.toLocaleDateString("en-SG",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).toUpperCase();
 fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&current=temperature_2m,weather_code,is_day&daily=precipitation_probability_max&timezone=Asia%2FSingapore&forecast_days=1").then(r=>r.json()).then(d=>{
- const c=d.current.weather_code,k=c>=51?"rain":c>=2?"cloud":"sun",s=$("sky");
+ const c=d.current.weather_code,k=c>=51?"rain":c>=2?"cloud":"sun",s=$("sky");window.WK=k;
  if(k==="sun")s.innerHTML='<div class="psun"></div>';else{s.innerHTML='<div class="pcl"></div>';if(k==="rain")for(let i=0;i<6;i++)s.innerHTML+=`<div class="pdr" style="left:${6+i*9}px;animation-delay:-${i*.1}s"></div>`}
  $("wx").innerHTML=`<b>${Math.round(d.current.temperature_2m)}°</b>${{sun:d.current.is_day?"CLEAR":"CLEAR NIGHT",cloud:"CLOUDY",rain:c>=95?"STORM":"RAIN"}[k]} · ${d.daily.precipitation_probability_max[0]}% RAIN`}).catch(()=>$("wx").textContent="WEATHER OFFLINE");
 let D={};
@@ -138,5 +138,23 @@ fetch("https://api.rss2json.com/v1/api.json?rss_url="+q).then(r=>r.json()).then(
  document.getElementById("news").innerHTML=it.map(x=>{const p=x.title.lastIndexOf(" - "),t=p>0?x.title.slice(0,p):x.title,src=p>0?x.title.slice(p+3):"";const h=Math.max(0,Math.round((Date.now()-new Date(x.pubDate.replace(" ","T")+"Z"))/36e5));
  return `<a href="${x.link}" target="_blank" style="display:block;color:var(--c3);text-decoration:none;border-bottom:2px dashed var(--c1);padding:8px 0">▸ ${esc(t)}<div class="px" style="font-size:8px;color:var(--c2);margin-top:4px">${esc(src)} · ${h}H AGO</div></a>`}).join("")})
  .catch(()=>document.getElementById("news").textContent="Headlines unavailable right now.")})();
+</script><script>
+(function(){const cv=document.getElementById("city"),x=cv.getContext("2d"),W=160,H=44,C=["#0e1512","#2d4636","#86a38a","#e2e8d6"];
+const B=[[4,14,12],[18,10,18],[30,16,8],[110,8,26],[122,12,32],[136,10,22],[148,10,28]];// x,w,h ; left=homes right=offices
+const ppl=[...Array(9)].map((_,i)=>({p:Math.random(),v:.0015+Math.random()*.002,bag:i%2}));let drops=[...Array(30)].map(()=>[Math.random()*W,Math.random()*H]),t=0;
+function hr(){return new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).getHours()}
+function f(c,a,b,w,h){x.fillStyle=C[c];x.fillRect(a|0,b|0,w,h)}
+function draw(){t++;const h=hr(),night=h<6||h>=19,dir=h>=5&&h<12?1:h>=16&&h<21?-1:0,k=window.WK||"sun";
+ f(night?0:k==="sun"?1:0,0,0,W,H);
+ if(night){for(let i=0;i<12;i++)if((i*7+t/20|0)%5)f(2,(i*37)%W,(i*13)%14+2,1,1);f(3,70,5,5,5);f(night?0:1,72,4,4,4)}
+ else if(k==="sun"){f(3,74,4,7,7);if(t%40<20){f(3,72,7,1,1);f(3,82,7,1,1)}}
+ else{const cx=(t/6)%(W+30)-30;f(2,cx,6,22,5);f(2,cx+5,3,12,4);f(2,cx+70,9,16,4)}
+ B.forEach(([a,w,bh],i)=>{f(1,a,H-6-bh,w,bh);for(let yy=H-4-bh;yy<H-8;yy+=4)for(let xx=a+2;xx<a+w-2;xx+=4){const lit=night?((xx+yy+i)%3!=0):(i>=3&&dir!==0);f(lit?3:0,xx,yy,2,2)}});
+ f(1,40,H-14,4,8);f(2,38,H-17,8,3);// tree
+ f(2,0,H-6,W,6);f(1,0,H-4,W,1);
+ const n=dir===0?(night?1:3):9;ppl.slice(0,n).forEach((q,i)=>{if(dir){q.p+=q.v*dir;if(q.p>1)q.p=0;if(q.p<0)q.p=1}else q.p+=Math.sin(t/60+i)*.0008;
+  const px=46+q.p*60,leg=(t/8|0)%2;f(3,px,H-13,2,2);f(night?2:3,px,H-11,2,3);f(3,px-(leg?1:0),H-8,1,2);f(3,px+1+(leg?1:0),H-8,1,2);if(q.bag&&dir===1)f(2,px+2,H-10,2,2);if(k==="rain")f(2,px-1,H-15,4,1)});
+ if(k==="rain")drops.forEach(d=>{d[1]+=2;d[0]-=.5;if(d[1]>H-6){d[1]=0;d[0]=Math.random()*W}f(2,d[0],d[1],1,2)});
+ requestAnimationFrame(draw)}draw()})();
 </script></body></html>
 <script>document.getElementById("wcar").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);document.querySelectorAll("#wdots i").forEach((d,k)=>d.className=k===i?"on":"")})</script>
