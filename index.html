@@ -1,74 +1,56 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Job Swipe · Top 5</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Syazwan's Daily</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:linear-gradient(160deg,#0f172a,#1e293b 60%,#134e4a);color:#0f172a;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow:hidden}
-header{color:#fff;text-align:center;padding:18px 12px 6px}header h1{font-size:20px}header p{font-size:13px;opacity:.7;margin-top:2px}
-#deck{position:relative;width:min(92vw,400px);height:min(66vh,560px);margin-top:10px}
-.card{position:absolute;inset:0;background:#fff;border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.35);padding:20px;overflow-y:auto;touch-action:none;user-select:none;transition:transform .3s ease}
-.rank{display:inline-block;background:#0d9488;color:#fff;font-weight:700;border-radius:999px;padding:3px 10px;font-size:12px}
-.card h2{font-size:19px;margin:10px 0 4px;line-height:1.25}.org{color:#0d9488;font-weight:600;font-size:14px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.chip{background:#f1f5f9;border-radius:8px;padding:5px 8px;font-size:12px}
-.sec{font-size:11px;font-weight:700;text-transform:uppercase;color:#64748b;margin-top:12px;letter-spacing:.04em}.card p{font-size:14px;line-height:1.45;margin-top:4px;color:#334155}
-.card a{color:#0d9488;font-size:14px;font-weight:600}
-.stamp{position:absolute;top:24px;font-size:26px;font-weight:800;border:4px solid;border-radius:10px;padding:2px 10px;opacity:0;pointer-events:none}
-.stamp.yes{left:20px;color:#16a34a;transform:rotate(-14deg)}.stamp.no{right:20px;color:#dc2626;transform:rotate(14deg)}
-.stamp.fav{left:50%;transform:translateX(-50%);color:#ec4899}
-#btns{display:flex;gap:22px;margin:18px 0}
-#btns button{width:62px;height:62px;border-radius:50%;border:none;font-size:26px;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.3);cursor:pointer}
-#btns button:active{transform:scale(.9)}#like{width:72px!important;height:72px!important;font-size:30px!important}
-#done{display:none;color:#fff;width:min(92vw,400px);margin-top:16px}
-#done .box{background:#fff;color:#0f172a;border-radius:18px;padding:18px}
-#done li{list-style:none;padding:8px 0;border-bottom:1px solid #e2e8f0;font-size:14px}
-#done textarea{width:100%;height:120px;margin-top:10px;font-size:12px;border-radius:8px;border:1px solid #cbd5e1;padding:8px}
-#done button{margin-top:10px;width:100%;padding:12px;border:none;border-radius:10px;background:#0d9488;color:#fff;font-weight:700;font-size:15px}
-.why{font-weight:600;color:#0f172a!important}.risk{color:#b45309!important;font-weight:600}details{margin-top:10px}summary{font-size:13px;color:#64748b;cursor:pointer}</style></head><body>
-<header><h1>Your Top 5 · updated 1 Nov</h1><p>Swipe right = interested · left = pass · ❤️ = love it, show me more like this</p><div style="margin-top:8px;display:flex;gap:6px;justify-content:center"><button id="tTop" onclick="setMode('top')" style="background:#fff;color:#333;border:0;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600">⭐ Top 5</button><button id="tWL" onclick="setMode('wl')" style="background:#fff;color:#333;border:0;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;opacity:.55">👀 Watch List</button></div><button id="reset2" style="margin-top:8px;background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 14px;font-size:13px">↺ Start over</button></header>
-<div id="deck"></div>
-<div id="btns"><button id="no" aria-label="Pass">✖️</button><button id="like" aria-label="Love it">❤️</button><button id="yes" aria-label="Interested">✔️</button></div>
-<div id="done"><div class="box"><h2>Your picks</h2><ul id="list"></ul>
-<p style="font-size:13px;margin-top:10px;color:#475569">Copy this and paste it in the Job Seeker App chat so Sheet Updater can log it:</p>
-<textarea id="out" readonly></textarea><button id="copy">Copy results</button><button id="reset" style="background:#475569">Start over</button></div></div>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f3f5f4;color:#1d2a26}
+.hero{position:relative;overflow:hidden;color:#fff;padding:22px 18px 26px;min-height:190px;background:linear-gradient(160deg,#3a8dde,#7cc4f5)}
+.hero.rain{background:linear-gradient(160deg,#4b5d6e,#8797a6)}.hero.cloud{background:linear-gradient(160deg,#6f8fae,#b5c7d8)}.hero.storm{background:linear-gradient(160deg,#2c3440,#5a6470)}.hero.night{background:linear-gradient(160deg,#0f1c3a,#33457a)}
+.hero h1{margin:0;font-size:22px;position:relative;z-index:2}.hero .hj{opacity:.9;margin-top:4px;position:relative;z-index:2}
+.wx{position:relative;z-index:2;margin-top:14px;font-size:15px}.wx b{font-size:30px;margin-right:6px}
+.sun{position:absolute;right:24px;top:22px;width:70px;height:70px;border-radius:50%;background:#ffd34d;box-shadow:0 0 40px #ffd34d;animation:pulse 4s ease-in-out infinite}
+.moon{position:absolute;right:28px;top:24px;width:56px;height:56px;border-radius:50%;box-shadow:-14px 6px 0 0 #f4f1d0}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.cl{position:absolute;width:120px;height:40px;background:#fff;opacity:.85;border-radius:40px;animation:drift 22s linear infinite}
+.cl:before{content:"";position:absolute;width:56px;height:56px;background:inherit;border-radius:50%;top:-26px;left:22px}
+@keyframes drift{from{transform:translateX(-160px)}to{transform:translateX(110vw)}}
+.drop{position:absolute;top:-20px;width:2px;height:16px;background:rgba(255,255,255,.7);animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(260px)}}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;animation:fl 6s infinite}@keyframes fl{0%,92%,100%{opacity:0}94%{opacity:.6}}
+main{padding:14px;max-width:640px;margin:0 auto}
+.c{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1f7a5a;margin-bottom:6px}
+.c p{margin:4px 0;line-height:1.5}.ref{font-size:13px;color:#667}a{color:#1f7a5a}
+.fast{background:#e8f6ef;border-left:4px solid #1f7a5a}
+.vid{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;margin:8px 0 4px}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.jobs iframe{width:100%;height:760px;border:0;border-radius:12px}
+</style></head><body>
+<section class="hero" id="hero"><h1 id="greg"></h1><div class="hj" id="hijri"></div><div class="wx" id="wx">Loading Singapore weather…</div></section>
+<main id="m"></main>
 <script>
-const TOP=[
-{t:"Senior Executive / Assistant Manager, Student Development",o:"Singapore Polytechnic",id:"JR-10000056400",pay:"Not stated",loc:"Mixed (Dover MRT, far west)",close:"12 Nov 2026",fit:"Strong fit: student-systems side matches your CS degree and AXS project. Catch: about half is facilities, procurement and claims admin.",wel:"Pass. Good after-hours load, good leave, good staffing (3.8). Main risk is the long trip west.",risk:"far-west commute; half is admin",why:"Strong fit: uses your CS degree",R:"https://drive.google.com/file/d/1oqu5lwp_Jz8aAWAp4-IrMqaGdrGpDiA6/view"},
-{t:"Student Life (NUS Business School)",o:"National University of Singapore",id:"",pay:"$4,500 – $5,500",loc:"Mixed (Kent Ridge MRT, far west)",close:"12 Nov 2026",fit:"Moderate fit for your youth mentoring background. Use the clean v2 resume.",wel:"Pass. Good leave and flexibility, good staffing (4.0). Risk: mixed after-hours load plus far-west commute.",risk:"far-west commute",why:"Moderate fit: youth mentoring",R:"https://drive.google.com/file/d/1flDlh44CMLlPt20WYggWc9h2m7NsWhw0/view"},
-{t:"Snr/Lead Exec, Student Experience & Digital Platforms",o:"Nanyang Polytechnic",id:"JR-10000054061",pay:"Not listed",loc:"Good (Ang Mo Kio, direct NS line from Sembawang)",close:"12 Nov 2026",fit:"Best skills match: half CCA and student leaders (PEER, SITTA), half digital platforms (CS, AXS). Gaps: Power BI, product-owner/CRM/LMS. May lead overseas trips.",wel:"Pass, but mixed after-hours load. Staffing is the risk (WLB 3.4, a 'toxic' review), so ask about team culture.",risk:"staffing reviews (WLB 3.4)",why:"Best skills match: CCA + digital",R:"https://drive.google.com/file/d/1xV3LizFI58Xu9NpfPUK6z2cqUqi8XnvX/view"},
-{t:"Training & Quality role",o:"MENDAKI",id:"",pay:"$3,500 – $5,000 (may be contract)",loc:"Unknown (East hybrid; HQ near Kembangan MRT)",close:"No deadline listed",fit:"Strong fit and the calmest MENDAKI role. Accepts IS/CS degrees, wants Excel/Power BI and systems work.",wel:"Pass. Mixed after-hours, good flexibility. Risk: poor staffing reviews (3.0).",risk:"poor staffing reviews (3.0)",why:"Strong fit, calmest MENDAKI role",R:"https://drive.google.com/file/d/1te8zgvi-7_HXgwgXaRApaWm5X1rZftZm/view"},
-{t:"Assistant Manager, Transition & Integration",o:"Nanyang Technological University",id:"R00025087",pay:"Not listed",loc:"Poor (far west, bus from Boon Lay)",close:"No closing date (posted 6 Oct)",fit:"Freshman buddy half fits you well; international-student and MOE reporting half you have no record in. Asks 3–5 yrs (you'll have ~2.5).",wel:"Pass. Good staffing (WLB 4.0), good leave. Risk: commute and NTU-wide 'toxic/blame' reviews.",risk:"far-west commute; asks 3–5 yrs",why:"Good fit for freshman buddy work",R:"https://drive.google.com/file/d/1IbqP_8IbcHGNmojxK8IXj4xXswtjnm9Z/view"}];
-const WL=[{"t": "Senior Assistant IT Consultant (AI Platform)", "o": "SIT", "id": "", "pay": "S$5,000–5,900 (contract)", "loc": "Best (Punggol)", "close": "19 Nov", "fit": "", "wel": "", "risk": "contract; may include a Python test", "why": "Pay holds; right in Punggol", "R": "https://docs.google.com/spreadsheets/d/1Gwjiy829ha0UmWPS5nW89BTjwgkqznhEKGumHQcKbmA/edit"}, {"t": "Executive, Student Experience", "o": "Newcastle Australia", "id": "", "pay": "S$3,000–3,500", "loc": "Good (Bugis)", "close": "19 Nov", "fit": "", "wel": "", "risk": "mostly admin; big pay cut", "why": "Student experience work", "R": "https://drive.google.com/file/d/1y7yfU3UY4a1a9isYxtXsrZkR4jWz8OWh/view"}, {"t": "Senior Executive, Curriculum (LKCMedicine)", "o": "NTU", "id": "", "pay": "S$3.5–4.5K", "loc": "Good (Novena, direct from Sembawang)", "close": "See sheet", "fit": "", "wel": "", "risk": "pay cut vs current; prefers edu/healthcare experience", "why": "Resume ready; meets degree bar", "R": "https://drive.google.com/file/d/1hGVQxNOli3i_3c6nf4LKI5Cal6BaAqwP/view"}, {"t": "Sector HR Policy", "o": "MUIS", "id": "", "pay": "Not listed (contract)", "loc": "Good (Braddell)", "close": "5 Nov", "fit": "", "wel": "", "risk": "weak fit (salary benchmarking); busy around Ramadan/Hajj", "why": "Muslim-friendly workplace", "R": "https://drive.google.com/file/d/1EqktXTqbztCnXN7RgmG1nq5cKxc58Ttd/view"}, {"t": "Senior Manager, Co-curricular Records & Systems", "o": "SMU", "id": "", "pay": "S$5,600–8,800", "loc": "Good (Bras Basah)", "close": "6 Nov", "fit": "", "wel": "", "risk": "wants 8+ yrs in systems", "why": "Records & systems, top pay", "R": "https://drive.google.com/file/d/1ApfEwKeXic_-wcUi0hfEVpdTbYuTeqaB/view"}, {"t": "Customer Success Manager", "o": "Wolters Kluwer", "id": "", "pay": "S$4,000–6,200", "loc": "Good (Shenton Way, 3 WFH days)", "close": "10 Nov", "fit": "", "wel": "", "risk": "revenue targets; asks 3+ yrs customer success", "why": "3 WFH days", "R": "https://docs.google.com/spreadsheets/d/1Gwjiy829ha0UmWPS5nW89BTjwgkqznhEKGumHQcKbmA/edit"}, {"t": "Exec Ed Programme Management (Business School)", "o": "NUS", "id": "", "pay": "S$4,200–5,000", "loc": "Mixed (Kent Ridge)", "close": "25 Nov", "fit": "", "wel": "", "risk": "needs strong Mandarin", "why": "Programme management", "R": "https://drive.google.com/file/d/1MzGtIX5rks10VcR_zUVmrvDKqJzJXDjy/view"}, {"t": "L&D (OJT)", "o": "Singapore Airlines", "id": "", "pay": "S$5,000–8,000 (2-yr contract)", "loc": "Site not stated", "close": "~late Nov", "fit": "", "wel": "", "risk": "likely filled before bond ends", "why": "Strong pay, L&D", "R": "https://docs.google.com/spreadsheets/d/1Gwjiy829ha0UmWPS5nW89BTjwgkqznhEKGumHQcKbmA/edit"}, {"t": "Volunteer Management", "o": "Daughters of Tomorrow", "id": "", "pay": "S$4,000–4,650", "loc": "Best (Bedok North)", "close": "13 Nov", "fit": "", "wel": "", "risk": "1 person runs 300+ volunteers; weekends; fundraising", "why": "Close to home, community work", "R": "https://drive.google.com/file/d/1cCTXKvRsUllKNaVYf1EbY5h04PwJ00vN/view"}, {"t": "Asst / Senior Asst Manager, Admissions & Services (postgrad)", "o": "SMU (via Hyperscal)", "id": "", "pay": "S$3,700–5,700 (contract to 2029)", "loc": "Good (Victoria St, DTL from Bedok Reservoir)", "close": "13 Nov", "fit": "", "wel": "", "risk": "yield targets; busy intake seasons; asks 3 yrs admissions", "why": "High-rated uni, near current pay", "R": "https://drive.google.com/file/d/1SSyo0hbLM_f1mAj306Hz7rJzX1rLzFCG/view"}, {"t": "Community Outreach Executive (SG Cares VC @ Yishun)", "o": "CampusImpact", "id": "", "pay": "See sheet", "loc": "Yishun", "close": "See sheet", "fit": "", "wel": "", "risk": "details in the shortlist sheet", "why": "On your Watch List", "R": "https://docs.google.com/spreadsheets/d/1Gwjiy829ha0UmWPS5nW89BTjwgkqznhEKGumHQcKbmA/edit"}];
-let mode='top',jobs=TOP,KEY='jobswipe-1nov-top';let res=JSON.parse(localStorage.getItem(KEY)||'{}');
-function setMode(m){mode=m;jobs=m==='top'?TOP:WL;KEY='jobswipe-1nov-'+m;res=JSON.parse(localStorage.getItem(KEY)||'{}');document.getElementById('tTop').style.opacity=m==='top'?1:.55;document.getElementById('tWL').style.opacity=m==='wl'?1:.55;document.querySelector('h1').textContent=m==='top'?'Your Top 5 · updated 1 Nov':'Watch List · 1 Nov';render()}
-const deck=document.getElementById("deck");
-function render(){deck.innerHTML="";const left=jobs.map((j,i)=>i).filter(i=>!res[i]);
- if(!left.length)return finish();document.getElementById("btns").style.display="flex";document.getElementById("done").style.display="none";deck.style.display="block";
- left.slice(0,2).reverse().forEach((i,k,arr)=>{const j=jobs[i],c=document.createElement("div");c.className="card";c.dataset.i=i;
- if(k===0&&arr.length>1)c.style.transform="scale(.95) translateY(12px)";
- c.innerHTML=`<div class="stamp yes">YES</div><div class="stamp no">NOPE</div><div class="stamp fav">LOVE</div><span class="rank">#${i+1} of ${jobs.length}</span><h2>${j.t}</h2><div class="org">${j.o}${j.id?" · "+j.id:""}</div>
- <div class="chips"><span class="chip">💰 ${j.pay}</span><span class="chip">📍 ${j.loc}</span><span class="chip">⏳ ${j.close}</span></div>
- <p class="why">✅ ${j.why}</p><p class="risk">⚠️ Main risk: ${j.risk}</p>
- ${j.fit?`<details><summary>More details</summary><div class="sec">Fit</div><p>${j.fit}</p><div class="sec">Welfare</div><p>${j.wel}</p></details>`:''}
- <p style="margin-top:12px"><a href="${j.R}" target="_blank">${j.R.includes("spreadsheets")?"📊 Open shortlist sheet ↗":j.R.includes("mycareersfuture")?"🔗 Open job ad ↗":"📄 Open resume ↗"}</a></p>`;
- deck.appendChild(c)});drag(deck.lastChild)}
-function decide(c,v){const i=c.dataset.i;res[i]=v;localStorage.setItem(KEY,JSON.stringify(res));
- const x=v==="pass"?-600:v==="yes"?600:0,y=v==="love"?-800:0;c.style.transition="transform .35s ease";c.style.transform=`translate(${x}px,${y}px) rotate(${x/20}deg)`;
- c.querySelector(".stamp."+(v==="pass"?"no":v==="love"?"fav":"yes")).style.opacity=1;if(navigator.vibrate)navigator.vibrate(20);setTimeout(render,330)}
-function drag(c){if(!c)return;let sx=0,sy=0,dx=0,dy=0,on=false;
- c.addEventListener("pointerdown",e=>{if(["A","SUMMARY"].includes(e.target.tagName))return;on=true;sx=e.clientX;sy=e.clientY;c.style.transition="none";c.setPointerCapture(e.pointerId)});
- c.addEventListener("pointermove",e=>{if(!on)return;dx=e.clientX-sx;dy=e.clientY-sy;c.style.transform=`translate(${dx}px,${dy}px) rotate(${dx/18}deg)`;
-  c.querySelector(".yes").style.opacity=Math.max(0,dx/100);c.querySelector(".no").style.opacity=Math.max(0,-dx/100);c.querySelector(".fav").style.opacity=Math.max(0,-dy/120)});
- c.addEventListener("pointerup",()=>{if(!on)return;on=false;if(dx>100)decide(c,"yes");else if(dx<-100)decide(c,"pass");else if(dy<-120)decide(c,"love");
-  else{c.style.transition="transform .3s";c.style.transform="";c.querySelectorAll(".stamp").forEach(s=>s.style.opacity=0)}dx=dy=0})}
-const topCard=()=>deck.lastChild;
-document.getElementById("no").onclick=()=>topCard()&&decide(topCard(),"pass");
-document.getElementById("yes").onclick=()=>topCard()&&decide(topCard(),"yes");
-document.getElementById("like").onclick=()=>topCard()&&decide(topCard(),"love");
-const lbl={love:"❤️ Love it, show more like this",yes:"✔️ Interested",pass:"✖️ Pass"};
-function finish(){deck.style.display="none";document.getElementById("btns").style.display="none";document.getElementById("done").style.display="block";
- document.getElementById("list").innerHTML=jobs.map((j,i)=>`<li><b>${lbl[res[i]]}</b><br>${j.t} · ${j.o}</li>`).join("");
- document.getElementById("out").value="@Sheet Updater my "+(mode==="top"?"Top 5":"Watch List")+" swipe results (1 Nov):\n"+jobs.map((j,i)=>`${i+1}. ${j.t}, ${j.o}${j.id?" ("+j.id+")":""}: ${lbl[res[i]]}`).join("\n")}
-document.getElementById("copy").onclick=()=>{const t=document.getElementById("out");t.select();navigator.clipboard?navigator.clipboard.writeText(t.value):document.execCommand("copy");document.getElementById("copy").textContent="Copied ✓"};
-document.getElementById("reset").onclick=()=>{res={};localStorage.removeItem(KEY);render()};
-document.getElementById("reset2").onclick=()=>{res={};localStorage.removeItem(KEY);render()};
-render();
+const $=s=>document.getElementById(s),esc=s=>(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const now=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Singapore"}));
+const ymd=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+$("greg").textContent=now.toLocaleDateString("en-SG",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+// weather
+function anim(kind,night){const h=$("hero");h.className="hero "+(night&&kind==="sun"?"night":kind);
+ if(kind==="sun")h.insertAdjacentHTML("beforeend",night?'<div class="moon"></div>':'<div class="sun"></div>');
+ if(kind!=="sun")for(let i=0;i<3;i++)h.insertAdjacentHTML("beforeend",`<div class="cl" style="top:${20+i*45}px;animation-delay:-${i*7}s;animation-duration:${20+i*6}s"></div>`);
+ if(kind==="rain"||kind==="storm")for(let i=0;i<50;i++)h.insertAdjacentHTML("beforeend",`<div class="drop" style="left:${Math.random()*100}%;animation-duration:${.5+Math.random()*.5}s;animation-delay:-${Math.random()}s"></div>`);
+ if(kind==="storm")h.insertAdjacentHTML("beforeend",'<div class="flash"></div>')}
+fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&current=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FSingapore&forecast_days=1")
+.then(r=>r.json()).then(d=>{const c=d.current.weather_code,n=!d.current.is_day;
+ const k=c>=95?"storm":c>=51?"rain":c>=2?"cloud":"sun",lbl={storm:"Thunderstorms",rain:"Rain",cloud:"Cloudy",sun:n?"Clear night":"Sunny"}[k];anim(k,n);
+ $("wx").innerHTML=`<b>${Math.round(d.current.temperature_2m)}°</b>${lbl} · ${Math.round(d.daily.temperature_2m_min[0])}–${Math.round(d.daily.temperature_2m_max[0])}° · ${d.daily.precipitation_probability_max[0]}% chance of rain`})
+.catch(()=>{anim("cloud");$("wx").textContent="Weather unavailable right now"});
+// content
+const card=(k,html,cls="")=>`<div class="c ${cls}"><div class="k">${k}</div>${html}</div>`;
+fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{
+ $("hijri").textContent=d.hijri||"";let h="";
+ if(d.fast)h+=card("🌙 Coming up",`<p>${esc(d.fast)}</p>`,"fast");
+ if(d.blessing)h+=card("🤲 Blessing to notice",`<p>${esc(d.blessing)}</p>`);
+ if(d.verse)h+=card("📖 Quran",`<p>“${esc(d.verse.text)}”</p><p class="ref"><a href="${d.verse.url}" target="_blank">${esc(d.verse.ref)} ↗</a></p>`);
+ if(d.hadith)h+=card("📜 Hadith",`<p>“${esc(d.hadith.text)}”</p><p class="ref"><a href="${d.hadith.url}" target="_blank">${esc(d.hadith.ref)} ↗</a></p>`);
+ if(d.lesson)h+=card("💡 Lesson · "+esc(d.lesson.title),`<p>${esc(d.lesson.text)}</p>${d.lesson.url?`<p class="ref"><a href="${d.lesson.url}" target="_blank">Source ↗</a></p>`:""}`);
+ if(d.quote)h+=card("💬 "+esc(d.quote.by),`<p>“${esc(d.quote.text)}”</p><p class="ref"><a href="${d.quote.url}" target="_blank">${esc(d.quote.date||"View post")} ↗</a></p>`);
+ (d.videos||[]).forEach(v=>h+=card("▶️ Watch",`<p>${esc(v.title)}</p><div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${v.id}${v.start?"?start="+v.start:""}" allow="encrypted-media;picture-in-picture" allowfullscreen></iframe></div>`));
+ $("m").insertAdjacentHTML("afterbegin",h)}).catch(()=>$("m").insertAdjacentHTML("afterbegin",card("Today","<p>Today's reminder isn't ready yet.</p>")));
+$("m").innerHTML=card("💼 Your jobs",'<iframe src="jobs.html" title="Job swipe"></iframe>',"jobs");
 </script></body></html>
