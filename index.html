@@ -43,9 +43,14 @@ a{color:var(--c3)}.ref{font-size:12px;color:var(--c2)}
 .cres{flex:0 0 40px;height:40px;border-radius:50%;box-shadow:-10px 4px 0 0 var(--c3);animation:glow 2s steps(2) infinite;margin-left:8px}@keyframes glow{50%{box-shadow:-10px 4px 0 0 var(--c2)}}
 .star{position:absolute;width:4px;height:4px;background:var(--c3);animation:blink 1.4s steps(2) infinite}
 .cd{font-size:14px;margin:6px 0;color:var(--c3)}.fastw p{margin:3px 0;font-size:13px}
+.radio{border:4px solid var(--c3);padding:12px;margin-bottom:14px;background:var(--c1);display:flex;gap:12px;align-items:center}
+.eq2{display:flex;gap:3px;align-items:flex-end;height:28px}.eq2 i{width:5px;background:var(--c3);height:6px}.radio.on .eq2 i{animation:eqa .5s steps(4) infinite alternate}.eq2 i:nth-child(2){animation-delay:-.2s}.eq2 i:nth-child(3){animation-delay:-.35s}.eq2 i:nth-child(4){animation-delay:-.1s}
+@keyframes eqa{to{height:28px}}.rb{background:var(--c3);color:var(--c0);border:0;padding:10px 12px;font-size:10px;cursor:pointer;box-shadow:3px 3px 0 var(--c0)}
+#rnow{font-size:12px;color:var(--c3);margin-top:4px}
 </style></head><body>
 <header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div></header>
 <main>
+<div class="radio" id="radio"><div class="eq2"><i></i><i></i><i></i><i></i></div><div style="flex:1"><div class="px" style="font-size:10px">📻 DAILY RADIO</div><div id="rnow">Play today's dashboard as a radio show?</div></div><button class="rb px" id="rbtn" onclick="radio()">▶ PLAY</button></div>
 <div id="fast"></div>
 <section class="w"><div class="t px"><span>▶ WATCH</span></div><div id="yt"></div></section>
 <section class="w"><div class="t px"><span id="qhLbl">📖 QURAN</span><span>◀ SWIPE ▶</span></div><div class="car" id="car"></div><div class="dots" id="qdots"><i class="on"></i><i></i></div></section>
@@ -82,5 +87,27 @@ fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r
  $("wdots").innerHTML=W.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("");
  const q=d.quote;if(q)$("quote").innerHTML=`<p>“${esc(q.text)}”</p><p class="ref">— ${esc(q.by)} · <a href="${q.url}" target="_blank">${esc(q.date||"source")} ↗</a></p>`});
 $("car").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);e.target.nextElementSibling.querySelectorAll("i").forEach((d,k)=>d.className=k===i?"on":"");const s=e.target.children[i];if(s)$("qhLbl").textContent=s.dataset.l});
+</script><script>
+let rOn=false;
+function rScript(){const d=D,p=[];const g=$("greg").textContent.toLowerCase();
+ p.push(`Assalamualaikum Syazwan, and welcome to your daily radio. It's ${g}, ${d.hijri||""}.`);
+ const wx=$("wx").innerText;if(wx&&!/LOADING|OFFLINE/.test(wx))p.push(`Weather check for Singapore: ${wx.replace("°"," degrees").toLowerCase()}.`);
+ if(d.fast&&d.fast.type)p.push(`Coming up: a ${d.fast.type.replace("·",", on")}. ${d.fast.why} That's from ${d.fast.src}. ${$("cdw").textContent||""}`);
+ if(d.blessing)p.push(`Today's blessing to notice: ${d.blessing}`);
+ if(d.verse)p.push(`From the Quran, ${d.verse.ref}: ${d.verse.text}`);
+ if(d.hadith)p.push(`And a hadith, from ${d.hadith.ref}: ${d.hadith.text}`);
+ if(d.name)p.push(`Today's name of Allah is ${d.name.tr}, ${d.name.meaning}. ${d.name.text}`);
+ if(d.quote)p.push(`A word from ${d.quote.by}: ${d.quote.text}`);
+ (d.world||[]).slice(0,2).forEach(w=>p.push(`World watch, ${w.src.toLowerCase()}: ${w.text}`));
+ p.push(`That's the show. Your job picks are waiting at the bottom whenever you're ready. Now, let's go to today's video.`);
+ return p.map(x=>x.replace(/ﷺ/g,"peace be upon him").replace(/\.\.\./g,","))}
+function radio(){const r=$("radio");if(rOn){speechSynthesis.cancel();rOn=false;r.classList.remove("on");$("rbtn").textContent="▶ PLAY";$("rnow").textContent="Radio stopped.";return}
+ if(!("speechSynthesis" in window)){$("rnow").textContent="This browser can't speak. Try Chrome or Safari.";return}
+ rOn=true;r.classList.add("on");$("rbtn").textContent="■ STOP";const parts=rScript();let i=0;
+ const vs=speechSynthesis.getVoices(),v=vs.find(v=>/en-(GB|SG|AU)/.test(v.lang))||vs.find(v=>/^en/.test(v.lang));
+ const next=()=>{if(!rOn)return;if(i>=parts.length){rOn=false;r.classList.remove("on");$("rbtn").textContent="▶ PLAY";$("rnow").textContent="Now playing today's video.";playVid();return}
+  const u=new SpeechSynthesisUtterance(parts[i]);if(v)u.voice=v;u.rate=1;u.pitch=1;$("rnow").textContent=parts[i].slice(0,80)+(parts[i].length>80?"…":"");u.onend=()=>{i++;next()};u.onerror=()=>{i++;next()};speechSynthesis.speak(u)};
+ speechSynthesis.cancel();next()}
+function playVid(){const f=document.querySelector("#yt iframe");if(!f)return;f.setAttribute("allow","autoplay; encrypted-media; picture-in-picture");const u=new URL(f.src);u.searchParams.set("autoplay","1");f.src=u.toString();f.scrollIntoView({behavior:"smooth",block:"center"})}
 </script></body></html>
 <script>document.getElementById("wcar").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);document.querySelectorAll("#wdots i").forEach((d,k)=>d.className=k===i?"on":"")})</script>
