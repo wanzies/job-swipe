@@ -1,56 +1,79 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Syazwan's Daily</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daily</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Amiri:wght@700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f3f5f4;color:#1d2a26}
-.hero{position:relative;overflow:hidden;color:#fff;padding:22px 18px 26px;min-height:190px;background:linear-gradient(160deg,#3a8dde,#7cc4f5)}
-.hero.rain{background:linear-gradient(160deg,#4b5d6e,#8797a6)}.hero.cloud{background:linear-gradient(160deg,#6f8fae,#b5c7d8)}.hero.storm{background:linear-gradient(160deg,#2c3440,#5a6470)}.hero.night{background:linear-gradient(160deg,#0f1c3a,#33457a)}
-.hero h1{margin:0;font-size:22px;position:relative;z-index:2}.hero .hj{opacity:.9;margin-top:4px;position:relative;z-index:2}
-.wx{position:relative;z-index:2;margin-top:14px;font-size:15px}.wx b{font-size:30px;margin-right:6px}
-.sun{position:absolute;right:24px;top:22px;width:70px;height:70px;border-radius:50%;background:#ffd34d;box-shadow:0 0 40px #ffd34d;animation:pulse 4s ease-in-out infinite}
-.moon{position:absolute;right:28px;top:24px;width:56px;height:56px;border-radius:50%;box-shadow:-14px 6px 0 0 #f4f1d0}
-@keyframes pulse{50%{transform:scale(1.08)}}
-.cl{position:absolute;width:120px;height:40px;background:#fff;opacity:.85;border-radius:40px;animation:drift 22s linear infinite}
-.cl:before{content:"";position:absolute;width:56px;height:56px;background:inherit;border-radius:50%;top:-26px;left:22px}
-@keyframes drift{from{transform:translateX(-160px)}to{transform:translateX(110vw)}}
-.drop{position:absolute;top:-20px;width:2px;height:16px;background:rgba(255,255,255,.7);animation:fall linear infinite}
-@keyframes fall{to{transform:translateY(260px)}}
-.flash{position:absolute;inset:0;background:#fff;opacity:0;animation:fl 6s infinite}@keyframes fl{0%,92%,100%{opacity:0}94%{opacity:.6}}
-main{padding:14px;max-width:640px;margin:0 auto}
-.c{background:#fff;border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.k{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#1f7a5a;margin-bottom:6px}
-.c p{margin:4px 0;line-height:1.5}.ref{font-size:13px;color:#667}a{color:#1f7a5a}
-.fast{background:#e8f6ef;border-left:4px solid #1f7a5a}
-.vid{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;margin:8px 0 4px}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.jobs iframe{width:100%;height:760px;border:0;border-radius:12px}
+:root{--c0:#0e1512;--c1:#2d4636;--c2:#86a38a;--c3:#e2e8d6}
+*{box-sizing:border-box}body{margin:0;background:var(--c0);color:var(--c3);font:15px/1.55 "IBM Plex Mono",monospace;image-rendering:pixelated}
+.px{font-family:"Press Start 2P",monospace;letter-spacing:.02em}
+header{padding:16px;border-bottom:4px solid var(--c1);position:relative;overflow:hidden;min-height:128px}
+header h1{font-size:12px;margin:0 0 8px;color:var(--c3)}header .hj{font-size:10px;color:var(--c2)}
+.wx{margin-top:14px;font-size:10px;color:var(--c2)}.wx b{font-size:18px;color:var(--c3);margin-right:6px}
+.gear{position:absolute;right:12px;top:12px;background:var(--c1);color:var(--c3);border:0;padding:8px 10px;font-size:10px;box-shadow:3px 3px 0 var(--c2);cursor:pointer}
+.sky{position:absolute;right:18px;bottom:14px;width:64px;height:48px}
+.psun{position:absolute;right:8px;top:6px;width:24px;height:24px;background:var(--c3);box-shadow:0 -8px 0 -4px var(--c2),0 8px 0 -4px var(--c2),8px 0 0 -4px var(--c2),-8px 0 0 -4px var(--c2);animation:blink 2s steps(2) infinite}
+.pcl{position:absolute;left:0;top:14px;width:40px;height:12px;background:var(--c2);box-shadow:8px -8px 0 0 var(--c2),20px -8px 0 0 var(--c2);animation:mv 6s steps(6) infinite alternate}
+.pdr{position:absolute;width:3px;height:6px;background:var(--c3);animation:dr .6s steps(4) infinite}
+@keyframes blink{50%{opacity:.6}}@keyframes mv{to{transform:translateX(18px)}}@keyframes dr{from{transform:translateY(28px)}to{transform:translateY(48px)}}
+main{max-width:640px;margin:0 auto;padding:12px}
+.w{border:4px solid var(--c1);background:#131d18;margin-bottom:14px;padding:12px;box-shadow:6px 6px 0 var(--c1)}
+.t{font-size:10px;color:var(--c2);margin:0 0 10px;display:flex;justify-content:space-between}
+a{color:var(--c3)}.ref{font-size:12px;color:var(--c2)}
+.vid{position:relative;padding-top:56.25%;border:3px solid var(--c1);margin-bottom:8px}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vt{font-size:12px;color:var(--c2);margin-bottom:10px}
+.car{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;scrollbar-width:none}.car::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start}.dots{text-align:center;margin-top:8px}.dots i{display:inline-block;width:8px;height:8px;background:var(--c1);margin:0 4px}.dots i.on{background:var(--c3)}
+.flip{perspective:900px;cursor:pointer;height:220px}.fi{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}.flip.on .fi{transform:rotateY(180deg)}
+.fa,.fb{position:absolute;inset:0;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;border:3px dashed var(--c1)}
+.fb{transform:rotateY(180deg);background:#17231d}
+.ar{font-family:Amiri,serif;font-size:64px;line-height:1.2;color:var(--c3)}.tr{font-size:11px;color:var(--c2);margin-top:10px}
+.hint{font-size:9px;color:var(--c1);margin-top:12px}
+.jobs iframe{width:100%;height:760px;border:0}
+.fast{font-size:12px;color:var(--c2);border:2px solid var(--c1);padding:8px;margin-bottom:14px}
+#set{position:fixed;inset:0;background:rgba(14,21,18,.97);display:none;z-index:9;padding:16px;overflow:auto}
+#set h2{font-size:12px}#q{width:100%;padding:12px;background:var(--c0);color:var(--c3);border:3px solid var(--c2);font:inherit}
+.sg{border:2px solid var(--c1);border-top:0}.sg div{padding:10px;cursor:pointer;border-top:1px solid var(--c1)}.sg div:hover,.sg div:active{background:var(--c1)}
+.chip{display:inline-flex;gap:8px;align-items:center;background:var(--c1);padding:6px 10px;margin:4px 4px 0 0;font-size:12px}.chip button{background:none;border:0;color:var(--c3);cursor:pointer}
+.btn{background:var(--c3);color:var(--c0);border:0;padding:10px 14px;font-size:10px;margin-top:18px;box-shadow:4px 4px 0 var(--c2);cursor:pointer}
 </style></head><body>
-<section class="hero" id="hero"><h1 id="greg"></h1><div class="hj" id="hijri"></div><div class="wx" id="wx">Loading Singapore weather…</div></section>
-<main id="m"></main>
+<header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div><button class="gear px" onclick="openSet()">⚙ SET</button></header>
+<main>
+<div id="fast"></div>
+<section class="w"><div class="t px"><span>▶ WATCH</span></div><div id="yt"></div></section>
+<section class="w"><div class="t px"><span id="qhLbl">📖 QURAN</span><span>◀ SWIPE ▶</span></div><div class="car" id="car"></div><div class="dots"><i class="on"></i><i></i></div></section>
+<section class="w"><div class="t px"><span>✦ NAMES OF ALLAH</span></div><div class="flip" id="flip" onclick="this.classList.toggle('on')"><div class="fi"><div class="fa"><div class="ar" id="nAr"></div><div class="tr px" id="nTr"></div><div class="hint px">TAP TO REVEAL</div></div><div class="fb"><div class="px" style="font-size:10px;margin-bottom:10px" id="nMean"></div><div style="font-size:13px" id="nTxt"></div><div class="ref" id="nRef" style="margin-top:8px"></div></div></div></div></section>
+<section class="w"><div class="t px"><span>❝ SCHOLARS</span></div><div id="quote"></div></section>
+<section class="w jobs"><div class="t px"><span>💼 JOBS</span></div><iframe src="jobs.html" title="Job swipe"></iframe></section>
+</main>
+<div id="set"><h2 class="px">⚙ SETTINGS</h2><p class="ref">YouTube channels to show at the top. Type to search, then tap a suggestion.</p>
+<input id="q" placeholder="Search channels…" autocomplete="off"><div class="sg" id="sg"></div>
+<p class="px" style="font-size:10px;margin-top:18px">YOUR CHANNELS</p><div id="mine"></div>
+<p class="ref" style="margin-top:14px">Not listed? Paste a channel ID (starts with UC) and press Enter.</p>
+<button class="btn px" onclick="closeSet()">DONE</button></div>
 <script>
-const $=s=>document.getElementById(s),esc=s=>(s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const $=s=>document.getElementById(s),esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const CH=[{n:"Mufti Menk",id:"UCMnInhD_Azd2ICGMKbHMsCg"},{n:"Yaqeen Institute",id:"UCLrUV5FkWV8lm9omd5vQApQ"},{n:"One Path Network",id:"UCQHRLH8RQIrdGWMhf5heWiA"},{n:"Assim Al-Hakeem",id:"UCWsdcrre0WbCWML_PnuzoAg"},{n:"Dr Zakir Naik",id:"UCWMnTGHG81DEWFfkEb3rrQQ"},{n:"Free Quran Education",id:"UCNdUFOtzSx3FS71pHkQLxhQ"}];
+let mine=JSON.parse(localStorage.getItem("dash-ch")||"[]");
 const now=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Singapore"}));
 const ymd=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
-$("greg").textContent=now.toLocaleDateString("en-SG",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-// weather
-function anim(kind,night){const h=$("hero");h.className="hero "+(night&&kind==="sun"?"night":kind);
- if(kind==="sun")h.insertAdjacentHTML("beforeend",night?'<div class="moon"></div>':'<div class="sun"></div>');
- if(kind!=="sun")for(let i=0;i<3;i++)h.insertAdjacentHTML("beforeend",`<div class="cl" style="top:${20+i*45}px;animation-delay:-${i*7}s;animation-duration:${20+i*6}s"></div>`);
- if(kind==="rain"||kind==="storm")for(let i=0;i<50;i++)h.insertAdjacentHTML("beforeend",`<div class="drop" style="left:${Math.random()*100}%;animation-duration:${.5+Math.random()*.5}s;animation-delay:-${Math.random()}s"></div>`);
- if(kind==="storm")h.insertAdjacentHTML("beforeend",'<div class="flash"></div>')}
-fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&current=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FSingapore&forecast_days=1")
-.then(r=>r.json()).then(d=>{const c=d.current.weather_code,n=!d.current.is_day;
- const k=c>=95?"storm":c>=51?"rain":c>=2?"cloud":"sun",lbl={storm:"Thunderstorms",rain:"Rain",cloud:"Cloudy",sun:n?"Clear night":"Sunny"}[k];anim(k,n);
- $("wx").innerHTML=`<b>${Math.round(d.current.temperature_2m)}°</b>${lbl} · ${Math.round(d.daily.temperature_2m_min[0])}–${Math.round(d.daily.temperature_2m_max[0])}° · ${d.daily.precipitation_probability_max[0]}% chance of rain`})
-.catch(()=>{anim("cloud");$("wx").textContent="Weather unavailable right now"});
-// content
-const card=(k,html,cls="")=>`<div class="c ${cls}"><div class="k">${k}</div>${html}</div>`;
-fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{
- $("hijri").textContent=d.hijri||"";let h="";
- if(d.fast)h+=card("🌙 Coming up",`<p>${esc(d.fast)}</p>`,"fast");
- if(d.blessing)h+=card("🤲 Blessing to notice",`<p>${esc(d.blessing)}</p>`);
- if(d.verse)h+=card("📖 Quran",`<p>“${esc(d.verse.text)}”</p><p class="ref"><a href="${d.verse.url}" target="_blank">${esc(d.verse.ref)} ↗</a></p>`);
- if(d.hadith)h+=card("📜 Hadith",`<p>“${esc(d.hadith.text)}”</p><p class="ref"><a href="${d.hadith.url}" target="_blank">${esc(d.hadith.ref)} ↗</a></p>`);
- if(d.lesson)h+=card("💡 Lesson · "+esc(d.lesson.title),`<p>${esc(d.lesson.text)}</p>${d.lesson.url?`<p class="ref"><a href="${d.lesson.url}" target="_blank">Source ↗</a></p>`:""}`);
- if(d.quote)h+=card("💬 "+esc(d.quote.by),`<p>“${esc(d.quote.text)}”</p><p class="ref"><a href="${d.quote.url}" target="_blank">${esc(d.quote.date||"View post")} ↗</a></p>`);
- (d.videos||[]).forEach(v=>h+=card("▶️ Watch",`<p>${esc(v.title)}</p><div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${v.id}${v.start?"?start="+v.start:""}" allow="encrypted-media;picture-in-picture" allowfullscreen></iframe></div>`));
- $("m").insertAdjacentHTML("afterbegin",h)}).catch(()=>$("m").insertAdjacentHTML("afterbegin",card("Today","<p>Today's reminder isn't ready yet.</p>")));
-$("m").innerHTML=card("💼 Your jobs",'<iframe src="jobs.html" title="Job swipe"></iframe>',"jobs");
+$("greg").textContent=now.toLocaleDateString("en-SG",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).toUpperCase();
+fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&current=temperature_2m,weather_code,is_day&daily=precipitation_probability_max&timezone=Asia%2FSingapore&forecast_days=1").then(r=>r.json()).then(d=>{
+ const c=d.current.weather_code,k=c>=51?"rain":c>=2?"cloud":"sun",s=$("sky");
+ if(k==="sun")s.innerHTML='<div class="psun"></div>';else{s.innerHTML='<div class="pcl"></div>';if(k==="rain")for(let i=0;i<6;i++)s.innerHTML+=`<div class="pdr" style="left:${6+i*9}px;animation-delay:-${i*.1}s"></div>`}
+ $("wx").innerHTML=`<b>${Math.round(d.current.temperature_2m)}°</b>${{sun:d.current.is_day?"CLEAR":"CLEAR NIGHT",cloud:"CLOUDY",rain:c>=95?"STORM":"RAIN"}[k]} · ${d.daily.precipitation_probability_max[0]}% RAIN`}).catch(()=>$("wx").textContent="WEATHER OFFLINE");
+let D={};
+function renderYT(){let h="";(D.videos||[]).forEach(v=>h+=`<div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${v.id}${v.start?"?start="+v.start:""}" allowfullscreen></iframe></div><div class="vt">${esc(v.title)}</div>`);
+ mine.forEach(c=>h+=`<div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${c.id.slice(2)}" allowfullscreen></iframe></div><div class="vt">Latest from ${esc(c.n)}</div>`);
+ $("yt").innerHTML=h||'<div class="vt">No videos today. Add channels in ⚙ SET.</div>'}
+fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{D=d;
+ $("hijri").textContent=(d.hijri||"").toUpperCase();if(d.fast)$("fast").innerHTML=`<div class="fast">🌙 ${esc(d.fast)}</div>`;renderYT();
+ const sl=(x,l)=>x?`<div class="slide" data-l="${l}"><p>“${esc(x.text)}”</p><p class="ref"><a href="${x.url}" target="_blank">${esc(x.ref)} ↗</a></p></div>`:"";
+ $("car").innerHTML=sl(d.verse,"📖 QURAN")+sl(d.hadith,"📜 HADITH");
+ const n=d.name||{};$("nAr").textContent=n.ar||"";$("nTr").textContent=(n.tr||"").toUpperCase();$("nMean").textContent=(n.meaning||"").toUpperCase();$("nTxt").textContent=n.text||"";if(n.url)$("nRef").innerHTML=`<a href="${n.url}" target="_blank">Source ↗</a>`;
+ const q=d.quote;if(q)$("quote").innerHTML=`<p>“${esc(q.text)}”</p><p class="ref">— ${esc(q.by)} · <a href="${q.url}" target="_blank">${esc(q.date||"source")} ↗</a></p>`});
+$("car").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);document.querySelectorAll(".dots i").forEach((d,k)=>d.className=k===i?"on":"");const s=e.target.children[i];if(s)$("qhLbl").textContent=s.dataset.l});
+function save(){localStorage.setItem("dash-ch",JSON.stringify(mine));drawMine();renderYT()}
+function drawMine(){$("mine").innerHTML=mine.map((c,i)=>`<span class="chip">${esc(c.n)}<button onclick="mine.splice(${i},1);save()">✕</button></span>`).join("")||'<span class="ref">None yet.</span>'}
+function pick(i){const c=CH[i];if(!mine.some(m=>m.id===c.id))mine.push(c);$("q").value="";$("sg").innerHTML="";save()}
+$("q").oninput=e=>{const v=e.target.value.trim().toLowerCase();$("sg").innerHTML=v?CH.map((c,i)=>c.n.toLowerCase().includes(v)?`<div onclick="pick(${i})">＋ ${esc(c.n)}</div>`:"").join("")||'<div class="ref">No match. Paste a UC… channel ID instead.</div>':""};
+$("q").onkeydown=e=>{const v=e.target.value.trim();if(e.key==="Enter"&&/^UC[\w-]{22}$/.test(v)){mine.push({n:v,id:v});e.target.value="";save()}};
+function openSet(){$("set").style.display="block";drawMine();$("q").focus()}function closeSet(){$("set").style.display="none"}
 </script></body></html>
