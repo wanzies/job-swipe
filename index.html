@@ -33,25 +33,24 @@ a{color:var(--c3)}.ref{font-size:12px;color:var(--c2)}
 .sg{border:2px solid var(--c1);border-top:0}.sg div{padding:10px;cursor:pointer;border-top:1px solid var(--c1)}.sg div:hover,.sg div:active{background:var(--c1)}
 .chip{display:inline-flex;gap:8px;align-items:center;background:var(--c1);padding:6px 10px;margin:4px 4px 0 0;font-size:12px}.chip button{background:none;border:0;color:var(--c3);cursor:pointer}
 .btn{background:var(--c3);color:var(--c0);border:0;padding:10px 14px;font-size:10px;margin-top:18px;box-shadow:4px 4px 0 var(--c2);cursor:pointer}
+.wd{text-align:center}.big{font-size:22px;margin:10px 0}.clock{width:72px;height:72px;margin:6px auto;border:4px solid var(--c3);position:relative;border-radius:0}
+.clock i{position:absolute;left:32px;top:6px;width:4px;height:30px;background:var(--c2);transform-origin:2px 30px;animation:tk 4s steps(8) infinite}@keyframes tk{from{transform:rotate(-40deg)}to{transform:rotate(-4deg)}}
+.bar{height:18px;border:3px solid var(--c3);margin:10px 0;position:relative}.bar b{position:absolute;left:0;top:0;bottom:0;background:var(--c2);animation:fill 2s steps(10) forwards}@keyframes fill{from{width:0}}
+.globe{width:48px;height:48px;margin:6px auto;background:var(--c1);box-shadow:inset 8px 0 0 var(--c2),inset -8px 0 0 var(--c0);animation:spin 3s steps(4) infinite}@keyframes spin{25%{box-shadow:inset 16px 0 0 var(--c2),inset -4px 0 0 var(--c0)}50%{box-shadow:inset 4px 0 0 var(--c2),inset -16px 0 0 var(--c0)}}
 </style></head><body>
-<header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div><button class="gear px" onclick="openSet()">⚙ SET</button></header>
+<header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div></header>
 <main>
 <div id="fast"></div>
 <section class="w"><div class="t px"><span>▶ WATCH</span></div><div id="yt"></div></section>
-<section class="w"><div class="t px"><span id="qhLbl">📖 QURAN</span><span>◀ SWIPE ▶</span></div><div class="car" id="car"></div><div class="dots"><i class="on"></i><i></i></div></section>
+<section class="w"><div class="t px"><span id="qhLbl">📖 QURAN</span><span>◀ SWIPE ▶</span></div><div class="car" id="car"></div><div class="dots" id="qdots"><i class="on"></i><i></i></div></section>
 <section class="w"><div class="t px"><span>✦ NAMES OF ALLAH</span></div><div class="flip" id="flip" onclick="this.classList.toggle('on')"><div class="fi"><div class="fa"><div class="ar" id="nAr"></div><div class="tr px" id="nTr"></div><div class="hint px">TAP TO REVEAL</div></div><div class="fb"><div class="px" style="font-size:10px;margin-bottom:10px" id="nMean"></div><div style="font-size:13px" id="nTxt"></div><div class="ref" id="nRef" style="margin-top:8px"></div></div></div></div></section>
 <section class="w"><div class="t px"><span>❝ SCHOLARS</span></div><div id="quote"></div></section>
+<section class="w"><div class="t px"><span id="wLbl">🌍 WORLD WATCH</span><span>◀ SWIPE ▶</span></div><div class="car" id="wcar"></div><div class="dots" id="wdots"></div></section>
 <section class="w jobs"><div class="t px"><span>💼 JOBS</span></div><iframe src="jobs.html" title="Job swipe"></iframe></section>
 </main>
-<div id="set"><h2 class="px">⚙ SETTINGS</h2><p class="ref">YouTube channels to show at the top. Type to search, then tap a suggestion.</p>
-<input id="q" placeholder="Search channels…" autocomplete="off"><div class="sg" id="sg"></div>
-<p class="px" style="font-size:10px;margin-top:18px">YOUR CHANNELS</p><div id="mine"></div>
-<p class="ref" style="margin-top:14px">Not listed? Paste a channel ID (starts with UC) and press Enter.</p>
-<button class="btn px" onclick="closeSet()">DONE</button></div>
 <script>
 const $=s=>document.getElementById(s),esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const CH=[{n:"Mufti Menk",id:"UCMnInhD_Azd2ICGMKbHMsCg"},{n:"Yaqeen Institute",id:"UCLrUV5FkWV8lm9omd5vQApQ"},{n:"One Path Network",id:"UCQHRLH8RQIrdGWMhf5heWiA"},{n:"Assim Al-Hakeem",id:"UCWsdcrre0WbCWML_PnuzoAg"},{n:"Dr Zakir Naik",id:"UCWMnTGHG81DEWFfkEb3rrQQ"},{n:"Free Quran Education",id:"UCNdUFOtzSx3FS71pHkQLxhQ"}];
-let mine=JSON.parse(localStorage.getItem("dash-ch")||"[]");
+let mine=[{n:"Nurul Asror",id:"UCbgvB0fCeXC9u9Ue9-awSNg"}];
 const now=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Singapore"}));
 const ymd=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
 $("greg").textContent=now.toLocaleDateString("en-SG",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).toUpperCase();
@@ -62,18 +61,16 @@ fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&cur
 let D={};
 function renderYT(){let h="";(D.videos||[]).forEach(v=>h+=`<div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${v.id}${v.start?"?start="+v.start:""}" allowfullscreen></iframe></div><div class="vt">${esc(v.title)}</div>`);
  mine.forEach(c=>h+=`<div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${c.id.slice(2)}" allowfullscreen></iframe></div><div class="vt">Latest from ${esc(c.n)}</div>`);
- $("yt").innerHTML=h||'<div class="vt">No videos today. Add channels in ⚙ SET.</div>'}
+ $("yt").innerHTML=h||''}
 fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{D=d;
  $("hijri").textContent=(d.hijri||"").toUpperCase();if(d.fast)$("fast").innerHTML=`<div class="fast">🌙 ${esc(d.fast)}</div>`;renderYT();
  const sl=(x,l)=>x?`<div class="slide" data-l="${l}"><p>“${esc(x.text)}”</p><p class="ref"><a href="${x.url}" target="_blank">${esc(x.ref)} ↗</a></p></div>`:"";
  $("car").innerHTML=sl(d.verse,"📖 QURAN")+sl(d.hadith,"📜 HADITH");
  const n=d.name||{};$("nAr").textContent=n.ar||"";$("nTr").textContent=(n.tr||"").toUpperCase();$("nMean").textContent=(n.meaning||"").toUpperCase();$("nTxt").textContent=n.text||"";if(n.url)$("nRef").innerHTML=`<a href="${n.url}" target="_blank">Source ↗</a>`;
+
+ const W=d.world||[];$("wcar").innerHTML=W.map(x=>`<div class="slide wd"><div class="px" style="font-size:10px;color:var(--c2)">${esc(x.src)}</div>${x.kind==="clock"?'<div class="clock"><i></i></div>':x.kind==="bar"?`<div class="bar"><b style="width:${x.pct}%"></b></div>`:'<div class="globe"></div>'}${x.big?`<div class="big px">${esc(x.big)}</div>`:""}${x.vid?`<div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${x.vid.slice(2)}" allowfullscreen></iframe></div>`:""}<p style="font-size:13px">${esc(x.text)}</p><p class="ref"><a href="${x.url}" target="_blank">Source ↗</a></p></div>`).join("");
+ $("wdots").innerHTML=W.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("");
  const q=d.quote;if(q)$("quote").innerHTML=`<p>“${esc(q.text)}”</p><p class="ref">— ${esc(q.by)} · <a href="${q.url}" target="_blank">${esc(q.date||"source")} ↗</a></p>`});
-$("car").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);document.querySelectorAll(".dots i").forEach((d,k)=>d.className=k===i?"on":"");const s=e.target.children[i];if(s)$("qhLbl").textContent=s.dataset.l});
-function save(){localStorage.setItem("dash-ch",JSON.stringify(mine));drawMine();renderYT()}
-function drawMine(){$("mine").innerHTML=mine.map((c,i)=>`<span class="chip">${esc(c.n)}<button onclick="mine.splice(${i},1);save()">✕</button></span>`).join("")||'<span class="ref">None yet.</span>'}
-function pick(i){const c=CH[i];if(!mine.some(m=>m.id===c.id))mine.push(c);$("q").value="";$("sg").innerHTML="";save()}
-$("q").oninput=e=>{const v=e.target.value.trim().toLowerCase();$("sg").innerHTML=v?CH.map((c,i)=>c.n.toLowerCase().includes(v)?`<div onclick="pick(${i})">＋ ${esc(c.n)}</div>`:"").join("")||'<div class="ref">No match. Paste a UC… channel ID instead.</div>':""};
-$("q").onkeydown=e=>{const v=e.target.value.trim();if(e.key==="Enter"&&/^UC[\w-]{22}$/.test(v)){mine.push({n:v,id:v});e.target.value="";save()}};
-function openSet(){$("set").style.display="block";drawMine();$("q").focus()}function closeSet(){$("set").style.display="none"}
+$("car").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);e.target.nextElementSibling.querySelectorAll("i").forEach((d,k)=>d.className=k===i?"on":"");const s=e.target.children[i];if(s)$("qhLbl").textContent=s.dataset.l});
 </script></body></html>
+<script>document.getElementById("wcar").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);document.querySelectorAll("#wdots i").forEach((d,k)=>d.className=k===i?"on":"")})</script>
