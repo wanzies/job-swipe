@@ -65,6 +65,7 @@ a{color:var(--c3)}.ref{font-size:12px;color:var(--c2)}
 <section class="w"><div class="t px"><span>✦ NAMES OF ALLAH</span></div><div class="flip" id="flip" onclick="this.classList.toggle('on')"><div class="fi"><div class="fa"><div class="ar" id="nAr"></div><div class="tr px" id="nTr"></div><div class="hint px">TAP TO REVEAL</div></div><div class="fb"><div class="px" style="font-size:10px;margin-bottom:10px" id="nMean"></div><div style="font-size:13px" id="nTxt"></div><div class="ref" id="nRef" style="margin-top:8px"></div></div></div></div></section>
 <section class="w"><div class="t px"><span>❝ SCHOLARS</span></div><div id="quote"></div></section>
 <section class="w"><div class="t px"><span id="wLbl">🌍 WORLD WATCH</span><span>◀ SWIPE ▶</span></div><div class="car" id="wcar"></div><div class="dots" id="wdots"></div></section>
+<section class="w"><div class="t px"><span>📰 WORLD NEWS</span><span id="nwT"></span></div><div id="news" style="font-size:13px">Loading headlines…</div></section>
 <section class="w jobs"><div class="t px"><span>💼 JOBS</span></div><iframe src="jobs.html" title="Job swipe"></iframe></section>
 </main>
 <script>
@@ -85,7 +86,7 @@ function renderFast(f){$("fast").innerHTML=`<div class="fastw" style="position:r
 function renderYT(){let h="";(D.videos||[]).forEach(v=>h+=`<div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${v.id}${v.start?"?start="+v.start:""}" allowfullscreen></iframe></div><div class="vt">${esc(v.title)}</div>`);
  mine.forEach(c=>h+=`<div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${c.id.slice(2)}" allowfullscreen></iframe></div><div class="vt">Latest from ${esc(c.n)}</div>`);
  $("yt").innerHTML=h||''}
-fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{D=d;
+fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{if(d.pm&&new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).getHours()>=18)Object.assign(d,d.pm);D=d;
  $("hijri").textContent=(d.hijri||"").toUpperCase();if(d.fast&&typeof d.fast==="object")renderFast(d.fast);else if(d.fast)$("fast").innerHTML=`<div class="fast">🌙 ${esc(d.fast)}</div>`;renderYT();
  const sl=(x,l)=>x?`<div class="slide" data-l="${l}"><p>“${esc(x.text)}”</p><p class="ref"><a href="${x.url}" target="_blank">${esc(x.ref)} ↗</a></p></div>`:"";
  $("car").innerHTML=sl(d.verse,"📖 QURAN")+sl(d.hadith,"📜 HADITH");
@@ -130,5 +131,12 @@ const RL=["😵","😩","😐","🙂","😄"];function rDraw(){const r=LS("rest"
  const days=[...Array(7)].map((_,i)=>new Date(Date.now()-i*864e5+(new Date().getTimezoneOffset()+480)*6e4).toISOString().slice(0,10)).reverse();
  $("rtrend").textContent="7 DAYS: "+days.map(d=>r[d]?"▁▂▄▆█"[r[d]-1]:"·").join(" ")}
 function rSet(v){const r=LS("rest")||{};r[sgDay()]=v;LS("rest",r);rDraw();logSheet("rest",{day:sgDay(),score:v})}rDraw();
+</script><script>
+(function(){const q=encodeURIComponent("https://news.google.com/rss/search?q=(nuclear OR NATO OR ceasefire OR missile OR \"world war\" OR Taiwan OR Ukraine OR Gaza OR Iran) when:1d&hl=en-SG&gl=SG&ceid=SG:en");
+fetch("https://api.rss2json.com/v1/api.json?rss_url="+q).then(r=>r.json()).then(d=>{const it=(d.items||[]).slice(0,6);if(!it.length)throw 0;
+ document.getElementById("nwT").textContent="LAST 24H";
+ document.getElementById("news").innerHTML=it.map(x=>{const p=x.title.lastIndexOf(" - "),t=p>0?x.title.slice(0,p):x.title,src=p>0?x.title.slice(p+3):"";const h=Math.max(0,Math.round((Date.now()-new Date(x.pubDate.replace(" ","T")+"Z"))/36e5));
+ return `<a href="${x.link}" target="_blank" style="display:block;color:var(--c3);text-decoration:none;border-bottom:2px dashed var(--c1);padding:8px 0">▸ ${esc(t)}<div class="px" style="font-size:8px;color:var(--c2);margin-top:4px">${esc(src)} · ${h}H AGO</div></a>`}).join("")})
+ .catch(()=>document.getElementById("news").textContent="Headlines unavailable right now.")})();
 </script></body></html>
 <script>document.getElementById("wcar").addEventListener("scroll",e=>{const i=Math.round(e.target.scrollLeft/e.target.clientWidth);document.querySelectorAll("#wdots i").forEach((d,k)=>d.className=k===i?"on":"")})</script>
