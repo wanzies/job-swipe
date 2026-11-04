@@ -1,7 +1,13 @@
 {
  "date": "2026-11-04",
  "hijri": "24 Jamadilawal 1448",
- "fast": "Thu 5 Nov is a sunnah fast.",
+ "fast": {
+  "type": "Sunnah fast · Thursday",
+  "date": "2026-11-05",
+  "why": "The Prophet ﷺ fasted on Mondays and Thursdays and said: \"Deeds are presented on Monday and Thursday, and I love that my deeds be presented while I am fasting.\"",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
  "blessing": "Your rizq. Say Alhamdulillah at your first meal and give a small sadaqah.",
  "verse": {
   "ref": "Ali 'Imran 3:173",

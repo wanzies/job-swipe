@@ -39,6 +39,10 @@ a{color:var(--c3)}.ref{font-size:12px;color:var(--c2)}
 .globe{width:48px;height:48px;margin:6px auto;background:var(--c1);box-shadow:inset 8px 0 0 var(--c2),inset -8px 0 0 var(--c0);animation:spin 3s steps(4) infinite}@keyframes spin{25%{box-shadow:inset 16px 0 0 var(--c2),inset -4px 0 0 var(--c0)}50%{box-shadow:inset 4px 0 0 var(--c2),inset -16px 0 0 var(--c0)}}
 .gm{display:grid;grid-template-columns:auto 1fr 1fr;gap:3px;font-size:10px;margin:10px auto;max-width:300px}.gm div{background:var(--c1);padding:8px 4px}.gm .h{background:none;color:var(--c2)}.gm .eq{background:var(--c3);color:var(--c0);animation:blink 1s steps(2) infinite}
 .meter{display:flex;gap:3px;justify-content:center;margin:8px 0}.meter i{width:22px;height:12px;background:var(--c1)}.meter i.on{background:var(--c3)}
+.fastw{border:4px solid var(--c2);padding:12px;margin-bottom:14px;background:#131d18;box-shadow:6px 6px 0 var(--c1);display:flex;gap:12px;align-items:center}
+.cres{flex:0 0 40px;height:40px;border-radius:50%;box-shadow:-10px 4px 0 0 var(--c3);animation:glow 2s steps(2) infinite;margin-left:8px}@keyframes glow{50%{box-shadow:-10px 4px 0 0 var(--c2)}}
+.star{position:absolute;width:4px;height:4px;background:var(--c3);animation:blink 1.4s steps(2) infinite}
+.cd{font-size:14px;margin:6px 0;color:var(--c3)}.fastw p{margin:3px 0;font-size:13px}
 </style></head><body>
 <header><h1 class="px" id="greg"></h1><div class="hj px" id="hijri"></div><div class="wx px" id="wx">LOADING WEATHER…</div><div class="sky" id="sky"></div></header>
 <main>
@@ -61,11 +65,15 @@ fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&cur
  if(k==="sun")s.innerHTML='<div class="psun"></div>';else{s.innerHTML='<div class="pcl"></div>';if(k==="rain")for(let i=0;i<6;i++)s.innerHTML+=`<div class="pdr" style="left:${6+i*9}px;animation-delay:-${i*.1}s"></div>`}
  $("wx").innerHTML=`<b>${Math.round(d.current.temperature_2m)}°</b>${{sun:d.current.is_day?"CLEAR":"CLEAR NIGHT",cloud:"CLOUDY",rain:c>=95?"STORM":"RAIN"}[k]} · ${d.daily.precipitation_probability_max[0]}% RAIN`}).catch(()=>$("wx").textContent="WEATHER OFFLINE");
 let D={};
+function renderFast(f){$("fast").innerHTML=`<div class="fastw" style="position:relative"><div class="cres"></div><span class="star" style="left:10px;top:8px"></span><span class="star" style="left:46px;top:50px;animation-delay:.7s"></span><div style="flex:1"><div class="px" style="font-size:10px;color:var(--c2)">🌙 ${esc(f.type).toUpperCase()}</div><div class="cd px" id="cd">…</div><p id="cdw"></p><p>${esc(f.why)}</p><p class="ref">${esc(f.src)}${f.url?` · <a href="${f.url}" target="_blank">Source ↗</a>`:""}</p></div></div>`;
+ const [y,m,dd]=f.date.split("-");fetch(`https://api.aladhan.com/v1/timings/${dd}-${m}-${y}?latitude=1.3521&longitude=103.8198&method=11`).then(r=>r.json()).then(j=>{const t=j.data.timings,st=new Date(`${f.date}T${t.Imsak}:00+08:00`),en=new Date(`${f.date}T${t.Maghrib}:00+08:00`);
+  const tick=()=>{const n=Date.now();let tgt,lbl;if(n<st){tgt=st;lbl=`Fast starts at Imsak ${t.Imsak} (Subuh ${t.Fajr}) and ends at Maghrib ${t.Maghrib} SGT.`}else if(n<en){tgt=en;lbl=`Fasting now. Breaks at Maghrib ${t.Maghrib} SGT.`}else{$("cd").textContent="DONE · ALHAMDULILLAH";$("cdw").textContent="";return}
+   const s=Math.floor((tgt-n)/1000);$("cd").textContent=`${n<st?"STARTS IN":"IFTAR IN"} ${Math.floor(s/3600)}H ${String(Math.floor(s/60)%60).padStart(2,"0")}M ${String(s%60).padStart(2,"0")}S`;$("cdw").textContent=lbl};tick();setInterval(tick,1000)}).catch(()=>$("cd").textContent=f.date)}
 function renderYT(){let h="";(D.videos||[]).forEach(v=>h+=`<div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${v.id}${v.start?"?start="+v.start:""}" allowfullscreen></iframe></div><div class="vt">${esc(v.title)}</div>`);
  mine.forEach(c=>h+=`<div class="vid"><iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${c.id.slice(2)}" allowfullscreen></iframe></div><div class="vt">Latest from ${esc(c.n)}</div>`);
  $("yt").innerHTML=h||''}
 fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{D=d;
- $("hijri").textContent=(d.hijri||"").toUpperCase();if(d.fast)$("fast").innerHTML=`<div class="fast">🌙 ${esc(d.fast)}</div>`;renderYT();
+ $("hijri").textContent=(d.hijri||"").toUpperCase();if(d.fast&&typeof d.fast==="object")renderFast(d.fast);else if(d.fast)$("fast").innerHTML=`<div class="fast">🌙 ${esc(d.fast)}</div>`;renderYT();
  const sl=(x,l)=>x?`<div class="slide" data-l="${l}"><p>“${esc(x.text)}”</p><p class="ref"><a href="${x.url}" target="_blank">${esc(x.ref)} ↗</a></p></div>`:"";
  $("car").innerHTML=sl(d.verse,"📖 QURAN")+sl(d.hadith,"📜 HADITH");
  const n=d.name||{};$("nAr").textContent=n.ar||"";$("nTr").textContent=(n.tr||"").toUpperCase();$("nMean").textContent=(n.meaning||"").toUpperCase();$("nTxt").textContent=n.text||"";if(n.url)$("nRef").innerHTML=`<a href="${n.url}" target="_blank">Source ↗</a>`;
