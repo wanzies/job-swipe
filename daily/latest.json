@@ -1,62 +1,67 @@
 {
- "date": "2026-11-05",
- "hijri": "25 Jamadilawal 1448",
+ "date": "2026-11-06",
+ "hijri": "26 Jamadilawal 1448",
  "fast": {
-  "type": "Sunnah fast · Thursday (today)",
-  "date": "2026-11-05",
-  "why": "Today is Thursday. In the Shafi'i school a sunnah fast is still valid if you make the intention before midday (zawal) and haven't eaten or drunk since Subuh. Next one: Monday 9 Nov.",
+  "type": "Sunnah fast · next Monday",
+  "date": "2026-11-09",
+  "why": "Today is Friday (Jumaat). Next sunnah fast is Monday 9 Nov. The Prophet ﷺ fasted Mondays and Thursdays.",
   "src": "Jami' at-Tirmidhi 747",
   "url": "https://sunnah.com/tirmidhi:747"
  },
- "blessing": "Your tongue and the ability to speak. Use it today for one sincere thank-you to a family member or colleague.",
+ "blessing": "The gift of dua itself: you can raise your hands to Allah anytime, even in a hard shift. After one solat today, ask Him for one need with hope.",
  "verse": {
-  "ref": "At-Talaq 65:3",
-  "text": "...And whoever relies upon Allah, then He is sufficient for him.",
-  "url": "https://quran.com/65/3"
+  "ref": "Ghafir 40:60",
+  "text": "Your Lord has proclaimed, \"Call upon Me, I will respond to you.\"",
+  "url": "https://quran.com/40/60"
  },
  "hadith": {
-  "ref": "Tirmidhi 2516",
-  "text": "Be mindful of Allah and He will protect you... Know that if the entire creation were to gather together to benefit you, you would never get any benefit except that Allah had written for you.",
-  "url": "https://sunnah.com/tirmidhi:2516"
+  "ref": "Abi Dawud 1479",
+  "text": "Supplication (du'a') is itself the worship. (He then recited:) \"And your Lord said: Call on Me, I will answer you\" (40:60).",
+  "url": "https://sunnah.com/abudawud:1479"
  },
  "lesson": {
-  "title": "Adab and akhlaq part 2: guarding the tongue",
-  "text": "\"Whoever believes in Allah and the Last Day, let him speak good or keep silent\" (Bukhari 6018). \"Part of the excellence of a person's Islam is leaving what does not concern him\" (Tirmidhi 2317). Before you speak, ask: is it true, is it kind, is it needed? At work, a calm short reply beats a sharp long one.",
-  "url": "https://sunnah.com/bukhari:6018"
+  "title": "Daily duas with meaning part 3: after every solat",
+  "text": "Dua is not an extra after worship; it is worship (Abi Dawud 1479, Sahih). After each fardh, before you rush on, sit even thirty seconds and ask. A short Prophetic comprehensive dua asks Allah for all good in this life and the next, what you know and what you don't, and that every decree for you be good. He promised response (40:60); delay is not denial. At work, a quiet ask between cases still counts.",
+  "url": "https://sunnah.com/abudawud:1479"
  },
  "quote": {
   "by": "Mufti Menk",
-  "date": "4 Nov 2026",
-  "text": "Be mindful of the company you keep... Some may speak ill behind your back and hope for your failure. The Almighty often sends warning signs. Don't ignore them.",
-  "url": "https://x.com/muftimenk/status/2117856959814574392"
+  "date": "25 Oct 2026",
+  "text": "Trust the Almighty's timing. Only He knows why you're in the state you are for so long. Perhaps the delay in answering your prayer is better for you than getting what you want now. He is the Best Planner.",
+  "url": "https://x.com/muftimenk/status/2114199512910528646"
  },
  "videos": [
   {
-   "id": "Gp78MQ2_bos",
-   "title": "Omar Suleiman: In Defense of the Quiet Muslim (intentional speech)",
-   "start": 263
+   "id": "Po1G9Pr-O9E",
+   "title": "Omar Suleiman: The Most Comprehensive Du'a Ever Narrated",
+   "start": 0
+  },
+  {
+   "id": "PLr03C8vWto",
+   "title": "Ustaz Jafri Abu Bakar: Jangan Tinggal 3 Doa Ini Setiap Hari (Malay)",
+   "start": 0
   }
  ],
  "name": {
-  "ar": "السميع",
-  "tr": "As-Sami'",
-  "meaning": "The All-Hearing",
-  "text": "Allah heard the woman who pleaded her case to the Prophet ﷺ. Every word you say, and every quiet dua, is heard. Let that shape your speech and give you hope.",
-  "url": "https://quran.com/58/1"
+  "ar": "المجيب",
+  "tr": "Al-Mujib",
+  "meaning": "The Responsive",
+  "text": "He answers the one who calls. Your quiet ask after solat is heard. Keep calling even when the answer is delayed; response comes in the form He chooses.",
+  "url": "https://quran.com/11/61"
  },
  "pm": {
   "name": {
-   "ar": "الحليم",
-   "tr": "Al-Halim",
-   "meaning": "The Forbearing",
-   "text": "\"Kind speech and forgiveness are better than charity followed by injury. And Allah is Free of need and Forbearing.\" He doesn't rush to punish; be slow to anger with others tonight.",
-   "url": "https://quran.com/2/263"
+   "ar": "القريب",
+   "tr": "Al-Qarib",
+   "meaning": "The Near",
+   "text": "\"I am truly near. I respond to one's prayer when they call upon Me.\" You do not need a perfect setting; He is closer than the stress of the day.",
+   "url": "https://quran.com/2/186"
   },
   "quote": {
    "by": "Mufti Menk",
-   "date": "28 Oct 2026",
-   "text": "Almighty. Remove our attachment to worldly things. Instead, make our hearts attached to You... Keep our hearts pure and always obedient in Your Path, no matter what's going on in our lives. Aameen.",
-   "url": "https://x.com/muftimenk/status/2115574633818722405"
+   "date": "30 Oct 2026",
+   "text": "Almighty. Grant us hearts filled with gratitude. May we count our blessings instead of our problems. We ask You for strength in times of need, peace in chaos, joy in sadness and hope in hopelessness. We know You won't disappoint. Aameen.",
+   "url": "https://x.com/muftimenk/status/2116232212828107240"
   }
  },
  "world": [
