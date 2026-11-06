@@ -1,0 +1,99 @@
+{
+ "date": "2026-11-07",
+ "hijri": "27 Jamadilawal 1448",
+ "fast": {
+  "type": "Sunnah fast · next Monday",
+  "date": "2026-11-09",
+  "why": "Today is Saturday. Next sunnah fast is Monday 9 Nov. The Prophet ﷺ fasted Mondays and Thursdays.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "Your iman itself: the quiet certainty that Allah is One and that hard days still sit inside His qadr. Say Alhamdulillah once today specifically for the gift of faith, not only for comfort.",
+ "verse": {
+  "ref": "Ibrahim 14:7",
+  "text": "And [remember] when your Lord proclaimed, \"If you are grateful, I will surely increase you [in favor]; but if you deny, indeed, My punishment is severe.\"",
+  "url": "https://quran.com/14/7"
+ },
+ "hadith": {
+  "ref": "Sahih Muslim 2999",
+  "text": "Strange are the ways of a believer, for there is good in every affair of his, and this is not the case with anyone else except the believer: if he has an occasion to feel delight, he thanks Allah, and that is good for him; and if he gets into trouble and shows patience, that is good for him.",
+  "url": "https://sunnah.com/muslim:2999"
+ },
+ "lesson": {
+  "title": "Aqidah basics: the six pillars of iman",
+  "text": "Aqidah is the certainty in the heart before the deeds of the limbs. In the Hadith of Jibril, the Prophet ﷺ defined iman as belief in Allah, His angels, His books, His messengers, the Last Day, and divine decree, the good and the bad of it (Bukhari 50; Muslim 8). Belief in Allah means He alone creates, alone deserves worship, and alone has perfect names. On a heavy work week, these six are not abstract: they remind you Who holds the caseload, the timing, and the outcome.",
+  "url": "https://sunnah.com/bukhari:50"
+ },
+ "quote": {
+  "by": "Mufti Menk",
+  "date": "21 Oct 2026",
+  "text": "It's easy to pick on what's wrong and what's not going well but it takes firm faith to see positive vibes in everything. Unfortunately, most tend to focus on flaws. We have become expert nitpickers overlooking the good in most things. Change your outlook.",
+  "url": "https://x.com/muftimenk/status/2112744772708225295"
+ },
+ "videos": [
+  {
+   "id": "hYQEW37_hWM",
+   "title": "Omar Suleiman: Faith is Refuge (The Faith Revival Ep. 1)",
+   "start": 0
+  },
+  {
+   "id": "6-eQDArZ_LQ",
+   "title": "Ust Shamsuddin: Islam, Iman dan Ihsan — Rukun Iman (Malay)",
+   "start": 0
+  }
+ ],
+ "name": {
+  "ar": "المؤمن",
+  "tr": "Al-Mu'min",
+  "meaning": "The Giver of Security / Guarantor of Faith",
+  "text": "He grants safety to the hearts that trust Him. Your iman is a refuge He placed in you; return to it when the day feels unsafe.",
+  "url": "https://quran.com/59/23"
+ },
+ "pm": {
+  "name": {
+   "ar": "الأحد",
+   "tr": "Al-Ahad",
+   "meaning": "The One",
+   "text": "\"Say, He is Allah, One.\" No partner shares His lordship or His right to be worshipped. Tonight's stress does not share that throne either.",
+   "url": "https://quran.com/112/1"
+  },
+  "quote": {
+   "by": "Mufti Menk",
+   "date": "17 Oct 2026",
+   "text": "Despite the obstacles you face daily, know that you're never alone. You may feel that you are but the Almighty is always watching over you. He has your back.",
+   "url": "https://x.com/muftimenk/status/2111554833043878271"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}
