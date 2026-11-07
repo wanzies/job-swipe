@@ -1,67 +1,67 @@
 {
- "date": "2026-11-07",
- "hijri": "27 Jamadilawal 1448",
+ "date": "2026-11-08",
+ "hijri": "28 Jamadilawal 1448",
  "fast": {
-  "type": "Sunnah fast · next Monday",
+  "type": "Sunnah fast · next Monday (tomorrow)",
   "date": "2026-11-09",
-  "why": "Today is Saturday. Next sunnah fast is Monday 9 Nov. The Prophet ﷺ fasted Mondays and Thursdays.",
+  "why": "Today is Sunday. Tomorrow Monday 9 Nov is a sunnah fast. The Prophet ﷺ fasted Mondays and Thursdays. Make the intention tonight if you can.",
   "src": "Jami' at-Tirmidhi 747",
   "url": "https://sunnah.com/tirmidhi:747"
  },
- "blessing": "Your iman itself: the quiet certainty that Allah is One and that hard days still sit inside His qadr. Say Alhamdulillah once today specifically for the gift of faith, not only for comfort.",
+ "blessing": "The five daily prayer slots themselves: built-in pauses from a heavy caseload. Pray one fardh today a little slower, then say Alhamdulillah after the salam for being able to stand before Him.",
  "verse": {
-  "ref": "Ibrahim 14:7",
-  "text": "And [remember] when your Lord proclaimed, \"If you are grateful, I will surely increase you [in favor]; but if you deny, indeed, My punishment is severe.\"",
-  "url": "https://quran.com/14/7"
+  "ref": "Al-Baqarah 2:153",
+  "text": "O you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.",
+  "url": "https://quran.com/2/153"
  },
  "hadith": {
-  "ref": "Sahih Muslim 2999",
-  "text": "Strange are the ways of a believer, for there is good in every affair of his, and this is not the case with anyone else except the believer: if he has an occasion to feel delight, he thanks Allah, and that is good for him; and if he gets into trouble and shows patience, that is good for him.",
-  "url": "https://sunnah.com/muslim:2999"
+  "ref": "Sahih al-Bukhari 528",
+  "text": "If there was a river at the door of anyone of you and he took a bath in it five times a day, would you notice any dirt on him? They said, \"Not a trace of dirt would be left.\" The Prophet ﷺ said, \"That is the example of the five prayers with which Allah blots out evil deeds.\"",
+  "url": "https://sunnah.com/bukhari:528"
  },
  "lesson": {
-  "title": "Aqidah basics: the six pillars of iman",
-  "text": "Aqidah is the certainty in the heart before the deeds of the limbs. In the Hadith of Jibril, the Prophet ﷺ defined iman as belief in Allah, His angels, His books, His messengers, the Last Day, and divine decree, the good and the bad of it (Bukhari 50; Muslim 8). Belief in Allah means He alone creates, alone deserves worship, and alone has perfect names. On a heavy work week, these six are not abstract: they remind you Who holds the caseload, the timing, and the outcome.",
-  "url": "https://sunnah.com/bukhari:50"
+  "title": "Fiqh of solat: the pillars (arkan) in the Shafi'i school",
+  "text": "After the conditions that make solat valid, the Shafi'i school lists pillars that must be present or the prayer itself is incomplete (Matn Abi Shuja'; Reliance of the Traveller). Core ones include intention, the opening takbir, standing if able, reciting Al-Fatihah, ruku' and two sajdahs with stillness (tuma'ninah), the final sitting with tashahhud and salawat on the Prophet ﷺ, then the salam. If you rush and skip stillness in ruku' or sujud, rebuild that one pillar today. At work, even a quiet office prayer counts when these are sound.",
+  "url": "https://sunnah.com/bukhari:528"
  },
  "quote": {
   "by": "Mufti Menk",
-  "date": "21 Oct 2026",
-  "text": "It's easy to pick on what's wrong and what's not going well but it takes firm faith to see positive vibes in everything. Unfortunately, most tend to focus on flaws. We have become expert nitpickers overlooking the good in most things. Change your outlook.",
-  "url": "https://x.com/muftimenk/status/2112744772708225295"
+  "date": "7 Nov 2026",
+  "text": "Don't have sleepless nights over your enemies. The Almighty will take care of them and give them their due for causing all the hurt. Have faith things will work out and that you'll emerge better than you were before.",
+  "url": "https://x.com/muftimenk/status/2119090580131045845"
  },
  "videos": [
   {
-   "id": "hYQEW37_hWM",
-   "title": "Omar Suleiman: Faith is Refuge (The Faith Revival Ep. 1)",
+   "id": "662_WDDbGmc",
+   "title": "Omar Suleiman: What Happens Between You and Allah in Prayer",
    "start": 0
   },
   {
-   "id": "6-eQDArZ_LQ",
-   "title": "Ust Shamsuddin: Islam, Iman dan Ihsan — Rukun Iman (Malay)",
+   "id": "E30hc-9pgcQ",
+   "title": "Ustaz Muhaizad: Rukun Solat & Sunat dalam Solat (Malay)",
    "start": 0
   }
  ],
  "name": {
-  "ar": "المؤمن",
-  "tr": "Al-Mu'min",
-  "meaning": "The Giver of Security / Guarantor of Faith",
-  "text": "He grants safety to the hearts that trust Him. Your iman is a refuge He placed in you; return to it when the day feels unsafe.",
+  "ar": "السلام",
+  "tr": "As-Salam",
+  "meaning": "The Source of Peace",
+  "text": "Every solat ends with \"Assalamu alaikum.\" He is Peace, and He places peace on the one who turns to Him. Carry that greeting into the rest of your shift.",
   "url": "https://quran.com/59/23"
  },
  "pm": {
   "name": {
-   "ar": "الأحد",
-   "tr": "Al-Ahad",
-   "meaning": "The One",
-   "text": "\"Say, He is Allah, One.\" No partner shares His lordship or His right to be worshipped. Tonight's stress does not share that throne either.",
-   "url": "https://quran.com/112/1"
+   "ar": "الحي",
+   "tr": "Al-Hayy",
+   "meaning": "The Ever-Living",
+   "text": "He never sleeps and never dies. When your energy runs out tonight, His care does not. End the day with a short dhikr of His living name.",
+   "url": "https://quran.com/2/255"
   },
   "quote": {
    "by": "Mufti Menk",
-   "date": "17 Oct 2026",
-   "text": "Despite the obstacles you face daily, know that you're never alone. You may feel that you are but the Almighty is always watching over you. He has your back.",
-   "url": "https://x.com/muftimenk/status/2111554833043878271"
+   "date": "8 Oct 2026",
+   "text": "Pain and heartaches are real. Don't take them lightly. Sadly, most would seek other people in trying to find comfort. The truth is the only One who can heal you is the Almighty. Ask for strength, comfort, healing, & perseverance. He will restore you. Trust Him.",
+   "url": "https://x.com/muftimenk/status/2108143685959286827"
   }
  },
  "world": [

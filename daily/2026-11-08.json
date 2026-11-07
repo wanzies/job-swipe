@@ -1,0 +1,99 @@
+{
+ "date": "2026-11-08",
+ "hijri": "28 Jamadilawal 1448",
+ "fast": {
+  "type": "Sunnah fast · next Monday (tomorrow)",
+  "date": "2026-11-09",
+  "why": "Today is Sunday. Tomorrow Monday 9 Nov is a sunnah fast. The Prophet ﷺ fasted Mondays and Thursdays. Make the intention tonight if you can.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "The five daily prayer slots themselves: built-in pauses from a heavy caseload. Pray one fardh today a little slower, then say Alhamdulillah after the salam for being able to stand before Him.",
+ "verse": {
+  "ref": "Al-Baqarah 2:153",
+  "text": "O you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.",
+  "url": "https://quran.com/2/153"
+ },
+ "hadith": {
+  "ref": "Sahih al-Bukhari 528",
+  "text": "If there was a river at the door of anyone of you and he took a bath in it five times a day, would you notice any dirt on him? They said, \"Not a trace of dirt would be left.\" The Prophet ﷺ said, \"That is the example of the five prayers with which Allah blots out evil deeds.\"",
+  "url": "https://sunnah.com/bukhari:528"
+ },
+ "lesson": {
+  "title": "Fiqh of solat: the pillars (arkan) in the Shafi'i school",
+  "text": "After the conditions that make solat valid, the Shafi'i school lists pillars that must be present or the prayer itself is incomplete (Matn Abi Shuja'; Reliance of the Traveller). Core ones include intention, the opening takbir, standing if able, reciting Al-Fatihah, ruku' and two sajdahs with stillness (tuma'ninah), the final sitting with tashahhud and salawat on the Prophet ﷺ, then the salam. If you rush and skip stillness in ruku' or sujud, rebuild that one pillar today. At work, even a quiet office prayer counts when these are sound.",
+  "url": "https://sunnah.com/bukhari:528"
+ },
+ "quote": {
+  "by": "Mufti Menk",
+  "date": "7 Nov 2026",
+  "text": "Don't have sleepless nights over your enemies. The Almighty will take care of them and give them their due for causing all the hurt. Have faith things will work out and that you'll emerge better than you were before.",
+  "url": "https://x.com/muftimenk/status/2119090580131045845"
+ },
+ "videos": [
+  {
+   "id": "662_WDDbGmc",
+   "title": "Omar Suleiman: What Happens Between You and Allah in Prayer",
+   "start": 0
+  },
+  {
+   "id": "E30hc-9pgcQ",
+   "title": "Ustaz Muhaizad: Rukun Solat & Sunat dalam Solat (Malay)",
+   "start": 0
+  }
+ ],
+ "name": {
+  "ar": "السلام",
+  "tr": "As-Salam",
+  "meaning": "The Source of Peace",
+  "text": "Every solat ends with \"Assalamu alaikum.\" He is Peace, and He places peace on the one who turns to Him. Carry that greeting into the rest of your shift.",
+  "url": "https://quran.com/59/23"
+ },
+ "pm": {
+  "name": {
+   "ar": "الحي",
+   "tr": "Al-Hayy",
+   "meaning": "The Ever-Living",
+   "text": "He never sleeps and never dies. When your energy runs out tonight, His care does not. End the day with a short dhikr of His living name.",
+   "url": "https://quran.com/2/255"
+  },
+  "quote": {
+   "by": "Mufti Menk",
+   "date": "8 Oct 2026",
+   "text": "Pain and heartaches are real. Don't take them lightly. Sadly, most would seek other people in trying to find comfort. The truth is the only One who can heal you is the Almighty. Ask for strength, comfort, healing, & perseverance. He will restore you. Trust Him.",
+   "url": "https://x.com/muftimenk/status/2108143685959286827"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}
