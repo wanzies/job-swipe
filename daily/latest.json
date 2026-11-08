@@ -1,67 +1,67 @@
 {
- "date": "2026-11-08",
- "hijri": "28 Jamadilawal 1448",
+ "date": "2026-11-09",
+ "hijri": "29 Jamadilawal 1448",
  "fast": {
-  "type": "Sunnah fast · next Monday (tomorrow)",
-  "date": "2026-11-09",
-  "why": "Today is Sunday. Tomorrow Monday 9 Nov is a sunnah fast. The Prophet ﷺ fasted Mondays and Thursdays. Make the intention tonight if you can.",
+  "type": "Sunnah fast · today (Monday); next Thursday",
+  "date": "2026-11-12",
+  "why": "Today is Monday, a sunnah fast day. If you did not intend last night, a nafl fast can still be intended before Zuhur if you have not eaten or drunk (Shafi'i). Next is Thursday 12 Nov. Actions are presented to Allah on Mondays and Thursdays.",
   "src": "Jami' at-Tirmidhi 747",
   "url": "https://sunnah.com/tirmidhi:747"
  },
- "blessing": "The five daily prayer slots themselves: built-in pauses from a heavy caseload. Pray one fardh today a little slower, then say Alhamdulillah after the salam for being able to stand before Him.",
+ "blessing": "Clean water and the ability to make wudu in seconds, anywhere. Say Alhamdulillah after wudu today and make the Prophetic dua: Ashhadu an la ilaha illallah wa ashhadu anna Muhammadan abduhu wa rasuluh.",
  "verse": {
-  "ref": "Al-Baqarah 2:153",
-  "text": "O you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.",
-  "url": "https://quran.com/2/153"
+  "ref": "Az-Zumar 39:10",
+  "text": "Indeed, the patient will be given their reward without account.",
+  "url": "https://quran.com/39/10"
  },
  "hadith": {
-  "ref": "Sahih al-Bukhari 528",
-  "text": "If there was a river at the door of anyone of you and he took a bath in it five times a day, would you notice any dirt on him? They said, \"Not a trace of dirt would be left.\" The Prophet ﷺ said, \"That is the example of the five prayers with which Allah blots out evil deeds.\"",
-  "url": "https://sunnah.com/bukhari:528"
+  "ref": "Sahih Muslim 223",
+  "text": "Purity is half of faith, and Alhamdulillah fills the scale.",
+  "url": "https://sunnah.com/muslim:223"
  },
  "lesson": {
-  "title": "Fiqh of solat: the pillars (arkan) in the Shafi'i school",
-  "text": "After the conditions that make solat valid, the Shafi'i school lists pillars that must be present or the prayer itself is incomplete (Matn Abi Shuja'; Reliance of the Traveller). Core ones include intention, the opening takbir, standing if able, reciting Al-Fatihah, ruku' and two sajdahs with stillness (tuma'ninah), the final sitting with tashahhud and salawat on the Prophet ﷺ, then the salam. If you rush and skip stillness in ruku' or sujud, rebuild that one pillar today. At work, even a quiet office prayer counts when these are sound.",
-  "url": "https://sunnah.com/bukhari:528"
+  "title": "Taharah: wudu and what breaks it (Shafi'i)",
+  "text": "Taharah is the key to solat. In the Shafi'i school the obligatory parts (fardhu) of wudu are six: intention while washing the face, washing the face, washing the hands to the elbows, wiping part of the head, washing the feet to the ankles, and doing them in order (Matn Abi Shuja'). Wudu breaks by anything leaving the front or back passage, sleep not seated firmly, loss of mind, and touching the private part with the palm. Notably, in the Shafi'i school skin-to-skin touch with the opposite sex (non-mahram) also breaks wudu. Fasting follows the same care: intention each night for Ramadan, and for a sunnah fast it can be made before Zuhur.",
+  "url": "https://sunnah.com/muslim:223"
  },
  "quote": {
   "by": "Mufti Menk",
-  "date": "7 Nov 2026",
-  "text": "Don't have sleepless nights over your enemies. The Almighty will take care of them and give them their due for causing all the hurt. Have faith things will work out and that you'll emerge better than you were before.",
-  "url": "https://x.com/muftimenk/status/2119090580131045845"
+  "date": "4 Oct 2026",
+  "text": "Don't be affected by criticism. Positive or negative, take them in your stride. Know that the level of criticism rises with your worth.",
+  "url": "https://x.com/muftimenk/status/2106641769928458380"
  },
  "videos": [
   {
-   "id": "662_WDDbGmc",
-   "title": "Omar Suleiman: What Happens Between You and Allah in Prayer",
+   "id": "U_2ZjEdvaNA",
+   "title": "Omar Suleiman: 15 Rewards for Voluntary Fasting",
    "start": 0
   },
   {
-   "id": "E30hc-9pgcQ",
-   "title": "Ustaz Muhaizad: Rukun Solat & Sunat dalam Solat (Malay)",
+   "id": "7cTSmx0Trzc",
+   "title": "Puasa Daud atau Senin-Kamis, mana lebih utama? (Bahasa Indonesia)",
    "start": 0
   }
  ],
  "name": {
-  "ar": "السلام",
-  "tr": "As-Salam",
-  "meaning": "The Source of Peace",
-  "text": "Every solat ends with \"Assalamu alaikum.\" He is Peace, and He places peace on the one who turns to Him. Carry that greeting into the rest of your shift.",
-  "url": "https://quran.com/59/23"
+  "ar": "الشكور",
+  "tr": "Ash-Shakur",
+  "meaning": "The Most Appreciative",
+  "text": "He rewards a small deed many times over and thanks His servants for their effort. Your patience at work is seen and repaid by the One who appreciates.",
+  "url": "https://quran.com/35/30"
  },
  "pm": {
   "name": {
-   "ar": "الحي",
-   "tr": "Al-Hayy",
-   "meaning": "The Ever-Living",
-   "text": "He never sleeps and never dies. When your energy runs out tonight, His care does not. End the day with a short dhikr of His living name.",
-   "url": "https://quran.com/2/255"
+   "ar": "اللطيف",
+   "tr": "Al-Latif",
+   "meaning": "The Subtle, The Gentle",
+   "text": "He arranges unseen kindnesses in ways you do not notice. Tonight, recall one ease that arrived quietly today and say Alhamdulillah.",
+   "url": "https://quran.com/67/14"
   },
   "quote": {
    "by": "Mufti Menk",
-   "date": "8 Oct 2026",
-   "text": "Pain and heartaches are real. Don't take them lightly. Sadly, most would seek other people in trying to find comfort. The truth is the only One who can heal you is the Almighty. Ask for strength, comfort, healing, & perseverance. He will restore you. Trust Him.",
-   "url": "https://x.com/muftimenk/status/2108143685959286827"
+   "date": "26 Sep 2026",
+   "text": "Thank the Almighty, no matter what the circumstances. It's not just to do with wealth & good things. Thank Him for guiding you & keeping you steadfast. Thank Him for increase in knowledge, for the lessons you've learnt from hardship. Do this each day and He will grant you more.",
+   "url": "https://x.com/muftimenk/status/2103723801649270813"
   }
  },
  "world": [
