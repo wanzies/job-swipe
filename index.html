@@ -65,6 +65,12 @@ input::placeholder{color:var(--fg);opacity:1}
 .todo-item .todo-txt{flex:1;display:flex;align-items:center;min-height:44px;padding:8px 4px;text-align:left;background:none;border:0;color:inherit;font:inherit;cursor:pointer;touch-action:manipulation;user-select:text;-webkit-user-select:text}
 .todo-item.done .todo-txt{text-decoration:line-through;opacity:.55}
 .todo-hint{font-size:8px;line-height:1.8;margin:0 0 12px}
+.sec-lbl{font-size:9px;margin:0 0 8px}
+.week-fold > summary{font-family:"Press Start 2P",ui-monospace,monospace;font-size:10px;line-height:1.4;min-height:44px;display:flex;align-items:center;cursor:pointer;list-style:none;touch-action:manipulation;user-select:none}
+.week-fold > summary::-webkit-details-marker,.week-fold > summary::marker{display:none;content:""}
+.week-fold > summary::before{content:"▶ ";margin-right:6px}
+.week-fold[open] > summary::before{content:"▼ "}
+.week-ui{touch-action:manipulation}
 .cal-day{margin:0 0 16px}
 .cal-ev{margin:0 0 10px;padding-bottom:8px;border-bottom:3px dashed var(--fg)}
 .cal-ev:last-child{border-bottom:0}
@@ -141,14 +147,19 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 02 TO-DO · colour: data-bg/data-fg · daily list in localStorage, clears at 00:00 and 12:00 SGT · mood: focused -->
-<section class="slide" id="todoS" data-bg="#FF2D55" data-fg="#000000" data-mood="focused" aria-label="To-do">
+<!-- 02 PLANNER · colour: data-bg/data-fg · today's events + to-do + collapsible next 7 days; to-do clears at 00:00 and 12:00 SGT · mood: focused -->
+<section class="slide" id="plannerS" data-bg="#FF2D55" data-fg="#000000" data-mood="focused" aria-label="Planner">
  <div class="inner">
-  <div class="top px"><span class="ico">✅</span><span class="cnt"></span></div>
-  <h2 class="ttl px">TO-DO</h2>
-  <p class="sub px">TODAY'S LIST</p>
+  <div class="top px"><span class="ico">📋</span><span class="cnt"></span></div>
+  <h2 class="ttl px">PLANNER</h2>
+  <p class="sub px" id="planDate"></p>
   <div class="scroll">
+   <div class="box plan-ui" id="planToday"><div class="lbl px sec-lbl">TODAY</div><div class="plock" aria-hidden="true"><span class="sh"></span><span class="bd"></span></div>
+    <div style="margin-bottom:8px">🔒 Locked</div>
+    <input id="cpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Calendar passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
+    <div id="cerr" style="margin-top:8px"></div></div>
    <div class="box todo-ui" id="todoBox">
+    <div class="lbl px sec-lbl">TO-DO</div>
     <p class="px todo-hint" id="todoReset"></p>
     <form class="todo-add" id="todoForm" autocomplete="off">
      <input id="todoIn" type="text" maxlength="200" placeholder="WRITE A TO-DO" aria-label="New to-do" enterkeyhint="done">
@@ -156,26 +167,17 @@ input::placeholder{color:var(--fg);opacity:1}
     </form>
     <div id="todoList"></div>
    </div>
+   <div class="box week-ui" id="planWeekBox" hidden>
+    <details class="week-fold" id="planWeekFold" open>
+     <summary class="px">NEXT 7 DAYS</summary>
+     <div id="planWeek"></div>
+    </details>
+   </div>
   </div>
  </div>
 </section>
 
-<!-- 03 CALENDAR · colour: data-bg/data-fg · locked; events from cal.enc.json after the same passcode · mood: curious -->
-<section class="slide" id="calS" data-bg="#0055FF" data-fg="#FFFFFF" data-mood="curious" aria-label="Calendar">
- <div class="inner">
-  <div class="top px"><span class="ico">📅</span><span class="cnt"></span></div>
-  <h2 class="ttl px">CALENDAR</h2>
-  <p class="sub px">NEXT 7 DAYS</p>
-  <div class="scroll">
-   <div class="box" id="cal"><div class="plock" aria-hidden="true"><span class="sh"></span><span class="bd"></span></div>
-    <div style="margin-bottom:8px">🔒 Locked</div>
-    <input id="cpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Calendar passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
-    <div id="cerr" style="margin-top:8px"></div></div>
-  </div>
- </div>
-</section>
-
-<!-- 04 FAST · colour: data-bg/data-fg · text: filled from daily JSON "fast" · mood: calm -->
+<!-- 03 FAST · colour: data-bg/data-fg · text: filled from daily JSON "fast" · mood: calm -->
 <section class="slide" id="fastS" data-bg="#7B2CFF" data-fg="#FFFFFF" data-mood="calm" aria-label="Fast">
  <div class="inner">
   <div class="top px"><span class="ico">🌙</span><span class="cnt"></span></div>
@@ -185,7 +187,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 05 BOND ENDS · colour: data-bg/data-fg · text: countdown to 31 Oct 2027 (script "bond") · mood: detective -->
+<!-- 04 BOND ENDS · colour: data-bg/data-fg · text: countdown to 31 Oct 2027 (script "bond") · mood: detective -->
 <section class="slide" id="bondS" data-bg="#FFB000" data-fg="#000000" data-mood="detective" aria-label="Bond ends">
  <div class="inner">
   <div class="top px"><span class="ico">⏳</span><span class="cnt"></span></div>
@@ -197,7 +199,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 06 QURAN TRACKER · colour: data-bg/data-fg · opens the full-screen reader · mood: calm -->
+<!-- 05 QURAN TRACKER · colour: data-bg/data-fg · opens the full-screen reader · mood: calm -->
 <section class="slide" id="quranS" data-bg="#00C2A8" data-fg="#000000" data-mood="calm" aria-label="Quran tracker">
  <div class="inner">
   <div class="top px"><span class="ico">📖</span><span class="cnt"></span></div>
@@ -209,7 +211,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 07 DHIKR GARDEN · colour: data-bg/data-fg · every 100 taps grows a tree · mood: calm -->
+<!-- 06 DHIKR GARDEN · colour: data-bg/data-fg · every 100 taps grows a tree · mood: calm -->
 <section class="slide" id="dhikrS" data-bg="#A6FF00" data-fg="#000000" data-mood="calm" aria-label="Dhikr garden">
  <div class="inner">
   <div class="top px"><span class="ico">🌱</span><span class="cnt"></span></div>
@@ -222,7 +224,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 08 REST CHECK · colour: data-bg/data-fg · 1–5 score logged to the sheet · mood: sleepy -->
+<!-- 07 REST CHECK · colour: data-bg/data-fg · 1–5 score logged to the sheet · mood: sleepy -->
 <section class="slide" id="restS" data-bg="#2B3CFF" data-fg="#FFFFFF" data-mood="sleepy" aria-label="Rest check">
  <div class="inner">
   <div class="top px"><span class="ico">🔋</span><span class="cnt"></span></div>
@@ -235,7 +237,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 09 FINANCE · colour: data-bg/data-fg · locked; figures only appear after the passcode decrypts fin.enc.json · mood: coin -->
+<!-- 08 FINANCE · colour: data-bg/data-fg · locked; figures only appear after the passcode decrypts fin.enc.json · mood: coin -->
 <section class="slide" id="finS" data-bg="#00FF9C" data-fg="#000000" data-mood="coin" aria-label="Finance">
  <div class="inner">
   <div class="top px"><span class="ico">💰</span><span class="cnt"></span></div>
@@ -249,7 +251,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 10 WATCH · colour: data-bg/data-fg · videos from daily JSON + channel list "mine" · mood: excited -->
+<!-- 09 WATCH · colour: data-bg/data-fg · videos from daily JSON + channel list "mine" · mood: excited -->
 <section class="slide" id="watchS" data-bg="#FF3B30" data-fg="#000000" data-mood="excited" aria-label="Watch">
  <div class="inner">
   <div class="top px"><span class="ico">▶️</span><span class="cnt"></span></div>
@@ -259,7 +261,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 11 QURAN & HADITH · colour: data-bg/data-fg · daily verse + hadith, flip with ◀ ▶ · mood: calm -->
+<!-- 10 QURAN & HADITH · colour: data-bg/data-fg · daily verse + hadith, flip with ◀ ▶ · mood: calm -->
 <section class="slide" id="verseS" data-bg="#E600FF" data-fg="#000000" data-mood="calm" aria-label="Quran and hadith">
  <div class="inner">
   <div class="top px"><span class="ico">📜</span><span class="cnt"></span></div>
@@ -269,7 +271,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 12 NAMES OF ALLAH · colour: data-bg/data-fg · tap the card to flip · mood: wonder -->
+<!-- 11 NAMES OF ALLAH · colour: data-bg/data-fg · tap the card to flip · mood: wonder -->
 <section class="slide" id="namesS" data-bg="#FF7A00" data-fg="#000000" data-mood="wonder" aria-label="Names of Allah">
  <div class="inner">
   <div class="top px"><span class="ico">✦</span><span class="cnt"></span></div>
@@ -284,7 +286,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 13 SCHOLARS · colour: data-bg/data-fg · quote from daily JSON · mood: curious -->
+<!-- 12 SCHOLARS · colour: data-bg/data-fg · quote from daily JSON · mood: curious -->
 <section class="slide" id="scholarS" data-bg="#5AC8FF" data-fg="#000000" data-mood="curious" aria-label="Scholars">
  <div class="inner">
   <div class="top px"><span class="ico">❝</span><span class="cnt"></span></div>
@@ -294,7 +296,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 14 WORLD WATCH · colour: data-bg/data-fg · clock / forecast / lectures / game model, flip with ◀ ▶ · mood: worried -->
+<!-- 13 WORLD WATCH · colour: data-bg/data-fg · clock / forecast / lectures / game model, flip with ◀ ▶ · mood: worried -->
 <section class="slide" id="worldS" data-bg="#FFE600" data-fg="#000000" data-mood="worried" aria-label="World watch">
  <div class="inner">
   <div class="top px"><span class="ico">🌍</span><span class="cnt"></span></div>
@@ -304,7 +306,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 15 WORLD NEWS · colour: data-bg/data-fg · last 24h headlines via Google News RSS · mood: excited -->
+<!-- 14 WORLD NEWS · colour: data-bg/data-fg · last 24h headlines via Google News RSS · mood: excited -->
 <section class="slide" id="newsS" data-bg="#FF2E9A" data-fg="#000000" data-mood="excited" aria-label="World news">
  <div class="inner">
   <div class="top px"><span class="ico">📰</span><span class="cnt"></span></div>
@@ -314,7 +316,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 16 JOBS · colour: data-bg/data-fg · opens the jobs.html / top5.html swipe decks · mood: happy -->
+<!-- 15 JOBS · colour: data-bg/data-fg · opens the jobs.html / top5.html swipe decks · mood: happy -->
 <section class="slide" id="jobsS" data-bg="#B4FF39" data-fg="#000000" data-mood="happy" aria-label="Jobs">
  <div class="inner">
   <div class="top px"><span class="ico">💼</span><span class="cnt"></span></div>
@@ -432,24 +434,33 @@ function unlockErr(id,msg){const r=document.getElementById(id);if(r)r.innerHTML=
 async function fUnlock(pw){pw=pw||(document.getElementById("fpw")||{}).value||(document.getElementById("cpw")||{}).value;if(!pw)return;
  try{const d=await decEnc("fin.enc.json",pw);sessionStorage.fpw=pw;fRender(d)}catch(x){if(!x.missing)unlockErr("ferr","✕ Wrong passcode")}
  try{const d=await decEnc("cal.enc.json",pw);sessionStorage.fpw=pw;cRender(d)}catch(x){if(x.missing)cMissing();else if(document.getElementById("cerr"))unlockErr("cerr","✕ Wrong passcode");else cLocked(true)}}
-function cLocked(wrong){$("cal").innerHTML=`<div class="plock" aria-hidden="true"><span class="sh"></span><span class="bd"></span></div>
+function cHideWeek(){const w=$("planWeekBox");if(w)w.hidden=true}
+function cShowWeek(){const w=$("planWeekBox");if(w)w.hidden=false}
+function cLocked(wrong){cHideWeek();const box=$("planToday")||$("cal");if(!box)return;box.innerHTML=`<div class="lbl px sec-lbl">TODAY</div><div class="plock" aria-hidden="true"><span class="sh"></span><span class="bd"></span></div>
 <div style="margin-bottom:8px">🔒 Locked</div>
 <input id="cpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Calendar passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
 <div id="cerr" style="margin-top:8px">${wrong?'<span class="chip">✕ Wrong passcode</span>':""}</div>`}
-function cMissing(){$("cal").innerHTML=`<div class="px" style="font-size:10px;line-height:1.8">Calendar not synced yet</div>`}
+function cMissing(){cHideWeek();const box=$("planToday")||$("cal");if(!box)return;box.innerHTML=`<div class="lbl px sec-lbl">TODAY</div><div class="px" style="font-size:10px;line-height:1.8">Calendar not synced yet</div>`}
 function cFmtTime(iso,allDay){if(allDay)return"All day";const p=sgParts(Date.parse(iso));if(!Number.isFinite(+p.h))return"";const h12=p.h%12||12,ap=p.h>=12?"PM":"AM";return h12+":"+pad2(p.min)+" "+ap}
 function cFmtSynced(iso){const t=Date.parse(iso);if(!Number.isFinite(t))return"";const p=sgParts(t),mo=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];const h12=p.h%12||12,ap=p.h>=12?"PM":"AM";return p.d+" "+mo[p.m-1]+", "+h12+":"+pad2(p.min)+" "+ap}
 function cDayKey(ms){const p=sgParts(ms);return p.y+"-"+pad2(p.m)+"-"+pad2(p.d)}
 function cDayLabel(key,todayKey,tomKey){if(key===todayKey)return"TODAY";if(key===tomKey)return"TOMORROW";const [y,m,d]=key.split("-").map(Number),dt=new Date(Date.UTC(y,m-1,d)),wd=["SUN","MON","TUE","WED","THU","FRI","SAT"][dt.getUTCDay()],mo=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"][m-1];return wd+" "+d+" "+mo}
-function cRender(d){const now=Date.now(),p0=sgParts(now),startToday=Date.UTC(p0.y,p0.m-1,p0.d)-8*3600*1000,endWin=startToday+7*864e5,todayKey=cDayKey(startToday+8*3600*1000),tomKey=cDayKey(startToday+864e5+8*3600*1000);
+function cEvHtml(e){const tag=(e.cal||"").toLowerCase()==="family"?"family":"main",name=tag==="family"?"FAMILY":"MAIN";return `<div class="cal-ev"><div class="cal-t px">${esc(cFmtTime(e.start,e.allDay))} <span class="ctag ${tag}">${name}</span></div><div class="cal-title">${esc(e.title||"(No title)")}</div>${e.loc?`<div class="cal-loc">${esc(e.loc)}</div>`:""}</div>`}
+function cRender(d){const p0=sgParts(Date.now()),startToday=Date.UTC(p0.y,p0.m-1,p0.d)-8*3600*1000,endWin=startToday+7*864e5,todayKey=cDayKey(startToday+8*3600*1000),tomKey=cDayKey(startToday+864e5+8*3600*1000);
  const ev=(d.events||[]).map(e=>{const s=Date.parse(e.start),en=e.end?Date.parse(e.end):(e.allDay?s+864e5:s);return{...e,_s:s,_e:Number.isFinite(en)?en:s}}).filter(e=>Number.isFinite(e._s)&&e._s<endWin&&e._e>=startToday).sort((a,b)=>(a.allDay!==b.allDay)?(a.allDay?-1:1):a._s-b._s);
- const groups=new Map();ev.forEach(e=>{const key=e._s<startToday?todayKey:cDayKey(e._s);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(e)});
- let h="";if(d.updated){const syn=cFmtSynced(d.updated);if(syn)h+=`<p class="px todo-hint">Synced ${syn} SGT</p>`}
- if(!ev.length)h+=`<div class="px" style="font-size:10px;line-height:1.8">No events in the next 7 days.</div>`;
- else for(const key of [...groups.keys()].sort()){h+=`<div class="cal-day"><div class="lbl px">${cDayLabel(key,todayKey,tomKey)}</div>`+groups.get(key).map(e=>{const tag=(e.cal||"").toLowerCase()==="family"?"family":"main",name=tag==="family"?"FAMILY":"MAIN";return `<div class="cal-ev"><div class="cal-t px">${esc(cFmtTime(e.start,e.allDay))} <span class="ctag ${tag}">${name}</span></div><div class="cal-title">${esc(e.title||"(No title)")}</div>${e.loc?`<div class="cal-loc">${esc(e.loc)}</div>`:""}</div>`}).join("")+"</div>"}
- h+=`<button class="b" onclick="sessionStorage.removeItem('fpw');location.reload()">🔒 LOCK</button>`;$("cal").innerHTML=h}
+ const today=[],rest=[];ev.forEach(e=>(((e._s<startToday?todayKey:cDayKey(e._s))===todayKey)?today:rest).push(e));
+ const groups=new Map();rest.forEach(e=>{const key=cDayKey(e._s);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(e)});
+ const syn=d.updated?cFmtSynced(d.updated):"";
+ let th=`<div class="lbl px sec-lbl">TODAY</div>`;if(syn)th+=`<p class="px todo-hint">Synced ${syn} SGT</p>`;
+ th+=today.length?today.map(cEvHtml).join(""):`<div class="px" style="font-size:10px;line-height:1.8">No events today.</div>`;
+ $("planToday").innerHTML=th;
+ let wh="";if(!rest.length)wh=`<div class="px" style="font-size:10px;line-height:1.8;margin-top:10px">No upcoming events.</div>`;
+ else for(const key of [...groups.keys()].sort())wh+=`<div class="cal-day"><div class="lbl px">${cDayLabel(key,todayKey,tomKey)}</div>`+groups.get(key).map(cEvHtml).join("")+"</div>";
+ wh+=`<button class="b" onclick="sessionStorage.removeItem('fpw');location.reload()">🔒 LOCK</button>`;
+ $("planWeek").innerHTML=wh;cShowWeek()}
 async function cProbe(){if(sessionStorage.fpw)return;try{const res=await fetch("cal.enc.json?"+Date.now(),{method:"GET"});if(res.status===404||!res.ok)cMissing()}catch(_){cMissing()}}
 cProbe();
+(function(){const el=$("planDate");if(!el)return;const p=sgParts(),mo=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"],dt=new Date(Date.UTC(p.y,p.m-1,p.d)),wd=["SUN","MON","TUE","WED","THU","FRI","SAT"][dt.getUTCDay()];el.textContent=wd+" "+p.d+" "+mo[p.m-1]+" "+p.y})();
 
 /* ✅ TO-DO — localStorage list; resets at 00:00 and 12:00 Asia/Singapore (UTC+8, not device tz) */
 const TODO=(()=>{const KEY="jobswipe-todo";let nowFn=()=>Date.now();
@@ -468,7 +479,8 @@ const TODO=(()=>{const KEY="jobswipe-todo";let nowFn=()=>Date.now();
  function add(text){const t=(text||"").trim();if(!t)return;check();const st=load();st.items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),text:t.slice(0,200),done:false});save(st);render()}
  function toggle(id){const st=load();const it=st.items.find(x=>x.id===id);if(!it)return;it.done=!it.done;save(st);render()}
  function remove(id){const st=load();st.items=st.items.filter(x=>x.id!==id);save(st);render()}
- const box=$("todoBox");if(box){["touchstart","pointerdown"].forEach(ev=>box.addEventListener(ev,e=>e.stopPropagation(),{passive:true}));
+ [ $("todoBox"),$("planToday"),$("planWeekBox")].forEach(box=>{if(box)["touchstart","pointerdown"].forEach(ev=>box.addEventListener(ev,e=>e.stopPropagation(),{passive:true}))});
+ const box=$("todoBox");if(box){
   $("todoForm").addEventListener("submit",e=>{e.preventDefault();e.stopPropagation();add($("todoIn").value);$("todoIn").value="";$("todoIn").focus()});
   $("todoList").addEventListener("click",e=>{const row=e.target.closest(".todo-item");if(!row)return;e.stopPropagation();if(e.target.closest(".del"))remove(row.dataset.id);else toggle(row.dataset.id)})}
  check();setInterval(()=>check(),6e4);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")check()});
@@ -608,7 +620,7 @@ const DECK=(()=>{const deck=$("deck"),S=[...deck.querySelectorAll(".slide")],N=S
  let st=null,ax=null,nb=null,nbDir=0,dragged=false;
  const W=()=>innerWidth,H=()=>innerHeight;
  const busyOverlay=()=>!!document.querySelector(".ov.on");
- function start(x,y,target,mouse){if(busyOverlay())return;if(target.closest("input,textarea,select,iframe,.todo-ui,button.chk,button.del"))return;
+ function start(x,y,target,mouse){if(busyOverlay())return;if(target.closest("input,textarea,select,iframe,.todo-ui,.plan-ui,.week-ui,button.chk,button.del,summary"))return;
   settle();const sc=target.closest(".scroll");st={x,y,t:performance.now(),sc,top:sc?sc.scrollTop<=0:true,bot:sc?sc.scrollTop+sc.clientHeight>=sc.scrollHeight-1:true,mouse};ax=null;nb=null;dragged=false}
  function move(x,y,e){if(!st)return false;const dx=x-st.x,dy=y-st.y;
   if(!ax){if(Math.hypot(dx,dy)<9)return false;
@@ -646,7 +658,7 @@ const DECK=(()=>{const deck=$("deck"),S=[...deck.querySelectorAll(".slide")],N=S
   else if(k==="ArrowDown"){go(cur+1,"y");e.preventDefault()}else if(k==="ArrowUp"){go(cur-1,"y");e.preventDefault()}
   else if(k==="Home"){go(0,"x");e.preventDefault()}else if(k==="End"){go(N-1,"x");e.preventDefault()}});
  /* start on the screen named in the URL hash (e.g. retro.html#finS) */
- const h=location.hash.slice(1),hi=S.findIndex(s=>s.id===h);cur=hi>0?hi:0;S[cur].classList.add("on");chrome();BOT.setMood(S[cur].dataset.mood);
+ const alias={todoS:"plannerS",calS:"plannerS"},h=alias[location.hash.slice(1)]||location.hash.slice(1),hi=S.findIndex(s=>s.id===h);cur=hi>0?hi:0;S[cur].classList.add("on");chrome();BOT.setMood(S[cur].dataset.mood);
  return{go,cur:()=>cur,idx:id=>S.findIndex(s=>s.id===id),lazy,N}})();
 window.DECK=DECK;
 if(sessionStorage.fpw)fUnlock(sessionStorage.fpw);
