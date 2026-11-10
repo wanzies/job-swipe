@@ -1,0 +1,568 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#00E5FF"><title>Daily · Retro</title>
+<!-- Optional web fonts. Everything still works with the monospace / serif fallbacks if these never load. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#00E5FF;--fg:#000;--sh:#fff;--dur:600ms;--ease:cubic-bezier(.22,.9,.24,1)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#000;overscroll-behavior:none}
+body{font:600 15px/1.55 ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;-webkit-text-size-adjust:100%;image-rendering:pixelated;-webkit-tap-highlight-color:transparent}
+.px{font-family:"Press Start 2P",ui-monospace,"Courier New",monospace;letter-spacing:.02em;font-weight:400}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+canvas,img{image-rendering:pixelated;image-rendering:crisp-edges}
+/* ---------- deck ---------- */
+#deck{position:fixed;inset:0;overflow:hidden;touch-action:none}
+.slide{position:absolute;inset:0;height:100vh;height:100dvh;background:var(--bg);color:var(--fg);visibility:hidden;z-index:1;
+ touch-action:none;overflow:hidden;user-select:none;-webkit-user-select:none;transform-origin:50% 50%;backface-visibility:hidden}
+.slide.on{visibility:visible;z-index:2}.slide.mv{visibility:visible;z-index:3}
+/* hard-edged checker strip along the top of every slide (decoration only) */
+.slide::before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:repeating-linear-gradient(90deg,var(--fg) 0 8px,transparent 8px 16px);opacity:.9}
+.inner{height:100%;display:flex;flex-direction:column;will-change:transform;
+ padding:calc(env(safe-area-inset-top,0px) + 20px) calc(env(safe-area-inset-right,0px) + 16px) calc(env(safe-area-inset-bottom,0px) + 52px) calc(env(safe-area-inset-left,0px) + 16px)}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:9px;gap:8px}
+.ico{font-size:30px;line-height:1;filter:none}
+.ttl{font-size:clamp(20px,7vw,32px);line-height:1.3;margin:10px 0 8px;text-shadow:4px 4px 0 var(--sh);word-break:break-word}
+.sub{font-size:10px;line-height:1.8;margin:0 0 10px}
+.scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;touch-action:pan-y;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:6px 10px 130px 4px;margin:0 -6px 0 -4px;user-select:text;-webkit-user-select:text;scrollbar-width:thin;scrollbar-color:var(--fg) transparent}
+.scroll::-webkit-scrollbar{width:6px}.scroll::-webkit-scrollbar-thumb{background:var(--fg)}
+/* chunky notched pixel box with a hard drop shadow */
+.box{background:var(--bg);margin:6px 8px 18px 6px;padding:12px;position:relative;
+ box-shadow:0 -4px 0 0 var(--fg),0 4px 0 0 var(--fg),-4px 0 0 0 var(--fg),4px 0 0 0 var(--fg),8px 8px 0 0 var(--fg)}
+.lbl{font-size:9px;margin:0 0 8px;display:flex;justify-content:space-between;gap:8px}
+.ref{font-size:12px}
+.big{font-size:clamp(22px,8vw,34px);line-height:1.3;margin:6px 0}
+.b{font-family:"Press Start 2P",ui-monospace,monospace;font-size:10px;line-height:1.4;background:var(--fg);color:var(--bg);border:0;padding:13px 14px;min-height:44px;margin:6px 8px 4px 0;cursor:pointer;
+ box-shadow:4px 4px 0 0 var(--sh),0 0 0 2px var(--fg);touch-action:manipulation}
+.b:active{transform:translate(3px,3px);box-shadow:1px 1px 0 0 var(--sh),0 0 0 2px var(--fg)}
+.b:focus-visible,#dots button:focus-visible{outline:3px dashed var(--fg);outline-offset:4px}
+.b.wide{width:100%;padding:20px;font-size:12px}
+input{font:inherit;background:var(--bg);color:var(--fg);border:0;padding:10px;min-height:44px;box-shadow:inset 0 0 0 3px var(--fg);border-radius:0}
+input::placeholder{color:var(--fg);opacity:1}
+.chip{display:inline-block;background:var(--fg);color:var(--bg);padding:1px 6px}
+.bbar{height:16px;margin-top:8px;box-shadow:0 0 0 3px var(--fg);position:relative}
+.bbar i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--fg) 0 6px,transparent 6px 8px)}
+.bbar i.over{background:repeating-linear-gradient(45deg,var(--fg) 0 4px,transparent 4px 8px)}
+.row{display:flex;justify-content:space-between;gap:10px}
+/* ---------- fixed chrome: dots + mascot ---------- */
+#dots{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);display:flex;justify-content:center;z-index:20;pointer-events:none;flex-wrap:wrap;padding:0 12px}
+#dots button{pointer-events:auto;width:22px;height:32px;padding:0;border:0;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation}
+#dots button::after{content:"";width:10px;height:10px;background:var(--bg);box-shadow:0 0 0 3px var(--fg)}
+#dots button.on::after{background:var(--fg);width:12px;height:12px;box-shadow:0 0 0 3px var(--fg),3px 3px 0 3px var(--sh)}
+#bot{position:fixed;right:calc(env(safe-area-inset-right,0px) + 6px);bottom:calc(env(safe-area-inset-bottom,0px) + 40px);width:120px;height:120px;z-index:19;pointer-events:none}
+/* ---------- topic widgets ---------- */
+.sky{position:absolute;right:14px;top:12px;width:64px;height:48px}
+.psun{position:absolute;right:8px;top:6px;width:24px;height:24px;background:var(--fg);box-shadow:0 -8px 0 -4px var(--fg),0 8px 0 -4px var(--fg),8px 0 0 -4px var(--fg),-8px 0 0 -4px var(--fg);animation:blink 2s steps(2) infinite}
+.pcl{position:absolute;left:0;top:14px;width:40px;height:12px;background:var(--fg);box-shadow:8px -8px 0 0 var(--fg),20px -8px 0 0 var(--fg);animation:mv 6s steps(6) infinite alternate}
+.pdr{position:absolute;width:3px;height:6px;background:var(--fg);animation:dr .6s steps(4) infinite}
+@keyframes blink{50%{opacity:.55}}@keyframes mv{to{transform:translateX(18px)}}@keyframes dr{from{transform:translateY(28px)}to{transform:translateY(48px)}}
+#city{width:100%;height:auto;min-height:110px;display:block}
+.cres{width:40px;height:40px;border-radius:50%;box-shadow:-10px 4px 0 0 var(--fg);animation:blink 2s steps(2) infinite;margin:4px 0 8px 12px}
+.ar{font-family:Amiri,"Noto Naskh Arabic","Geeza Pro","Times New Roman",serif;font-weight:700}
+.flip{perspective:900px;cursor:pointer;height:260px;margin:6px 8px 18px 6px}
+.fi{position:relative;width:100%;height:100%;transition:transform .6s steps(6);transform-style:preserve-3d}.flip.on .fi{transform:rotateY(180deg)}
+.fa,.fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px;background:var(--bg);
+ box-shadow:0 -4px 0 0 var(--fg),0 4px 0 0 var(--fg),-4px 0 0 0 var(--fg),4px 0 0 0 var(--fg),8px 8px 0 0 var(--fg)}
+.fb{transform:rotateY(180deg);background:var(--fg);color:var(--bg)}
+.fa .ar{font-size:64px;line-height:1.2}.tr{font-size:11px;margin-top:10px}.hint{font-size:8px;margin-top:14px}
+.pg{display:none}.pg.on{display:block}
+.pdots{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:6px}
+.pdots i{width:10px;height:10px;box-shadow:0 0 0 3px var(--fg)}.pdots i.on{background:var(--fg)}.pdots .b{font:700 16px/1 ui-monospace,monospace;padding:12px 16px}
+.wd{text-align:center}
+.clock{width:72px;height:72px;margin:6px auto;box-shadow:0 0 0 4px var(--fg);position:relative}
+.clock i{position:absolute;left:34px;top:6px;width:4px;height:30px;background:var(--fg);transform-origin:2px 30px;animation:tk 4s steps(8) infinite}@keyframes tk{from{transform:rotate(-40deg)}to{transform:rotate(-4deg)}}
+.bar{height:20px;box-shadow:0 0 0 3px var(--fg);margin:12px 3px;position:relative}.bar b{position:absolute;left:0;top:0;bottom:0;background:var(--fg);animation:fill 2s steps(10) forwards}@keyframes fill{from{width:0}}
+.globe{width:48px;height:48px;margin:6px auto;background:var(--bg);box-shadow:inset 8px 0 0 var(--fg),inset -8px 0 0 var(--fg),0 0 0 3px var(--fg);animation:spin 3s steps(4) infinite}@keyframes spin{25%{box-shadow:inset 16px 0 0 var(--fg),inset -4px 0 0 var(--fg),0 0 0 3px var(--fg)}50%{box-shadow:inset 4px 0 0 var(--fg),inset -16px 0 0 var(--fg),0 0 0 3px var(--fg)}}
+.gm{display:grid;grid-template-columns:auto 1fr 1fr;gap:4px;font-size:8px;line-height:1.5;margin:10px auto;max-width:320px}.gm div{box-shadow:0 0 0 2px var(--fg);padding:8px 4px}.gm .h{box-shadow:none}.gm .eq{background:var(--fg);color:var(--bg);animation:blink 1s steps(2) infinite}
+.meter{display:flex;gap:4px;justify-content:center;margin:8px 0}.meter i{width:22px;height:12px;box-shadow:0 0 0 2px var(--fg)}.meter i.on{background:var(--fg)}
+.vid{position:relative;padding-top:56.25%;box-shadow:0 0 0 4px var(--fg);margin:4px 4px 8px;background:#000}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vt{font-size:12px;margin:0 0 16px}
+.gd{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 4px}.gd span{height:48px;box-shadow:0 0 0 3px var(--fg);display:flex;align-items:flex-end;justify-content:center;font-size:24px;line-height:1}
+.gd .grow{animation:bob 1s steps(2) infinite}@keyframes bob{50%{transform:translateY(-3px)}}
+.rs{display:flex;gap:8px;flex-wrap:wrap}.rs button{flex:1;min-width:48px;font-size:24px;padding:10px 0}
+.rs button.sel{outline:4px solid var(--fg);outline-offset:4px}
+.nw{display:block;text-decoration:none;padding:10px 0;border-bottom:3px dashed var(--fg)}
+.fin .k{font-size:11px;margin-top:12px}.fin .v{font-size:15px;margin-top:4px}
+/* ---------- overlays (Quran reader, job deck) ---------- */
+.ov{position:fixed;inset:0;z-index:50;display:none;background:#FFF4C2;color:#000;--bg:#FFF4C2;--fg:#000;--sh:#fff;overflow:auto;touch-action:pan-y;overscroll-behavior:contain;
+ padding:calc(env(safe-area-inset-top,0px) + 14px) calc(env(safe-area-inset-right,0px) + 14px) calc(env(safe-area-inset-bottom,0px) + 14px) calc(env(safe-area-inset-left,0px) + 14px)}
+.ov.on{display:block}
+.ovh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;background:var(--bg);padding-bottom:6px;z-index:2}
+.ay{border-bottom:3px dashed var(--fg);padding:12px 0}.ay .ar{font-size:26px;direction:rtl;text-align:right;line-height:2.1}.ay .en{font-size:14px}.ay.cur{box-shadow:inset 6px 0 0 var(--fg);padding-left:12px}
+#jov{padding:0;overflow:hidden}#jov iframe{position:absolute;left:0;right:0;bottom:0;top:calc(env(safe-area-inset-top,0px) + 66px);width:100%;height:calc(100% - env(safe-area-inset-top,0px) - 66px);border:0;background:#fff}
+#jov .ovh{padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 6px}
+@media (prefers-reduced-motion: reduce){
+ *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
+}
+@media (min-width:700px){.inner{max-width:720px;margin:0 auto}}
+</style></head><body>
+<!--
+  HOW TO EDIT A SCREEN
+  Each <section class="slide"> below is one full-screen topic.
+   data-bg   = background colour   data-fg = text colour (keep the pair at 4.5:1 contrast or better)
+   data-mood = mascot mood: happy | excited | curious | detective | sleepy | calm | coin | worried | wonder
+   .ttl      = the big pixel title   .sub = the short line under it
+  Order of the sections = order of the swipe deck and the dots.
+-->
+<main id="deck" aria-roledescription="carousel" aria-label="Daily dashboard">
+
+<!-- 01 TODAY · colour: data-bg/data-fg · title: date (filled by script) · mood: happy -->
+<section class="slide" id="today" data-bg="#00E5FF" data-fg="#000000" data-mood="happy" aria-label="Today">
+ <div class="inner">
+  <div class="top px"><span class="ico">☀️</span><span class="cnt"></span></div>
+  <h1 class="ttl px" id="greg">TODAY</h1>
+  <p class="sub px" id="hijri"></p>
+  <div class="scroll">
+   <div class="box" style="min-height:76px"><div class="sky" id="sky"></div><div class="px" id="wx" style="font-size:10px;padding-right:76px;line-height:2">LOADING WEATHER…</div></div>
+   <div class="box" style="padding:6px"><canvas id="city" width="160" height="44" aria-label="Pixel city: people walk to work in the morning and home in the evening"></canvas></div>
+   <p class="px" id="nref" style="font-size:9px"></p>
+   <p class="px" style="font-size:8px;line-height:2">◀ SWIPE ▶ · ▲▼ · ARROW KEYS · TAP THE DOTS</p>
+  </div>
+ </div>
+</section>
+
+<!-- 02 FAST · colour: data-bg/data-fg · text: filled from daily JSON "fast" · mood: calm -->
+<section class="slide" id="fastS" data-bg="#7B2CFF" data-fg="#FFFFFF" data-mood="calm" aria-label="Fast">
+ <div class="inner">
+  <div class="top px"><span class="ico">🌙</span><span class="cnt"></span></div>
+  <h2 class="ttl px">FAST</h2>
+  <p class="sub px" id="fastType">NO FAST FLAGGED TODAY</p>
+  <div class="scroll"><div id="fast"></div></div>
+ </div>
+</section>
+
+<!-- 03 BOND ENDS · colour: data-bg/data-fg · text: countdown to 31 Oct 2027 (script "bond") · mood: detective -->
+<section class="slide" id="bondS" data-bg="#FFB000" data-fg="#000000" data-mood="detective" aria-label="Bond ends">
+ <div class="inner">
+  <div class="top px"><span class="ico">⏳</span><span class="cnt"></span></div>
+  <h2 class="ttl px">BOND ENDS</h2>
+  <p class="sub px">SPF BOND · FREE FROM OCT 2027</p>
+  <div class="scroll">
+   <div class="box"><div id="bond" class="big px"></div><div class="bbar"><i id="bondbar"></i></div><div id="bondsub" style="margin-top:12px"></div></div>
+  </div>
+ </div>
+</section>
+
+<!-- 04 QURAN TRACKER · colour: data-bg/data-fg · opens the full-screen reader · mood: calm -->
+<section class="slide" id="quranS" data-bg="#00C2A8" data-fg="#000000" data-mood="calm" aria-label="Quran tracker">
+ <div class="inner">
+  <div class="top px"><span class="ico">📖</span><span class="cnt"></span></div>
+  <h2 class="ttl px">QURAN TRACKER</h2>
+  <p class="sub px">ONE PAGE AT A TIME</p>
+  <div class="scroll">
+   <div class="box"><div id="qpos"></div><button class="b" onclick="qOpen()">▶ READ 1 PAGE</button></div>
+  </div>
+ </div>
+</section>
+
+<!-- 05 DHIKR GARDEN · colour: data-bg/data-fg · every 100 taps grows a tree · mood: calm -->
+<section class="slide" id="dhikrS" data-bg="#A6FF00" data-fg="#000000" data-mood="calm" aria-label="Dhikr garden">
+ <div class="inner">
+  <div class="top px"><span class="ico">🌱</span><span class="cnt"></span></div>
+  <h2 class="ttl px">DHIKR GARDEN</h2>
+  <p class="sub px">SUBHANALLAH / SELAWAT</p>
+  <div class="scroll">
+   <div class="box"><div id="dsum"></div><div class="gd" id="gd"></div>
+    <button class="b wide" onclick="dTap()">TAP · SUBHANALLAH / SELAWAT</button><button class="b" onclick="dUndo()">−1</button></div>
+  </div>
+ </div>
+</section>
+
+<!-- 06 REST CHECK · colour: data-bg/data-fg · 1–5 score logged to the sheet · mood: sleepy -->
+<section class="slide" id="restS" data-bg="#2B3CFF" data-fg="#FFFFFF" data-mood="sleepy" aria-label="Rest check">
+ <div class="inner">
+  <div class="top px"><span class="ico">🔋</span><span class="cnt"></span></div>
+  <h2 class="ttl px">REST CHECK</h2>
+  <p class="sub px">HOW RESTED ARE YOU TODAY?</p>
+  <div class="scroll">
+   <div class="box"><div class="rs" id="rs"></div><div id="rtrend" class="px" style="font-size:10px;margin-top:16px;line-height:2"></div></div>
+   <button class="b" onclick="setSheet()">⚙ SHEET LINK</button>
+  </div>
+ </div>
+</section>
+
+<!-- 07 FINANCE · colour: data-bg/data-fg · locked; figures only appear after the passcode decrypts fin.enc.json · mood: coin -->
+<section class="slide" id="finS" data-bg="#00FF9C" data-fg="#000000" data-mood="coin" aria-label="Finance">
+ <div class="inner">
+  <div class="top px"><span class="ico">💰</span><span class="cnt"></span></div>
+  <h2 class="ttl px">FINANCE</h2>
+  <p class="sub px">BALANCE · BILLS · DEBTS · LEAKS</p>
+  <div class="scroll fin">
+   <div class="box" id="fin"><div style="margin-bottom:8px">🔒 Locked</div>
+    <input id="fpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Finance passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
+    <div id="ferr" style="margin-top:8px"></div></div>
+  </div>
+ </div>
+</section>
+
+<!-- 08 WATCH · colour: data-bg/data-fg · videos from daily JSON + channel list "mine" · mood: excited -->
+<section class="slide" id="watchS" data-bg="#FF3B30" data-fg="#000000" data-mood="excited" aria-label="Watch">
+ <div class="inner">
+  <div class="top px"><span class="ico">▶️</span><span class="cnt"></span></div>
+  <h2 class="ttl px">WATCH</h2>
+  <p class="sub px">TODAY'S TALKS · SWIPE ON THE EDGES</p>
+  <div class="scroll"><div id="yt"></div></div>
+ </div>
+</section>
+
+<!-- 09 QURAN & HADITH · colour: data-bg/data-fg · daily verse + hadith, flip with ◀ ▶ · mood: calm -->
+<section class="slide" id="verseS" data-bg="#E600FF" data-fg="#000000" data-mood="calm" aria-label="Quran and hadith">
+ <div class="inner">
+  <div class="top px"><span class="ico">📜</span><span class="cnt"></span></div>
+  <h2 class="ttl px" id="qhLbl">📖 QURAN</h2>
+  <p class="sub px">VERSE &amp; HADITH OF THE DAY</p>
+  <div class="scroll"><div id="car" class="pager"></div><div class="pdots" id="qdots"></div></div>
+ </div>
+</section>
+
+<!-- 10 NAMES OF ALLAH · colour: data-bg/data-fg · tap the card to flip · mood: wonder -->
+<section class="slide" id="namesS" data-bg="#FF7A00" data-fg="#000000" data-mood="wonder" aria-label="Names of Allah">
+ <div class="inner">
+  <div class="top px"><span class="ico">✦</span><span class="cnt"></span></div>
+  <h2 class="ttl px">NAMES OF ALLAH</h2>
+  <p class="sub px">TAP TO REVEAL</p>
+  <div class="scroll">
+   <div class="flip" id="flip" role="button" tabindex="0" aria-label="Flip card" onclick="this.classList.toggle('on')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('on')}"><div class="fi">
+    <div class="fa"><div class="ar" id="nAr"></div><div class="tr px" id="nTr"></div><div class="hint px">TAP TO REVEAL</div></div>
+    <div class="fb"><div class="px" style="font-size:11px;margin-bottom:12px;line-height:1.6" id="nMean"></div><div id="nTxt"></div><div class="ref" id="nRef" style="margin-top:10px"></div></div>
+   </div></div>
+  </div>
+ </div>
+</section>
+
+<!-- 11 SCHOLARS · colour: data-bg/data-fg · quote from daily JSON · mood: curious -->
+<section class="slide" id="scholarS" data-bg="#5AC8FF" data-fg="#000000" data-mood="curious" aria-label="Scholars">
+ <div class="inner">
+  <div class="top px"><span class="ico">❝</span><span class="cnt"></span></div>
+  <h2 class="ttl px">SCHOLARS</h2>
+  <p class="sub px">A WORD FOR TODAY</p>
+  <div class="scroll"><div class="box" id="quote" style="font-size:16px">…</div></div>
+ </div>
+</section>
+
+<!-- 12 WORLD WATCH · colour: data-bg/data-fg · clock / forecast / lectures / game model, flip with ◀ ▶ · mood: worried -->
+<section class="slide" id="worldS" data-bg="#FFE600" data-fg="#000000" data-mood="worried" aria-label="World watch">
+ <div class="inner">
+  <div class="top px"><span class="ico">🌍</span><span class="cnt"></span></div>
+  <h2 class="ttl px" id="wLbl">WORLD WATCH</h2>
+  <p class="sub px">HOW CLOSE IS THE BIG ONE?</p>
+  <div class="scroll"><div id="wcar" class="pager"></div><div class="pdots" id="wdots"></div></div>
+ </div>
+</section>
+
+<!-- 13 WORLD NEWS · colour: data-bg/data-fg · last 24h headlines via Google News RSS · mood: excited -->
+<section class="slide" id="newsS" data-bg="#FF2E9A" data-fg="#000000" data-mood="excited" aria-label="World news">
+ <div class="inner">
+  <div class="top px"><span class="ico">📰</span><span class="cnt"></span></div>
+  <h2 class="ttl px">WORLD NEWS</h2>
+  <p class="sub px" id="nwT">LOADING…</p>
+  <div class="scroll"><div id="news">Loading headlines…</div></div>
+ </div>
+</section>
+
+<!-- 14 JOBS · colour: data-bg/data-fg · opens the jobs.html / top5.html swipe decks · mood: happy -->
+<section class="slide" id="jobsS" data-bg="#B4FF39" data-fg="#000000" data-mood="happy" aria-label="Jobs">
+ <div class="inner">
+  <div class="top px"><span class="ico">💼</span><span class="cnt"></span></div>
+  <h2 class="ttl px">JOBS</h2>
+  <p class="sub px">SWIPE YOUR PICKS · PREP UNTIL OCT 2027</p>
+  <div class="scroll">
+   <div class="box"><p style="margin-top:0">Your Top 4 and Watch List cards, swipe right on the ones you like.</p>
+    <button class="b wide" onclick="jOpen('jobs.html')">▶ PLAY JOB DECK</button>
+    <p class="ref"><a href="jobs.html">Open jobs.html ↗</a> · <a href="top5.html">Open top5.html ↗</a></p></div>
+  </div>
+ </div>
+</section>
+
+</main>
+
+<nav id="dots" aria-label="Screens"></nav>
+<canvas id="bot" width="40" height="40" aria-hidden="true"></canvas>
+
+<!-- Quran reader overlay (swipe right = next page, left = previous, same as before) -->
+<div id="qr" class="ov" role="dialog" aria-label="Quran reader"><div class="ovh"><span class="px" id="qhead" style="font-size:10px"></span><button class="b" onclick="qStop()">■ STOP &amp; SAVE</button></div><div id="qbody">Loading…</div><div class="row" style="margin:16px 0 40px"><button class="b" onclick="qGo(-1)">◀ PREV</button><button class="b" onclick="qGo(1)">NEXT PAGE ▶</button></div></div>
+<!-- Job deck overlay -->
+<div id="jov" class="ov" role="dialog" aria-label="Job swipe deck"><div class="ovh"><span class="px" style="font-size:10px">💼 JOBS</span><button class="b" onclick="jClose()">✕ CLOSE</button></div><iframe id="jfr" title="Job swipe"></iframe></div>
+<script>
+const $=s=>document.getElementById(s),esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let mine=[{n:"Nurul Asror",id:"UCKbkIWJiGciz7ACCGeQkAMw"}];
+const now=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Singapore"}));
+const ymd=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+$("greg").textContent=now.toLocaleDateString("en-SG",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).toUpperCase();
+fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&current=temperature_2m,weather_code,is_day&daily=precipitation_probability_max&timezone=Asia%2FSingapore&forecast_days=1").then(r=>r.json()).then(d=>{
+ const c=d.current.weather_code,k=c>=51?"rain":c>=2?"cloud":"sun",s=$("sky");window.WK=k;
+ if(k==="sun")s.innerHTML='<div class="psun"></div>';else{s.innerHTML='<div class="pcl"></div>';if(k==="rain")for(let i=0;i<6;i++)s.innerHTML+=`<div class="pdr" style="left:${6+i*9}px;animation-delay:-${i*.1}s"></div>`}
+ $("wx").innerHTML=`<b style="font-size:22px">${Math.round(d.current.temperature_2m)}°</b><br>${{sun:d.current.is_day?"CLEAR":"CLEAR NIGHT",cloud:"CLOUDY",rain:c>=95?"STORM":"RAIN"}[k]} · ${d.daily.precipitation_probability_max[0]}% RAIN`}).catch(()=>$("wx").textContent="WEATHER OFFLINE");
+let D={};
+function renderFast(f){$("fastType").textContent=(f.type||"").toUpperCase();
+ $("fast").innerHTML=`<div class="box"><div class="cres"></div><div class="big px" id="cd" style="font-size:18px">…</div><p id="cdw"></p><p>${esc(f.why)}</p><p class="ref">${esc(f.src)}${f.url?` · <a href="${f.url}" target="_blank" rel="noopener">Source ↗</a>`:""}</p></div>`;
+ const [y,m,dd]=f.date.split("-");fetch(`https://api.aladhan.com/v1/timings/${dd}-${m}-${y}?latitude=1.3521&longitude=103.8198&method=11`).then(r=>r.json()).then(j=>{const t=j.data.timings,st=new Date(`${f.date}T${t.Imsak}:00+08:00`),en=new Date(`${f.date}T${t.Maghrib}:00+08:00`);
+  const tick=()=>{const n=Date.now();let tgt,lbl;if(n<st){tgt=st;lbl=`Fast starts at Imsak ${t.Imsak} (Subuh ${t.Fajr}) and ends at Maghrib ${t.Maghrib} SGT.`}else if(n<en){tgt=en;lbl=`Fasting now. Breaks at Maghrib ${t.Maghrib} SGT.`}else{$("cd").textContent="DONE · ALHAMDULILLAH";$("cdw").textContent="";return}
+   const s=Math.floor((tgt-n)/1000);$("cd").textContent=`${n<st?"STARTS IN":"IFTAR IN"} ${Math.floor(s/3600)}H ${String(Math.floor(s/60)%60).padStart(2,"0")}M ${String(s%60).padStart(2,"0")}S`;$("cdw").textContent=lbl};tick();setInterval(tick,1000)}).catch(()=>$("cd").textContent=f.date)}
+/* videos are rendered with data-src and only load when the WATCH / WORLD screen is opened */
+function renderYT(){let h="";(D.videos||[]).forEach(v=>h+=`<div class="vid"><iframe data-src="https://www.youtube-nocookie.com/embed/${v.id}${v.start?"?start="+v.start:""}" title="${esc(v.title)}" allowfullscreen></iframe></div><div class="vt">${esc(v.title)}</div>`);
+ mine.forEach(c=>h+=`<div class="vid"><iframe data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${c.id.slice(2)}" title="Latest from ${esc(c.n)}" allowfullscreen></iframe></div><div class="vt">Latest from ${esc(c.n)}</div>`);
+ $("yt").innerHTML=h||'<div class="box">No videos today.</div>';if(window.DECK)DECK.lazy()}
+/* tap-to-page mini pager used by QURAN & HADITH and WORLD WATCH (buttons, so it never fights the screen swipe) */
+function pager(box,dots,onShow){const P=[...box.children];let i=0;if(!P.length)return;
+ dots.innerHTML=(P.length>1?`<button class="b" aria-label="Previous" data-d="-1">◀</button>`:"")+P.map((_,k)=>`<i class="${k?"":"on"}"></i>`).join("")+(P.length>1?`<button class="b" aria-label="Next" data-d="1">▶</button>`:"");
+ const show=k=>{i=(k+P.length)%P.length;P.forEach((p,n)=>p.classList.toggle("on",n===i));dots.querySelectorAll("i").forEach((d,n)=>d.className=n===i?"on":"");onShow&&onShow(P[i]);if(window.DECK)DECK.lazy()};
+ dots.onclick=e=>{const b=e.target.closest("button");if(b)show(i+ +b.dataset.d)};show(0)}
+fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{if(d.pm&&new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).getHours()>=18)Object.assign(d,d.pm);D=d;
+ $("hijri").textContent=(d.hijri||"").toUpperCase();if(d.fast&&typeof d.fast==="object")renderFast(d.fast);else if(d.fast){$("fastType").textContent="TODAY";$("fast").innerHTML=`<div class="box">🌙 ${esc(d.fast)}</div>`}else $("fast").innerHTML=`<div class="box">No fast flagged for today.</div>`;renderYT();
+ const sl=(x,l)=>x?`<div class="pg" data-l="${l}"><div class="box" style="font-size:17px;line-height:1.6"><p style="margin-top:0">“${esc(x.text)}”</p><p class="ref"><a href="${x.url}" target="_blank" rel="noopener">${esc(x.ref)} ↗</a></p></div></div>`:"";
+ $("car").innerHTML=sl(d.verse,"📖 QURAN")+sl(d.hadith,"📜 HADITH");pager($("car"),$("qdots"),s=>$("qhLbl").textContent=s.dataset.l);
+ const n=d.name||{};$("nAr").textContent=n.ar||"";$("nTr").textContent=(n.tr||"").toUpperCase();$("nMean").textContent=(n.meaning||"").toUpperCase();$("nTxt").textContent=n.text||"";if(n.url)$("nRef").innerHTML=`<a href="${n.url}" target="_blank" rel="noopener">Source ↗</a>`;
+ const W=d.world||[];$("wcar").innerHTML=W.map(x=>`<div class="pg"><div class="box wd"><div class="px" style="font-size:9px;line-height:1.6">${esc(x.src)}</div>${x.kind==="clock"?'<div class="clock"><i></i></div>':x.kind==="bar"?`<div class="bar"><b style="width:${x.pct}%"></b></div>`:x.kind==="game"?`<div class="gm px"><div class="h"></div><div class="h">B: RESTRAIN</div><div class="h">B: ESCALATE</div><div class="h">A: RESTRAIN</div><div class="eq">COMPETE</div><div>PROXY WAR</div><div class="h">A: ESCALATE</div><div>PROXY WAR</div><div>WW3 (ALL LOSE)</div></div><div class="meter">${[1,2,3,4,5].map(n=>`<i class="${n<=x.level?'on':''}"></i>`).join('')}</div>`:'<div class="globe"></div>'}${x.big?`<div class="big px">${esc(x.big)}</div>`:""}${x.vid?`<div class="vid"><iframe data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${x.vid.slice(2)}" title="${esc(x.src)}" allowfullscreen></iframe></div>`:""}<p style="font-size:14px">${esc(x.text)}</p>${x.url?`<p class="ref"><a href="${x.url}" target="_blank" rel="noopener">Source ↗</a></p>`:`<p class="ref">${esc(x.note||"")}</p>`}</div></div>`).join("");
+ pager($("wcar"),$("wdots"));
+ const q=d.quote;if(q)$("quote").innerHTML=`<p style="margin-top:0">“${esc(q.text)}”</p><p class="ref">— ${esc(q.by)} · <a href="${q.url}" target="_blank" rel="noopener">${esc(q.date||"source")} ↗</a></p>`}).catch(()=>{$("quote").textContent="Couldn't load today's content."});
+</script>
+<script>
+/* 6am / 6pm auto-refresh (SGT) */
+(function(){const tick=()=>{const n=new Date(),sg=new Date(n.getTime()+(n.getTimezoneOffset()+480)*6e4);const nx=new Date(sg);{const h=sg.getHours();if(h<6)nx.setHours(6,0,0,0);else if(h<18)nx.setHours(18,0,0,0);else{nx.setDate(nx.getDate()+1);nx.setHours(6,0,0,0)}};const ms=nx-sg;if(ms<1000){location.reload();return}const h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);document.getElementById("nref").textContent=`NEXT REFRESH ${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`};tick();setInterval(tick,1000)})();
+</script>
+<script>
+const LS=(k,v)=>v===undefined?JSON.parse(localStorage.getItem(k)||"null"):localStorage.setItem(k,JSON.stringify(v));
+const sgDay=()=>new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).toISOString().slice(0,10);
+function logSheet(type,data){const u=LS("sheetUrl")||"https://script.google.com/macros/s/AKfycbwNvaaKWn5hJTDxX9PyTDDyEYJIeIJYGfmKHdMNnvX4jQp01SaP1H7ba9VLnVG6iWJjow/exec";const q=LS("pendLog")||[];q.push({type,ts:new Date().toISOString(),...data});if(!u){LS("pendLog",q);return}
+ fetch(u,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify(q)}).then(()=>LS("pendLog",[])).catch(()=>LS("pendLog",q))}
+function setSheet(){const u=prompt("Paste your Google Sheet web app link",LS("sheetUrl")||"");if(u!==null){LS("sheetUrl",u.trim());logSheet("ping",{})}}
+// bond
+(function(){const end=new Date("2027-10-31T00:00:00+08:00"),st=new Date("2025-10-31T00:00:00+08:00"),now=new Date(),d=Math.ceil((end-now)/864e5);
+ $("bond").textContent=d+" DAYS";$("bondbar").style.width=Math.min(100,(now-st)/(end-st)*100)+"%";$("bondsub").textContent=`About ${Math.round(d/30.4)} months to go · free from Oct 2027`})();
+// quran reader
+const qr=$("qr");
+let qp=LS("qpos")||{page:39,ref:"2:238"};
+function qShow(){$("qpos").innerHTML=`Next: <b>Surah ${qp.ref.replace(":"," · verse ")}</b> · page ${qp.page}/604`}qShow();
+async function qLoad(p){$("qhead").textContent="PAGE "+p+"/604";$("qbody").textContent="Loading…";try{
+ const [a,e]=await Promise.all(["quran-uthmani","en.sahih"].map(ed=>fetch(`https://api.alquran.cloud/v1/page/${p}/${ed}`).then(r=>r.json())));
+ const A=a.data.ayahs,E=e.data.ayahs;$("qbody").innerHTML=A.map((x,i)=>`<div class="ay${x.surah.number+":"+x.numberInSurah==qp.ref?" cur":""}"><div class="px" style="font-size:8px">${x.surah.englishName} ${x.surah.number}:${x.numberInSurah}</div><div class="ar">${x.text}</div><div class="en">${E[i].text}</div></div>`).join("");
+ qr.last=A[A.length-1];qr.first=A[0];const c=document.querySelector(".ay.cur");if(c)c.scrollIntoView();else qr.scrollTop=0}catch(_){$("qbody").textContent="Couldn't load the page. Check your connection."}}
+function qOpen(){qr.classList.add("on");qr.p=qp.page;qLoad(qr.p);BOT.setMood("calm")}
+function qDone(){const l=qr.last;if(!l)return;logSheet("quran",{day:sgDay(),page:qr.p,upto:l.surah.number+":"+l.numberInSurah});
+ qp={page:Math.min(604,qr.p+1),ref:qr.p>=604?"1:1":""};LS("qpos",qp)}
+function qGo(d){if(d>0){qDone();if(qr.p>=604)return qStop();qr.p++}else if(qr.p>1)qr.p--;qp.page=qr.p;qLoad(qr.p).then(()=>{if(qr.first){qp.ref=qr.first.surah.number+":"+qr.first.numberInSurah;LS("qpos",qp);qShow()}})}
+function qStop(){qr.classList.remove("on");LS("qpos",qp);qShow();logSheet("quran-stop",{day:sgDay(),page:qp.page,next:qp.ref})}
+let tx=0,ty=0;qr.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY});qr.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy))qGo(dx>0?1:-1)});
+// job deck overlay
+function jOpen(u){const f=$("jfr");if(f.getAttribute("src")!==u)f.src=u;$("jov").classList.add("on")}
+function jClose(){$("jov").classList.remove("on")}
+// dhikr garden
+let dc=LS("dhikr")||0;const ST=["·","🌱","🌿","🪴","🌳"];
+function dDraw(){const full=Math.floor(dc/100)%10,cur=dc%100;let h="";for(let i=0;i<10;i++)h+=i<full?`<span>🌳</span>`:i==full?`<span class="grow">${ST[Math.min(4,Math.floor(cur/25))]}</span>`:`<span></span>`;
+ $("gd").innerHTML=h;$("dsum").textContent=`${dc} total · plant ${full+1}: ${cur}/100 · garden ${Math.floor(dc/1000)+1}`}
+function dTap(){dc++;LS("dhikr",dc);dDraw();if(navigator.vibrate)navigator.vibrate(dc%100?8:[60,40,60]);if(window.BOT)BOT.pop(dc%100?"heart":"star")}
+function dUndo(){if(dc>0){dc--;LS("dhikr",dc);dDraw()}}dDraw();
+// rest
+const RL=["😵","😩","😐","🙂","😄"];function rDraw(){const r=LS("rest")||{},t=sgDay();$("rs").innerHTML=RL.map((e,i)=>`<button class="b${r[t]==i+1?" sel":""}" aria-label="Rest ${i+1} of 5" onclick="rSet(${i+1})">${e}</button>`).join("");
+ const days=[...Array(7)].map((_,i)=>new Date(Date.now()-i*864e5+(new Date().getTimezoneOffset()+480)*6e4).toISOString().slice(0,10)).reverse();
+ $("rtrend").textContent="7 DAYS: "+days.map(d=>r[d]?"▁▂▄▆█"[r[d]-1]:"·").join(" ")}
+function rSet(v){const r=LS("rest")||{};r[sgDay()]=v;LS("rest",r);rDraw();logSheet("rest",{day:sgDay(),score:v})}rDraw();
+</script>
+<script>
+(function(){const q=encodeURIComponent("https://news.google.com/rss/search?q="+encodeURIComponent("nuclear OR NATO OR ceasefire OR missile OR Ukraine OR Gaza OR Iran OR Taiwan when:1d")+"&hl=en-SG&gl=SG&ceid=SG:en");
+fetch("https://api.rss2json.com/v1/api.json?rss_url="+q).then(r=>r.json()).then(d=>{const it=(d.items||[]).slice(0,6);if(!it.length)throw 0;
+ document.getElementById("nwT").textContent="LAST 24H";
+ document.getElementById("news").innerHTML=it.map(x=>{const p=x.title.lastIndexOf(" - "),t=p>0?x.title.slice(0,p):x.title,src=p>0?x.title.slice(p+3):"";const h=Math.max(0,Math.round((Date.now()-new Date(x.pubDate.replace(" ","T")+"Z"))/36e5));
+ return `<a class="nw" href="${x.link}" target="_blank" rel="noopener">▸ ${esc(t)}<div class="px" style="font-size:8px;margin-top:6px;line-height:1.6">${esc(src)} · ${h}H AGO</div></a>`}).join("")})
+ .catch(()=>{document.getElementById("nwT").textContent="OFFLINE";document.getElementById("news").textContent="Headlines unavailable right now."})})();
+</script>
+<script>
+/* pixel city (unchanged scene; pauses while the TODAY screen is off-screen) */
+(function(){const cv=document.getElementById("city"),x=cv.getContext("2d"),W=160,H=44,C=["#0e1512","#2d4636","#86a38a","#e2e8d6"];x.imageSmoothingEnabled=false;
+const B=[[4,14,12],[18,10,18],[30,16,8],[110,8,26],[122,12,32],[136,10,22],[148,10,28]];// x,w,h ; left=homes right=offices
+const ppl=[...Array(9)].map((_,i)=>({p:Math.random(),v:.0015+Math.random()*.002,bag:i%2}));let drops=[...Array(30)].map(()=>[Math.random()*W,Math.random()*H]),t=0;
+function hr(){return new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).getHours()}
+function f(c,a,b,w,h){x.fillStyle=C[c];x.fillRect(a|0,b|0,w,h)}
+function draw(){requestAnimationFrame(draw);if(window.DECK&&DECK.cur()!==0&&t>0)return;t++;const h=hr(),night=h<6||h>=19,dir=h>=5&&h<12?1:h>=16&&h<21?-1:0,k=window.WK||"sun";
+ f(night?0:k==="sun"?1:0,0,0,W,H);
+ if(night){for(let i=0;i<12;i++)if((i*7+t/20|0)%5)f(2,(i*37)%W,(i*13)%14+2,1,1);f(3,70,5,5,5);f(night?0:1,72,4,4,4)}
+ else if(k==="sun"){f(3,74,4,7,7);if(t%40<20){f(3,72,7,1,1);f(3,82,7,1,1)}}
+ else{const cx=(t/6)%(W+30)-30;f(2,cx,6,22,5);f(2,cx+5,3,12,4);f(2,cx+70,9,16,4)}
+ B.forEach(([a,w,bh],i)=>{f(1,a,H-6-bh,w,bh);for(let yy=H-4-bh;yy<H-8;yy+=4)for(let xx=a+2;xx<a+w-2;xx+=4){const lit=night?((xx+yy+i)%3!=0):(i>=3&&dir!==0);f(lit?3:0,xx,yy,2,2)}});
+ f(1,40,H-14,4,8);f(2,38,H-17,8,3);// tree
+ f(2,0,H-6,W,6);f(1,0,H-4,W,1);
+ const n=dir===0?(night?1:3):9;ppl.slice(0,n).forEach((q,i)=>{if(dir){q.p+=q.v*dir;if(q.p>1)q.p=0;if(q.p<0)q.p=1}else q.p+=Math.sin(t/60+i)*.0008;
+  const px=46+q.p*60,leg=(t/8|0)%2;f(3,px,H-13,2,2);f(night?2:3,px,H-11,2,3);f(3,px-(leg?1:0),H-8,1,2);f(3,px+1+(leg?1:0),H-8,1,2);if(q.bag&&dir===1)f(2,px+2,H-10,2,2);if(k==="rain")f(2,px-1,H-15,4,1)});
+ if(k==="rain")drops.forEach(d=>{d[1]+=2;d[0]-=.5;if(d[1]>H-6){d[1]=0;d[0]=Math.random()*W}f(2,d[0],d[1],1,2)});
+}draw()})();
+
+/* 💰 FINANCE — decrypts fin.enc.json in the browser (PBKDF2 + AES-GCM). No passcode or figures live in this file. */
+const $$m=n=>"S$"+(+n).toLocaleString("en-SG",{minimumFractionDigits:2,maximumFractionDigits:2});
+const fB=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function fUnlock(pw){pw=pw||document.getElementById("fpw").value;try{const e=await(await fetch("fin.enc.json?"+Date.now())).json();const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:fB(e.s),iterations:600000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);const d=JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:fB(e.iv)},k,fB(e.ct))));sessionStorage.fpw=pw;fRender(d)}catch(x){const r=document.getElementById("ferr");if(r)r.innerHTML='<span class="chip">✕ Wrong passcode</span>'}}
+function fBar(p,red){return `<div class="bbar"><i class="${red?"over":""}" style="width:${Math.min(100,p)}%"></i></div>`}
+const neg=(v,s)=>v<0?`<span class="chip">▼ ${s}</span>`:s;
+function fRender(d){const lim=new Date(Date.now()+30*864e5).toISOString().slice(0,10);const due=d.bills_due.filter(b=>!b.paid&&b.due<=lim);const dueT=due.reduce((a,b)=>a+b.amt,0);const safe=d.safe_to_spend!=null?d.safe_to_spend:d.balance.amt-dueT;const wk=d.week;const today=new Date().toISOString().slice(0,10);
+let h=`<div style="display:flex;gap:18px;flex-wrap:wrap"><div><div class="k px">BALANCE (${d.balance.date})</div><div class="v px">${$$m(d.balance.amt)}</div></div><div><div class="k px">SAFE TO SPEND TILL PAYDAY</div><div class="v px">${neg(safe,$$m(safe))}</div></div></div>
+<div style="margin-top:14px">Can I afford it? <input id="fa" type="number" inputmode="decimal" placeholder="S$" style="width:100px"> <button class="b" onclick="fAfford(${safe},${wk.cap-wk.spent})">CHECK</button> <div id="far" style="margin-top:6px"></div></div>
+<div class="k px">THIS WEEK ${$$m(wk.spent)} / ${$$m(wk.cap)}${wk.spent>wk.cap?" · OVER":""}</div>${fBar(wk.spent/wk.cap*100,wk.spent>wk.cap)}
+<div class="k px">BILLS DUE NEXT 30 DAYS (${$$m(dueT)})</div><div>${d.bills_due.sort((a,b)=>a.due<b.due?-1:1).map(b=>`<div class="row"><span>${b.paid?"✅":(b.due<today?"⚠️":"⬜")} ${b.due.slice(5)} ${b.name}</span><b>${$$m(b.amt)}</b></div>`).join("")}</div>
+<div class="k px">DEBTS</div>${d.debts.filter(x=>x.total>0).map(x=>`<div style="margin-top:6px">${x.to}: ${$$m(x.paid)} / ${$$m(x.total)} · ${$$m(x.monthly)}/mo · ${x.left_months} mo left</div>${fBar(x.paid/x.total*100)}`).join("")}${d.debts.some(x=>x.total==0)?`<div style="margin-top:6px">OCBC investment amount not set yet</div>`:""}
+<div class="k px">SAVINGS</div><div>${d.savings?$$m(d.savings):"Not set yet"} · Nov target ${$$m((d.budget_nov.find(b=>/POSB/.test(b.cat))||{limit:0}).limit)}</div>
+<div class="k px">TOP LEAKS (SEP–OCT)</div><div>${d.leaks.map(l=>`<div style="margin-top:6px">🕳 ${l.name} <b>${$$m(l.amt)}</b><br><span>${l.tip}</span></div>`).join("")}</div>
+<div class="k px">MONTHS</div><div>${d.months.map(m=>`<div>${m.m}: in ${$$m(m.in)} · out ${$$m(m.out)} · <b>${neg(m.in-m.out,$$m(m.in-m.out))}</b></div>`).join("")}</div>
+<div class="k px">TIPS</div><ul style="margin:4px 0;padding-left:18px">${d.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
+<button class="b" onclick="sessionStorage.removeItem('fpw');location.reload()">🔒 LOCK</button>`;document.getElementById("fin").innerHTML=h;if(window.BOT&&DECK.cur()===DECK.idx("finS"))BOT.pop("coin")}
+function fAfford(safe,wk){const a=+document.getElementById("fa").value,r=document.getElementById("far");if(!a)return;r.innerHTML=a>safe?`<span class="chip">❌ No, you're short ${$$m(a-safe)} for bills</span>`:a>wk?`<span class="chip">⚠️ Over this week's cap by ${$$m(a-wk)}</span>`:"✅ OK"}
+</script>
+<script>
+/* ===== MASCOT · pixel blob drawn on a 40×40 canvas, scaled 3× with image-rendering: pixelated =====
+   Moods: happy | excited | curious | detective | sleepy | calm | coin | worried | wonder  (set per screen with data-mood) */
+const BOT=(()=>{const cv=$("bot"),c=cv.getContext("2d");c.imageSmoothingEnabled=false;
+ const RM=matchMedia("(prefers-reduced-motion: reduce)"),OUT="#000",BODY="#FFFFFF",SHADE="#BFCAD6",CHEEK="#FF6FAE",GOLD="#FFCC00";
+ let mood="happy",look={x:0,y:0},ovr=null,ovrUntil=0,sq=0,lean=0,blinkAt=performance.now()+1800,blinkEnd=0,pops=[],moodT=0;
+ const P=(x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),w,h)};
+ const G=(rows,x,y,col)=>{x=Math.round(x);y=Math.round(y);for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]])rows.forEach((r,j)=>[...r].forEach((b,i)=>{if(b==="1")P(x+i+dx,y+j+dy,1,1,OUT)}));rows.forEach((r,j)=>[...r].forEach((b,i)=>{if(b==="1")P(x+i,y+j,1,1,col)}))};
+ const GL={heart:["01010","11111","01110","00100"],star:["00100","01110","11111","01110","00100"],coin:["0110","1111","1111","0110"],z:["111","001","010","100","111"],q:["111","001","011","000","010"],sp:["010","111","010"]};
+ function blob(cx,by,w,h,col){const top=by-h;for(let y=0;y<h;y++){const v=(y+.5)/h,yy=v<.6?(.6-v)/.6:(v-.6)/.4*.8,hw=Math.round(w/2*Math.pow(Math.max(0,1-Math.pow(yy,2.4)),1/2.4));P(cx-hw,top+y,hw*2,1,col)}}
+ function eye(kind,x,y,lx,ly){x=Math.round(x);y=Math.round(y);
+  switch(kind){
+   case"blink":P(x,y+3,5,1,OUT);break;
+   case"happy":P(x,y+3,1,1,OUT);P(x+1,y+2,1,1,OUT);P(x+2,y+1,1,1,OUT);P(x+3,y+2,1,1,OUT);P(x+4,y+3,1,1,OUT);break;
+   case"peace":P(x,y+2,1,1,OUT);P(x+1,y+3,3,1,OUT);P(x+4,y+2,1,1,OUT);break;
+   case"sleep":P(x,y+3,5,1,OUT);P(x+1,y+4,3,1,OUT);break;
+   case"half":P(x,y+3,5,1,OUT);P(x,y+4,5,1,OUT);P(x+1,y+5,3,1,OUT);P(x+1+lx,y+4,1,1,"#fff");break;
+   case"squint":P(x,y+2,5,2,OUT);P(x+1+lx,y+2,1,1,"#fff");break;
+   case"coin":P(x+1+lx,y+ly,3,1,OUT);P(x+lx,y+1+ly,5,4,OUT);P(x+1+lx,y+5+ly,3,1,OUT);P(x+1+lx,y+1+ly,3,4,GOLD);P(x+2+lx,y+2+ly,1,2,"#9A6A00");break;
+   case"big":P(x+lx,y-1+ly,5,1,OUT);P(x-1+lx,y+ly,7,6,OUT);P(x+lx,y+6+ly,5,1,OUT);P(x+lx+1,y+ly,2,2,"#fff");P(x+lx+4,y+ly+3,1,1,"#fff");break;
+   default:P(x+1+lx,y+ly,3,1,OUT);P(x+lx,y+1+ly,5,4,OUT);P(x+1+lx,y+5+ly,3,1,OUT);P(x+1+lx+(lx>0?1:0),y+1+ly,2,2,"#fff")}}
+ function frame(ts){requestAnimationFrame(frame);const s=RM.matches?0:ts/1000,ms=ts;c.clearRect(0,0,40,40);
+  let bob=0,sx=1,sy=1,shake=0,tgt={x:0,y:0};const ab=k=>Math.abs(Math.sin(s*Math.PI*k));
+  switch(mood){
+   case"happy":{const p=ab(1.4);bob=-p*5;sy=1+p*.06-(p<.15?(.15-p)*1.4:0);sx=2-sy;tgt={x:0,y:-.3};break}
+   case"excited":{const p=ab(2.4);bob=-p*6;sy=1+p*.08-(p<.2?(.2-p)*1.5:0);sx=2-sy;tgt={x:0,y:-.5};break}
+   case"curious":{bob=-Math.sin(s*2)*1;sy=1+Math.sin(s*2)*.03;tgt=[{x:-1,y:0},{x:1,y:0},{x:0,y:-1},{x:0,y:0}][Math.floor(s/1.1)%4];break}
+   case"detective":{bob=-ab(.7)*1;shake=Math.round(Math.sin(s*1.2)*1.5);tgt={x:Math.sin(s*1.3)>0?1:-1,y:0};break}
+   case"sleepy":{const b=Math.sin(s*1.3);sy=1+b*.06;sx=1-b*.04;break}
+   case"calm":{bob=-Math.sin(s*1.4)*1.5;sy=1+Math.sin(s*1.4)*.03;break}
+   case"coin":{bob=-ab(.9)*2;tgt=[{x:-1,y:0},{x:1,y:-.5},{x:0,y:-1},{x:1,y:0}][Math.floor(s/1.3)%4];break}
+   case"worried":{shake=Math.floor(s*10)%2;tgt={x:Math.floor(s/.6)%2?1:-1,y:0};break}
+   case"wonder":{bob=-Math.sin(s*1.8)*2.5;tgt={x:0,y:-1};break}}
+  if(ovr&&ms<ovrUntil)tgt=ovr;else ovr=null;
+  look.x+=(tgt.x-look.x)*.25;look.y+=(tgt.y-look.y)*.25;sq*=.86;
+  sx+=sq*.3+Math.abs(lean)*.12;sy-=sq*.28+Math.abs(lean)*.1;
+  const w=24*sx,h=18*sy,cx=20+shake+Math.round(lean*3),by=36+Math.round(bob),top=by-h;
+  P(cx-w/2+3,38,Math.max(4,w-6+bob),2,"rgba(0,0,0,.28)");
+  if(mood!=="detective"){const tip=mood==="sleepy"?"#8A8A8A":mood==="excited"?(Math.floor(s*6)%2?"#FFE600":"#FF2E9A"):mood==="coin"?GOLD:mood==="worried"?"#FF3B30":"#39FF14";
+   P(cx,top-4,1,4,OUT);P(cx-2,top-7,5,4,OUT);P(cx-1,top-6,3,2,tip)}
+  blob(cx,by+1,w+2,h+2,OUT);blob(cx,by,w,h,SHADE);blob(cx,by-2,w,h-2,BODY);
+  const ey=top+h*.36,lx=Math.round(look.x*1.6),ly=Math.round(look.y*1.2);
+  if(ms>blinkAt){blinkEnd=ms+130;blinkAt=ms+2200+Math.random()*2600}const bl=ms<blinkEnd;
+  let L="open",R="open";
+  if(mood==="happy")L=R=Math.floor(s/2.2)%3===2?"happy":"open";
+  if(mood==="excited")L=R="big";
+  if(mood==="calm")L=R=Math.floor(s/3)%4===3?"open":"peace";
+  if(mood==="sleepy")L=R=(s%6)>4.6?"half":"sleep";
+  if(mood==="coin")L=R="coin";
+  if(mood==="wonder")L=R="big";
+  if(mood==="detective")R="squint";
+  if(bl&&L!=="peace"&&L!=="sleep")L=R="blink";
+  eye(L,cx-8,ey,lx,ly);eye(R,cx+3,ey,lx,ly);
+  const my=Math.round(ey+7),mx=Math.round(cx)+lx;
+  if(["happy","excited","wonder","calm","coin"].includes(mood)){P(cx-11,ey+5,3,1,CHEEK);P(cx+8,ey+5,3,1,CHEEK)}
+  switch(mood){
+   case"happy":case"coin":P(mx-2,my,1,1,OUT);P(mx-1,my+1,3,1,OUT);P(mx+2,my,1,1,OUT);break;
+   case"excited":P(mx-2,my,5,1,OUT);P(mx-1,my+1,3,2,OUT);P(mx,my+2,1,1,CHEEK);break;
+   case"calm":P(mx-1,my+1,3,1,OUT);break;
+   case"sleepy":{const o=Math.sin(s*1.3)>0?2:1;P(mx-1,my,2,o,OUT);break}
+   case"curious":case"wonder":P(mx-1,my,2,2,OUT);break;
+   case"detective":P(mx-2,my+1,4,1,OUT);break;
+   case"worried":P(mx-2,my+1,1,1,OUT);P(mx-1,my,1,1,OUT);P(mx,my+1,1,1,OUT);P(mx+1,my,1,1,OUT);P(cx-9,ey-3,3,1,OUT);P(cx+6,ey-3,3,1,OUT);break}
+  if(mood==="detective"){const hy=Math.round(top);P(cx-10,hy-1,20,4,OUT);P(cx-9,hy,18,2,"#7A4A1E");P(cx-7,hy-6,14,6,OUT);P(cx-6,hy-5,12,5,"#7A4A1E");P(cx-6,hy-2,12,1,"#C08A4A");P(cx-1,hy-6,2,1,"#C08A4A");
+   const gx=Math.round(cx+9+Math.sin(s*1.3)*1),gy=Math.round(by-9+Math.sin(s*2.6));P(gx,gy,7,7,OUT);P(gx+1,gy+1,5,5,"#BFF3FF");P(gx+1,gy+1,2,1,"#fff");P(gx+6,gy+6,2,2,OUT);P(gx+7,gy+7,2,2,OUT)}
+  if(mood==="sleepy")for(let i=0;i<3;i++){const p=(s*.35+i/3)%1;if(p<.85)G(GL.z,28+p*7,14-p*13,"#fff")}
+  if(mood==="curious"&&s%3.3>2.2)G(GL.q,32,4+Math.round(Math.sin(s*6)),"#fff");
+  if(mood==="worried"){const d=Math.floor(s*2)%2;P(cx+11,top+3+d,1,1,OUT);P(cx+10,top+4+d,3,3,OUT);P(cx+11,top+5+d,1,1,"#6FD3FF")}
+  if(mood==="coin"&&s%2.4<1.2){const p=(s%2.4)/1.2;G(GL.coin,6,16-p*12,GOLD)}
+  if(mood==="excited"||mood==="wonder")[[4,8],[33,5],[35,22],[3,25]].forEach(([x,y],i)=>{if((Math.floor(s*(mood==="excited"?5:2))+i)%3!==0)G(GL.sp,x,y,mood==="excited"?"#FFE600":"#fff")});
+  pops=pops.filter(p=>ms-p.t<900);pops.forEach(p=>{const k=(ms-p.t)/900;G(GL[p.k]||GL.heart,p.x,top-4-k*14,p.k==="coin"?GOLD:p.k==="star"?"#FFE600":CHEEK)})}
+ requestAnimationFrame(frame);
+ return{
+  setMood(m){mood=m||"happy";moodT=performance.now()},
+  mood:()=>mood,
+  react(dx,dy){ovr={x:Math.sign(dx)||0,y:Math.sign(dy)||0};ovrUntil=performance.now()+520;sq=1;lean=0},
+  track(dx,dy){const W=innerWidth||400;ovr={x:Math.max(-1,Math.min(1,dx/60)),y:Math.max(-1,Math.min(1,dy/60))};ovrUntil=performance.now()+200;lean=Math.max(-1,Math.min(1,dx/W*2))},
+  release(){lean=0},
+  pop(k){pops.push({k,t:performance.now(),x:16+Math.random()*4});if(pops.length>6)pops.shift()}}})();
+window.BOT=BOT;
+</script>
+<script>
+/* ===== DECK · full-screen slides, swipe / drag / arrow keys / dots / wheel ===== */
+const DECK=(()=>{const deck=$("deck"),S=[...deck.querySelectorAll(".slide")],N=S.length,dots=$("dots"),RM=matchMedia("(prefers-reduced-motion: reduce)");
+ const EASE="cubic-bezier(.22,.9,.24,1)",dur=()=>RM.matches?0:620;let cur=0,cleanup=null;
+ const lum=h=>{const v=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(c=>c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4));return .2126*v[0]+.7152*v[1]+.0722*v[2]};
+ S.forEach((s,i)=>{const bg=s.dataset.bg,fg=s.dataset.fg;s.style.setProperty("--bg",bg);s.style.setProperty("--fg",fg);s.style.setProperty("--sh",lum(fg)>.5?"#000":"#fff");
+  s.querySelector(".cnt").textContent=String(i+1).padStart(2,"0")+"/"+String(N).padStart(2,"0");
+  const b=document.createElement("button");b.setAttribute("aria-label",(i+1)+": "+s.getAttribute("aria-label"));b.onclick=()=>go(i,"x");dots.appendChild(b)});
+ const inner=s=>s.querySelector(".inner");
+ function T(el,x,y,sc,anim,unit){el.style.transition=anim&&dur()?`transform ${dur()}ms ${EASE}`:"none";el.style.transform=`translate3d(${x}${unit||"px"},${y}${unit||"px"},0) scale(${sc})`}
+ function chrome(){const s=S[cur],r=document.documentElement.style;r.setProperty("--bg",s.dataset.bg);r.setProperty("--fg",s.dataset.fg);r.setProperty("--sh",s.style.getPropertyValue("--sh"));
+  document.querySelector('meta[name="theme-color"]').content=s.dataset.bg;
+  [...dots.children].forEach((d,i)=>{d.classList.toggle("on",i===cur);d.setAttribute("aria-current",i===cur?"true":"false")});
+  S.forEach((x,i)=>{const on=i===cur;x.inert=!on;x.setAttribute("aria-hidden",on?"false":"true")});
+  history.replaceState(null,"","#"+s.id);lazy()}
+ function lazy(){S[cur].querySelectorAll("iframe[data-src]").forEach(f=>{if(f.closest(".pg")&&!f.closest(".pg.on"))return;f.src=f.dataset.src;f.removeAttribute("data-src")})}
+ function settle(){if(cleanup){cleanup();cleanup=null}}
+ /* go(n): outgoing slides fully away; incoming slides in from the far side with a slight scale-up, its content trailing (parallax) */
+ function go(n,axis,dir,fromDrag){settle();if(n<0||n>=N||n===cur){snap();return}
+  dir=dir||(n>cur?1:-1);axis=axis||"x";const o=S[cur],i=S[n],X=axis==="x",d=dir*100;
+  i.classList.add("mv");
+  if(!fromDrag){T(i,X?d:0,X?0:d,.86,false,"%");T(inner(i),X?d*.25:0,X?0:d*.25,1,false,"%");void i.offsetWidth}
+  else{T(inner(i),X?d*.12:0,X?0:d*.12,1,false,"%");void i.offsetWidth}
+  T(o,X?-d:0,X?0:-d,.94,true,"%");T(inner(o),X?-d*.15:0,X?0:-d*.15,1,true,"%");
+  T(i,0,0,1,true,"%");T(inner(i),0,0,1,true,"%");
+  o.classList.remove("on");i.classList.add("on");cur=n;chrome();
+  BOT.react(X?-dir:0,X?0:-dir);const m=i.dataset.mood;setTimeout(()=>{if(cur===n)BOT.setMood(m)},dur()?380:0);
+  const done=()=>{o.classList.remove("mv");i.classList.remove("mv");[o,inner(o)].forEach(e=>{e.style.transition="none";e.style.transform=""});[i,inner(i)].forEach(e=>{e.style.transition="none";e.style.transform=""})};
+  if(!dur())done();else{const t=setTimeout(()=>{cleanup=null;done()},dur()+40);cleanup=()=>{clearTimeout(t);done()}}}
+ function snap(){const o=S[cur];T(o,0,0,1,true);if(nb!=null&&S[nb]){const e=S[nb],k=nbDir*100;T(e,ax==="x"?k:0,ax==="x"?0:k,.86,true,"%");const z=e;setTimeout(()=>{if(z!==S[cur]){z.classList.remove("mv");z.style.transition="none";z.style.transform=""}},dur()+40)}BOT.release()}
+ /* --- drag / swipe --- */
+ let st=null,ax=null,nb=null,nbDir=0,dragged=false;
+ const W=()=>innerWidth,H=()=>innerHeight;
+ const busyOverlay=()=>!!document.querySelector(".ov.on");
+ function start(x,y,target,mouse){if(busyOverlay())return;if(target.closest("input,textarea,select,iframe"))return;
+  settle();const sc=target.closest(".scroll");st={x,y,t:performance.now(),sc,top:sc?sc.scrollTop<=0:true,bot:sc?sc.scrollTop+sc.clientHeight>=sc.scrollHeight-1:true,mouse};ax=null;nb=null;dragged=false}
+ function move(x,y,e){if(!st)return false;const dx=x-st.x,dy=y-st.y;
+  if(!ax){if(Math.hypot(dx,dy)<9)return false;
+   if(Math.abs(dx)>Math.abs(dy)*1.1)ax="x";
+   else{/* vertical: let an inner scroller scroll unless it is already at that edge (or it's a mouse drag) */
+    const canScroll=st.sc&&st.sc.scrollHeight>st.sc.clientHeight+2&&!st.mouse;
+    if(canScroll&&((dy>0&&!st.top)||(dy<0&&!st.bot))){st=null;return false}
+    if(e&&e.cancelable===false){st=null;return false}ax="y"}}
+  dragged=true;const X=ax==="x",dd=X?dx:dy,L=X?W():H(),dir=dd<0?1:-1,n=cur+dir;
+  if(nb!=null&&nb!==n&&S[nb]){S[nb].classList.remove("mv");S[nb].style.transform=""}
+  const o=S[cur];o.style.transition="none";
+  if(n<0||n>=N){nb=null;const r=dd*.3;o.style.transform=`translate3d(${X?r:0}px,${X?0:r}px,0)`}
+  else{nb=n;nbDir=dir;const e2=S[n],p=Math.min(1,Math.abs(dd)/L);e2.classList.add("mv");
+   o.style.transform=`translate3d(${X?dd:0}px,${X?0:dd}px,0) scale(${1-p*.06})`;
+   e2.style.transition="none";e2.style.transform=`translate3d(${X?dir*L+dd:0}px,${X?0:dir*L+dd}px,0) scale(${.86+.14*p})`}
+  BOT.track(X?dx:0,X?0:dy);return true}
+ function end(x,y){if(!st)return;const dx=x-st.x,dy=y-st.y,dt=Math.max(1,performance.now()-st.t),X=ax==="x",dd=X?dx:dy,v=Math.abs(dd)/dt,L=X?W():H();
+  const s=st;st=null;if(!ax)return;
+  if(nb!=null&&(Math.abs(dd)>L*.18||(v>.45&&Math.abs(dd)>30))){const n=nb;nb=null;go(n,ax,nbDir,true)}else snap();ax=null}
+ deck.addEventListener("touchstart",e=>{if(e.touches.length>1){st=null;return}const t=e.touches[0];start(t.clientX,t.clientY,e.target,false)},{passive:true});
+ deck.addEventListener("touchmove",e=>{if(!st)return;const t=e.touches[0];if(move(t.clientX,t.clientY,e)&&e.cancelable)e.preventDefault()},{passive:false});
+ deck.addEventListener("touchend",e=>{const t=e.changedTouches[0];end(t.clientX,t.clientY)});
+ deck.addEventListener("touchcancel",()=>{if(st){st=null;snap()}});
+ deck.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse"||e.button!==0)return;if(e.target.closest("button,a,input,label,textarea,select,[role=button]"))return;start(e.clientX,e.clientY,e.target,true);if(st)e.preventDefault()});
+ addEventListener("pointermove",e=>{if(e.pointerType==="mouse"&&st&&st.mouse)move(e.clientX,e.clientY)});
+ addEventListener("pointerup",e=>{if(e.pointerType==="mouse"&&st&&st.mouse)end(e.clientX,e.clientY)});
+ deck.addEventListener("click",e=>{if(dragged){e.preventDefault();e.stopPropagation();dragged=false}},true);
+ /* wheel / trackpad: only flips when the inner scroller can't scroll further */
+ let wl=0;deck.addEventListener("wheel",e=>{if(busyOverlay())return;const sc=e.target.closest(".scroll"),dy=Math.abs(e.deltaY)>Math.abs(e.deltaX)?e.deltaY:e.deltaX;if(Math.abs(dy)<24)return;
+  if(sc&&Math.abs(e.deltaY)>=Math.abs(e.deltaX)&&((dy>0&&sc.scrollTop+sc.clientHeight<sc.scrollHeight-1)||(dy<0&&sc.scrollTop>0)))return;
+  const t=performance.now();if(t-wl<800)return;wl=t;go(cur+(dy>0?1:-1),Math.abs(e.deltaY)>=Math.abs(e.deltaX)?"y":"x")},{passive:true});
+ addEventListener("keydown",e=>{if(busyOverlay()){if(e.key==="Escape"){if($("qr").classList.contains("on"))qStop();else jClose()}return}
+  if(e.target.closest&&e.target.closest("input,textarea,select"))return;
+  const k=e.key;if(k==="ArrowRight"||k==="PageDown"){go(cur+1,"x");e.preventDefault()}else if(k==="ArrowLeft"||k==="PageUp"){go(cur-1,"x");e.preventDefault()}
+  else if(k==="ArrowDown"){go(cur+1,"y");e.preventDefault()}else if(k==="ArrowUp"){go(cur-1,"y");e.preventDefault()}
+  else if(k==="Home"){go(0,"x");e.preventDefault()}else if(k==="End"){go(N-1,"x");e.preventDefault()}});
+ /* start on the screen named in the URL hash (e.g. retro.html#finS) */
+ const h=location.hash.slice(1),hi=S.findIndex(s=>s.id===h);cur=hi>0?hi:0;S[cur].classList.add("on");chrome();BOT.setMood(S[cur].dataset.mood);
+ return{go,cur:()=>cur,idx:id=>S.findIndex(s=>s.id===id),lazy,N}})();
+window.DECK=DECK;
+if(sessionStorage.fpw)fUnlock(sessionStorage.fpw);
+</script>
+</body></html>
