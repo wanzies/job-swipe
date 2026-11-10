@@ -57,7 +57,27 @@ input::placeholder{color:var(--fg);opacity:1}
 .pcl{position:absolute;left:0;top:14px;width:40px;height:12px;background:var(--fg);box-shadow:8px -8px 0 0 var(--fg),20px -8px 0 0 var(--fg);animation:mv 6s steps(6) infinite alternate}
 .pdr{position:absolute;width:3px;height:6px;background:var(--fg);animation:dr .6s steps(4) infinite}
 @keyframes blink{50%{opacity:.55}}@keyframes mv{to{transform:translateX(18px)}}@keyframes dr{from{transform:translateY(28px)}to{transform:translateY(48px)}}
-#city{width:100%;height:auto;min-height:110px;display:block}
+.todo-add{display:flex;gap:8px;align-items:stretch;margin:0 0 12px;touch-action:manipulation}
+.todo-add input{flex:1;min-width:0;touch-action:manipulation}
+.todo-add .b{margin:0;flex-shrink:0}
+.todo-item{display:flex;align-items:stretch;gap:8px;margin:0 0 10px;touch-action:manipulation}
+.todo-item .chk,.todo-item .del{flex:0 0 44px;width:44px;min-width:44px;min-height:44px;margin:0;padding:0;font-size:16px;line-height:1;touch-action:manipulation}
+.todo-item .todo-txt{flex:1;display:flex;align-items:center;min-height:44px;padding:8px 4px;text-align:left;background:none;border:0;color:inherit;font:inherit;cursor:pointer;touch-action:manipulation;user-select:text;-webkit-user-select:text}
+.todo-item.done .todo-txt{text-decoration:line-through;opacity:.55}
+.todo-hint{font-size:8px;line-height:1.8;margin:0 0 12px}
+.cal-day{margin:0 0 16px}
+.cal-ev{margin:0 0 10px;padding-bottom:8px;border-bottom:3px dashed var(--fg)}
+.cal-ev:last-child{border-bottom:0}
+.cal-t{font-size:10px;margin-bottom:4px;line-height:1.6}
+.cal-title{font-size:15px;line-height:1.45}
+.cal-loc{font-size:12px;margin-top:2px}
+.ctag{display:inline-block;font-family:"Press Start 2P",ui-monospace,monospace;font-size:7px;line-height:1.4;padding:3px 5px;margin-left:6px;vertical-align:middle}
+.ctag.main{background:var(--fg);color:var(--bg)}
+.ctag.family{background:#FFE600;color:#000;box-shadow:0 0 0 2px var(--fg)}
+.plock{width:40px;height:48px;position:relative;margin:8px 0 14px}
+.plock .sh{position:absolute;left:8px;top:0;width:24px;height:18px;box-sizing:border-box;border:6px solid var(--fg);border-bottom:0}
+.plock .bd{position:absolute;left:0;top:16px;width:40px;height:32px;background:var(--fg)}
+.plock .bd::after{content:"";position:absolute;left:16px;top:8px;width:8px;height:8px;background:var(--bg);box-shadow:2px 8px 0 0 var(--bg),-2px 8px 0 0 var(--bg),0 10px 0 0 var(--bg)}
 .cres{width:40px;height:40px;border-radius:50%;box-shadow:-10px 4px 0 0 var(--fg);animation:blink 2s steps(2) infinite;margin:4px 0 8px 12px}
 .ar{font-family:Amiri,"Noto Naskh Arabic","Geeza Pro","Times New Roman",serif;font-weight:700}
 .flip{perspective:900px;cursor:pointer;height:260px;margin:6px 8px 18px 6px}
@@ -101,7 +121,7 @@ input::placeholder{color:var(--fg);opacity:1}
   HOW TO EDIT A SCREEN
   Each <section class="slide"> below is one full-screen topic.
    data-bg   = background colour   data-fg = text colour (keep the pair at 4.5:1 contrast or better)
-   data-mood = mascot mood: happy | excited | curious | detective | sleepy | calm | coin | worried | wonder
+   data-mood = mascot mood: happy | excited | curious | detective | sleepy | calm | coin | worried | wonder | focused
    .ttl      = the big pixel title   .sub = the short line under it
   Order of the sections = order of the swipe deck and the dots.
 -->
@@ -115,14 +135,47 @@ input::placeholder{color:var(--fg);opacity:1}
   <p class="sub px" id="hijri"></p>
   <div class="scroll">
    <div class="box" style="min-height:76px"><div class="sky" id="sky"></div><div class="px" id="wx" style="font-size:10px;padding-right:76px;line-height:2">LOADING WEATHER…</div></div>
-   <div class="box" style="padding:6px"><canvas id="city" width="160" height="44" aria-label="Pixel city: people walk to work in the morning and home in the evening"></canvas></div>
    <p class="px" id="nref" style="font-size:9px"></p>
    <p class="px" style="font-size:8px;line-height:2">◀ SWIPE ▶ · ▲▼ · ARROW KEYS · TAP THE DOTS</p>
   </div>
  </div>
 </section>
 
-<!-- 02 FAST · colour: data-bg/data-fg · text: filled from daily JSON "fast" · mood: calm -->
+<!-- 02 TO-DO · colour: data-bg/data-fg · daily list in localStorage, clears at 00:00 and 12:00 SGT · mood: focused -->
+<section class="slide" id="todoS" data-bg="#FF2D55" data-fg="#000000" data-mood="focused" aria-label="To-do">
+ <div class="inner">
+  <div class="top px"><span class="ico">✅</span><span class="cnt"></span></div>
+  <h2 class="ttl px">TO-DO</h2>
+  <p class="sub px">TODAY'S LIST</p>
+  <div class="scroll">
+   <div class="box todo-ui" id="todoBox">
+    <p class="px todo-hint" id="todoReset"></p>
+    <form class="todo-add" id="todoForm" autocomplete="off">
+     <input id="todoIn" type="text" maxlength="200" placeholder="WRITE A TO-DO" aria-label="New to-do" enterkeyhint="done">
+     <button class="b" type="submit" aria-label="Add to-do">ADD</button>
+    </form>
+    <div id="todoList"></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- 03 CALENDAR · colour: data-bg/data-fg · locked; events from cal.enc.json after the same passcode · mood: curious -->
+<section class="slide" id="calS" data-bg="#0055FF" data-fg="#FFFFFF" data-mood="curious" aria-label="Calendar">
+ <div class="inner">
+  <div class="top px"><span class="ico">📅</span><span class="cnt"></span></div>
+  <h2 class="ttl px">CALENDAR</h2>
+  <p class="sub px">NEXT 7 DAYS</p>
+  <div class="scroll">
+   <div class="box" id="cal"><div class="plock" aria-hidden="true"><span class="sh"></span><span class="bd"></span></div>
+    <div style="margin-bottom:8px">🔒 Locked</div>
+    <input id="cpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Calendar passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
+    <div id="cerr" style="margin-top:8px"></div></div>
+  </div>
+ </div>
+</section>
+
+<!-- 04 FAST · colour: data-bg/data-fg · text: filled from daily JSON "fast" · mood: calm -->
 <section class="slide" id="fastS" data-bg="#7B2CFF" data-fg="#FFFFFF" data-mood="calm" aria-label="Fast">
  <div class="inner">
   <div class="top px"><span class="ico">🌙</span><span class="cnt"></span></div>
@@ -132,7 +185,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 03 BOND ENDS · colour: data-bg/data-fg · text: countdown to 31 Oct 2027 (script "bond") · mood: detective -->
+<!-- 05 BOND ENDS · colour: data-bg/data-fg · text: countdown to 31 Oct 2027 (script "bond") · mood: detective -->
 <section class="slide" id="bondS" data-bg="#FFB000" data-fg="#000000" data-mood="detective" aria-label="Bond ends">
  <div class="inner">
   <div class="top px"><span class="ico">⏳</span><span class="cnt"></span></div>
@@ -144,7 +197,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 04 QURAN TRACKER · colour: data-bg/data-fg · opens the full-screen reader · mood: calm -->
+<!-- 06 QURAN TRACKER · colour: data-bg/data-fg · opens the full-screen reader · mood: calm -->
 <section class="slide" id="quranS" data-bg="#00C2A8" data-fg="#000000" data-mood="calm" aria-label="Quran tracker">
  <div class="inner">
   <div class="top px"><span class="ico">📖</span><span class="cnt"></span></div>
@@ -156,7 +209,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 05 DHIKR GARDEN · colour: data-bg/data-fg · every 100 taps grows a tree · mood: calm -->
+<!-- 07 DHIKR GARDEN · colour: data-bg/data-fg · every 100 taps grows a tree · mood: calm -->
 <section class="slide" id="dhikrS" data-bg="#A6FF00" data-fg="#000000" data-mood="calm" aria-label="Dhikr garden">
  <div class="inner">
   <div class="top px"><span class="ico">🌱</span><span class="cnt"></span></div>
@@ -169,7 +222,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 06 REST CHECK · colour: data-bg/data-fg · 1–5 score logged to the sheet · mood: sleepy -->
+<!-- 08 REST CHECK · colour: data-bg/data-fg · 1–5 score logged to the sheet · mood: sleepy -->
 <section class="slide" id="restS" data-bg="#2B3CFF" data-fg="#FFFFFF" data-mood="sleepy" aria-label="Rest check">
  <div class="inner">
   <div class="top px"><span class="ico">🔋</span><span class="cnt"></span></div>
@@ -182,7 +235,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 07 FINANCE · colour: data-bg/data-fg · locked; figures only appear after the passcode decrypts fin.enc.json · mood: coin -->
+<!-- 09 FINANCE · colour: data-bg/data-fg · locked; figures only appear after the passcode decrypts fin.enc.json · mood: coin -->
 <section class="slide" id="finS" data-bg="#00FF9C" data-fg="#000000" data-mood="coin" aria-label="Finance">
  <div class="inner">
   <div class="top px"><span class="ico">💰</span><span class="cnt"></span></div>
@@ -196,7 +249,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 08 WATCH · colour: data-bg/data-fg · videos from daily JSON + channel list "mine" · mood: excited -->
+<!-- 10 WATCH · colour: data-bg/data-fg · videos from daily JSON + channel list "mine" · mood: excited -->
 <section class="slide" id="watchS" data-bg="#FF3B30" data-fg="#000000" data-mood="excited" aria-label="Watch">
  <div class="inner">
   <div class="top px"><span class="ico">▶️</span><span class="cnt"></span></div>
@@ -206,7 +259,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 09 QURAN & HADITH · colour: data-bg/data-fg · daily verse + hadith, flip with ◀ ▶ · mood: calm -->
+<!-- 11 QURAN & HADITH · colour: data-bg/data-fg · daily verse + hadith, flip with ◀ ▶ · mood: calm -->
 <section class="slide" id="verseS" data-bg="#E600FF" data-fg="#000000" data-mood="calm" aria-label="Quran and hadith">
  <div class="inner">
   <div class="top px"><span class="ico">📜</span><span class="cnt"></span></div>
@@ -216,7 +269,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 10 NAMES OF ALLAH · colour: data-bg/data-fg · tap the card to flip · mood: wonder -->
+<!-- 12 NAMES OF ALLAH · colour: data-bg/data-fg · tap the card to flip · mood: wonder -->
 <section class="slide" id="namesS" data-bg="#FF7A00" data-fg="#000000" data-mood="wonder" aria-label="Names of Allah">
  <div class="inner">
   <div class="top px"><span class="ico">✦</span><span class="cnt"></span></div>
@@ -231,7 +284,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 11 SCHOLARS · colour: data-bg/data-fg · quote from daily JSON · mood: curious -->
+<!-- 13 SCHOLARS · colour: data-bg/data-fg · quote from daily JSON · mood: curious -->
 <section class="slide" id="scholarS" data-bg="#5AC8FF" data-fg="#000000" data-mood="curious" aria-label="Scholars">
  <div class="inner">
   <div class="top px"><span class="ico">❝</span><span class="cnt"></span></div>
@@ -241,7 +294,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 12 WORLD WATCH · colour: data-bg/data-fg · clock / forecast / lectures / game model, flip with ◀ ▶ · mood: worried -->
+<!-- 14 WORLD WATCH · colour: data-bg/data-fg · clock / forecast / lectures / game model, flip with ◀ ▶ · mood: worried -->
 <section class="slide" id="worldS" data-bg="#FFE600" data-fg="#000000" data-mood="worried" aria-label="World watch">
  <div class="inner">
   <div class="top px"><span class="ico">🌍</span><span class="cnt"></span></div>
@@ -251,7 +304,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 13 WORLD NEWS · colour: data-bg/data-fg · last 24h headlines via Google News RSS · mood: excited -->
+<!-- 15 WORLD NEWS · colour: data-bg/data-fg · last 24h headlines via Google News RSS · mood: excited -->
 <section class="slide" id="newsS" data-bg="#FF2E9A" data-fg="#000000" data-mood="excited" aria-label="World news">
  <div class="inner">
   <div class="top px"><span class="ico">📰</span><span class="cnt"></span></div>
@@ -261,7 +314,7 @@ input::placeholder{color:var(--fg);opacity:1}
  </div>
 </section>
 
-<!-- 14 JOBS · colour: data-bg/data-fg · opens the jobs.html / top5.html swipe decks · mood: happy -->
+<!-- 16 JOBS · colour: data-bg/data-fg · opens the jobs.html / top5.html swipe decks · mood: happy -->
 <section class="slide" id="jobsS" data-bg="#B4FF39" data-fg="#000000" data-mood="happy" aria-label="Jobs">
  <div class="inner">
   <div class="top px"><span class="ico">💼</span><span class="cnt"></span></div>
@@ -369,29 +422,59 @@ fetch("https://api.rss2json.com/v1/api.json?rss_url="+q).then(r=>r.json()).then(
  .catch(()=>{document.getElementById("nwT").textContent="OFFLINE";document.getElementById("news").textContent="Headlines unavailable right now."})})();
 </script>
 <script>
-/* pixel city (unchanged scene; pauses while the TODAY screen is off-screen) */
-(function(){const cv=document.getElementById("city"),x=cv.getContext("2d"),W=160,H=44,C=["#0e1512","#2d4636","#86a38a","#e2e8d6"];x.imageSmoothingEnabled=false;
-const B=[[4,14,12],[18,10,18],[30,16,8],[110,8,26],[122,12,32],[136,10,22],[148,10,28]];// x,w,h ; left=homes right=offices
-const ppl=[...Array(9)].map((_,i)=>({p:Math.random(),v:.0015+Math.random()*.002,bag:i%2}));let drops=[...Array(30)].map(()=>[Math.random()*W,Math.random()*H]),t=0;
-function hr(){return new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).getHours()}
-function f(c,a,b,w,h){x.fillStyle=C[c];x.fillRect(a|0,b|0,w,h)}
-function draw(){requestAnimationFrame(draw);if(window.DECK&&DECK.cur()!==0&&t>0)return;t++;const h=hr(),night=h<6||h>=19,dir=h>=5&&h<12?1:h>=16&&h<21?-1:0,k=window.WK||"sun";
- f(night?0:k==="sun"?1:0,0,0,W,H);
- if(night){for(let i=0;i<12;i++)if((i*7+t/20|0)%5)f(2,(i*37)%W,(i*13)%14+2,1,1);f(3,70,5,5,5);f(night?0:1,72,4,4,4)}
- else if(k==="sun"){f(3,74,4,7,7);if(t%40<20){f(3,72,7,1,1);f(3,82,7,1,1)}}
- else{const cx=(t/6)%(W+30)-30;f(2,cx,6,22,5);f(2,cx+5,3,12,4);f(2,cx+70,9,16,4)}
- B.forEach(([a,w,bh],i)=>{f(1,a,H-6-bh,w,bh);for(let yy=H-4-bh;yy<H-8;yy+=4)for(let xx=a+2;xx<a+w-2;xx+=4){const lit=night?((xx+yy+i)%3!=0):(i>=3&&dir!==0);f(lit?3:0,xx,yy,2,2)}});
- f(1,40,H-14,4,8);f(2,38,H-17,8,3);// tree
- f(2,0,H-6,W,6);f(1,0,H-4,W,1);
- const n=dir===0?(night?1:3):9;ppl.slice(0,n).forEach((q,i)=>{if(dir){q.p+=q.v*dir;if(q.p>1)q.p=0;if(q.p<0)q.p=1}else q.p+=Math.sin(t/60+i)*.0008;
-  const px=46+q.p*60,leg=(t/8|0)%2;f(3,px,H-13,2,2);f(night?2:3,px,H-11,2,3);f(3,px-(leg?1:0),H-8,1,2);f(3,px+1+(leg?1:0),H-8,1,2);if(q.bag&&dir===1)f(2,px+2,H-10,2,2);if(k==="rain")f(2,px-1,H-15,4,1)});
- if(k==="rain")drops.forEach(d=>{d[1]+=2;d[0]-=.5;if(d[1]>H-6){d[1]=0;d[0]=Math.random()*W}f(2,d[0],d[1],1,2)});
-}draw()})();
-
-/* 💰 FINANCE — decrypts fin.enc.json in the browser (PBKDF2 + AES-GCM). No passcode or figures live in this file. */
+/* 💰 FINANCE + 📅 CALENDAR — decrypt fin.enc.json / cal.enc.json in the browser (PBKDF2 + AES-GCM). No passcode or figures live in this file. */
 const $$m=n=>"S$"+(+n).toLocaleString("en-SG",{minimumFractionDigits:2,maximumFractionDigits:2});
 const fB=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-async function fUnlock(pw){pw=pw||document.getElementById("fpw").value;try{const e=await(await fetch("fin.enc.json?"+Date.now())).json();const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:fB(e.s),iterations:600000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);const d=JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:fB(e.iv)},k,fB(e.ct))));sessionStorage.fpw=pw;fRender(d)}catch(x){const r=document.getElementById("ferr");if(r)r.innerHTML='<span class="chip">✕ Wrong passcode</span>'}}
+function sgParts(ms){const t=new Date((ms??Date.now())+8*3600*1000);return{y:t.getUTCFullYear(),m:t.getUTCMonth()+1,d:t.getUTCDate(),h:t.getUTCHours(),min:t.getUTCMinutes()}}
+function pad2(n){return String(n).padStart(2,"0")}
+async function decEnc(url,pw){const res=await fetch(url+"?"+Date.now());if(res.status===404){const e=new Error("missing");e.missing=true;throw e}if(!res.ok){const e=new Error("fetch");e.missing=true;throw e}const e=await res.json();const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:fB(e.s),iterations:600000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:fB(e.iv)},k,fB(e.ct))))}
+function unlockErr(id,msg){const r=document.getElementById(id);if(r)r.innerHTML=`<span class="chip">${msg}</span>`}
+async function fUnlock(pw){pw=pw||(document.getElementById("fpw")||{}).value||(document.getElementById("cpw")||{}).value;if(!pw)return;
+ try{const d=await decEnc("fin.enc.json",pw);sessionStorage.fpw=pw;fRender(d)}catch(x){if(!x.missing)unlockErr("ferr","✕ Wrong passcode")}
+ try{const d=await decEnc("cal.enc.json",pw);sessionStorage.fpw=pw;cRender(d)}catch(x){if(x.missing)cMissing();else if(document.getElementById("cerr"))unlockErr("cerr","✕ Wrong passcode");else cLocked(true)}}
+function cLocked(wrong){$("cal").innerHTML=`<div class="plock" aria-hidden="true"><span class="sh"></span><span class="bd"></span></div>
+<div style="margin-bottom:8px">🔒 Locked</div>
+<input id="cpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Calendar passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
+<div id="cerr" style="margin-top:8px">${wrong?'<span class="chip">✕ Wrong passcode</span>':""}</div>`}
+function cMissing(){$("cal").innerHTML=`<div class="px" style="font-size:10px;line-height:1.8">Calendar not synced yet</div>`}
+function cFmtTime(iso,allDay){if(allDay)return"All day";const p=sgParts(Date.parse(iso));if(!Number.isFinite(+p.h))return"";const h12=p.h%12||12,ap=p.h>=12?"PM":"AM";return h12+":"+pad2(p.min)+" "+ap}
+function cFmtSynced(iso){const t=Date.parse(iso);if(!Number.isFinite(t))return"";const p=sgParts(t),mo=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];const h12=p.h%12||12,ap=p.h>=12?"PM":"AM";return p.d+" "+mo[p.m-1]+", "+h12+":"+pad2(p.min)+" "+ap}
+function cDayKey(ms){const p=sgParts(ms);return p.y+"-"+pad2(p.m)+"-"+pad2(p.d)}
+function cDayLabel(key,todayKey,tomKey){if(key===todayKey)return"TODAY";if(key===tomKey)return"TOMORROW";const [y,m,d]=key.split("-").map(Number),dt=new Date(Date.UTC(y,m-1,d)),wd=["SUN","MON","TUE","WED","THU","FRI","SAT"][dt.getUTCDay()],mo=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"][m-1];return wd+" "+d+" "+mo}
+function cRender(d){const now=Date.now(),p0=sgParts(now),startToday=Date.UTC(p0.y,p0.m-1,p0.d)-8*3600*1000,endWin=startToday+7*864e5,todayKey=cDayKey(startToday+8*3600*1000),tomKey=cDayKey(startToday+864e5+8*3600*1000);
+ const ev=(d.events||[]).map(e=>{const s=Date.parse(e.start),en=e.end?Date.parse(e.end):(e.allDay?s+864e5:s);return{...e,_s:s,_e:Number.isFinite(en)?en:s}}).filter(e=>Number.isFinite(e._s)&&e._s<endWin&&e._e>=startToday).sort((a,b)=>(a.allDay!==b.allDay)?(a.allDay?-1:1):a._s-b._s);
+ const groups=new Map();ev.forEach(e=>{const key=e._s<startToday?todayKey:cDayKey(e._s);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(e)});
+ let h="";if(d.updated){const syn=cFmtSynced(d.updated);if(syn)h+=`<p class="px todo-hint">Synced ${syn} SGT</p>`}
+ if(!ev.length)h+=`<div class="px" style="font-size:10px;line-height:1.8">No events in the next 7 days.</div>`;
+ else for(const key of [...groups.keys()].sort()){h+=`<div class="cal-day"><div class="lbl px">${cDayLabel(key,todayKey,tomKey)}</div>`+groups.get(key).map(e=>{const tag=(e.cal||"").toLowerCase()==="family"?"family":"main",name=tag==="family"?"FAMILY":"MAIN";return `<div class="cal-ev"><div class="cal-t px">${esc(cFmtTime(e.start,e.allDay))} <span class="ctag ${tag}">${name}</span></div><div class="cal-title">${esc(e.title||"(No title)")}</div>${e.loc?`<div class="cal-loc">${esc(e.loc)}</div>`:""}</div>`}).join("")+"</div>"}
+ h+=`<button class="b" onclick="sessionStorage.removeItem('fpw');location.reload()">🔒 LOCK</button>`;$("cal").innerHTML=h}
+async function cProbe(){if(sessionStorage.fpw)return;try{const res=await fetch("cal.enc.json?"+Date.now(),{method:"GET"});if(res.status===404||!res.ok)cMissing()}catch(_){cMissing()}}
+cProbe();
+
+/* ✅ TO-DO — localStorage list; resets at 00:00 and 12:00 Asia/Singapore (UTC+8, not device tz) */
+const TODO=(()=>{const KEY="jobswipe-todo";let nowFn=()=>Date.now();
+ function period(ms){const p=sgParts(ms??nowFn());return p.y+"-"+pad2(p.m)+"-"+pad2(p.d)+(p.h<12?"-AM":"-PM")}
+ function load(){try{return JSON.parse(localStorage.getItem(KEY)||"null")||{period:"",items:[]}}catch(_){return{period:"",items:[]}}}
+ function save(st){localStorage.setItem(KEY,JSON.stringify(st))}
+ function hint(ms){const p=sgParts(ms??nowFn());return p.h<12?"Resets at 12:00 PM SGT":"Resets at midnight SGT"}
+ function render(){const st=load(),list=$("todoList"),hintEl=$("todoReset");if(hintEl)hintEl.textContent=hint();
+  if(!list)return;if(!st.items.length){list.innerHTML='<div class="px" style="font-size:10px;line-height:1.8">Nothing on the list yet.</div>';return}
+  list.innerHTML=st.items.map(it=>`<div class="todo-item${it.done?" done":""}" data-id="${esc(it.id)}">
+   <button type="button" class="b chk" role="checkbox" aria-checked="${it.done?"true":"false"}" aria-label="${it.done?"Mark "+esc(it.text)+" not done":"Mark "+esc(it.text)+" done"}">${it.done?"☑":"☐"}</button>
+   <button type="button" class="todo-txt" aria-label="${it.done?"Mark "+esc(it.text)+" not done":"Mark "+esc(it.text)+" done"}">${esc(it.text)}</button>
+   <button type="button" class="b del" aria-label="Delete ${esc(it.text)}">✕</button>
+  </div>`).join("")}
+ function check(ms){const p=period(ms??nowFn()),st=load();if(st.period!==p){st.period=p;st.items=[];save(st)}render();return p}
+ function add(text){const t=(text||"").trim();if(!t)return;check();const st=load();st.items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),text:t.slice(0,200),done:false});save(st);render()}
+ function toggle(id){const st=load();const it=st.items.find(x=>x.id===id);if(!it)return;it.done=!it.done;save(st);render()}
+ function remove(id){const st=load();st.items=st.items.filter(x=>x.id!==id);save(st);render()}
+ const box=$("todoBox");if(box){["touchstart","pointerdown"].forEach(ev=>box.addEventListener(ev,e=>e.stopPropagation(),{passive:true}));
+  $("todoForm").addEventListener("submit",e=>{e.preventDefault();e.stopPropagation();add($("todoIn").value);$("todoIn").value="";$("todoIn").focus()});
+  $("todoList").addEventListener("click",e=>{const row=e.target.closest(".todo-item");if(!row)return;e.stopPropagation();if(e.target.closest(".del"))remove(row.dataset.id);else toggle(row.dataset.id)})}
+ check();setInterval(()=>check(),6e4);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")check()});
+ return{check,period,add,toggle,remove,render,hint,setNow(ms){nowFn=typeof ms==="function"?ms:()=>+ms},now:()=>nowFn()}})();
+window.TODO=TODO;
+
 function fBar(p,red){return `<div class="bbar"><i class="${red?"over":""}" style="width:${Math.min(100,p)}%"></i></div>`}
 const neg=(v,s)=>v<0?`<span class="chip">▼ ${s}</span>`:s;
 function fRender(d){const lim=new Date(Date.now()+30*864e5).toISOString().slice(0,10);const due=d.bills_due.filter(b=>!b.paid&&b.due<=lim);const dueT=due.reduce((a,b)=>a+b.amt,0);const safe=d.safe_to_spend!=null?d.safe_to_spend:d.balance.amt-dueT;const wk=d.week;const today=new Date().toISOString().slice(0,10);
@@ -409,7 +492,7 @@ function fAfford(safe,wk){const a=+document.getElementById("fa").value,r=documen
 </script>
 <script>
 /* ===== MASCOT · pixel blob drawn on a 40×40 canvas, scaled 3× with image-rendering: pixelated =====
-   Moods: happy | excited | curious | detective | sleepy | calm | coin | worried | wonder  (set per screen with data-mood) */
+   Moods: happy | excited | curious | detective | sleepy | calm | coin | worried | wonder | focused  (set per screen with data-mood) */
 const BOT=(()=>{const cv=$("bot"),c=cv.getContext("2d");c.imageSmoothingEnabled=false;
  const RM=matchMedia("(prefers-reduced-motion: reduce)"),OUT="#000",BODY="#FFFFFF",SHADE="#BFCAD6",CHEEK="#FF6FAE",GOLD="#FFCC00";
  let mood="happy",look={x:0,y:0},ovr=null,ovrUntil=0,sq=0,lean=0,blinkAt=performance.now()+1800,blinkEnd=0,pops=[],moodT=0;
@@ -439,7 +522,8 @@ const BOT=(()=>{const cv=$("bot"),c=cv.getContext("2d");c.imageSmoothingEnabled=
    case"calm":{bob=-Math.sin(s*1.4)*1.5;sy=1+Math.sin(s*1.4)*.03;break}
    case"coin":{bob=-ab(.9)*2;tgt=[{x:-1,y:0},{x:1,y:-.5},{x:0,y:-1},{x:1,y:0}][Math.floor(s/1.3)%4];break}
    case"worried":{shake=Math.floor(s*10)%2;tgt={x:Math.floor(s/.6)%2?1:-1,y:0};break}
-   case"wonder":{bob=-Math.sin(s*1.8)*2.5;tgt={x:0,y:-1};break}}
+   case"wonder":{bob=-Math.sin(s*1.8)*2.5;tgt={x:0,y:-1};break}
+   case"focused":{bob=-Math.sin(s*1.6)*1;tgt={x:0,y:1};break}}
   if(ovr&&ms<ovrUntil)tgt=ovr;else ovr=null;
   look.x+=(tgt.x-look.x)*.25;look.y+=(tgt.y-look.y)*.25;sq*=.86;
   sx+=sq*.3+Math.abs(lean)*.12;sy-=sq*.28+Math.abs(lean)*.1;
@@ -458,6 +542,7 @@ const BOT=(()=>{const cv=$("bot"),c=cv.getContext("2d");c.imageSmoothingEnabled=
   if(mood==="coin")L=R="coin";
   if(mood==="wonder")L=R="big";
   if(mood==="detective")R="squint";
+  if(mood==="focused")L=R="squint";
   if(bl&&L!=="peace"&&L!=="sleep")L=R="blink";
   eye(L,cx-8,ey,lx,ly);eye(R,cx+3,ey,lx,ly);
   const my=Math.round(ey+7),mx=Math.round(cx)+lx;
@@ -469,7 +554,8 @@ const BOT=(()=>{const cv=$("bot"),c=cv.getContext("2d");c.imageSmoothingEnabled=
    case"sleepy":{const o=Math.sin(s*1.3)>0?2:1;P(mx-1,my,2,o,OUT);break}
    case"curious":case"wonder":P(mx-1,my,2,2,OUT);break;
    case"detective":P(mx-2,my+1,4,1,OUT);break;
-   case"worried":P(mx-2,my+1,1,1,OUT);P(mx-1,my,1,1,OUT);P(mx,my+1,1,1,OUT);P(mx+1,my,1,1,OUT);P(cx-9,ey-3,3,1,OUT);P(cx+6,ey-3,3,1,OUT);break}
+   case"worried":P(mx-2,my+1,1,1,OUT);P(mx-1,my,1,1,OUT);P(mx,my+1,1,1,OUT);P(mx+1,my,1,1,OUT);P(cx-9,ey-3,3,1,OUT);P(cx+6,ey-3,3,1,OUT);break;
+   case"focused":P(mx-2,my,5,1,OUT);break}
   if(mood==="detective"){const hy=Math.round(top);P(cx-10,hy-1,20,4,OUT);P(cx-9,hy,18,2,"#7A4A1E");P(cx-7,hy-6,14,6,OUT);P(cx-6,hy-5,12,5,"#7A4A1E");P(cx-6,hy-2,12,1,"#C08A4A");P(cx-1,hy-6,2,1,"#C08A4A");
    const gx=Math.round(cx+9+Math.sin(s*1.3)*1),gy=Math.round(by-9+Math.sin(s*2.6));P(gx,gy,7,7,OUT);P(gx+1,gy+1,5,5,"#BFF3FF");P(gx+1,gy+1,2,1,"#fff");P(gx+6,gy+6,2,2,OUT);P(gx+7,gy+7,2,2,OUT)}
   if(mood==="sleepy")for(let i=0;i<3;i++){const p=(s*.35+i/3)%1;if(p<.85)G(GL.z,28+p*7,14-p*13,"#fff")}
@@ -522,7 +608,7 @@ const DECK=(()=>{const deck=$("deck"),S=[...deck.querySelectorAll(".slide")],N=S
  let st=null,ax=null,nb=null,nbDir=0,dragged=false;
  const W=()=>innerWidth,H=()=>innerHeight;
  const busyOverlay=()=>!!document.querySelector(".ov.on");
- function start(x,y,target,mouse){if(busyOverlay())return;if(target.closest("input,textarea,select,iframe"))return;
+ function start(x,y,target,mouse){if(busyOverlay())return;if(target.closest("input,textarea,select,iframe,.todo-ui,button.chk,button.del"))return;
   settle();const sc=target.closest(".scroll");st={x,y,t:performance.now(),sc,top:sc?sc.scrollTop<=0:true,bot:sc?sc.scrollTop+sc.clientHeight>=sc.scrollHeight-1:true,mouse};ax=null;nb=null;dragged=false}
  function move(x,y,e){if(!st)return false;const dx=x-st.x,dy=y-st.y;
   if(!ax){if(Math.hypot(dx,dy)<9)return false;
