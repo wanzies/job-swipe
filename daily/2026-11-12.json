@@ -1,0 +1,94 @@
+{
+ "date": "2026-11-12",
+ "hijri": "2 Jamadilakhir 1448",
+ "fast": {
+  "type": "Sunnah fast · today (Thursday)",
+  "date": "2026-11-12",
+  "why": "Today is Thursday. Deeds are presented to Allah on Mondays and Thursdays, and the Prophet ﷺ liked to be fasting when his deeds were presented. If you haven't eaten or drunk since Fajr, you can still make the niyyah this morning before Zuhr. The next fast is Monday 16 Nov.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "Your rizq that already arrived today: breakfast, a roof, a working body. Say Alhamdulillah before your first meal, and give a small sadaqah, even a dollar.",
+ "verse": {
+  "ref": "Al-Baqarah 2:286",
+  "text": "Allah does not burden a soul beyond its capacity.",
+  "url": "https://quran.com/2/286"
+ },
+ "hadith": {
+  "ref": "Sahih al-Bukhari 5641",
+  "text": "No fatigue, illness, sorrow, sadness, harm or distress befalls a Muslim, even the prick of a thorn, but Allah expiates some of his sins for it.",
+  "url": "https://sunnah.com/bukhari:5641"
+ },
+ "lesson": {
+  "title": "Names of Allah part 3: Ar-Razzaq, the Provider",
+  "text": "Ar-Razzaq is the One who provides for every creature, believer or not: \"Indeed it is Allah who is the Provider, the Possessor of firm strength\" (51:58). Rizq is more than salary: health, time, family and iman are all rizq. The Prophet ﷺ said that if you truly relied on Allah, He would provide for you as He does the birds, who leave hungry and return full (Tirmidhi 2344). The birds still fly out, so take the halal means and leave the result to Him.",
+  "url": "https://quran.com/51/58"
+ },
+ "quote": {
+  "by": "Mufti Menk",
+  "date": "11 Nov 2026",
+  "text": "The Almighty has a specific purpose for your life. You need to trust Him fully. You will be tested and tried but if you bear patience and remain steadfast, the end result will bring you happiness and true success.",
+  "url": "https://x.com/muftimenk/status/2120350317099602042"
+ },
+ "videos": [
+  {
+   "id": "6GyKAVVTM6g",
+   "title": "Omar Suleiman: Romance Is Rizq... But So Is Everything Else (Names: Ar-Razzaq)",
+   "start": 0
+  }
+ ],
+ "name": {
+  "ar": "الرزاق",
+  "tr": "Ar-Razzaq",
+  "meaning": "The Provider",
+  "text": "He provides for every creature, \"Indeed it is Allah who is the Provider, the Possessor of firm strength\" (51:58). Your rizq is written, so work with calm and ease.",
+  "url": "https://quran.com/51/58"
+ },
+ "pm": {
+  "name": {
+   "ar": "الودود",
+   "tr": "Al-Wadud",
+   "meaning": "The Most Loving",
+   "text": "He is \"the Forgiving, the Most Loving\" (85:14). Tonight, remember you are loved by your Lord even on a day you felt unseen.",
+   "url": "https://quran.com/85/14"
+  },
+  "quote": {
+   "by": "Mufti Menk",
+   "date": "25 Oct 2026",
+   "text": "Trust the Almighty's timing. Only He knows why you're in the state you are for so long. Perhaps the delay in answering your prayer is better for you than getting what you want now. He is the Best Planner.",
+   "url": "https://x.com/muftimenk/status/2114199512910528646"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}
