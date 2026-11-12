@@ -1,666 +1,505 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#00E5FF"><title>Daily · Retro</title>
-<!-- Optional web fonts. Everything still works with the monospace / serif fallbacks if these never load. -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0b0c10"><meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Daily</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%230b0c10%22/%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%229%22 fill=%22none%22 stroke=%22%232dd4bf%22 stroke-width=%223%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amiri:wght@700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#00E5FF;--fg:#000;--sh:#fff;--dur:600ms;--ease:cubic-bezier(.22,.9,.24,1)}
+:root{--bg:#0b0c10;--s1:#13151b;--s2:#1a1d25;--s3:#232733;--bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.12);--tx:#eceef4;--mu:#8a90a2;--mu2:#5d6274;
+ --ac:#2dd4bf;--ac2:rgba(45,212,191,.14);--ok:#34d399;--warn:#fbbf24;--bad:#f87171;--fam:#a78bfa;--r:16px;--ease:cubic-bezier(.2,.8,.2,1)}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;overflow:hidden;background:#000;overscroll-behavior:none}
-body{font:600 15px/1.55 ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;-webkit-text-size-adjust:100%;image-rendering:pixelated;-webkit-tap-highlight-color:transparent}
-.px{font-family:"Press Start 2P",ui-monospace,"Courier New",monospace;letter-spacing:.02em;font-weight:400}
-a{color:inherit;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
-canvas,img{image-rendering:pixelated;image-rendering:crisp-edges}
-/* ---------- deck ---------- */
-#deck{position:fixed;inset:0;overflow:hidden;touch-action:none}
-.slide{position:absolute;inset:0;height:100vh;height:100dvh;background:var(--bg);color:var(--fg);visibility:hidden;z-index:1;
- touch-action:none;overflow:hidden;user-select:none;-webkit-user-select:none;transform-origin:50% 50%;backface-visibility:hidden}
-.slide.on{visibility:visible;z-index:2}.slide.mv{visibility:visible;z-index:3}
-/* hard-edged checker strip along the top of every slide (decoration only) */
-.slide::before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:repeating-linear-gradient(90deg,var(--fg) 0 8px,transparent 8px 16px);opacity:.9}
-.inner{height:100%;display:flex;flex-direction:column;will-change:transform;
- padding:calc(env(safe-area-inset-top,0px) + 20px) calc(env(safe-area-inset-right,0px) + 16px) calc(env(safe-area-inset-bottom,0px) + 52px) calc(env(safe-area-inset-left,0px) + 16px)}
-.top{display:flex;justify-content:space-between;align-items:center;font-size:9px;gap:8px}
-.ico{font-size:30px;line-height:1;filter:none}
-.ttl{font-size:clamp(20px,7vw,32px);line-height:1.3;margin:10px 0 8px;text-shadow:4px 4px 0 var(--sh);word-break:break-word}
-.sub{font-size:10px;line-height:1.8;margin:0 0 10px}
-.scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;touch-action:pan-y;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:6px 10px 130px 4px;margin:0 -6px 0 -4px;user-select:text;-webkit-user-select:text;scrollbar-width:thin;scrollbar-color:var(--fg) transparent}
-.scroll::-webkit-scrollbar{width:6px}.scroll::-webkit-scrollbar-thumb{background:var(--fg)}
-/* chunky notched pixel box with a hard drop shadow */
-.box{background:var(--bg);margin:6px 8px 18px 6px;padding:12px;position:relative;
- box-shadow:0 -4px 0 0 var(--fg),0 4px 0 0 var(--fg),-4px 0 0 0 var(--fg),4px 0 0 0 var(--fg),8px 8px 0 0 var(--fg)}
-.lbl{font-size:9px;margin:0 0 8px;display:flex;justify-content:space-between;gap:8px}
-.ref{font-size:12px}
-.big{font-size:clamp(22px,8vw,34px);line-height:1.3;margin:6px 0}
-.b{font-family:"Press Start 2P",ui-monospace,monospace;font-size:10px;line-height:1.4;background:var(--fg);color:var(--bg);border:0;padding:13px 14px;min-height:44px;margin:6px 8px 4px 0;cursor:pointer;
- box-shadow:4px 4px 0 0 var(--sh),0 0 0 2px var(--fg);touch-action:manipulation}
-.b:active{transform:translate(3px,3px);box-shadow:1px 1px 0 0 var(--sh),0 0 0 2px var(--fg)}
-.b:focus-visible,#dots button:focus-visible{outline:3px dashed var(--fg);outline-offset:4px}
-.b.wide{width:100%;padding:20px;font-size:12px}
-input{font:inherit;background:var(--bg);color:var(--fg);border:0;padding:10px;min-height:44px;box-shadow:inset 0 0 0 3px var(--fg);border-radius:0}
-input::placeholder{color:var(--fg);opacity:1}
-.chip{display:inline-block;background:var(--fg);color:var(--bg);padding:1px 6px}
-.bbar{height:16px;margin-top:8px;box-shadow:0 0 0 3px var(--fg);position:relative}
-.bbar i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--fg) 0 6px,transparent 6px 8px)}
-.bbar i.over{background:repeating-linear-gradient(45deg,var(--fg) 0 4px,transparent 4px 8px)}
-.row{display:flex;justify-content:space-between;gap:10px}
-/* ---------- fixed chrome: dots + mascot ---------- */
-#dots{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 8px);display:flex;justify-content:center;z-index:20;pointer-events:none;flex-wrap:wrap;padding:0 12px}
-#dots button{pointer-events:auto;width:22px;height:32px;padding:0;border:0;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;touch-action:manipulation}
-#dots button::after{content:"";width:10px;height:10px;background:var(--bg);box-shadow:0 0 0 3px var(--fg)}
-#dots button.on::after{background:var(--fg);width:12px;height:12px;box-shadow:0 0 0 3px var(--fg),3px 3px 0 3px var(--sh)}
-#bot{position:fixed;right:calc(env(safe-area-inset-right,0px) + 6px);bottom:calc(env(safe-area-inset-bottom,0px) + 40px);width:120px;height:120px;z-index:19;pointer-events:none}
-/* ---------- topic widgets ---------- */
-.sky{position:absolute;right:14px;top:12px;width:64px;height:48px}
-.psun{position:absolute;right:8px;top:6px;width:24px;height:24px;background:var(--fg);box-shadow:0 -8px 0 -4px var(--fg),0 8px 0 -4px var(--fg),8px 0 0 -4px var(--fg),-8px 0 0 -4px var(--fg);animation:blink 2s steps(2) infinite}
-.pcl{position:absolute;left:0;top:14px;width:40px;height:12px;background:var(--fg);box-shadow:8px -8px 0 0 var(--fg),20px -8px 0 0 var(--fg);animation:mv 6s steps(6) infinite alternate}
-.pdr{position:absolute;width:3px;height:6px;background:var(--fg);animation:dr .6s steps(4) infinite}
-@keyframes blink{50%{opacity:.55}}@keyframes mv{to{transform:translateX(18px)}}@keyframes dr{from{transform:translateY(28px)}to{transform:translateY(48px)}}
-.todo-add{display:flex;gap:8px;align-items:stretch;margin:0 0 12px;touch-action:manipulation}
-.todo-add input{flex:1;min-width:0;touch-action:manipulation}
-.todo-add .b{margin:0;flex-shrink:0}
-.todo-item{display:flex;align-items:stretch;gap:8px;margin:0 0 10px;touch-action:manipulation}
-.todo-item .chk,.todo-item .del{flex:0 0 44px;width:44px;min-width:44px;min-height:44px;margin:0;padding:0;font-size:16px;line-height:1;touch-action:manipulation}
-.todo-item .todo-txt{flex:1;display:flex;align-items:center;min-height:44px;padding:8px 4px;text-align:left;background:none;border:0;color:inherit;font:inherit;cursor:pointer;touch-action:manipulation;user-select:text;-webkit-user-select:text}
-.todo-item.done .todo-txt{text-decoration:line-through;opacity:.55}
-.todo-hint{font-size:8px;line-height:1.8;margin:0 0 12px}
-.sec-lbl{font-size:9px;margin:0 0 8px}
-.week-fold > summary{font-family:"Press Start 2P",ui-monospace,monospace;font-size:10px;line-height:1.4;min-height:44px;display:flex;align-items:center;cursor:pointer;list-style:none;touch-action:manipulation;user-select:none}
-.week-fold > summary::-webkit-details-marker,.week-fold > summary::marker{display:none;content:""}
-.week-fold > summary::before{content:"▶ ";margin-right:6px}
-.week-fold[open] > summary::before{content:"▼ "}
-.week-ui{touch-action:manipulation}
-.cal-day{margin:0 0 16px}
-.cal-ev{margin:0 0 10px;padding-bottom:8px;border-bottom:3px dashed var(--fg)}
-.cal-ev:last-child{border-bottom:0}
-.cal-t{font-size:10px;margin-bottom:4px;line-height:1.6}
-.cal-title{font-size:15px;line-height:1.45}
-.cal-loc{font-size:12px;margin-top:2px}
-.ctag{display:inline-block;font-family:"Press Start 2P",ui-monospace,monospace;font-size:7px;line-height:1.4;padding:3px 5px;margin-left:6px;vertical-align:middle}
-.ctag.main{background:var(--fg);color:var(--bg)}
-.ctag.family{background:#FFE600;color:#000;box-shadow:0 0 0 2px var(--fg)}
-.plock{width:40px;height:48px;position:relative;margin:8px 0 14px}
-.plock .sh{position:absolute;left:8px;top:0;width:24px;height:18px;box-sizing:border-box;border:6px solid var(--fg);border-bottom:0}
-.plock .bd{position:absolute;left:0;top:16px;width:40px;height:32px;background:var(--fg)}
-.plock .bd::after{content:"";position:absolute;left:16px;top:8px;width:8px;height:8px;background:var(--bg);box-shadow:2px 8px 0 0 var(--bg),-2px 8px 0 0 var(--bg),0 10px 0 0 var(--bg)}
-.cres{width:40px;height:40px;border-radius:50%;box-shadow:-10px 4px 0 0 var(--fg);animation:blink 2s steps(2) infinite;margin:4px 0 8px 12px}
-.ar{font-family:Amiri,"Noto Naskh Arabic","Geeza Pro","Times New Roman",serif;font-weight:700}
-.flip{perspective:900px;cursor:pointer;height:260px;margin:6px 8px 18px 6px}
-.fi{position:relative;width:100%;height:100%;transition:transform .6s steps(6);transform-style:preserve-3d}.flip.on .fi{transform:rotateY(180deg)}
-.fa,.fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px;background:var(--bg);
- box-shadow:0 -4px 0 0 var(--fg),0 4px 0 0 var(--fg),-4px 0 0 0 var(--fg),4px 0 0 0 var(--fg),8px 8px 0 0 var(--fg)}
-.fb{transform:rotateY(180deg);background:var(--fg);color:var(--bg)}
-.fa .ar{font-size:64px;line-height:1.2}.tr{font-size:11px;margin-top:10px}.hint{font-size:8px;margin-top:14px}
-.pg{display:none}.pg.on{display:block}
-.pdots{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:6px}
-.pdots i{width:10px;height:10px;box-shadow:0 0 0 3px var(--fg)}.pdots i.on{background:var(--fg)}.pdots .b{font:700 16px/1 ui-monospace,monospace;padding:12px 16px}
-.wd{text-align:center}
-.clock{width:72px;height:72px;margin:6px auto;box-shadow:0 0 0 4px var(--fg);position:relative}
-.clock i{position:absolute;left:34px;top:6px;width:4px;height:30px;background:var(--fg);transform-origin:2px 30px;animation:tk 4s steps(8) infinite}@keyframes tk{from{transform:rotate(-40deg)}to{transform:rotate(-4deg)}}
-.bar{height:20px;box-shadow:0 0 0 3px var(--fg);margin:12px 3px;position:relative}.bar b{position:absolute;left:0;top:0;bottom:0;background:var(--fg);animation:fill 2s steps(10) forwards}@keyframes fill{from{width:0}}
-.globe{width:48px;height:48px;margin:6px auto;background:var(--bg);box-shadow:inset 8px 0 0 var(--fg),inset -8px 0 0 var(--fg),0 0 0 3px var(--fg);animation:spin 3s steps(4) infinite}@keyframes spin{25%{box-shadow:inset 16px 0 0 var(--fg),inset -4px 0 0 var(--fg),0 0 0 3px var(--fg)}50%{box-shadow:inset 4px 0 0 var(--fg),inset -16px 0 0 var(--fg),0 0 0 3px var(--fg)}}
-.gm{display:grid;grid-template-columns:auto 1fr 1fr;gap:4px;font-size:8px;line-height:1.5;margin:10px auto;max-width:320px}.gm div{box-shadow:0 0 0 2px var(--fg);padding:8px 4px}.gm .h{box-shadow:none}.gm .eq{background:var(--fg);color:var(--bg);animation:blink 1s steps(2) infinite}
-.meter{display:flex;gap:4px;justify-content:center;margin:8px 0}.meter i{width:22px;height:12px;box-shadow:0 0 0 2px var(--fg)}.meter i.on{background:var(--fg)}
-.vid{position:relative;padding-top:56.25%;box-shadow:0 0 0 4px var(--fg);margin:4px 4px 8px;background:#000}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.vt{font-size:12px;margin:0 0 16px}
-.gd{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 4px}.gd span{height:48px;box-shadow:0 0 0 3px var(--fg);display:flex;align-items:flex-end;justify-content:center;font-size:24px;line-height:1}
-.gd .grow{animation:bob 1s steps(2) infinite}@keyframes bob{50%{transform:translateY(-3px)}}
-.rs{display:flex;gap:8px;flex-wrap:wrap}.rs button{flex:1;min-width:48px;font-size:24px;padding:10px 0}
-.rs button.sel{outline:4px solid var(--fg);outline-offset:4px}
-.nw{display:block;text-decoration:none;padding:10px 0;border-bottom:3px dashed var(--fg)}
-.fin .k{font-size:11px;margin-top:12px}.fin .v{font-size:15px;margin-top:4px}
-/* ---------- overlays (Quran reader, job deck) ---------- */
-.ov{position:fixed;inset:0;z-index:50;display:none;background:#FFF4C2;color:#000;--bg:#FFF4C2;--fg:#000;--sh:#fff;overflow:auto;touch-action:pan-y;overscroll-behavior:contain;
- padding:calc(env(safe-area-inset-top,0px) + 14px) calc(env(safe-area-inset-right,0px) + 14px) calc(env(safe-area-inset-bottom,0px) + 14px) calc(env(safe-area-inset-left,0px) + 14px)}
-.ov.on{display:block}
-.ovh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;background:var(--bg);padding-bottom:6px;z-index:2}
-.ay{border-bottom:3px dashed var(--fg);padding:12px 0}.ay .ar{font-size:26px;direction:rtl;text-align:right;line-height:2.1}.ay .en{font-size:14px}.ay.cur{box-shadow:inset 6px 0 0 var(--fg);padding-left:12px}
-#jov{padding:0;overflow:hidden}#jov iframe{position:absolute;left:0;right:0;bottom:0;top:calc(env(safe-area-inset-top,0px) + 66px);width:100%;height:calc(100% - env(safe-area-inset-top,0px) - 66px);border:0;background:#fff}
-#jov .ovh{padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 6px}
-@media (prefers-reduced-motion: reduce){
- *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);overscroll-behavior:none}
+body{font:400 15px/1.45 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;
+ display:grid;grid-template-rows:auto 1fr auto;grid-template-areas:"hd" "main" "nav";height:100dvh;overflow:hidden;font-feature-settings:"cv11","ss01"}
+button,input{font:inherit;color:inherit}
+a{color:var(--ac);text-decoration:none}
+.num{font-variant-numeric:tabular-nums}
+.ar{font-family:Amiri,"Noto Naskh Arabic","Geeza Pro",serif;font-weight:700}
+/* header */
+#hd{grid-area:hd;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 8px;background:var(--bg)}
+#hd .ttl{font-weight:700;font-size:20px;letter-spacing:-.02em}
+#hd .meta{font-size:12px;color:var(--mu);display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 3px var(--ac2);display:inline-block}
+.lockbtn{border:1px solid var(--bd2);background:var(--s1);border-radius:999px;padding:4px 10px;font-size:12px;cursor:pointer;color:var(--mu)}
+/* pager */
+#pager{grid-area:main;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+#pager::-webkit-scrollbar{display:none}
+#pager:focus,.screen:focus{outline:none}
+.screen{flex:0 0 100%;width:100%;height:100%;overflow-y:auto;scroll-snap-align:start;scroll-snap-stop:always;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch;padding:4px 12px 24px;contain:content}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:1240px;margin:0 auto}
+.w1{grid-column:span 1}.w2,.w3,.w4{grid-column:1/-1}
+@media (min-width:900px){
+ body{grid-template-columns:auto 1fr;grid-template-rows:auto 1fr;grid-template-areas:"hd nav" "main main"}
+ .grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+ .w2{grid-column:span 2}.w3{grid-column:span 3}.w4{grid-column:1/-1}
+ .screen{padding:8px 24px 32px}
+ #hd{padding:16px 24px}
 }
-@media (min-width:700px){.inner{max-width:720px;margin:0 auto}}
-</style></head><body>
+/* cards */
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:14px;min-width:0;position:relative;animation:rise .45s var(--ease) both}
+.card.tap{cursor:pointer;transition:border-color .2s,transform .2s}.card.tap:hover{border-color:var(--bd2)}.card.tap:active{transform:scale(.99)}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.lbl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.lbl a,.lbl button{letter-spacing:0;text-transform:none;font-weight:500}
+.big{font-size:28px;font-weight:700;letter-spacing:-.03em;line-height:1.1}
+.mid{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.mu{color:var(--mu)}.sm{font-size:12.5px}.xs{font-size:11.5px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.stack>*+*{margin-top:8px}
+.btn{border:1px solid var(--bd2);background:var(--s2);border-radius:12px;padding:9px 14px;font-weight:600;font-size:14px;cursor:pointer;transition:background .15s,transform .1s;white-space:nowrap}
+.btn:hover{background:var(--s3)}.btn:active{transform:scale(.97)}
+.btn.pri{background:var(--ac);border-color:transparent;color:#05110f}
+.btn.ghost{background:transparent}
+.btn.sm{padding:6px 10px;font-size:12.5px;border-radius:10px}
+.inp{background:var(--bg);border:1px solid var(--bd2);border-radius:12px;padding:9px 12px;min-width:0;outline:none;transition:border-color .15s}
+.inp:focus{border-color:var(--ac)}
+.pill{white-space:nowrap;display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--s3);color:var(--mu)}
+.pill.ac{background:var(--ac2);color:var(--ac)}.pill.bad{background:rgba(248,113,113,.14);color:var(--bad)}.pill.ok{background:rgba(52,211,153,.14);color:var(--ok)}.pill.warn{background:rgba(251,191,36,.14);color:var(--warn)}.pill.fam{background:rgba(167,139,250,.15);color:var(--fam)}
+.bar{height:8px;border-radius:99px;background:var(--s3);overflow:hidden}.bar>i{display:block;height:100%;border-radius:99px;background:var(--ac);width:0;transition:width .9s var(--ease)}.bar>i.over{background:var(--bad)}
+.ring{transform:rotate(-90deg)}.ring circle{fill:none;stroke-linecap:round}.ring .tr{stroke:var(--s3)}.ring .pr{stroke:var(--ac);transition:stroke-dashoffset 1s var(--ease)}
+.sep{height:1px;background:var(--bd);margin:10px 0}
+.skel{color:var(--mu2)}
+/* hero */
+.hero{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;background:radial-gradient(120% 140% at 100% 0%,var(--ac2),transparent 60%),var(--s1)}
+.clock{font-size:44px;font-weight:700;letter-spacing:-.04em;line-height:1}.clock small{font-size:15px;color:var(--mu);font-weight:600;margin-left:4px;letter-spacing:0}
+.greet{font-size:13px;color:var(--mu);margin-bottom:6px}
+.pring{position:relative;width:118px;height:118px}.pring svg{position:absolute;inset:0}
+.pring .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.pring .n{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;font-weight:600}.pring .t{font-size:19px;font-weight:700;letter-spacing:-.02em}.pring .s{font-size:11px;color:var(--mu)}
+.ptimes{grid-column:1/-1;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:8px}
+.pt{background:var(--s2);border-radius:10px;padding:6px 2px;text-align:center;border:1px solid transparent}.pt b{display:block;font-size:13px;font-weight:600}.pt span{font-size:10.5px;color:var(--mu)}
+.pt.past{opacity:.5}.pt.next{border-color:var(--ac);background:var(--ac2)}.pt.next span{color:var(--ac)}
+/* unlock */
+.unlock{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.unlock .inp{flex:1 1 120px;max-width:200px;letter-spacing:.2em}
+.err{color:var(--bad);font-size:12.5px;min-height:1em}
+/* events */
+.ev{display:grid;grid-template-columns:62px 1fr;gap:8px;padding:8px 0;border-top:1px solid var(--bd)}.ev:first-child{border-top:0}
+.ev .tm{font-size:12.5px;color:var(--mu);font-weight:600}.ev .ti{font-weight:600}.ev .lo{font-size:12px;color:var(--mu)}
+.ev.main{box-shadow:inset 3px 0 0 var(--ac);padding-left:8px}.ev.family{box-shadow:inset 3px 0 0 var(--fam);padding-left:8px}
+details summary{cursor:pointer;list-style:none;font-size:12.5px;color:var(--mu);font-weight:600;padding:6px 0}details summary::-webkit-details-marker{display:none}
+details summary::before{content:"›";display:inline-block;margin-right:6px;transition:transform .2s}details[open] summary::before{transform:rotate(90deg)}
+.dayh{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--mu);margin-top:8px;text-transform:uppercase}
+/* todo */
+.todo-add{display:flex;gap:8px;margin-bottom:6px}.todo-add .inp{flex:1}
+.todo-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--bd)}.todo-item:first-child{border-top:0}
+.chk{width:22px;height:22px;flex:0 0 22px;border-radius:7px;border:1.5px solid var(--mu2);background:transparent;cursor:pointer;display:grid;place-items:center;padding:0;transition:all .15s}
+.chk svg{opacity:0;transition:opacity .15s}.done .chk{background:var(--ac);border-color:var(--ac)}.done .chk svg{opacity:1}
+.todo-txt{flex:1;text-align:left;background:none;border:0;padding:4px 0;cursor:pointer;word-break:break-word;transition:color .2s}
+.done .todo-txt{color:var(--mu2);text-decoration:line-through}
+.del{background:none;border:0;color:var(--mu2);cursor:pointer;font-size:18px;line-height:1;padding:4px 6px;border-radius:8px}.del:hover{color:var(--bad);background:var(--s2)}
+/* rest */
+.rs{display:flex;gap:4px}.rs button{flex:1;border:1px solid var(--bd);background:var(--s2);border-radius:10px;padding:6px 0;font-size:18px;cursor:pointer;transition:all .15s}
+.rs button.sel{border-color:var(--ac);background:var(--ac2);transform:translateY(-2px)}
+/* faith */
+.verse{font-size:16px;line-height:1.55}
+.qline{font-size:16.5px;line-height:1.55;font-weight:500}
+.tapbig{width:100%;padding:18px;font-size:16px;border-radius:14px}
+.trees{display:flex;gap:4px;margin:8px 0}.trees i{flex:1;height:6px;border-radius:99px;background:var(--s3)}.trees i.on{background:var(--ok)}.trees i.cur{background:linear-gradient(90deg,var(--ok) var(--p),var(--s3) var(--p))}
+.namecard{text-align:center;cursor:pointer;user-select:none}.namecard .ar{font-size:54px;line-height:1.3;color:var(--ac)}
+.namecard .rev{max-height:0;overflow:hidden;transition:max-height .45s var(--ease),opacity .3s;opacity:0;text-align:left}.namecard.on .rev{max-height:500px;opacity:1}
+.vid{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--s2)}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vt{font-size:13px;margin:6px 0 10px;font-weight:500}
+/* money */
+.kv{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--bd);font-size:14px}.kv:first-child{border-top:0}.kv b{font-weight:600;white-space:nowrap}
+.neg{color:var(--bad)}
+.chart text{fill:var(--mu);font-size:10px;font-family:inherit}
+/* world/news */
+.nw{display:block;padding:10px 0;border-top:1px solid var(--bd);color:var(--tx)}.nw:first-child{border-top:0}.nw:hover .nt{color:var(--ac)}.nt{font-weight:500;transition:color .15s}
+.meter{display:flex;gap:4px;margin:8px 0}.meter i{flex:1;height:8px;border-radius:99px;background:var(--s3)}.meter i.on{background:var(--warn)}
+.job{padding:10px 0;border-top:1px solid var(--bd)}.job:first-child{border-top:0}.job .jt{font-weight:600}
+/* nav */
+#tabs{grid-area:nav;display:flex;justify-content:space-around;background:rgba(11,12,16,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--bd);padding:6px 6px calc(env(safe-area-inset-bottom,0px) + 6px);z-index:5}
+#tabs button{flex:1;background:none;border:0;color:var(--mu2);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:600;padding:6px 0;cursor:pointer;border-radius:12px;transition:color .2s}
+#tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#tabs button[aria-selected=true]{color:var(--ac)}
+@media (min-width:900px){
+ #tabs{justify-content:flex-end;gap:4px;border:0;background:transparent;backdrop-filter:none;padding:16px 24px;align-items:center}
+ #tabs button{flex:0 0 auto;flex-direction:row;font-size:14px;padding:8px 14px;gap:8px;color:var(--mu)}
+ #tabs button svg{width:18px;height:18px}
+ #tabs button[aria-selected=true]{background:var(--s2);color:var(--tx)}
+ .clock{font-size:56px}
+}
+/* overlays */
+.ov{position:fixed;inset:0;z-index:50;display:none;background:var(--bg);overflow:auto;overscroll-behavior:contain}
+.ov.on{display:block;animation:rise .25s var(--ease)}
+.ovh{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 10px) 16px 10px;background:rgba(11,12,16,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--bd)}
+#qbody{max-width:760px;margin:0 auto;padding:0 16px}
+.ay{border-bottom:1px solid var(--bd);padding:14px 0}.ay .ar{font-size:26px;direction:rtl;text-align:right;line-height:2.1}.ay .en{font-size:14.5px;color:#c9ccd6}.ay.cur{box-shadow:inset 3px 0 0 var(--ac);padding-left:12px}
+#jov{overflow:hidden}#jov iframe{width:100%;height:calc(100% - 56px - env(safe-area-inset-top,0px));border:0;display:block}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;transition-duration:1ms!important}#pager{scroll-behavior:auto}}
+</style></head>
+<body>
 <!--
-  HOW TO EDIT A SCREEN
-  Each <section class="slide"> below is one full-screen topic.
-   data-bg   = background colour   data-fg = text colour (keep the pair at 4.5:1 contrast or better)
-   data-mood = mascot mood: happy | excited | curious | detective | sleepy | calm | coin | worried | wonder | focused
-   .ttl      = the big pixel title   .sub = the short line under it
-  Order of the sections = order of the swipe deck and the dots.
+  MODERN DASHBOARD · 5 screens (Now, Faith, Money, Career, World), swipe sideways or use the tabs.
+  Finance (fin.enc.json) and calendar (cal.enc.json) are decrypted in the browser only (PBKDF2 600k + AES-GCM).
+  No passcode or figures live in this file. Old 8-bit version: retro.html · older: classic.html
 -->
-<main id="deck" aria-roledescription="carousel" aria-label="Daily dashboard">
+<header id="hd"><div class="ttl" id="hdT">Now</div><div class="meta"><span id="hdM" class="num"></span><button class="lockbtn" id="lockBtn" hidden onclick="lockAll()">Lock</button></div></header>
+<main id="pager" aria-label="Dashboard screens">
 
-<!-- 01 TODAY · colour: data-bg/data-fg · title: date (filled by script) · mood: happy -->
-<section class="slide" id="today" data-bg="#00E5FF" data-fg="#000000" data-mood="happy" aria-label="Today">
- <div class="inner">
-  <div class="top px"><span class="ico">☀️</span><span class="cnt"></span></div>
-  <h1 class="ttl px" id="greg">TODAY</h1>
-  <p class="sub px" id="hijri"></p>
-  <div class="scroll">
-   <div class="box" style="min-height:76px"><div class="sky" id="sky"></div><div class="px" id="wx" style="font-size:10px;padding-right:76px;line-height:2">LOADING WEATHER…</div></div>
-   <p class="px" id="nref" style="font-size:9px"></p>
-   <p class="px" style="font-size:8px;line-height:2">◀ SWIPE ▶ · ▲▼ · ARROW KEYS · TAP THE DOTS</p>
-  </div>
+<!-- ============ NOW ============ -->
+<section class="screen" id="now" aria-label="Now"><div class="grid">
+ <div class="card w4 hero">
+  <div><div class="greet" id="greet">Assalamualaikum</div><div class="clock num" id="clock">--:--</div>
+   <div style="margin-top:8px;font-weight:600" id="dateL"></div><div class="sm mu" id="hijri"></div></div>
+  <div class="pring" id="pRing"><svg class="ring" viewBox="0 0 118 118" width="118" height="118"><circle class="tr" cx="59" cy="59" r="52" stroke-width="8"/><circle class="pr" id="pArc" cx="59" cy="59" r="52" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>
+   <div class="c"><div class="n" id="pNext">Next</div><div class="t num" id="pCd">--</div><div class="s num" id="pAt"></div></div></div>
+  <div class="ptimes" id="ptimes"></div>
  </div>
-</section>
+ <div class="card w4" id="unlockCard"><div class="lbl">🔒 Calendar &amp; money are locked</div>
+  <form class="unlock" onsubmit="event.preventDefault();unlockFrom('pwNow','errNow')"><input class="inp num" id="pwNow" type="password" inputmode="numeric" autocomplete="off" placeholder="Passcode" aria-label="Passcode"><button class="btn pri" type="submit">Unlock</button></form>
+  <div class="err" id="errNow"></div><div class="xs mu">Unlock once and today's events and your money summary appear here.</div></div>
+ <div class="card w4 tap" id="finLine" hidden onclick="go(2)"></div>
+ <div class="card w2" id="evCard" hidden><div class="lbl"><span>Today's schedule</span><span class="xs mu" id="evSync"></span></div><div id="evToday"></div>
+  <details id="evWeekFold"><summary>Next 7 days</summary><div id="evWeek"></div></details></div>
+ <div class="card w2" id="todoBox"><div class="lbl"><span>To-do <span class="num" id="todoCount"></span></span><span class="xs mu" id="todoReset"></span></div>
+  <form class="todo-add" id="todoForm" autocomplete="off"><input class="inp" id="todoIn" type="text" maxlength="200" placeholder="Add a task…" aria-label="New to-do" enterkeyhint="done"><button class="btn pri" type="submit" aria-label="Add to-do">Add</button></form>
+  <div id="todoList"></div></div>
+ <div class="card w1" id="wxCard"><div class="lbl"><span>Weather</span><span id="wxIco"></span></div><div class="big num" id="wxT">--°</div><div class="sm mu" id="wxD">Loading…</div><div id="wxSpark" style="margin-top:8px"></div></div>
+ <div class="card w1" id="fastMini"><div class="lbl">Fasting</div><div class="sm skel">Loading…</div></div>
+ <div class="card w1"><div class="lbl">Rest today</div><div class="rs" id="rs"></div><div id="rtrend" style="margin-top:10px"></div></div>
+ <div class="card w1 tap" onclick="go(3)"><div class="lbl">SPF bond</div><div class="big num" id="bondMini">--</div><div class="xs mu">days to Oct 2027</div><div class="bar" style="margin-top:10px"><i id="bondMiniBar"></i></div></div>
+ <div class="card w4 tap" id="verseMini" onclick="go(1)"><div class="lbl"><span>Ayah of the day</span><span class="xs mu" id="verseMiniRef"></span></div><div class="qline" id="verseMiniT">…</div></div>
+ <div class="w4 xs mu row" style="padding:2px 4px"><span class="num" id="nref"></span><button class="btn ghost sm" onclick="setSheet()">Sheet link</button></div>
+</div></section>
 
-<!-- 02 PLANNER · colour: data-bg/data-fg · today's events + to-do + collapsible next 7 days; to-do clears at 00:00 and 12:00 SGT · mood: focused -->
-<section class="slide" id="plannerS" data-bg="#FF2D55" data-fg="#000000" data-mood="focused" aria-label="Planner">
- <div class="inner">
-  <div class="top px"><span class="ico">📋</span><span class="cnt"></span></div>
-  <h2 class="ttl px">PLANNER</h2>
-  <p class="sub px" id="planDate"></p>
-  <div class="scroll">
-   <div class="box plan-ui" id="planToday"><div class="lbl px sec-lbl">TODAY</div><div class="plock" aria-hidden="true"><span class="sh"></span><span class="bd"></span></div>
-    <div style="margin-bottom:8px">🔒 Locked</div>
-    <input id="cpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Calendar passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
-    <div id="cerr" style="margin-top:8px"></div></div>
-   <div class="box todo-ui" id="todoBox">
-    <div class="lbl px sec-lbl">TO-DO</div>
-    <p class="px todo-hint" id="todoReset"></p>
-    <form class="todo-add" id="todoForm" autocomplete="off">
-     <input id="todoIn" type="text" maxlength="200" placeholder="WRITE A TO-DO" aria-label="New to-do" enterkeyhint="done">
-     <button class="b" type="submit" aria-label="Add to-do">ADD</button>
-    </form>
-    <div id="todoList"></div>
-   </div>
-   <div class="box week-ui" id="planWeekBox" hidden>
-    <details class="week-fold" id="planWeekFold" open>
-     <summary class="px">NEXT 7 DAYS</summary>
-     <div id="planWeek"></div>
-    </details>
-   </div>
-  </div>
- </div>
-</section>
+<!-- ============ FAITH ============ -->
+<section class="screen" id="faith" aria-label="Faith"><div class="grid">
+ <div class="card w2"><div class="lbl">Quran tracker</div>
+  <div class="row" style="justify-content:flex-start;gap:14px"><div class="pring" style="width:84px;height:84px"><svg class="ring" viewBox="0 0 84 84" width="84" height="84"><circle class="tr" cx="42" cy="42" r="36" stroke-width="7"/><circle class="pr" id="qArc" cx="42" cy="42" r="36" stroke-width="7" stroke-dasharray="226.2" stroke-dashoffset="226.2"/></svg><div class="c"><div class="t num" id="qPct" style="font-size:15px">0%</div></div></div>
+   <div class="stack" style="flex:1"><div id="qpos" class="sm"></div><button class="btn pri" onclick="qOpen()">Read 1 page</button></div></div></div>
+ <div class="card w2"><div class="lbl"><span>Dhikr</span><span class="xs mu">SubhanAllah / Selawat</span></div>
+  <div class="row"><div class="big num" id="dCount">0</div><div class="xs mu" id="dsum" style="text-align:right"></div></div>
+  <div class="trees" id="gd"></div>
+  <div class="row" style="gap:8px"><button class="btn pri tapbig" onclick="dTap()">Tap</button><button class="btn" style="padding:18px" onclick="dUndo()" aria-label="Undo one">−1</button></div></div>
+ <div class="card w2" id="fastCard"><div class="lbl"><span>Fast</span><span class="pill" id="fastType">None today</span></div><div id="fast" class="sm mu">No fast flagged for today.</div></div>
+ <div class="card w2 namecard" id="flip" role="button" tabindex="0" aria-label="Name of Allah, tap to reveal" onclick="this.classList.toggle('on')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('on')}">
+  <div class="lbl"><span>Name of Allah</span><span class="xs mu">Tap to reveal</span></div><div class="ar" id="nAr"></div><div class="mid" id="nTr"></div>
+  <div class="rev"><div class="sm" style="color:var(--ac);font-weight:600;margin:8px 0" id="nMean"></div><div class="sm" id="nTxt"></div><div class="xs" id="nRef" style="margin-top:6px"></div></div></div>
+ <div class="card w2"><div class="lbl">Quran</div><div class="verse" id="verseT">…</div><div class="xs" style="margin-top:8px" id="verseR"></div></div>
+ <div class="card w2"><div class="lbl">Hadith</div><div class="verse" id="hadithT">…</div><div class="xs" style="margin-top:8px" id="hadithR"></div></div>
+ <div class="card w4" id="lessonCard" hidden><div class="lbl">Today's lesson</div><div class="mid" id="lessonTi" style="font-size:17px"></div><div class="sm" style="margin-top:6px;color:#c9ccd6" id="lessonT"></div><div class="xs" style="margin-top:6px" id="lessonR"></div></div>
+ <div class="card w2"><div class="lbl">A word for today</div><div class="verse" id="quote">…</div></div>
+ <div class="card w2" id="blessCard" hidden><div class="lbl">Gratitude</div><div class="verse" id="bless"></div></div>
+ <div class="card w4"><div class="lbl">Today's talks</div><div id="yt" class="grid" style="gap:12px"></div></div>
+</div></section>
 
-<!-- 03 FAST · colour: data-bg/data-fg · text: filled from daily JSON "fast" · mood: calm -->
-<section class="slide" id="fastS" data-bg="#7B2CFF" data-fg="#FFFFFF" data-mood="calm" aria-label="Fast">
- <div class="inner">
-  <div class="top px"><span class="ico">🌙</span><span class="cnt"></span></div>
-  <h2 class="ttl px">FAST</h2>
-  <p class="sub px" id="fastType">NO FAST FLAGGED TODAY</p>
-  <div class="scroll"><div id="fast"></div></div>
- </div>
-</section>
+<!-- ============ MONEY ============ -->
+<section class="screen" id="money" aria-label="Money"><div class="grid" id="fin">
+ <div class="card w4"><div class="lbl">🔒 Money is locked</div>
+  <form class="unlock" onsubmit="event.preventDefault();unlockFrom('pwFin','errFin')"><input class="inp num" id="pwFin" type="password" inputmode="numeric" autocomplete="off" placeholder="Passcode" aria-label="Passcode"><button class="btn pri" type="submit">Unlock</button></form>
+  <div class="err" id="errFin"></div><div class="xs mu">Balance, bills, debts and spending decrypt on your phone only.</div></div>
+</div></section>
 
-<!-- 04 BOND ENDS · colour: data-bg/data-fg · text: countdown to 31 Oct 2027 (script "bond") · mood: detective -->
-<section class="slide" id="bondS" data-bg="#FFB000" data-fg="#000000" data-mood="detective" aria-label="Bond ends">
- <div class="inner">
-  <div class="top px"><span class="ico">⏳</span><span class="cnt"></span></div>
-  <h2 class="ttl px">BOND ENDS</h2>
-  <p class="sub px">SPF BOND · FREE FROM OCT 2027</p>
-  <div class="scroll">
-   <div class="box"><div id="bond" class="big px"></div><div class="bbar"><i id="bondbar"></i></div><div id="bondsub" style="margin-top:12px"></div></div>
-  </div>
- </div>
-</section>
+<!-- ============ CAREER ============ -->
+<section class="screen" id="career" aria-label="Career"><div class="grid">
+ <div class="card w2"><div class="lbl">SPF bond</div>
+  <div class="row" style="justify-content:flex-start;gap:16px"><div class="pring" style="width:96px;height:96px"><svg class="ring" viewBox="0 0 96 96" width="96" height="96"><circle class="tr" cx="48" cy="48" r="41" stroke-width="8"/><circle class="pr" id="bArc" cx="48" cy="48" r="41" stroke-width="8" stroke-dasharray="257.6" stroke-dashoffset="257.6"/></svg><div class="c"><div class="t num" id="bPct" style="font-size:16px"></div><div class="s">served</div></div></div>
+   <div><div class="big num" id="bond">--</div><div class="sm mu" id="bondsub"></div></div></div></div>
+ <div class="card w2"><div class="lbl">Job decks</div><div class="sm mu" style="margin-bottom:10px">Prep templates until the bond ends in Oct 2027. Swipe right on roles you like.</div>
+  <div class="row" style="gap:8px;justify-content:flex-start;flex-wrap:wrap"><button class="btn pri" onclick="jOpen('jobs.html')">Swipe job deck</button><button class="btn" onclick="jOpen('top5.html')">Top picks</button></div>
+  <div class="xs" style="margin-top:10px"><a href="jobs.html">jobs.html ↗</a> · <a href="top5.html">top5.html ↗</a></div></div>
+ <div class="card w4"><div class="lbl"><span>Top picks</span><span class="xs mu" id="wlCount"></span></div><div id="topList" class="sm skel">Loading…</div>
+  <details id="wlFold" style="margin-top:6px" hidden><summary>Watch list</summary><div id="wlList"></div></details></div>
+</div></section>
 
-<!-- 05 QURAN TRACKER · colour: data-bg/data-fg · opens the full-screen reader · mood: calm -->
-<section class="slide" id="quranS" data-bg="#00C2A8" data-fg="#000000" data-mood="calm" aria-label="Quran tracker">
- <div class="inner">
-  <div class="top px"><span class="ico">📖</span><span class="cnt"></span></div>
-  <h2 class="ttl px">QURAN TRACKER</h2>
-  <p class="sub px">ONE PAGE AT A TIME</p>
-  <div class="scroll">
-   <div class="box"><div id="qpos"></div><button class="b" onclick="qOpen()">▶ READ 1 PAGE</button></div>
-  </div>
- </div>
-</section>
-
-<!-- 06 DHIKR GARDEN · colour: data-bg/data-fg · every 100 taps grows a tree · mood: calm -->
-<section class="slide" id="dhikrS" data-bg="#A6FF00" data-fg="#000000" data-mood="calm" aria-label="Dhikr garden">
- <div class="inner">
-  <div class="top px"><span class="ico">🌱</span><span class="cnt"></span></div>
-  <h2 class="ttl px">DHIKR GARDEN</h2>
-  <p class="sub px">SUBHANALLAH / SELAWAT</p>
-  <div class="scroll">
-   <div class="box"><div id="dsum"></div><div class="gd" id="gd"></div>
-    <button class="b wide" onclick="dTap()">TAP · SUBHANALLAH / SELAWAT</button><button class="b" onclick="dUndo()">−1</button></div>
-  </div>
- </div>
-</section>
-
-<!-- 07 REST CHECK · colour: data-bg/data-fg · 1–5 score logged to the sheet · mood: sleepy -->
-<section class="slide" id="restS" data-bg="#2B3CFF" data-fg="#FFFFFF" data-mood="sleepy" aria-label="Rest check">
- <div class="inner">
-  <div class="top px"><span class="ico">🔋</span><span class="cnt"></span></div>
-  <h2 class="ttl px">REST CHECK</h2>
-  <p class="sub px">HOW RESTED ARE YOU TODAY?</p>
-  <div class="scroll">
-   <div class="box"><div class="rs" id="rs"></div><div id="rtrend" class="px" style="font-size:10px;margin-top:16px;line-height:2"></div></div>
-   <button class="b" onclick="setSheet()">⚙ SHEET LINK</button>
-  </div>
- </div>
-</section>
-
-<!-- 08 FINANCE · colour: data-bg/data-fg · locked; figures only appear after the passcode decrypts fin.enc.json · mood: coin -->
-<section class="slide" id="finS" data-bg="#00FF9C" data-fg="#000000" data-mood="coin" aria-label="Finance">
- <div class="inner">
-  <div class="top px"><span class="ico">💰</span><span class="cnt"></span></div>
-  <h2 class="ttl px">FINANCE</h2>
-  <p class="sub px">BALANCE · BILLS · DEBTS · LEAKS</p>
-  <div class="scroll fin">
-   <div class="box" id="fin"><div style="margin-bottom:8px">🔒 Locked</div>
-    <input id="fpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Finance passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
-    <div id="ferr" style="margin-top:8px"></div></div>
-  </div>
- </div>
-</section>
-
-<!-- 09 WATCH · colour: data-bg/data-fg · videos from daily JSON + channel list "mine" · mood: excited -->
-<section class="slide" id="watchS" data-bg="#FF3B30" data-fg="#000000" data-mood="excited" aria-label="Watch">
- <div class="inner">
-  <div class="top px"><span class="ico">▶️</span><span class="cnt"></span></div>
-  <h2 class="ttl px">WATCH</h2>
-  <p class="sub px">TODAY'S TALKS · SWIPE ON THE EDGES</p>
-  <div class="scroll"><div id="yt"></div></div>
- </div>
-</section>
-
-<!-- 10 QURAN & HADITH · colour: data-bg/data-fg · daily verse + hadith, flip with ◀ ▶ · mood: calm -->
-<section class="slide" id="verseS" data-bg="#E600FF" data-fg="#000000" data-mood="calm" aria-label="Quran and hadith">
- <div class="inner">
-  <div class="top px"><span class="ico">📜</span><span class="cnt"></span></div>
-  <h2 class="ttl px" id="qhLbl">📖 QURAN</h2>
-  <p class="sub px">VERSE &amp; HADITH OF THE DAY</p>
-  <div class="scroll"><div id="car" class="pager"></div><div class="pdots" id="qdots"></div></div>
- </div>
-</section>
-
-<!-- 11 NAMES OF ALLAH · colour: data-bg/data-fg · tap the card to flip · mood: wonder -->
-<section class="slide" id="namesS" data-bg="#FF7A00" data-fg="#000000" data-mood="wonder" aria-label="Names of Allah">
- <div class="inner">
-  <div class="top px"><span class="ico">✦</span><span class="cnt"></span></div>
-  <h2 class="ttl px">NAMES OF ALLAH</h2>
-  <p class="sub px">TAP TO REVEAL</p>
-  <div class="scroll">
-   <div class="flip" id="flip" role="button" tabindex="0" aria-label="Flip card" onclick="this.classList.toggle('on')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('on')}"><div class="fi">
-    <div class="fa"><div class="ar" id="nAr"></div><div class="tr px" id="nTr"></div><div class="hint px">TAP TO REVEAL</div></div>
-    <div class="fb"><div class="px" style="font-size:11px;margin-bottom:12px;line-height:1.6" id="nMean"></div><div id="nTxt"></div><div class="ref" id="nRef" style="margin-top:10px"></div></div>
-   </div></div>
-  </div>
- </div>
-</section>
-
-<!-- 12 SCHOLARS · colour: data-bg/data-fg · quote from daily JSON · mood: curious -->
-<section class="slide" id="scholarS" data-bg="#5AC8FF" data-fg="#000000" data-mood="curious" aria-label="Scholars">
- <div class="inner">
-  <div class="top px"><span class="ico">❝</span><span class="cnt"></span></div>
-  <h2 class="ttl px">SCHOLARS</h2>
-  <p class="sub px">A WORD FOR TODAY</p>
-  <div class="scroll"><div class="box" id="quote" style="font-size:16px">…</div></div>
- </div>
-</section>
-
-<!-- 13 WORLD WATCH · colour: data-bg/data-fg · clock / forecast / lectures / game model, flip with ◀ ▶ · mood: worried -->
-<section class="slide" id="worldS" data-bg="#FFE600" data-fg="#000000" data-mood="worried" aria-label="World watch">
- <div class="inner">
-  <div class="top px"><span class="ico">🌍</span><span class="cnt"></span></div>
-  <h2 class="ttl px" id="wLbl">WORLD WATCH</h2>
-  <p class="sub px">HOW CLOSE IS THE BIG ONE?</p>
-  <div class="scroll"><div id="wcar" class="pager"></div><div class="pdots" id="wdots"></div></div>
- </div>
-</section>
-
-<!-- 14 WORLD NEWS · colour: data-bg/data-fg · last 24h headlines via Google News RSS · mood: excited -->
-<section class="slide" id="newsS" data-bg="#FF2E9A" data-fg="#000000" data-mood="excited" aria-label="World news">
- <div class="inner">
-  <div class="top px"><span class="ico">📰</span><span class="cnt"></span></div>
-  <h2 class="ttl px">WORLD NEWS</h2>
-  <p class="sub px" id="nwT">LOADING…</p>
-  <div class="scroll"><div id="news">Loading headlines…</div></div>
- </div>
-</section>
-
-<!-- 15 JOBS · colour: data-bg/data-fg · opens the jobs.html / top5.html swipe decks · mood: happy -->
-<section class="slide" id="jobsS" data-bg="#B4FF39" data-fg="#000000" data-mood="happy" aria-label="Jobs">
- <div class="inner">
-  <div class="top px"><span class="ico">💼</span><span class="cnt"></span></div>
-  <h2 class="ttl px">JOBS</h2>
-  <p class="sub px">SWIPE YOUR PICKS · PREP UNTIL OCT 2027</p>
-  <div class="scroll">
-   <div class="box"><p style="margin-top:0">Your Top 4 and Watch List cards, swipe right on the ones you like.</p>
-    <button class="b wide" onclick="jOpen('jobs.html')">▶ PLAY JOB DECK</button>
-    <p class="ref"><a href="jobs.html">Open jobs.html ↗</a> · <a href="top5.html">Open top5.html ↗</a></p></div>
-  </div>
- </div>
-</section>
-
+<!-- ============ WORLD ============ -->
+<section class="screen" id="world" aria-label="World"><div class="grid">
+ <div class="card w4"><div class="lbl"><span>Headlines</span><span class="xs mu" id="nwT">Loading…</span></div><div id="news" class="sm skel">Loading headlines…</div></div>
+ <div class="w4 grid" id="wcar" style="padding:0"></div>
+</div></section>
 </main>
 
-<nav id="dots" aria-label="Screens"></nav>
-<canvas id="bot" width="40" height="40" aria-hidden="true"></canvas>
+<nav id="tabs" role="tablist" aria-label="Screens">
+ <button role="tab" data-i="0" aria-selected="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Now</button>
+ <button role="tab" data-i="1" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>Faith</button>
+ <button role="tab" data-i="2" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/></svg>Money</button>
+ <button role="tab" data-i="3" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/></svg>Career</button>
+ <button role="tab" data-i="4" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>World</button>
+</nav>
 
-<!-- Quran reader overlay (swipe right = next page, left = previous, same as before) -->
-<div id="qr" class="ov" role="dialog" aria-label="Quran reader"><div class="ovh"><span class="px" id="qhead" style="font-size:10px"></span><button class="b" onclick="qStop()">■ STOP &amp; SAVE</button></div><div id="qbody">Loading…</div><div class="row" style="margin:16px 0 40px"><button class="b" onclick="qGo(-1)">◀ PREV</button><button class="b" onclick="qGo(1)">NEXT PAGE ▶</button></div></div>
+<!-- Quran reader (swipe right = next page, left = previous) -->
+<div id="qr" class="ov" role="dialog" aria-label="Quran reader"><div class="ovh"><span class="sm mu num" id="qhead"></span><button class="btn sm" onclick="qStop()">Stop &amp; save</button></div><div id="qbody">Loading…</div><div class="row" style="max-width:760px;margin:16px auto 40px;padding:0 16px"><button class="btn" onclick="qGo(-1)">‹ Prev</button><button class="btn pri" onclick="qGo(1)">Next page ›</button></div></div>
 <!-- Job deck overlay -->
-<div id="jov" class="ov" role="dialog" aria-label="Job swipe deck"><div class="ovh"><span class="px" style="font-size:10px">💼 JOBS</span><button class="b" onclick="jClose()">✕ CLOSE</button></div><iframe id="jfr" title="Job swipe"></iframe></div>
+<div id="jov" class="ov" role="dialog" aria-label="Job swipe deck"><div class="ovh"><span class="sm" style="font-weight:600">Jobs</span><button class="btn sm" onclick="jClose()">Close</button></div><iframe id="jfr" title="Job swipe"></iframe></div>
 <script>
-const $=s=>document.getElementById(s),esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-let mine=[{n:"Nurul Asror",id:"UCKbkIWJiGciz7ACCGeQkAMw"}];
-const now=new Date(new Date().toLocaleString("en-US",{timeZone:"Asia/Singapore"}));
-const ymd=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
-$("greg").textContent=now.toLocaleDateString("en-SG",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).toUpperCase();
-fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&current=temperature_2m,weather_code,is_day&daily=precipitation_probability_max&timezone=Asia%2FSingapore&forecast_days=1").then(r=>r.json()).then(d=>{
- const c=d.current.weather_code,k=c>=51?"rain":c>=2?"cloud":"sun",s=$("sky");window.WK=k;
- if(k==="sun")s.innerHTML='<div class="psun"></div>';else{s.innerHTML='<div class="pcl"></div>';if(k==="rain")for(let i=0;i<6;i++)s.innerHTML+=`<div class="pdr" style="left:${6+i*9}px;animation-delay:-${i*.1}s"></div>`}
- $("wx").innerHTML=`<b style="font-size:22px">${Math.round(d.current.temperature_2m)}°</b><br>${{sun:d.current.is_day?"CLEAR":"CLEAR NIGHT",cloud:"CLOUDY",rain:c>=95?"STORM":"RAIN"}[k]} · ${d.daily.precipitation_probability_max[0]}% RAIN`}).catch(()=>$("wx").textContent="WEATHER OFFLINE");
-let D={};
-function renderFast(f){$("fastType").textContent=(f.type||"").toUpperCase();
- $("fast").innerHTML=`<div class="box"><div class="cres"></div><div class="big px" id="cd" style="font-size:18px">…</div><p id="cdw"></p><p>${esc(f.why)}</p><p class="ref">${esc(f.src)}${f.url?` · <a href="${f.url}" target="_blank" rel="noopener">Source ↗</a>`:""}</p></div>`;
- const [y,m,dd]=f.date.split("-");fetch(`https://api.aladhan.com/v1/timings/${dd}-${m}-${y}?latitude=1.3521&longitude=103.8198&method=11`).then(r=>r.json()).then(j=>{const t=j.data.timings,st=new Date(`${f.date}T${t.Imsak}:00+08:00`),en=new Date(`${f.date}T${t.Maghrib}:00+08:00`);
-  const tick=()=>{const n=Date.now();let tgt,lbl;if(n<st){tgt=st;lbl=`Fast starts at Imsak ${t.Imsak} (Subuh ${t.Fajr}) and ends at Maghrib ${t.Maghrib} SGT.`}else if(n<en){tgt=en;lbl=`Fasting now. Breaks at Maghrib ${t.Maghrib} SGT.`}else{$("cd").textContent="DONE · ALHAMDULILLAH";$("cdw").textContent="";return}
-   const s=Math.floor((tgt-n)/1000);$("cd").textContent=`${n<st?"STARTS IN":"IFTAR IN"} ${Math.floor(s/3600)}H ${String(Math.floor(s/60)%60).padStart(2,"0")}M ${String(s%60).padStart(2,"0")}S`;$("cdw").textContent=lbl};tick();setInterval(tick,1000)}).catch(()=>$("cd").textContent=f.date)}
-/* videos are rendered with data-src and only load when the WATCH / WORLD screen is opened */
-function renderYT(){let h="";(D.videos||[]).forEach(v=>h+=`<div class="vid"><iframe data-src="https://www.youtube-nocookie.com/embed/${v.id}${v.start?"?start="+v.start:""}" title="${esc(v.title)}" allowfullscreen></iframe></div><div class="vt">${esc(v.title)}</div>`);
- mine.forEach(c=>h+=`<div class="vid"><iframe data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${c.id.slice(2)}" title="Latest from ${esc(c.n)}" allowfullscreen></iframe></div><div class="vt">Latest from ${esc(c.n)}</div>`);
- $("yt").innerHTML=h||'<div class="box">No videos today.</div>';if(window.DECK)DECK.lazy()}
-/* tap-to-page mini pager used by QURAN & HADITH and WORLD WATCH (buttons, so it never fights the screen swipe) */
-function pager(box,dots,onShow){const P=[...box.children];let i=0;if(!P.length)return;
- dots.innerHTML=(P.length>1?`<button class="b" aria-label="Previous" data-d="-1">◀</button>`:"")+P.map((_,k)=>`<i class="${k?"":"on"}"></i>`).join("")+(P.length>1?`<button class="b" aria-label="Next" data-d="1">▶</button>`:"");
- const show=k=>{i=(k+P.length)%P.length;P.forEach((p,n)=>p.classList.toggle("on",n===i));dots.querySelectorAll("i").forEach((d,n)=>d.className=n===i?"on":"");onShow&&onShow(P[i]);if(window.DECK)DECK.lazy()};
- dots.onclick=e=>{const b=e.target.closest("button");if(b)show(i+ +b.dataset.d)};show(0)}
-fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{if(d.pm&&new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).getHours()>=18)Object.assign(d,d.pm);D=d;
- $("hijri").textContent=(d.hijri||"").toUpperCase();if(d.fast&&typeof d.fast==="object")renderFast(d.fast);else if(d.fast){$("fastType").textContent="TODAY";$("fast").innerHTML=`<div class="box">🌙 ${esc(d.fast)}</div>`}else $("fast").innerHTML=`<div class="box">No fast flagged for today.</div>`;renderYT();
- const sl=(x,l)=>x?`<div class="pg" data-l="${l}"><div class="box" style="font-size:17px;line-height:1.6"><p style="margin-top:0">“${esc(x.text)}”</p><p class="ref"><a href="${x.url}" target="_blank" rel="noopener">${esc(x.ref)} ↗</a></p></div></div>`:"";
- $("car").innerHTML=sl(d.verse,"📖 QURAN")+sl(d.hadith,"📜 HADITH");pager($("car"),$("qdots"),s=>$("qhLbl").textContent=s.dataset.l);
- const n=d.name||{};$("nAr").textContent=n.ar||"";$("nTr").textContent=(n.tr||"").toUpperCase();$("nMean").textContent=(n.meaning||"").toUpperCase();$("nTxt").textContent=n.text||"";if(n.url)$("nRef").innerHTML=`<a href="${n.url}" target="_blank" rel="noopener">Source ↗</a>`;
- const W=d.world||[];$("wcar").innerHTML=W.map(x=>`<div class="pg"><div class="box wd"><div class="px" style="font-size:9px;line-height:1.6">${esc(x.src)}</div>${x.kind==="clock"?'<div class="clock"><i></i></div>':x.kind==="bar"?`<div class="bar"><b style="width:${x.pct}%"></b></div>`:x.kind==="game"?`<div class="gm px"><div class="h"></div><div class="h">B: RESTRAIN</div><div class="h">B: ESCALATE</div><div class="h">A: RESTRAIN</div><div class="eq">COMPETE</div><div>PROXY WAR</div><div class="h">A: ESCALATE</div><div>PROXY WAR</div><div>WW3 (ALL LOSE)</div></div><div class="meter">${[1,2,3,4,5].map(n=>`<i class="${n<=x.level?'on':''}"></i>`).join('')}</div>`:'<div class="globe"></div>'}${x.big?`<div class="big px">${esc(x.big)}</div>`:""}${x.vid?`<div class="vid"><iframe data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${x.vid.slice(2)}" title="${esc(x.src)}" allowfullscreen></iframe></div>`:""}<p style="font-size:14px">${esc(x.text)}</p>${x.url?`<p class="ref"><a href="${x.url}" target="_blank" rel="noopener">Source ↗</a></p>`:`<p class="ref">${esc(x.note||"")}</p>`}</div></div>`).join("");
- pager($("wcar"),$("wdots"));
- const q=d.quote;if(q)$("quote").innerHTML=`<p style="margin-top:0">“${esc(q.text)}”</p><p class="ref">— ${esc(q.by)} · <a href="${q.url}" target="_blank" rel="noopener">${esc(q.date||"source")} ↗</a></p>`}).catch(()=>{$("quote").textContent="Couldn't load today's content."});
-</script>
-<script>
-/* 6am / 6pm auto-refresh (SGT) */
-(function(){const tick=()=>{const n=new Date(),sg=new Date(n.getTime()+(n.getTimezoneOffset()+480)*6e4);const nx=new Date(sg);{const h=sg.getHours();if(h<6)nx.setHours(6,0,0,0);else if(h<18)nx.setHours(18,0,0,0);else{nx.setDate(nx.getDate()+1);nx.setHours(6,0,0,0)}};const ms=nx-sg;if(ms<1000){location.reload();return}const h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);document.getElementById("nref").textContent=`NEXT REFRESH ${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`};tick();setInterval(tick,1000)})();
-</script>
-<script>
+"use strict";
+const $=s=>document.getElementById(s),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const safeUrl=u=>/^https?:\/\//i.test(u||"")?esc(u):"#";
 const LS=(k,v)=>v===undefined?JSON.parse(localStorage.getItem(k)||"null"):localStorage.setItem(k,JSON.stringify(v));
-const sgDay=()=>new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).toISOString().slice(0,10);
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const pad2=n=>String(n).padStart(2,"0");
+/* Singapore time helpers (UTC+8, independent of device time zone) */
+function sgParts(ms){const t=new Date((ms??Date.now())+8*3600*1000);return{y:t.getUTCFullYear(),m:t.getUTCMonth()+1,d:t.getUTCDate(),h:t.getUTCHours(),min:t.getUTCMinutes(),s:t.getUTCSeconds(),wd:t.getUTCDay()}}
+const sgDay=(ms)=>{const p=sgParts(ms);return p.y+"-"+pad2(p.m)+"-"+pad2(p.d)};
+const MO=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const fmt12=(h,m)=>(h%12||12)+":"+pad2(m)+" "+(h>=12?"PM":"AM");
+const ymd=sgDay();
+/* free daily accent rotation (by SGT date) */
+(function(){const A=[["#2dd4bf","45,212,191"],["#60a5fa","96,165,250"],["#a78bfa","167,139,250"],["#f59e0b","245,158,11"],["#34d399","52,211,153"],["#f472b6","244,114,182"],["#38bdf8","56,189,248"]];
+ const p=sgParts(),doy=Math.floor((Date.UTC(p.y,p.m-1,p.d)-Date.UTC(p.y,0,0))/864e5),a=A[doy%A.length],r=document.documentElement.style;
+ r.setProperty("--ac",a[0]);r.setProperty("--ac2",`rgba(${a[1]},.14)`);if(a[0]==="#a78bfa")r.setProperty("--fam","#f472b6")})();
+function countUp(el,to,f){if(!el)return;f=f||(v=>Math.round(v).toLocaleString("en-SG"));if(RM||!isFinite(to)){el.textContent=f(to);return}const t0=performance.now(),d=800;
+ const step=t=>{const k=Math.min(1,(t-t0)/d),e=1-Math.pow(1-k,3);el.textContent=f(to*e);if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+function setArc(id,pct){const c=$(id);if(!c)return;const L=+c.getAttribute("stroke-dasharray");c.style.strokeDashoffset=L*(1-Math.max(0,Math.min(1,pct)))}
+function spark(vals,w,h,opt){opt=opt||{};if(!vals.length)return"";const mn=Math.min(...vals),mx=Math.max(...vals),r=mx-mn||1,X=i=>i*(w/(vals.length-1||1)),Y=v=>h-2-(v-mn)/r*(h-4);
+ const d=vals.map((v,i)=>(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)).join(" ");
+ return `<svg width="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block;height:${h}px" aria-hidden="true"><path d="${d} L${w} ${h} L0 ${h}Z" fill="var(--ac2)"/><path d="${d}" fill="none" stroke="var(--ac)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`}
+
+/* ================= NAV / PAGER ================= */
+const pager=$("pager"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Money","Career","World"];
+let cur=0;const inited=new Set();
+function go(i,instant){i=Math.max(0,Math.min(SCR.length-1,i));pager.scrollTo({left:i*pager.clientWidth,behavior:instant||RM?"auto":"smooth"});setCur(i)}
+function setCur(i){if(i===cur&&inited.has(i))return;cur=i;TABS.forEach((t,k)=>t.setAttribute("aria-selected",k===i?"true":"false"));$("hdT").textContent=NAMES[i];
+ history.replaceState(null,"","#"+SCR[i].id);initScreen(i)}
+TABS.forEach(t=>t.onclick=()=>go(+t.dataset.i));
+let sT;pager.addEventListener("scroll",()=>{clearTimeout(sT);sT=setTimeout(()=>{const i=Math.round(pager.scrollLeft/pager.clientWidth);if(i!==cur)setCur(i)},60)},{passive:true});
+addEventListener("resize",()=>pager.scrollTo({left:cur*pager.clientWidth}));
+addEventListener("keydown",e=>{if(document.querySelector(".ov.on")){if(e.key==="Escape"){if($("qr").classList.contains("on"))qStop();else jClose()}return}
+ if(e.target.closest&&e.target.closest("input,textarea,select"))return;if(e.key==="ArrowRight")go(cur+1);else if(e.key==="ArrowLeft")go(cur-1)});
+function lazyFrames(root){root.querySelectorAll("iframe[data-src]").forEach(f=>{f.src=f.dataset.src;f.removeAttribute("data-src")})}
+function initScreen(i){if(i!==cur)return;lazyFrames(SCR[i]);if(inited.has(i))return;inited.add(i);
+ if(i===3)loadJobs();if(i===4)loadNews()}
+
+/* ================= CLOCK + TICK ================= */
+const PT={today:null,tom:null};let FASTT=null;
+function tick(){const now=Date.now(),p=sgParts(now);
+ $("clock").innerHTML=`${(p.h%12||12)}:${pad2(p.min)}<small>:${pad2(p.s)} ${p.h>=12?"PM":"AM"}</small>`;
+ $("hdM").textContent=cur===0?"":`${fmt12(p.h,p.min)}`;
+ $("greet").textContent=(p.h<5?"Late night":p.h<12?"Good morning":p.h<15?"Good afternoon":p.h<19?"Good evening":"Good night")+", Syazwan";
+ prayerTick(now);fastTick(now);refreshTick(now)}
+function dateHeader(){const p=sgParts();$("dateL").textContent=`${WD[p.wd]}, ${p.d} ${MO[p.m-1]} ${p.y}`}
+dateHeader();
+
+/* ================= PRAYER TIMES (MUIS method via Aladhan) ================= */
+const PN=[["Fajr","Subuh"],["Sunrise","Syuruk"],["Dhuhr","Zohor"],["Asr","Asar"],["Maghrib","Maghrib"],["Isha","Isyak"]];
+function ptFetch(dayStr){const c=LS("ptCache")||{};if(c[dayStr])return Promise.resolve(c[dayStr]);const [y,m,d]=dayStr.split("-");
+ return fetch(`https://api.aladhan.com/v1/timings/${d}-${m}-${y}?latitude=1.3521&longitude=103.8198&method=11`).then(r=>r.json()).then(j=>{const t={};Object.entries(j.data.timings).forEach(([k,v])=>t[k]=String(v).slice(0,5));
+  const c2=LS("ptCache")||{};c2[dayStr]=t;Object.keys(c2).sort().slice(0,-4).forEach(k=>delete c2[k]);LS("ptCache",c2);return t})}
+const ptAt=(day,hm)=>Date.parse(`${day}T${hm}:00+08:00`);
+const tomStr=sgDay(Date.now()+864e5);
+Promise.all([ptFetch(ymd),ptFetch(tomStr).catch(()=>null)]).then(([a,b])=>{PT.today=a;PT.tom=b;
+ $("ptimes").innerHTML=PN.map(([k,n],i)=>{const [h,m]=a[k].split(":").map(Number);return `<div class="pt" id="pt${i}"><span>${n}</span><b class="num">${(h%12||12)}:${pad2(m)}</b></div>`}).join("");prayerTick(Date.now())})
+ .catch(()=>{$("pNext").textContent="Prayer";$("pCd").textContent="Offline";$("ptimes").innerHTML=""});
+function prayerTick(now){if(!PT.today)return;const T=PN.map(([k])=>ptAt(ymd,PT.today[k]));let ni=T.findIndex(t=>t>now),next,prev,name;
+ const isPrayer=i=>i!==1;
+ if(ni===-1){next=PT.tom?ptAt(tomStr,PT.tom.Fajr):T[0]+864e5;prev=T[5];name="Subuh"}else{next=T[ni];prev=ni>0?T[ni-1]:T[5]-864e5;name=PN[ni][1]}
+ const s=Math.max(0,Math.floor((next-now)/1000)),h=Math.floor(s/3600),m=Math.floor(s/60)%60;
+ $("pNext").textContent=name;$("pCd").textContent=h?`${h}h ${pad2(m)}m`:`${m}m ${pad2(s%60)}s`;
+ const np=sgParts(next);$("pAt").textContent="at "+fmt12(np.h,np.min);setArc("pArc",(now-prev)/(next-prev));
+ PN.forEach((_,i)=>{const el=$("pt"+i);if(el){el.classList.toggle("past",T[i]<=now&&i!==ni);el.classList.toggle("next",i===ni)}})}
+
+/* ================= WEATHER ================= */
+const WXI={sun:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+ moon:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c7d2fe" stroke-width="1.8"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>',
+ cloud:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 11a3.5 3.5 0 0 0 1 7z"/></svg>',
+ rain:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 8a3.5 3.5 0 0 0 1 7zM8 18l-1 3M12 18l-1 3M16 18l-1 3"/></svg>'};
+fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&current=temperature_2m,apparent_temperature,weather_code,is_day&hourly=temperature_2m,precipitation_probability&daily=precipitation_probability_max,temperature_2m_max,temperature_2m_min&timezone=Asia%2FSingapore&forecast_days=2").then(r=>r.json()).then(d=>{
+ const c=d.current.weather_code,k=c>=51?"rain":c>=2?"cloud":(d.current.is_day?"sun":"moon");
+ const desc=c>=95?"Thunderstorm":c>=80?"Showers":c>=61?"Rain":c>=51?"Drizzle":c>=45?"Fog":c>=3?"Cloudy":c>=2?"Partly cloudy":d.current.is_day?"Clear":"Clear night";
+ $("wxIco").innerHTML=WXI[k];countUp($("wxT"),d.current.temperature_2m,v=>Math.round(v)+"°");
+ $("wxD").innerHTML=`${desc} · ${d.daily.precipitation_probability_max[0]}% rain<br><span class="xs">Feels ${Math.round(d.current.apparent_temperature)}° · ${Math.round(d.daily.temperature_2m_min[0])}–${Math.round(d.daily.temperature_2m_max[0])}°</span>`;
+ const hi=d.hourly.time.findIndex(t=>t>=d.current.time.slice(0,13)),T=d.hourly.temperature_2m.slice(Math.max(0,hi),Math.max(0,hi)+12);
+ if(T.length>2)$("wxSpark").innerHTML=spark(T,120,28)+`<div class="row xs mu" style="margin-top:2px"><span>now</span><span>+12h</span></div>`})
+ .catch(()=>{$("wxD").textContent="Weather offline"});
+
+/* ================= DAILY CONTENT (daily/YYYY-MM-DD.json) ================= */
+let D={};
+function renderFast(f){$("fastType").textContent=f.type||"Today";$("fastType").className="pill ac";
+ $("fast").className="sm";$("fast").innerHTML=`<div class="mid num" id="cd">…</div><div class="mu" id="cdw" style="margin:4px 0 8px"></div><div style="color:#c9ccd6">${esc(f.why)}</div><div class="xs mu" style="margin-top:6px">${esc(f.src)}${f.url?` · <a href="${safeUrl(f.url)}" target="_blank" rel="noopener">Source ↗</a>`:""}</div>`;
+ $("fastMini").innerHTML=`<div class="lbl">Fasting</div><div class="mid num" id="cdm" style="font-size:18px">…</div><div class="xs mu" id="cdmw">${esc(f.type||"")}</div>`;$("fastMini").classList.add("tap");$("fastMini").onclick=()=>go(1);
+ ptFetch(f.date).then(t=>{FASTT={st:ptAt(f.date,t.Imsak),en:ptAt(f.date,t.Maghrib),t};fastTick(Date.now())}).catch(()=>{$("cd").textContent=f.date})}
+function fastTick(n){if(!FASTT)return;const {st,en,t}=FASTT;let tgt,lbl,ml;
+ if(n<st){tgt=st;lbl=`Starts at Imsak ${t.Imsak} (Subuh ${t.Fajr}), ends at Maghrib ${t.Maghrib} SGT.`;ml="Starts in"}
+ else if(n<en){tgt=en;lbl=`Fasting now. Breaks at Maghrib ${t.Maghrib} SGT.`;ml="Iftar in"}
+ else{$("cd").textContent="Done · Alhamdulillah";$("cdw").textContent="";$("cdm").textContent="Done";$("cdmw").textContent="Alhamdulillah";FASTT=null;return}
+ const s=Math.floor((tgt-n)/1000),str=`${Math.floor(s/3600)}h ${pad2(Math.floor(s/60)%60)}m ${pad2(s%60)}s`;
+ $("cd").textContent=ml+" "+str;$("cdw").textContent=lbl;$("cdm").textContent=str;$("cdmw").textContent=ml+" · "+(n<st?"Imsak "+t.Imsak:"Maghrib "+t.Maghrib)}
+function renderYT(){let h="";const mine=[{n:"Nurul Asror",id:"UCKbkIWJiGciz7ACCGeQkAMw"}];
+ (D.videos||[]).forEach(v=>h+=`<div class="w2"><div class="vid"><iframe data-src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.id)}${v.start?"?start="+(+v.start):""}" title="${esc(v.title)}" loading="lazy" allowfullscreen></iframe></div><div class="vt">${esc(v.title)}</div></div>`);
+ mine.forEach(c=>h+=`<div class="w2"><div class="vid"><iframe data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${c.id.slice(2)}" title="Latest from ${esc(c.n)}" loading="lazy" allowfullscreen></iframe></div><div class="vt">Latest from ${esc(c.n)}</div></div>`);
+ $("yt").innerHTML=h;if(cur===1)lazyFrames(SCR[1])}
+function clockSvg(){return `<svg viewBox="0 0 100 100" width="84" height="84" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="var(--s3)" stroke-width="6"/><path d="M50 6 A44 44 0 0 1 58.2 6.8" fill="none" stroke="var(--bad)" stroke-width="6" stroke-linecap="round"/><line x1="50" y1="50" x2="50" y2="14" stroke="var(--tx)" stroke-width="4" stroke-linecap="round"/><line x1="50" y1="50" x2="54" y2="18" stroke="var(--bad)" stroke-width="2.5" stroke-linecap="round"/><circle cx="50" cy="50" r="4" fill="var(--tx)"/></svg>`}
+function renderWorld(W){$("wcar").innerHTML=W.map((x,i)=>{let viz="";
+ if(x.kind==="clock")viz=`<div class="row" style="justify-content:flex-start;gap:14px">${clockSvg()}<div class="big num">${esc(x.big||"")}</div></div>`;
+ else if(x.kind==="bar")viz=`<div class="big num">${esc(x.big||(x.pct+"%"))}</div><div class="bar" style="margin:8px 0"><i data-w="${+x.pct||0}"></i></div>`;
+ else if(x.kind==="game")viz=`<div class="mid">${esc(x.big||"")}</div><div class="meter">${[1,2,3,4,5].map(n=>`<i class="${n<=x.level?"on":""}"></i>`).join("")}</div><table class="xs mu" style="width:100%;border-collapse:collapse;text-align:center;margin:6px 0"><tr><td></td><td>B restrains</td><td>B escalates</td></tr><tr><td>A restrains</td><td style="color:var(--ok)">Compete</td><td>Proxy war</td></tr><tr><td>A escalates</td><td>Proxy war</td><td style="color:var(--bad)">WW3 (all lose)</td></tr></table>`;
+ else if(x.big)viz=`<div class="big">${esc(x.big)}</div>`;
+ const vid=x.vid?`<div class="vid" style="margin:8px 0"><iframe data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${esc(String(x.vid).slice(2))}" title="${esc(x.src)}" loading="lazy" allowfullscreen></iframe></div>`:"";
+ return `<div class="card ${x.vid?"w2":"w2"}" style="animation-delay:${i*40}ms"><div class="lbl">${esc(x.src)}</div>${viz}${vid}<div class="sm" style="color:#c9ccd6">${esc(x.text)}</div><div class="xs mu" style="margin-top:6px">${x.url?`<a href="${safeUrl(x.url)}" target="_blank" rel="noopener">Source ↗</a>`:esc(x.note||"")}</div></div>`}).join("");
+ requestAnimationFrame(()=>$("wcar").querySelectorAll("[data-w]").forEach(b=>b.style.width=b.dataset.w+"%"));if(cur===4)lazyFrames(SCR[4])}
+fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{if(d.pm&&sgParts().h>=18)Object.assign(d,d.pm);D=d;
+ $("hijri").textContent=d.hijri||"";
+ if(d.fast&&typeof d.fast==="object")renderFast(d.fast);else if(d.fast){$("fastType").textContent="Today";$("fast").textContent=d.fast;$("fastMini").innerHTML=`<div class="lbl">Fasting</div><div class="sm">${esc(d.fast)}</div>`}
+ else $("fastMini").innerHTML=`<div class="lbl">Fasting</div><div class="mid">None</div><div class="xs mu">No fast flagged today</div>`;
+ renderYT();
+ const v=d.verse,h=d.hadith;
+ if(v){$("verseT").textContent="“"+v.text+"”";$("verseR").innerHTML=`<a href="${safeUrl(v.url)}" target="_blank" rel="noopener">${esc(v.ref)} ↗</a>`;$("verseMiniT").textContent="“"+v.text+"”";$("verseMiniRef").textContent=v.ref}
+ else{$("verseMini").hidden=true}
+ if(h){$("hadithT").textContent="“"+h.text+"”";$("hadithR").innerHTML=`<a href="${safeUrl(h.url)}" target="_blank" rel="noopener">${esc(h.ref)} ↗</a>`}
+ const n=d.name||{};$("nAr").textContent=n.ar||"";$("nTr").textContent=n.tr||"";$("nMean").textContent=n.meaning||"";$("nTxt").textContent=n.text||"";if(n.url)$("nRef").innerHTML=`<a href="${safeUrl(n.url)}" target="_blank" rel="noopener">Source ↗</a>`;
+ if(d.lesson){$("lessonCard").hidden=false;$("lessonTi").textContent=d.lesson.title||"";$("lessonT").textContent=d.lesson.text||"";if(d.lesson.url)$("lessonR").innerHTML=`<a href="${safeUrl(d.lesson.url)}" target="_blank" rel="noopener">Source ↗</a>`}
+ if(d.blessing){$("blessCard").hidden=false;$("bless").textContent=d.blessing}
+ const q=d.quote;if(q)$("quote").innerHTML=`“${esc(q.text)}”<div class="xs mu" style="margin-top:8px">— ${esc(q.by)} · <a href="${safeUrl(q.url)}" target="_blank" rel="noopener">${esc(q.date||"source")} ↗</a></div>`;
+ renderWorld(d.world||[])
+}).catch(()=>{$("quote").textContent="Couldn't load today's content.";$("fastMini").innerHTML=`<div class="lbl">Fasting</div><div class="sm mu">Offline</div>`});
+
+/* 6am / 6pm auto-refresh (SGT) */
+function refreshTick(now){const p=sgParts(now);let nh=p.h<6?6:p.h<18?18:30;const tgt=Date.UTC(p.y,p.m-1,p.d,nh,0,0)-8*3600e3,ms=tgt-now;
+ if(ms<1000&&!document.querySelector(".ov.on")&&!(document.activeElement&&document.activeElement.tagName==="INPUT")){location.reload();return}
+ const s=Math.max(0,Math.floor(ms/1000));$("nref").textContent=`Fresh content in ${Math.floor(s/3600)}:${pad2(Math.floor(s/60)%60)}:${pad2(s%60)}`}
+
+/* ================= SHEET LOGGING (unchanged) ================= */
 function logSheet(type,data){const u=LS("sheetUrl")||"https://script.google.com/macros/s/AKfycbwNvaaKWn5hJTDxX9PyTDDyEYJIeIJYGfmKHdMNnvX4jQp01SaP1H7ba9VLnVG6iWJjow/exec";const q=LS("pendLog")||[];q.push({type,ts:new Date().toISOString(),...data});if(!u){LS("pendLog",q);return}
  fetch(u,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify(q)}).then(()=>LS("pendLog",[])).catch(()=>LS("pendLog",q))}
 function setSheet(){const u=prompt("Paste your Google Sheet web app link",LS("sheetUrl")||"");if(u!==null){LS("sheetUrl",u.trim());logSheet("ping",{})}}
-// bond
-(function(){const end=new Date("2027-10-31T00:00:00+08:00"),st=new Date("2025-10-31T00:00:00+08:00"),now=new Date(),d=Math.ceil((end-now)/864e5);
- $("bond").textContent=d+" DAYS";$("bondbar").style.width=Math.min(100,(now-st)/(end-st)*100)+"%";$("bondsub").textContent=`About ${Math.round(d/30.4)} months to go · free from Oct 2027`})();
-// quran reader
-const qr=$("qr");
-let qp=LS("qpos")||{page:39,ref:"2:238"};
-function qShow(){$("qpos").innerHTML=`Next: <b>Surah ${qp.ref.replace(":"," · verse ")}</b> · page ${qp.page}/604`}qShow();
-async function qLoad(p){$("qhead").textContent="PAGE "+p+"/604";$("qbody").textContent="Loading…";try{
+
+/* ================= BOND ================= */
+(function(){const end=Date.parse("2027-10-31T00:00:00+08:00"),st=Date.parse("2025-10-31T00:00:00+08:00"),now=Date.now(),d=Math.max(0,Math.ceil((end-now)/864e5)),pc=Math.min(1,(now-st)/(end-st));
+ countUp($("bond"),d,v=>Math.round(v)+" days");countUp($("bondMini"),d);$("bondsub").textContent=`About ${Math.round(d/30.4)} months to go · free from Oct 2027`;
+ $("bPct").textContent=Math.round(pc*100)+"%";requestAnimationFrame(()=>{setArc("bArc",pc);$("bondMiniBar").style.width=pc*100+"%"})})();
+
+/* ================= QURAN READER (same storage: qpos) ================= */
+const qr=$("qr");let qp=LS("qpos")||{page:39,ref:"2:238"};
+function qShow(){$("qpos").innerHTML=`Next: <b>Surah ${esc(String(qp.ref||"").replace(":"," · verse "))}</b><br><span class="mu">Page ${qp.page} of 604</span>`;const pc=(qp.page-1)/604;$("qPct").textContent=Math.round(pc*100)+"%";requestAnimationFrame(()=>setArc("qArc",pc))}qShow();
+async function qLoad(p){$("qhead").textContent="Page "+p+" / 604";$("qbody").textContent="Loading…";try{
  const [a,e]=await Promise.all(["quran-uthmani","en.sahih"].map(ed=>fetch(`https://api.alquran.cloud/v1/page/${p}/${ed}`).then(r=>r.json())));
- const A=a.data.ayahs,E=e.data.ayahs;$("qbody").innerHTML=A.map((x,i)=>`<div class="ay${x.surah.number+":"+x.numberInSurah==qp.ref?" cur":""}"><div class="px" style="font-size:8px">${x.surah.englishName} ${x.surah.number}:${x.numberInSurah}</div><div class="ar">${x.text}</div><div class="en">${E[i].text}</div></div>`).join("");
+ const A=a.data.ayahs,E=e.data.ayahs;$("qbody").innerHTML=A.map((x,i)=>`<div class="ay${x.surah.number+":"+x.numberInSurah==qp.ref?" cur":""}"><div class="xs mu">${esc(x.surah.englishName)} ${x.surah.number}:${x.numberInSurah}</div><div class="ar">${esc(x.text)}</div><div class="en">${esc(E[i].text)}</div></div>`).join("");
  qr.last=A[A.length-1];qr.first=A[0];const c=document.querySelector(".ay.cur");if(c)c.scrollIntoView();else qr.scrollTop=0}catch(_){$("qbody").textContent="Couldn't load the page. Check your connection."}}
-function qOpen(){qr.classList.add("on");qr.p=qp.page;qLoad(qr.p);BOT.setMood("calm")}
-function qDone(){const l=qr.last;if(!l)return;logSheet("quran",{day:sgDay(),page:qr.p,upto:l.surah.number+":"+l.numberInSurah});
- qp={page:Math.min(604,qr.p+1),ref:qr.p>=604?"1:1":""};LS("qpos",qp)}
+function qOpen(){qr.classList.add("on");qr.p=qp.page;qLoad(qr.p)}
+function qDone(){const l=qr.last;if(!l)return;logSheet("quran",{day:sgDay(),page:qr.p,upto:l.surah.number+":"+l.numberInSurah});qp={page:Math.min(604,qr.p+1),ref:qr.p>=604?"1:1":""};LS("qpos",qp)}
 function qGo(d){if(d>0){qDone();if(qr.p>=604)return qStop();qr.p++}else if(qr.p>1)qr.p--;qp.page=qr.p;qLoad(qr.p).then(()=>{if(qr.first){qp.ref=qr.first.surah.number+":"+qr.first.numberInSurah;LS("qpos",qp);qShow()}})}
 function qStop(){qr.classList.remove("on");LS("qpos",qp);qShow();logSheet("quran-stop",{day:sgDay(),page:qp.page,next:qp.ref})}
-let tx=0,ty=0;qr.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY});qr.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy))qGo(dx>0?1:-1)});
-// job deck overlay
+let tx=0,ty=0;qr.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});qr.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy))qGo(dx>0?1:-1)});
+/* job deck overlay */
 function jOpen(u){const f=$("jfr");if(f.getAttribute("src")!==u)f.src=u;$("jov").classList.add("on")}
 function jClose(){$("jov").classList.remove("on")}
-// dhikr garden
-let dc=LS("dhikr")||0;const ST=["·","🌱","🌿","🪴","🌳"];
-function dDraw(){const full=Math.floor(dc/100)%10,cur=dc%100;let h="";for(let i=0;i<10;i++)h+=i<full?`<span>🌳</span>`:i==full?`<span class="grow">${ST[Math.min(4,Math.floor(cur/25))]}</span>`:`<span></span>`;
- $("gd").innerHTML=h;$("dsum").textContent=`${dc} total · plant ${full+1}: ${cur}/100 · garden ${Math.floor(dc/1000)+1}`}
-function dTap(){dc++;LS("dhikr",dc);dDraw();if(navigator.vibrate)navigator.vibrate(dc%100?8:[60,40,60]);if(window.BOT)BOT.pop(dc%100?"heart":"star")}
-function dUndo(){if(dc>0){dc--;LS("dhikr",dc);dDraw()}}dDraw();
-// rest
-const RL=["😵","😩","😐","🙂","😄"];function rDraw(){const r=LS("rest")||{},t=sgDay();$("rs").innerHTML=RL.map((e,i)=>`<button class="b${r[t]==i+1?" sel":""}" aria-label="Rest ${i+1} of 5" onclick="rSet(${i+1})">${e}</button>`).join("");
- const days=[...Array(7)].map((_,i)=>new Date(Date.now()-i*864e5+(new Date().getTimezoneOffset()+480)*6e4).toISOString().slice(0,10)).reverse();
- $("rtrend").textContent="7 DAYS: "+days.map(d=>r[d]?"▁▂▄▆█"[r[d]-1]:"·").join(" ")}
-function rSet(v){const r=LS("rest")||{};r[sgDay()]=v;LS("rest",r);rDraw();logSheet("rest",{day:sgDay(),score:v})}rDraw();
-</script>
-<script>
-(function(){const q=encodeURIComponent("https://news.google.com/rss/search?q="+encodeURIComponent("nuclear OR NATO OR ceasefire OR missile OR Ukraine OR Gaza OR Iran OR Taiwan when:1d")+"&hl=en-SG&gl=SG&ceid=SG:en");
-fetch("https://api.rss2json.com/v1/api.json?rss_url="+q).then(r=>r.json()).then(d=>{const it=(d.items||[]).slice(0,6);if(!it.length)throw 0;
- document.getElementById("nwT").textContent="LAST 24H";
- document.getElementById("news").innerHTML=it.map(x=>{const p=x.title.lastIndexOf(" - "),t=p>0?x.title.slice(0,p):x.title,src=p>0?x.title.slice(p+3):"";const h=Math.max(0,Math.round((Date.now()-new Date(x.pubDate.replace(" ","T")+"Z"))/36e5));
- return `<a class="nw" href="${x.link}" target="_blank" rel="noopener">▸ ${esc(t)}<div class="px" style="font-size:8px;margin-top:6px;line-height:1.6">${esc(src)} · ${h}H AGO</div></a>`}).join("")})
- .catch(()=>{document.getElementById("nwT").textContent="OFFLINE";document.getElementById("news").textContent="Headlines unavailable right now."})})();
-</script>
-<script>
-/* 💰 FINANCE + 📅 CALENDAR — decrypt fin.enc.json / cal.enc.json in the browser (PBKDF2 + AES-GCM). No passcode or figures live in this file. */
-const $$m=n=>"S$"+(+n).toLocaleString("en-SG",{minimumFractionDigits:2,maximumFractionDigits:2});
-const fB=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-function sgParts(ms){const t=new Date((ms??Date.now())+8*3600*1000);return{y:t.getUTCFullYear(),m:t.getUTCMonth()+1,d:t.getUTCDate(),h:t.getUTCHours(),min:t.getUTCMinutes()}}
-function pad2(n){return String(n).padStart(2,"0")}
-async function decEnc(url,pw){const res=await fetch(url+"?"+Date.now());if(res.status===404){const e=new Error("missing");e.missing=true;throw e}if(!res.ok){const e=new Error("fetch");e.missing=true;throw e}const e=await res.json();const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:fB(e.s),iterations:600000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:fB(e.iv)},k,fB(e.ct))))}
-function unlockErr(id,msg){const r=document.getElementById(id);if(r)r.innerHTML=`<span class="chip">${msg}</span>`}
-async function fUnlock(pw){pw=pw||(document.getElementById("fpw")||{}).value||(document.getElementById("cpw")||{}).value;if(!pw)return;
- try{const d=await decEnc("fin.enc.json",pw);sessionStorage.fpw=pw;fRender(d)}catch(x){if(!x.missing)unlockErr("ferr","✕ Wrong passcode")}
- try{const d=await decEnc("cal.enc.json",pw);sessionStorage.fpw=pw;cRender(d)}catch(x){if(x.missing)cMissing();else if(document.getElementById("cerr"))unlockErr("cerr","✕ Wrong passcode");else cLocked(true)}}
-function cHideWeek(){const w=$("planWeekBox");if(w)w.hidden=true}
-function cShowWeek(){const w=$("planWeekBox");if(w)w.hidden=false}
-function cLocked(wrong){cHideWeek();const box=$("planToday")||$("cal");if(!box)return;box.innerHTML=`<div class="lbl px sec-lbl">TODAY</div><div class="plock" aria-hidden="true"><span class="sh"></span><span class="bd"></span></div>
-<div style="margin-bottom:8px">🔒 Locked</div>
-<input id="cpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Calendar passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
-<div id="cerr" style="margin-top:8px">${wrong?'<span class="chip">✕ Wrong passcode</span>':""}</div>`}
-function cMissing(){cHideWeek();const box=$("planToday")||$("cal");if(!box)return;box.innerHTML=`<div class="lbl px sec-lbl">TODAY</div><div class="px" style="font-size:10px;line-height:1.8">Calendar not synced yet</div>`}
-function cFmtTime(iso,allDay){if(allDay)return"All day";const p=sgParts(Date.parse(iso));if(!Number.isFinite(+p.h))return"";const h12=p.h%12||12,ap=p.h>=12?"PM":"AM";return h12+":"+pad2(p.min)+" "+ap}
-function cFmtSynced(iso){const t=Date.parse(iso);if(!Number.isFinite(t))return"";const p=sgParts(t),mo=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];const h12=p.h%12||12,ap=p.h>=12?"PM":"AM";return p.d+" "+mo[p.m-1]+", "+h12+":"+pad2(p.min)+" "+ap}
-function cDayKey(ms){const p=sgParts(ms);return p.y+"-"+pad2(p.m)+"-"+pad2(p.d)}
-function cDayLabel(key,todayKey,tomKey){if(key===todayKey)return"TODAY";if(key===tomKey)return"TOMORROW";const [y,m,d]=key.split("-").map(Number),dt=new Date(Date.UTC(y,m-1,d)),wd=["SUN","MON","TUE","WED","THU","FRI","SAT"][dt.getUTCDay()],mo=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"][m-1];return wd+" "+d+" "+mo}
-function cEvHtml(e){const tag=(e.cal||"").toLowerCase()==="family"?"family":"main",name=tag==="family"?"FAMILY":"MAIN";return `<div class="cal-ev"><div class="cal-t px">${esc(cFmtTime(e.start,e.allDay))} <span class="ctag ${tag}">${name}</span></div><div class="cal-title">${esc(e.title||"(No title)")}</div>${e.loc?`<div class="cal-loc">${esc(e.loc)}</div>`:""}</div>`}
-function cRender(d){const p0=sgParts(Date.now()),startToday=Date.UTC(p0.y,p0.m-1,p0.d)-8*3600*1000,endWin=startToday+7*864e5,todayKey=cDayKey(startToday+8*3600*1000),tomKey=cDayKey(startToday+864e5+8*3600*1000);
- const ev=(d.events||[]).map(e=>{const s=Date.parse(e.start),en=e.end?Date.parse(e.end):(e.allDay?s+864e5:s);return{...e,_s:s,_e:Number.isFinite(en)?en:s}}).filter(e=>Number.isFinite(e._s)&&e._s<endWin&&e._e>=startToday).sort((a,b)=>(a.allDay!==b.allDay)?(a.allDay?-1:1):a._s-b._s);
- const today=[],rest=[];ev.forEach(e=>(((e._s<startToday?todayKey:cDayKey(e._s))===todayKey)?today:rest).push(e));
- const groups=new Map();rest.forEach(e=>{const key=cDayKey(e._s);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(e)});
- const syn=d.updated?cFmtSynced(d.updated):"";
- let th=`<div class="lbl px sec-lbl">TODAY</div>`;if(syn)th+=`<p class="px todo-hint">Synced ${syn} SGT</p>`;
- th+=today.length?today.map(cEvHtml).join(""):`<div class="px" style="font-size:10px;line-height:1.8">No events today.</div>`;
- $("planToday").innerHTML=th;
- let wh="";if(!rest.length)wh=`<div class="px" style="font-size:10px;line-height:1.8;margin-top:10px">No upcoming events.</div>`;
- else for(const key of [...groups.keys()].sort())wh+=`<div class="cal-day"><div class="lbl px">${cDayLabel(key,todayKey,tomKey)}</div>`+groups.get(key).map(cEvHtml).join("")+"</div>";
- wh+=`<button class="b" onclick="sessionStorage.removeItem('fpw');location.reload()">🔒 LOCK</button>`;
- $("planWeek").innerHTML=wh;cShowWeek()}
-async function cProbe(){if(sessionStorage.fpw)return;try{const res=await fetch("cal.enc.json?"+Date.now(),{method:"GET"});if(res.status===404||!res.ok)cMissing()}catch(_){cMissing()}}
-cProbe();
-(function(){const el=$("planDate");if(!el)return;const p=sgParts(),mo=["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"],dt=new Date(Date.UTC(p.y,p.m-1,p.d)),wd=["SUN","MON","TUE","WED","THU","FRI","SAT"][dt.getUTCDay()];el.textContent=wd+" "+p.d+" "+mo[p.m-1]+" "+p.y})();
 
-/* ✅ TO-DO — localStorage list; resets at 00:00 and 12:00 Asia/Singapore (UTC+8, not device tz) */
+/* ================= DHIKR (same storage: dhikr) ================= */
+let dc=LS("dhikr")||0;
+function dDraw(){const full=Math.floor(dc/100)%10,c=dc%100;let h="";for(let i=0;i<10;i++)h+=i<full?'<i class="on"></i>':i===full?`<i class="cur" style="--p:${c}%"></i>`:"<i></i>";
+ $("gd").innerHTML=h;$("dCount").textContent=dc.toLocaleString("en-SG");$("dsum").innerHTML=`Plant ${full+1}: ${c}/100<br>Garden ${Math.floor(dc/1000)+1}`}
+function dTap(){dc++;LS("dhikr",dc);dDraw();if(navigator.vibrate)navigator.vibrate(dc%100?8:[60,40,60])}
+function dUndo(){if(dc>0){dc--;LS("dhikr",dc);dDraw()}}dDraw();
+
+/* ================= REST (same storage: rest) ================= */
+const RL=["😵","😩","😐","🙂","😄"];
+function rDraw(){const r=LS("rest")||{},t=sgDay();$("rs").innerHTML=RL.map((e,i)=>`<button class="${r[t]==i+1?"sel":""}" aria-label="Rest ${i+1} of 5" onclick="rSet(${i+1})">${e}</button>`).join("");
+ const days=[...Array(7)].map((_,i)=>sgDay(Date.now()-(6-i)*864e5));
+ $("rtrend").innerHTML=`<svg width="100%" height="30" viewBox="0 0 140 30" preserveAspectRatio="none" aria-label="Rest, last 7 days">${days.map((d,i)=>{const v=r[d]||0,hh=v?v*5.4:2;return `<rect x="${i*20+3}" y="${30-hh}" width="14" height="${hh}" rx="3" fill="${v?"var(--ac)":"var(--s3)"}" opacity="${d===t?1:.6}"/>`}).join("")}</svg><div class="row xs mu"><span>7 days</span><span>today</span></div>`}
+function rSet(v){const r=LS("rest")||{};r[sgDay()]=v;LS("rest",r);rDraw();logSheet("rest",{day:sgDay(),score:v})}rDraw();
+
+/* ================= TO-DO · localStorage "jobswipe-todo"; resets at 00:00 and 12:00 SGT (UTC+8, not device tz) ================= */
+const CHK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#05110f" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 const TODO=(()=>{const KEY="jobswipe-todo";let nowFn=()=>Date.now();
  function period(ms){const p=sgParts(ms??nowFn());return p.y+"-"+pad2(p.m)+"-"+pad2(p.d)+(p.h<12?"-AM":"-PM")}
  function load(){try{return JSON.parse(localStorage.getItem(KEY)||"null")||{period:"",items:[]}}catch(_){return{period:"",items:[]}}}
  function save(st){localStorage.setItem(KEY,JSON.stringify(st))}
- function hint(ms){const p=sgParts(ms??nowFn());return p.h<12?"Resets at 12:00 PM SGT":"Resets at midnight SGT"}
- function render(){const st=load(),list=$("todoList"),hintEl=$("todoReset");if(hintEl)hintEl.textContent=hint();
-  if(!list)return;if(!st.items.length){list.innerHTML='<div class="px" style="font-size:10px;line-height:1.8">Nothing on the list yet.</div>';return}
+ function hint(ms){const p=sgParts(ms??nowFn());return p.h<12?"Clears at 12 PM":"Clears at midnight"}
+ function render(){const st=load(),list=$("todoList");$("todoReset").textContent=hint();const dn=st.items.filter(x=>x.done).length;$("todoCount").textContent=st.items.length?`· ${dn}/${st.items.length}`:"";
+  if(!st.items.length){list.innerHTML='<div class="sm mu" style="padding:6px 0">Nothing yet. What matters this half-day?</div>';return}
   list.innerHTML=st.items.map(it=>`<div class="todo-item${it.done?" done":""}" data-id="${esc(it.id)}">
-   <button type="button" class="b chk" role="checkbox" aria-checked="${it.done?"true":"false"}" aria-label="${it.done?"Mark "+esc(it.text)+" not done":"Mark "+esc(it.text)+" done"}">${it.done?"☑":"☐"}</button>
-   <button type="button" class="todo-txt" aria-label="${it.done?"Mark "+esc(it.text)+" not done":"Mark "+esc(it.text)+" done"}">${esc(it.text)}</button>
-   <button type="button" class="b del" aria-label="Delete ${esc(it.text)}">✕</button>
-  </div>`).join("")}
+   <button type="button" class="chk" role="checkbox" aria-checked="${it.done?"true":"false"}" aria-label="${it.done?"Mark "+esc(it.text)+" not done":"Mark "+esc(it.text)+" done"}">${CHK}</button>
+   <button type="button" class="todo-txt">${esc(it.text)}</button>
+   <button type="button" class="del" aria-label="Delete ${esc(it.text)}">×</button></div>`).join("")}
  function check(ms){const p=period(ms??nowFn()),st=load();if(st.period!==p){st.period=p;st.items=[];save(st)}render();return p}
  function add(text){const t=(text||"").trim();if(!t)return;check();const st=load();st.items.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),text:t.slice(0,200),done:false});save(st);render()}
  function toggle(id){const st=load();const it=st.items.find(x=>x.id===id);if(!it)return;it.done=!it.done;save(st);render()}
  function remove(id){const st=load();st.items=st.items.filter(x=>x.id!==id);save(st);render()}
- [ $("todoBox"),$("planToday"),$("planWeekBox")].forEach(box=>{if(box)["touchstart","pointerdown"].forEach(ev=>box.addEventListener(ev,e=>e.stopPropagation(),{passive:true}))});
- const box=$("todoBox");if(box){
-  $("todoForm").addEventListener("submit",e=>{e.preventDefault();e.stopPropagation();add($("todoIn").value);$("todoIn").value="";$("todoIn").focus()});
-  $("todoList").addEventListener("click",e=>{const row=e.target.closest(".todo-item");if(!row)return;e.stopPropagation();if(e.target.closest(".del"))remove(row.dataset.id);else toggle(row.dataset.id)})}
+ $("todoForm").addEventListener("submit",e=>{e.preventDefault();add($("todoIn").value);$("todoIn").value="";$("todoIn").focus()});
+ $("todoList").addEventListener("click",e=>{const row=e.target.closest(".todo-item");if(!row)return;if(e.target.closest(".del"))remove(row.dataset.id);else if(e.target.closest(".chk,.todo-txt"))toggle(row.dataset.id)});
  check();setInterval(()=>check(),6e4);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")check()});
  return{check,period,add,toggle,remove,render,hint,setNow(ms){nowFn=typeof ms==="function"?ms:()=>+ms},now:()=>nowFn()}})();
 window.TODO=TODO;
 
-function fBar(p,red){return `<div class="bbar"><i class="${red?"over":""}" style="width:${Math.min(100,p)}%"></i></div>`}
-const neg=(v,s)=>v<0?`<span class="chip">▼ ${s}</span>`:s;
-function fRender(d){const lim=new Date(Date.now()+30*864e5).toISOString().slice(0,10);const due=d.bills_due.filter(b=>!b.paid&&b.due<=lim);const dueT=due.reduce((a,b)=>a+b.amt,0);const safe=d.safe_to_spend!=null?d.safe_to_spend:d.balance.amt-dueT;const wk=d.week;const today=new Date().toISOString().slice(0,10);
-let h=`<div style="display:flex;gap:18px;flex-wrap:wrap"><div><div class="k px">BALANCE (${d.balance.date})</div><div class="v px">${$$m(d.balance.amt)}</div></div><div><div class="k px">SAFE TO SPEND TILL PAYDAY</div><div class="v px">${neg(safe,$$m(safe))}</div></div></div>
-<div style="margin-top:14px">Can I afford it? <input id="fa" type="number" inputmode="decimal" placeholder="S$" style="width:100px"> <button class="b" onclick="fAfford(${safe},${wk.cap-wk.spent})">CHECK</button> <div id="far" style="margin-top:6px"></div></div>
-<div class="k px">THIS WEEK ${$$m(wk.spent)} / ${$$m(wk.cap)}${wk.spent>wk.cap?" · OVER":""}</div>${fBar(wk.spent/wk.cap*100,wk.spent>wk.cap)}
-<div class="k px">BILLS DUE NEXT 30 DAYS (${$$m(dueT)})</div><div>${d.bills_due.sort((a,b)=>a.due<b.due?-1:1).map(b=>`<div class="row"><span>${b.paid?"✅":(b.due<today?"⚠️":"⬜")} ${b.due.slice(5)} ${b.name}</span><b>${$$m(b.amt)}</b></div>`).join("")}</div>
-<div class="k px">DEBTS</div>${d.debts.filter(x=>x.total>0).map(x=>`<div style="margin-top:6px">${x.to}: ${$$m(x.paid)} / ${$$m(x.total)} · ${$$m(x.monthly)}/mo · ${x.left_months} mo left</div>${fBar(x.paid/x.total*100)}`).join("")}${d.debts.some(x=>x.total==0)?`<div style="margin-top:6px">OCBC investment amount not set yet</div>`:""}
-<div class="k px">SAVINGS</div><div>${d.savings?$$m(d.savings):"Not set yet"} · Nov target ${$$m((d.budget_nov.find(b=>/POSB/.test(b.cat))||{limit:0}).limit)}</div>
-<div class="k px">TOP LEAKS (SEP–OCT)</div><div>${d.leaks.map(l=>`<div style="margin-top:6px">🕳 ${l.name} <b>${$$m(l.amt)}</b><br><span>${l.tip}</span></div>`).join("")}</div>
-<div class="k px">MONTHS</div><div>${d.months.map(m=>`<div>${m.m}: in ${$$m(m.in)} · out ${$$m(m.out)} · <b>${neg(m.in-m.out,$$m(m.in-m.out))}</b></div>`).join("")}</div>
-<div class="k px">TIPS</div><ul style="margin:4px 0;padding-left:18px">${d.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
-<button class="b" onclick="sessionStorage.removeItem('fpw');location.reload()">🔒 LOCK</button>`;document.getElementById("fin").innerHTML=h;if(window.BOT&&DECK.cur()===DECK.idx("finS"))BOT.pop("coin")}
-function fAfford(safe,wk){const a=+document.getElementById("fa").value,r=document.getElementById("far");if(!a)return;r.innerHTML=a>safe?`<span class="chip">❌ No, you're short ${$$m(a-safe)} for bills</span>`:a>wk?`<span class="chip">⚠️ Over this week's cap by ${$$m(a-wk)}</span>`:"✅ OK"}
-</script>
-<script>
-/* ===== MASCOT · pixel blob drawn on a 40×40 canvas, scaled 3× with image-rendering: pixelated =====
-   Moods: happy | excited | curious | detective | sleepy | calm | coin | worried | wonder | focused  (set per screen with data-mood) */
-const BOT=(()=>{const cv=$("bot"),c=cv.getContext("2d");c.imageSmoothingEnabled=false;
- const RM=matchMedia("(prefers-reduced-motion: reduce)"),OUT="#000",BODY="#FFFFFF",SHADE="#BFCAD6",CHEEK="#FF6FAE",GOLD="#FFCC00";
- let mood="happy",look={x:0,y:0},ovr=null,ovrUntil=0,sq=0,lean=0,blinkAt=performance.now()+1800,blinkEnd=0,pops=[],moodT=0;
- const P=(x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),w,h)};
- const G=(rows,x,y,col)=>{x=Math.round(x);y=Math.round(y);for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]])rows.forEach((r,j)=>[...r].forEach((b,i)=>{if(b==="1")P(x+i+dx,y+j+dy,1,1,OUT)}));rows.forEach((r,j)=>[...r].forEach((b,i)=>{if(b==="1")P(x+i,y+j,1,1,col)}))};
- const GL={heart:["01010","11111","01110","00100"],star:["00100","01110","11111","01110","00100"],coin:["0110","1111","1111","0110"],z:["111","001","010","100","111"],q:["111","001","011","000","010"],sp:["010","111","010"]};
- function blob(cx,by,w,h,col){const top=by-h;for(let y=0;y<h;y++){const v=(y+.5)/h,yy=v<.6?(.6-v)/.6:(v-.6)/.4*.8,hw=Math.round(w/2*Math.pow(Math.max(0,1-Math.pow(yy,2.4)),1/2.4));P(cx-hw,top+y,hw*2,1,col)}}
- function eye(kind,x,y,lx,ly){x=Math.round(x);y=Math.round(y);
-  switch(kind){
-   case"blink":P(x,y+3,5,1,OUT);break;
-   case"happy":P(x,y+3,1,1,OUT);P(x+1,y+2,1,1,OUT);P(x+2,y+1,1,1,OUT);P(x+3,y+2,1,1,OUT);P(x+4,y+3,1,1,OUT);break;
-   case"peace":P(x,y+2,1,1,OUT);P(x+1,y+3,3,1,OUT);P(x+4,y+2,1,1,OUT);break;
-   case"sleep":P(x,y+3,5,1,OUT);P(x+1,y+4,3,1,OUT);break;
-   case"half":P(x,y+3,5,1,OUT);P(x,y+4,5,1,OUT);P(x+1,y+5,3,1,OUT);P(x+1+lx,y+4,1,1,"#fff");break;
-   case"squint":P(x,y+2,5,2,OUT);P(x+1+lx,y+2,1,1,"#fff");break;
-   case"coin":P(x+1+lx,y+ly,3,1,OUT);P(x+lx,y+1+ly,5,4,OUT);P(x+1+lx,y+5+ly,3,1,OUT);P(x+1+lx,y+1+ly,3,4,GOLD);P(x+2+lx,y+2+ly,1,2,"#9A6A00");break;
-   case"big":P(x+lx,y-1+ly,5,1,OUT);P(x-1+lx,y+ly,7,6,OUT);P(x+lx,y+6+ly,5,1,OUT);P(x+lx+1,y+ly,2,2,"#fff");P(x+lx+4,y+ly+3,1,1,"#fff");break;
-   default:P(x+1+lx,y+ly,3,1,OUT);P(x+lx,y+1+ly,5,4,OUT);P(x+1+lx,y+5+ly,3,1,OUT);P(x+1+lx+(lx>0?1:0),y+1+ly,2,2,"#fff")}}
- function frame(ts){requestAnimationFrame(frame);const s=RM.matches?0:ts/1000,ms=ts;c.clearRect(0,0,40,40);
-  let bob=0,sx=1,sy=1,shake=0,tgt={x:0,y:0};const ab=k=>Math.abs(Math.sin(s*Math.PI*k));
-  switch(mood){
-   case"happy":{const p=ab(1.4);bob=-p*5;sy=1+p*.06-(p<.15?(.15-p)*1.4:0);sx=2-sy;tgt={x:0,y:-.3};break}
-   case"excited":{const p=ab(2.4);bob=-p*6;sy=1+p*.08-(p<.2?(.2-p)*1.5:0);sx=2-sy;tgt={x:0,y:-.5};break}
-   case"curious":{bob=-Math.sin(s*2)*1;sy=1+Math.sin(s*2)*.03;tgt=[{x:-1,y:0},{x:1,y:0},{x:0,y:-1},{x:0,y:0}][Math.floor(s/1.1)%4];break}
-   case"detective":{bob=-ab(.7)*1;shake=Math.round(Math.sin(s*1.2)*1.5);tgt={x:Math.sin(s*1.3)>0?1:-1,y:0};break}
-   case"sleepy":{const b=Math.sin(s*1.3);sy=1+b*.06;sx=1-b*.04;break}
-   case"calm":{bob=-Math.sin(s*1.4)*1.5;sy=1+Math.sin(s*1.4)*.03;break}
-   case"coin":{bob=-ab(.9)*2;tgt=[{x:-1,y:0},{x:1,y:-.5},{x:0,y:-1},{x:1,y:0}][Math.floor(s/1.3)%4];break}
-   case"worried":{shake=Math.floor(s*10)%2;tgt={x:Math.floor(s/.6)%2?1:-1,y:0};break}
-   case"wonder":{bob=-Math.sin(s*1.8)*2.5;tgt={x:0,y:-1};break}
-   case"focused":{bob=-Math.sin(s*1.6)*1;tgt={x:0,y:1};break}}
-  if(ovr&&ms<ovrUntil)tgt=ovr;else ovr=null;
-  look.x+=(tgt.x-look.x)*.25;look.y+=(tgt.y-look.y)*.25;sq*=.86;
-  sx+=sq*.3+Math.abs(lean)*.12;sy-=sq*.28+Math.abs(lean)*.1;
-  const w=24*sx,h=18*sy,cx=20+shake+Math.round(lean*3),by=36+Math.round(bob),top=by-h;
-  P(cx-w/2+3,38,Math.max(4,w-6+bob),2,"rgba(0,0,0,.28)");
-  if(mood!=="detective"){const tip=mood==="sleepy"?"#8A8A8A":mood==="excited"?(Math.floor(s*6)%2?"#FFE600":"#FF2E9A"):mood==="coin"?GOLD:mood==="worried"?"#FF3B30":"#39FF14";
-   P(cx,top-4,1,4,OUT);P(cx-2,top-7,5,4,OUT);P(cx-1,top-6,3,2,tip)}
-  blob(cx,by+1,w+2,h+2,OUT);blob(cx,by,w,h,SHADE);blob(cx,by-2,w,h-2,BODY);
-  const ey=top+h*.36,lx=Math.round(look.x*1.6),ly=Math.round(look.y*1.2);
-  if(ms>blinkAt){blinkEnd=ms+130;blinkAt=ms+2200+Math.random()*2600}const bl=ms<blinkEnd;
-  let L="open",R="open";
-  if(mood==="happy")L=R=Math.floor(s/2.2)%3===2?"happy":"open";
-  if(mood==="excited")L=R="big";
-  if(mood==="calm")L=R=Math.floor(s/3)%4===3?"open":"peace";
-  if(mood==="sleepy")L=R=(s%6)>4.6?"half":"sleep";
-  if(mood==="coin")L=R="coin";
-  if(mood==="wonder")L=R="big";
-  if(mood==="detective")R="squint";
-  if(mood==="focused")L=R="squint";
-  if(bl&&L!=="peace"&&L!=="sleep")L=R="blink";
-  eye(L,cx-8,ey,lx,ly);eye(R,cx+3,ey,lx,ly);
-  const my=Math.round(ey+7),mx=Math.round(cx)+lx;
-  if(["happy","excited","wonder","calm","coin"].includes(mood)){P(cx-11,ey+5,3,1,CHEEK);P(cx+8,ey+5,3,1,CHEEK)}
-  switch(mood){
-   case"happy":case"coin":P(mx-2,my,1,1,OUT);P(mx-1,my+1,3,1,OUT);P(mx+2,my,1,1,OUT);break;
-   case"excited":P(mx-2,my,5,1,OUT);P(mx-1,my+1,3,2,OUT);P(mx,my+2,1,1,CHEEK);break;
-   case"calm":P(mx-1,my+1,3,1,OUT);break;
-   case"sleepy":{const o=Math.sin(s*1.3)>0?2:1;P(mx-1,my,2,o,OUT);break}
-   case"curious":case"wonder":P(mx-1,my,2,2,OUT);break;
-   case"detective":P(mx-2,my+1,4,1,OUT);break;
-   case"worried":P(mx-2,my+1,1,1,OUT);P(mx-1,my,1,1,OUT);P(mx,my+1,1,1,OUT);P(mx+1,my,1,1,OUT);P(cx-9,ey-3,3,1,OUT);P(cx+6,ey-3,3,1,OUT);break;
-   case"focused":P(mx-2,my,5,1,OUT);break}
-  if(mood==="detective"){const hy=Math.round(top);P(cx-10,hy-1,20,4,OUT);P(cx-9,hy,18,2,"#7A4A1E");P(cx-7,hy-6,14,6,OUT);P(cx-6,hy-5,12,5,"#7A4A1E");P(cx-6,hy-2,12,1,"#C08A4A");P(cx-1,hy-6,2,1,"#C08A4A");
-   const gx=Math.round(cx+9+Math.sin(s*1.3)*1),gy=Math.round(by-9+Math.sin(s*2.6));P(gx,gy,7,7,OUT);P(gx+1,gy+1,5,5,"#BFF3FF");P(gx+1,gy+1,2,1,"#fff");P(gx+6,gy+6,2,2,OUT);P(gx+7,gy+7,2,2,OUT)}
-  if(mood==="sleepy")for(let i=0;i<3;i++){const p=(s*.35+i/3)%1;if(p<.85)G(GL.z,28+p*7,14-p*13,"#fff")}
-  if(mood==="curious"&&s%3.3>2.2)G(GL.q,32,4+Math.round(Math.sin(s*6)),"#fff");
-  if(mood==="worried"){const d=Math.floor(s*2)%2;P(cx+11,top+3+d,1,1,OUT);P(cx+10,top+4+d,3,3,OUT);P(cx+11,top+5+d,1,1,"#6FD3FF")}
-  if(mood==="coin"&&s%2.4<1.2){const p=(s%2.4)/1.2;G(GL.coin,6,16-p*12,GOLD)}
-  if(mood==="excited"||mood==="wonder")[[4,8],[33,5],[35,22],[3,25]].forEach(([x,y],i)=>{if((Math.floor(s*(mood==="excited"?5:2))+i)%3!==0)G(GL.sp,x,y,mood==="excited"?"#FFE600":"#fff")});
-  pops=pops.filter(p=>ms-p.t<900);pops.forEach(p=>{const k=(ms-p.t)/900;G(GL[p.k]||GL.heart,p.x,top-4-k*14,p.k==="coin"?GOLD:p.k==="star"?"#FFE600":CHEEK)})}
- requestAnimationFrame(frame);
- return{
-  setMood(m){mood=m||"happy";moodT=performance.now()},
-  mood:()=>mood,
-  react(dx,dy){ovr={x:Math.sign(dx)||0,y:Math.sign(dy)||0};ovrUntil=performance.now()+520;sq=1;lean=0},
-  track(dx,dy){const W=innerWidth||400;ovr={x:Math.max(-1,Math.min(1,dx/60)),y:Math.max(-1,Math.min(1,dy/60))};ovrUntil=performance.now()+200;lean=Math.max(-1,Math.min(1,dx/W*2))},
-  release(){lean=0},
-  pop(k){pops.push({k,t:performance.now(),x:16+Math.random()*4});if(pops.length>6)pops.shift()}}})();
-window.BOT=BOT;
-</script>
-<script>
-/* ===== DECK · full-screen slides, swipe / drag / arrow keys / dots / wheel ===== */
-const DECK=(()=>{const deck=$("deck"),S=[...deck.querySelectorAll(".slide")],N=S.length,dots=$("dots"),RM=matchMedia("(prefers-reduced-motion: reduce)");
- const EASE="cubic-bezier(.22,.9,.24,1)",dur=()=>RM.matches?0:620;let cur=0,cleanup=null;
- const lum=h=>{const v=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(c=>c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4));return .2126*v[0]+.7152*v[1]+.0722*v[2]};
- S.forEach((s,i)=>{const bg=s.dataset.bg,fg=s.dataset.fg;s.style.setProperty("--bg",bg);s.style.setProperty("--fg",fg);s.style.setProperty("--sh",lum(fg)>.5?"#000":"#fff");
-  s.querySelector(".cnt").textContent=String(i+1).padStart(2,"0")+"/"+String(N).padStart(2,"0");
-  const b=document.createElement("button");b.setAttribute("aria-label",(i+1)+": "+s.getAttribute("aria-label"));b.onclick=()=>go(i,"x");dots.appendChild(b)});
- const inner=s=>s.querySelector(".inner");
- function T(el,x,y,sc,anim,unit){el.style.transition=anim&&dur()?`transform ${dur()}ms ${EASE}`:"none";el.style.transform=`translate3d(${x}${unit||"px"},${y}${unit||"px"},0) scale(${sc})`}
- function chrome(){const s=S[cur],r=document.documentElement.style;r.setProperty("--bg",s.dataset.bg);r.setProperty("--fg",s.dataset.fg);r.setProperty("--sh",s.style.getPropertyValue("--sh"));
-  document.querySelector('meta[name="theme-color"]').content=s.dataset.bg;
-  [...dots.children].forEach((d,i)=>{d.classList.toggle("on",i===cur);d.setAttribute("aria-current",i===cur?"true":"false")});
-  S.forEach((x,i)=>{const on=i===cur;x.inert=!on;x.setAttribute("aria-hidden",on?"false":"true")});
-  history.replaceState(null,"","#"+s.id);lazy()}
- function lazy(){S[cur].querySelectorAll("iframe[data-src]").forEach(f=>{if(f.closest(".pg")&&!f.closest(".pg.on"))return;f.src=f.dataset.src;f.removeAttribute("data-src")})}
- function settle(){if(cleanup){cleanup();cleanup=null}}
- /* go(n): outgoing slides fully away; incoming slides in from the far side with a slight scale-up, its content trailing (parallax) */
- function go(n,axis,dir,fromDrag){settle();if(n<0||n>=N||n===cur){snap();return}
-  dir=dir||(n>cur?1:-1);axis=axis||"x";const o=S[cur],i=S[n],X=axis==="x",d=dir*100;
-  i.classList.add("mv");
-  if(!fromDrag){T(i,X?d:0,X?0:d,.86,false,"%");T(inner(i),X?d*.25:0,X?0:d*.25,1,false,"%");void i.offsetWidth}
-  else{T(inner(i),X?d*.12:0,X?0:d*.12,1,false,"%");void i.offsetWidth}
-  T(o,X?-d:0,X?0:-d,.94,true,"%");T(inner(o),X?-d*.15:0,X?0:-d*.15,1,true,"%");
-  T(i,0,0,1,true,"%");T(inner(i),0,0,1,true,"%");
-  o.classList.remove("on");i.classList.add("on");cur=n;chrome();
-  BOT.react(X?-dir:0,X?0:-dir);const m=i.dataset.mood;setTimeout(()=>{if(cur===n)BOT.setMood(m)},dur()?380:0);
-  const done=()=>{o.classList.remove("mv");i.classList.remove("mv");[o,inner(o)].forEach(e=>{e.style.transition="none";e.style.transform=""});[i,inner(i)].forEach(e=>{e.style.transition="none";e.style.transform=""})};
-  if(!dur())done();else{const t=setTimeout(()=>{cleanup=null;done()},dur()+40);cleanup=()=>{clearTimeout(t);done()}}}
- function snap(){const o=S[cur];T(o,0,0,1,true);if(nb!=null&&S[nb]){const e=S[nb],k=nbDir*100;T(e,ax==="x"?k:0,ax==="x"?0:k,.86,true,"%");const z=e;setTimeout(()=>{if(z!==S[cur]){z.classList.remove("mv");z.style.transition="none";z.style.transform=""}},dur()+40)}BOT.release()}
- /* --- drag / swipe --- */
- let st=null,ax=null,nb=null,nbDir=0,dragged=false;
- const W=()=>innerWidth,H=()=>innerHeight;
- const busyOverlay=()=>!!document.querySelector(".ov.on");
- function start(x,y,target,mouse){if(busyOverlay())return;if(target.closest("input,textarea,select,iframe,.todo-ui,.plan-ui,.week-ui,button.chk,button.del,summary"))return;
-  settle();const sc=target.closest(".scroll");st={x,y,t:performance.now(),sc,top:sc?sc.scrollTop<=0:true,bot:sc?sc.scrollTop+sc.clientHeight>=sc.scrollHeight-1:true,mouse};ax=null;nb=null;dragged=false}
- function move(x,y,e){if(!st)return false;const dx=x-st.x,dy=y-st.y;
-  if(!ax){if(Math.hypot(dx,dy)<9)return false;
-   if(Math.abs(dx)>Math.abs(dy)*1.1)ax="x";
-   else{/* vertical: let an inner scroller scroll unless it is already at that edge (or it's a mouse drag) */
-    const canScroll=st.sc&&st.sc.scrollHeight>st.sc.clientHeight+2&&!st.mouse;
-    if(canScroll&&((dy>0&&!st.top)||(dy<0&&!st.bot))){st=null;return false}
-    if(e&&e.cancelable===false){st=null;return false}ax="y"}}
-  dragged=true;const X=ax==="x",dd=X?dx:dy,L=X?W():H(),dir=dd<0?1:-1,n=cur+dir;
-  if(nb!=null&&nb!==n&&S[nb]){S[nb].classList.remove("mv");S[nb].style.transform=""}
-  const o=S[cur];o.style.transition="none";
-  if(n<0||n>=N){nb=null;const r=dd*.3;o.style.transform=`translate3d(${X?r:0}px,${X?0:r}px,0)`}
-  else{nb=n;nbDir=dir;const e2=S[n],p=Math.min(1,Math.abs(dd)/L);e2.classList.add("mv");
-   o.style.transform=`translate3d(${X?dd:0}px,${X?0:dd}px,0) scale(${1-p*.06})`;
-   e2.style.transition="none";e2.style.transform=`translate3d(${X?dir*L+dd:0}px,${X?0:dir*L+dd}px,0) scale(${.86+.14*p})`}
-  BOT.track(X?dx:0,X?0:dy);return true}
- function end(x,y){if(!st)return;const dx=x-st.x,dy=y-st.y,dt=Math.max(1,performance.now()-st.t),X=ax==="x",dd=X?dx:dy,v=Math.abs(dd)/dt,L=X?W():H();
-  const s=st;st=null;if(!ax)return;
-  if(nb!=null&&(Math.abs(dd)>L*.18||(v>.45&&Math.abs(dd)>30))){const n=nb;nb=null;go(n,ax,nbDir,true)}else snap();ax=null}
- deck.addEventListener("touchstart",e=>{if(e.touches.length>1){st=null;return}const t=e.touches[0];start(t.clientX,t.clientY,e.target,false)},{passive:true});
- deck.addEventListener("touchmove",e=>{if(!st)return;const t=e.touches[0];if(move(t.clientX,t.clientY,e)&&e.cancelable)e.preventDefault()},{passive:false});
- deck.addEventListener("touchend",e=>{const t=e.changedTouches[0];end(t.clientX,t.clientY)});
- deck.addEventListener("touchcancel",()=>{if(st){st=null;snap()}});
- deck.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse"||e.button!==0)return;if(e.target.closest("button,a,input,label,textarea,select,[role=button]"))return;start(e.clientX,e.clientY,e.target,true);if(st)e.preventDefault()});
- addEventListener("pointermove",e=>{if(e.pointerType==="mouse"&&st&&st.mouse)move(e.clientX,e.clientY)});
- addEventListener("pointerup",e=>{if(e.pointerType==="mouse"&&st&&st.mouse)end(e.clientX,e.clientY)});
- deck.addEventListener("click",e=>{if(dragged){e.preventDefault();e.stopPropagation();dragged=false}},true);
- /* wheel / trackpad: only flips when the inner scroller can't scroll further */
- let wl=0;deck.addEventListener("wheel",e=>{if(busyOverlay())return;const sc=e.target.closest(".scroll"),dy=Math.abs(e.deltaY)>Math.abs(e.deltaX)?e.deltaY:e.deltaX;if(Math.abs(dy)<24)return;
-  if(sc&&Math.abs(e.deltaY)>=Math.abs(e.deltaX)&&((dy>0&&sc.scrollTop+sc.clientHeight<sc.scrollHeight-1)||(dy<0&&sc.scrollTop>0)))return;
-  const t=performance.now();if(t-wl<800)return;wl=t;go(cur+(dy>0?1:-1),Math.abs(e.deltaY)>=Math.abs(e.deltaX)?"y":"x")},{passive:true});
- addEventListener("keydown",e=>{if(busyOverlay()){if(e.key==="Escape"){if($("qr").classList.contains("on"))qStop();else jClose()}return}
-  if(e.target.closest&&e.target.closest("input,textarea,select"))return;
-  const k=e.key;if(k==="ArrowRight"||k==="PageDown"){go(cur+1,"x");e.preventDefault()}else if(k==="ArrowLeft"||k==="PageUp"){go(cur-1,"x");e.preventDefault()}
-  else if(k==="ArrowDown"){go(cur+1,"y");e.preventDefault()}else if(k==="ArrowUp"){go(cur-1,"y");e.preventDefault()}
-  else if(k==="Home"){go(0,"x");e.preventDefault()}else if(k==="End"){go(N-1,"x");e.preventDefault()}});
- /* start on the screen named in the URL hash (e.g. retro.html#finS) */
- const alias={todoS:"plannerS",calS:"plannerS"},h=alias[location.hash.slice(1)]||location.hash.slice(1),hi=S.findIndex(s=>s.id===h);cur=hi>0?hi:0;S[cur].classList.add("on");chrome();BOT.setMood(S[cur].dataset.mood);
- return{go,cur:()=>cur,idx:id=>S.findIndex(s=>s.id===id),lazy,N}})();
-window.DECK=DECK;
-if(sessionStorage.fpw)fUnlock(sessionStorage.fpw);
+/* ================= ENCRYPTED DATA · fin.enc.json / cal.enc.json (PBKDF2-SHA256 600k + AES-GCM) ================= */
+const dS=s=>{const m=String(s||"").match(/^(\d{4})-(\d{2})-(\d{2})/);return m?(+m[3])+" "+MO[+m[2]-1]:String(s||"")};
+const money=n=>"S$"+(+n||0).toLocaleString("en-SG",{minimumFractionDigits:2,maximumFractionDigits:2});
+const money0=n=>(n<0?"−":"")+"S$"+Math.abs(+n||0).toLocaleString("en-SG",{maximumFractionDigits:0});
+const fB=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function decEnc(url,pw){const res=await fetch(url+"?"+Date.now(),{cache:"no-store"}).catch(()=>({ok:false}));if(!res.ok){const e=new Error("missing");e.missing=true;throw e}const e=await res.json();const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:fB(e.s),iterations:600000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:fB(e.iv)},k,fB(e.ct))))}
+let FIN=null,CAL=null;
+async function unlockFrom(inId,errId){const el=$(inId),pw=el.value;if(!pw)return;$(errId).textContent="Unlocking…";const ok=await unlock(pw);if(ok){el.value="";$(errId).textContent=""}else $(errId).textContent="Wrong passcode"}
+async function unlock(pw){const calNew=!CAL;const [f,c]=await Promise.allSettled([FIN?Promise.resolve(FIN):decEnc("fin.enc.json",pw),CAL?Promise.resolve(CAL):decEnc("cal.enc.json",pw)]);let any=false;
+ if(f.status==="fulfilled"){FIN=f.value;any=true;fRender(FIN);if(!sessionStorage.fpw)sessionStorage.fpw=pw;else if(sessionStorage.fpw!==pw)sessionStorage.fpwF=pw}else if(f.reason&&f.reason.missing)finMissing();
+ if(c.status==="fulfilled"){if(calNew){CAL=c.value;cRender(CAL);sessionStorage.fpw=pw}any=true}else if(c.reason&&c.reason.missing){cMissing();}
+ if(any){$("unlockCard").hidden=true;$("lockBtn").hidden=false;if(!FIN&&!(f.reason&&f.reason.missing))finOtherCode()}
+ return any}
+function lockAll(){sessionStorage.removeItem("fpw");sessionStorage.removeItem("fpwF");location.reload()}
+function finMissing(){$("fin").innerHTML=`<div class="card w4"><div class="lbl">Money</div><div class="sm mu">Finance data hasn't been published yet.</div></div>`}
+function finOtherCode(){$("fin").innerHTML=`<div class="card w4"><div class="lbl">🔒 Money uses a different passcode</div>
+ <form class="unlock" onsubmit="event.preventDefault();unlockFrom('pwFin','errFin')"><input class="inp num" id="pwFin" type="password" inputmode="numeric" autocomplete="off" placeholder="Finance passcode" aria-label="Finance passcode"><button class="btn pri" type="submit">Unlock</button></form><div class="err" id="errFin"></div><div class="xs mu">Your calendar unlocked, but the finance file was encrypted with another passcode. Enter that one here; it is remembered until you close the tab.</div></div>`;
+ $("finLine").hidden=false;$("finLine").innerHTML=`<div class="row"><span class="sm mu">🔒 Money: enter its passcode on the Money tab</span><span class="pill">Open ›</span></div>`}
+/* --- calendar --- */
+function cFmtTime(iso,allDay){if(allDay)return"All day";const t=Date.parse(iso);if(!isFinite(t))return"";const p=sgParts(t);return fmt12(p.h,p.min)}
+function cFmtSynced(iso){const t=Date.parse(iso);if(!isFinite(t))return"";const p=sgParts(t);return p.d+" "+MO[p.m-1]+", "+fmt12(p.h,p.min)}
+function cDayLabel(key,todayKey,tomKey){if(key===todayKey)return"Today";if(key===tomKey)return"Tomorrow";const [y,m,d]=key.split("-").map(Number);return WD[new Date(Date.UTC(y,m-1,d)).getUTCDay()]+" "+d+" "+MO[m-1]}
+function cEvHtml(e){const fam=(e.cal||"").toLowerCase()==="family";return `<div class="ev ${fam?"family":"main"}"><div class="tm num">${esc(cFmtTime(e.start,e.allDay))}</div><div><div class="ti">${esc(e.title||"(No title)")} ${fam?'<span class="pill fam">Family</span>':""}</div>${e.loc?`<div class="lo">${esc(e.loc)}</div>`:""}</div></div>`}
+function cRender(d){$("evCard").hidden=false;const p0=sgParts(),startToday=Date.UTC(p0.y,p0.m-1,p0.d)-8*3600e3,endWin=startToday+8*864e5,todayKey=sgDay(startToday),tomKey=sgDay(startToday+864e5);
+ const ev=(d.events||[]).map(e=>{const s=Date.parse(e.start),en=e.end?Date.parse(e.end):(e.allDay?s+864e5:s);return{...e,_s:s,_e:isFinite(en)?en:s}}).filter(e=>isFinite(e._s)&&e._s<endWin&&e._e>=startToday).sort((a,b)=>(a.allDay!==b.allDay)?(a.allDay?-1:1):a._s-b._s);
+ const today=[],rest=[];ev.forEach(e=>(((e._s<startToday?todayKey:sgDay(e._s))===todayKey)?today:rest).push(e));
+ const groups=new Map();rest.forEach(e=>{const k=sgDay(e._s);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(e)});
+ $("evSync").textContent=d.updated?"Synced "+cFmtSynced(d.updated):"";
+ $("evToday").innerHTML=today.length?today.map(cEvHtml).join(""):`<div class="sm mu" style="padding:4px 0">Nothing scheduled today. Free time is rizq too.</div>`;
+ let wh="";if(!rest.length)wh=`<div class="sm mu">No events in the next 7 days.</div>`;else for(const k of [...groups.keys()].sort())wh+=`<div class="dayh">${cDayLabel(k,todayKey,tomKey)}</div>`+groups.get(k).map(cEvHtml).join("");
+ $("evWeek").innerHTML=wh;$("evWeekFold").querySelector("summary").textContent=`Next 7 days · ${rest.length} event${rest.length===1?"":"s"}`;if(rest.length&&!today.length)$("evWeekFold").open=true}
+function cMissing(){$("evCard").hidden=false;$("evToday").innerHTML=`<div class="sm mu">Calendar not synced yet.</div>`;$("evWeekFold").hidden=true}
+/* --- finance --- (fields as published by FA Bot; anything missing is skipped, never invented) */
+function fRender(d){const today=sgDay(),lim=sgDay(Date.now()+30*864e5),A=v=>Array.isArray(v)?v:[];
+ const bills=A(d.bills_due).slice().sort((a,b)=>a.due<b.due?-1:1),due=bills.filter(b=>!b.paid&&b.due<=lim),dueT=due.reduce((a,b)=>a+(+b.amt||0),0);
+ const bal=d.balance&&isFinite(+d.balance.amt)?+d.balance.amt:null,safe=d.safe_to_spend!=null?+d.safe_to_spend:(bal!=null?bal-dueT:null),wk=d.week&&+d.week.cap?d.week:null;
+ const payday=d.payday||d.next_payday,pdDays=payday&&isFinite(Date.parse(payday))?Math.ceil((Date.parse(payday+"T00:00:00+08:00")-Date.now())/864e5):null;
+ const nextBill=bills.find(b=>!b.paid&&b.due>=today)||bills.find(b=>!b.paid);
+ /* Now-screen one-liner */
+ const bits=[];if(safe!=null)bits.push(`<div><div class="xs mu">Safe to spend</div><div class="mid num ${safe<0?"neg":""}" id="flSafe">${money0(safe)}</div></div>`);
+ if(wk)bits.push(`<div style="flex:1;min-width:110px"><div class="xs mu">This week · <span class="num">${money0(wk.spent)} / ${money0(wk.cap)}</span></div><div class="bar" style="margin-top:6px"><i class="${wk.spent>wk.cap?"over":""}" data-w="${Math.min(100,wk.spent/wk.cap*100)}"></i></div></div>`);
+ if(nextBill)bits.push(`<div><div class="xs mu">Next bill</div><div class="sm" style="font-weight:600">${esc(nextBill.name)} · ${esc(dS(nextBill.due))}</div></div>`);
+ if(pdDays!=null)bits.push(`<div><div class="xs mu">Payday</div><div class="sm" style="font-weight:600">${pdDays} days</div></div>`);
+ $("finLine").hidden=!bits.length;$("finLine").innerHTML=`<div class="lbl"><span>Money</span><span class="pill">Details ›</span></div><div class="row" style="flex-wrap:wrap;gap:14px;align-items:flex-end">${bits.join("")}</div>`;
+ /* Money screen */
+ let h="";
+ h+=`<div class="card w2" style="background:radial-gradient(120% 140% at 100% 0%,var(--ac2),transparent 60%),var(--s1)"><div class="lbl"><span>Balance</span><span class="xs mu">${esc(d.balance&&d.balance.date||"")}</span></div><div class="big num" id="mBal">${bal!=null?money(bal):"—"}</div>
+  ${safe!=null?`<div class="sep"></div><div class="lbl" style="margin-bottom:2px">Safe to spend till payday</div><div class="mid num ${safe<0?"neg":""}" id="mSafe">${money(safe)}</div>`:""}</div>`;
+ if(wk){const left=wk.cap-wk.spent;h+=`<div class="card w2"><div class="lbl"><span>This week</span>${wk.spent>wk.cap?'<span class="pill bad">Over</span>':`<span class="pill ok">${money0(left)} left</span>`}</div><div class="mid num">${money(wk.spent)} <span class="sm mu">of ${money(wk.cap)}</span></div><div class="bar" style="margin:10px 0"><i class="${wk.spent>wk.cap?"over":""}" data-w="${Math.min(100,wk.spent/wk.cap*100)}"></i></div>
+  <form class="row" style="gap:8px;justify-content:flex-start" onsubmit="event.preventDefault();fAfford(${+safe||0},${left})"><span class="sm mu">Can I afford</span><input class="inp num" id="fa" type="number" inputmode="decimal" placeholder="S$" style="width:90px"><button class="btn sm" type="submit">Check</button></form><div id="far" class="sm" style="margin-top:6px"></div></div>`}
+ if(bills.length)h+=`<div class="card w2"><div class="lbl"><span>Bills</span><span class="xs mu">Next 30 days ${money(dueT)}</span></div>${bills.map(b=>{const st=b.paid?'<span class="pill ok">Paid</span>':b.due<today?'<span class="pill bad">Overdue</span>':b.due<=lim?'<span class="pill warn">Due</span>':'<span class="pill">Later</span>';return `<div class="kv"><span>${st} <span class="mu num">${esc(dS(b.due))}</span> ${esc(b.name)}</span><b class="num">${money(b.amt)}</b></div>`}).join("")}</div>`;
+ const debts=A(d.debts);if(debts.length)h+=`<div class="card w2"><div class="lbl">Debts</div>${debts.filter(x=>+x.total>0).map(x=>`<div style="margin:6px 0 12px"><div class="row sm"><span style="font-weight:600">${esc(x.to)}</span><span class="num mu">${money0(x.paid)} / ${money0(x.total)}</span></div><div class="bar" style="margin:6px 0"><i data-w="${Math.min(100,x.paid/x.total*100)}"></i></div><div class="xs mu">${money(x.monthly)}/mo${x.left_months!=null?` · ${esc(x.left_months)} mo left`:""}</div></div>`).join("")}${debts.some(x=>+x.total===0)?`<div class="xs mu">${esc(debts.filter(x=>+x.total===0).map(x=>x.to).join(", "))}: amount not set yet</div>`:""}</div>`;
+ const bud=A(d.budget_nov).length?A(d.budget_nov):A(d.budget);
+ if(d.savings!=null||bud.length){const tgt=bud.find(b=>/POSB|sav/i.test(b.cat||""));h+=`<div class="card w2"><div class="lbl">Savings</div><div class="mid num">${d.savings?money(d.savings):"Not set yet"}</div>${tgt?`<div class="xs mu" style="margin-top:4px">Target ${esc(tgt.cat)} ${money(tgt.limit)}</div>`:""}
+  ${bud.length?`<div class="sep"></div><div class="lbl" style="margin-bottom:4px">Budget</div>${bud.map(b=>`<div class="kv"><span>${esc(b.cat)}</span><b class="num">${money(b.limit)}</b></div>`).join("")}`:""}</div>`}
+ const months=A(d.months);if(months.length){const mx=Math.max(...months.map(m=>Math.max(+m.in||0,+m.out||0)))||1,W=280,H=110,bw=Math.min(22,(W/months.length-10)/2);
+  h+=`<div class="card w2"><div class="lbl"><span>Monthly in / out</span><span class="xs mu"><span style="color:var(--ac)">■</span> in <span style="color:var(--bad)">■</span> out</span></div><svg class="chart" viewBox="0 0 ${W} ${H+16}" width="100%" role="img" aria-label="Monthly income and spending">${months.map((m,i)=>{const x=i*(W/months.length)+(W/months.length)/2,hi=(+m.in||0)/mx*H,ho=(+m.out||0)/mx*H;return `<rect x="${x-bw-1}" y="${H-hi}" width="${bw}" height="${hi}" rx="3" fill="var(--ac)"/><rect x="${x+1}" y="${H-ho}" width="${bw}" height="${ho}" rx="3" fill="var(--bad)" opacity=".85"/><text x="${x}" y="${H+13}" text-anchor="middle">${esc(m.m)}</text>`}).join("")}</svg>
+  ${months.map(m=>{const n=(+m.in||0)-(+m.out||0);return `<div class="kv"><span>${esc(m.m)}</span><b class="num ${n<0?"neg":""}">${n<0?"−":"+"}${money(Math.abs(n))}</b></div>`}).join("")}</div>`}
+ const leaks=A(d.leaks);if(leaks.length){const lm=Math.max(...leaks.map(l=>+l.amt||0))||1;h+=`<div class="card w2"><div class="lbl">Top leaks</div>${leaks.map(l=>`<div style="margin:6px 0 10px"><div class="row sm"><span style="font-weight:600">${esc(l.name)}</span><b class="num">${money(l.amt)}</b></div><div class="bar" style="height:5px;margin:5px 0"><i class="over" data-w="${(+l.amt||0)/lm*100}"></i></div><div class="xs mu">${esc(l.tip)}</div></div>`).join("")}</div>`}
+ const tips=A(d.tips);if(tips.length)h+=`<div class="card w4"><div class="lbl">Tips</div><ul class="sm" style="margin:0;padding-left:18px;color:#c9ccd6">${tips.map(t=>`<li style="margin:4px 0">${esc(t)}</li>`).join("")}</ul></div>`;
+ h+=`<div class="w4 row" style="justify-content:flex-end"><button class="btn sm" onclick="lockAll()">Lock</button></div>`;
+ $("fin").innerHTML=h;requestAnimationFrame(()=>document.querySelectorAll("#fin [data-w],#finLine [data-w]").forEach(b=>b.style.width=b.dataset.w+"%"));
+ if(bal!=null)countUp($("mBal"),bal,money);if(safe!=null){countUp($("mSafe"),safe,money);countUp($("flSafe"),safe,money0)}}
+function fAfford(safe,wk){const a=+$("fa").value,r=$("far");if(!a)return;r.innerHTML=a>safe?`<span class="pill bad">No · short ${money(a-safe)} for bills</span>`:a>wk?`<span class="pill warn">Over this week's cap by ${money(a-wk)}</span>`:'<span class="pill ok">OK</span>'}
+
+/* ================= CAREER · reads TOP / WL arrays from jobs.html (no changes to that file) ================= */
+function loadJobs(){fetch("jobs.html",{cache:"no-cache"}).then(r=>r.text()).then(s=>{const grab=n=>{const m=s.match(new RegExp("const "+n+"=(\\[[\\s\\S]*?\\]);\\n"));try{return m?JSON.parse(m[1]):[]}catch(_){return[]}};
+ const T=grab("TOP"),W=grab("WL");const item=(j,i)=>`<div class="job"><div class="row" style="align-items:flex-start"><div><div class="jt">${i!=null?`<span class="mu num">${i+1}.</span> `:""}${esc(j.t)}</div><div class="xs mu">${esc(j.o)}${j.id?" · "+esc(j.id):""}</div></div>${j.R&&i!=null?`<a class="pill ac" href="${safeUrl(j.R)}" target="_blank" rel="noopener">Resume ↗</a>`:""}</div><div class="xs mu" style="margin-top:4px">${esc(j.loc||"")}${j.pay?" · "+esc(j.pay):""}${j.close?" · closes "+esc(j.close):""}</div></div>`;
+ $("topList").className="sm";$("topList").innerHTML=T.length?T.map(item).join(""):'<div class="mu">No top picks right now.</div>';
+ if(W.length){$("wlFold").hidden=false;$("wlCount").textContent=`${T.length} top · ${W.length} on watch`;$("wlFold").querySelector("summary").textContent=`Watch list · ${W.length} roles`;$("wlList").innerHTML=W.map(j=>item(j,null)).join("")}})
+ .catch(()=>{$("topList").textContent="Couldn't load the job deck."})}
+
+/* ================= NEWS (last 24h, Google News RSS) ================= */
+function loadNews(){const q=encodeURIComponent("https://news.google.com/rss/search?q="+encodeURIComponent("nuclear OR NATO OR ceasefire OR missile OR Ukraine OR Gaza OR Iran OR Taiwan when:1d")+"&hl=en-SG&gl=SG&ceid=SG:en");
+ fetch("https://api.rss2json.com/v1/api.json?rss_url="+q).then(r=>r.json()).then(d=>{const it=(d.items||[]).slice(0,10);if(!it.length)throw 0;$("nwT").textContent="Last 24h";$("news").className="sm";
+  $("news").innerHTML=it.map(x=>{const p=x.title.lastIndexOf(" - "),t=p>0?x.title.slice(0,p):x.title,src=p>0?x.title.slice(p+3):"";const h=Math.max(0,Math.round((Date.now()-new Date(String(x.pubDate).replace(" ","T")+"Z"))/36e5));
+   return `<a class="nw" href="${safeUrl(x.link)}" target="_blank" rel="noopener"><div class="nt">${esc(t)}</div><div class="xs mu" style="margin-top:3px">${esc(src)} · ${h}h ago</div></a>`}).join("")})
+ .catch(()=>{$("nwT").textContent="Offline";$("news").textContent="Headlines unavailable right now."})}
+
+/* ================= START ================= */
+(function(){const alias={today:0,plannerS:0,todoS:0,calS:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:2,finS:2,career:3,bondS:3,jobsS:3,world:4,worldS:4,newsS:4},i=alias[location.hash.slice(1)]??0;
+ cur=-1;requestAnimationFrame(()=>{go(i,true)})})();
+tick();setInterval(tick,1000);
+if(sessionStorage.fpw){unlock(sessionStorage.fpw).then(ok=>{if(!FIN&&sessionStorage.fpwF)unlock(sessionStorage.fpwF)})}
+else fetch("cal.enc.json?"+Date.now(),{method:"HEAD"}).catch(()=>{});
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
 </body></html>
