@@ -1,0 +1,94 @@
+{
+ "date": "2026-11-13",
+ "hijri": "3 Jamadilakhir 1448",
+ "fast": {
+  "type": "Sunnah fast · Monday",
+  "date": "2026-11-16",
+  "why": "Monday is a day deeds are presented to Allah, and the Prophet ﷺ liked to be fasting when his deeds were presented. Make your niyyah on Sunday night, or before Zuhr on Monday if you haven't eaten.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "The people who quietly help you: a colleague who covers, a parent who prays for you, a driver who stops. Thank one of them by name today, and say Alhamdulillah for them.",
+ "verse": {
+  "ref": "Az-Zumar 39:10",
+  "text": "Indeed, the patient will be given their reward without account.",
+  "url": "https://quran.com/39/10"
+ },
+ "hadith": {
+  "ref": "Sahih al-Bukhari 1469",
+  "text": "Whoever is patient, Allah will make him patient. No one has been given a gift better and more vast than patience.",
+  "url": "https://sunnah.com/bukhari:1469"
+ },
+ "lesson": {
+  "title": "Adab and akhlaq part 3: thanking people",
+  "text": "The Prophet ﷺ said: \"He who does not thank people has not thanked Allah\" (Abu Dawud 4811, Tirmidhi 1954). Gratitude to Allah and gratitude to the people He used to help you go together. A sincere \"thank you\", a dua for them (\"jazakallahu khayran\"), or a small kindness back all count. On a heavy day at work, this also lifts your own heart, because you start noticing the good around you.",
+  "url": "https://sunnah.com/abudawud:4811"
+ },
+ "quote": {
+  "by": "Mufti Menk",
+  "date": "17 Oct 2026",
+  "text": "Don't be selfish and think only about yourself. Be sensitive to the needs of others. If you want people to respect your time, respect theirs.",
+  "url": "https://x.com/muftimenk/status/2111317436104376706"
+ },
+ "videos": [
+  {
+   "id": "t--rezLMP1c",
+   "title": "Omar Suleiman: When You Need to Feel Loved (Allah's Names, Ep. 10: kindness and appreciation)",
+   "start": 0
+  }
+ ],
+ "name": {
+  "ar": "الوهاب",
+  "tr": "Al-Wahhab",
+  "meaning": "The Bestower",
+  "text": "He gives freely, with nothing owed: \"Our Lord, grant us mercy from Yourself. Indeed, You are the Bestower\" (3:8). Everything you have is a gift, so ask Him and thank Him.",
+  "url": "https://quran.com/3/8"
+ },
+ "pm": {
+  "name": {
+   "ar": "الغفار",
+   "tr": "Al-Ghaffar",
+   "meaning": "The Ever-Forgiving",
+   "text": "\"I am Ever-Forgiving to whoever repents, believes and does good\" (20:82). Close the day with istighfar and put down today's mistakes.",
+   "url": "https://quran.com/20/82"
+  },
+  "quote": {
+   "by": "Mufti Menk",
+   "date": "15 Oct 2026",
+   "text": "Almighty, We ask You to hide our faults, forgive our sins and protect us from all evil and harm in this world and the Hereafter. Aameen.",
+   "url": "https://x.com/muftimenk/status/2110621834819350869"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}
