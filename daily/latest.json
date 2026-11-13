@@ -1,6 +1,6 @@
 {
- "date": "2026-11-13",
- "hijri": "3 Jamadilakhir 1448",
+ "date": "2026-11-14",
+ "hijri": "4 Jamadilakhir 1448",
  "fast": {
   "type": "Sunnah fast · Monday",
   "date": "2026-11-16",
@@ -8,55 +8,36 @@
   "src": "Jami' at-Tirmidhi 747",
   "url": "https://sunnah.com/tirmidhi:747"
  },
- "blessing": "The people who quietly help you: a colleague who covers, a parent who prays for you, a driver who stops. Thank one of them by name today, and say Alhamdulillah for them.",
+ "blessing": "Your free time and health: even a few spare minutes between cases are a gift many people lack. Today, say Alhamdulillah for your health and spend five of those minutes on dhikr or a short dua.",
  "verse": {
-  "ref": "Az-Zumar 39:10",
-  "text": "Indeed, the patient will be given their reward without account.",
-  "url": "https://quran.com/39/10"
+  "ref": "Ar-Ra'd 13:28",
+  "text": "Those who believe, and whose hearts find comfort in the remembrance of Allah. Surely in the remembrance of Allah do hearts find comfort.",
+  "url": "https://quran.com/13/28"
  },
  "hadith": {
-  "ref": "Sahih al-Bukhari 1469",
-  "text": "Whoever is patient, Allah will make him patient. No one has been given a gift better and more vast than patience.",
-  "url": "https://sunnah.com/bukhari:1469"
+  "ref": "Sahih al-Bukhari 6412",
+  "text": "There are two blessings that many people lose out on: health and free time.",
+  "url": "https://sunnah.com/bukhari:6412"
  },
  "lesson": {
-  "title": "Adab and akhlaq part 3: thanking people",
-  "text": "The Prophet ﷺ said: \"He who does not thank people has not thanked Allah\" (Abu Dawud 4811, Tirmidhi 1954). Gratitude to Allah and gratitude to the people He used to help you go together. A sincere \"thank you\", a dua for them (\"jazakallahu khayran\"), or a small kindness back all count. On a heavy day at work, this also lifts your own heart, because you start noticing the good around you.",
-  "url": "https://sunnah.com/abudawud:4811"
+  "title": "Daily duas part 4: morning shukr",
+  "text": "Abu Dawud 5073 records a dua for the morning: \"Allahumma ma asbaha bi min ni'matin aw bi ahadin min khalqik, faminka wahdaka la sharika lak, falakal-hamdu wa lakash-shukr\" (O Allah, whatever blessing I or any of Your creation woke up with is from You alone, so all praise and thanks are Yours). Saying it makes you notice that each morning begins with gifts you did not earn. It takes ten seconds and turns the day toward shukr.",
+  "url": "https://sunnah.com/abudawud:5073"
  },
- "quote": {
-  "by": "Mufti Menk",
-  "date": "17 Oct 2026",
-  "text": "Don't be selfish and think only about yourself. Be sensitive to the needs of others. If you want people to respect your time, respect theirs.",
-  "url": "https://x.com/muftimenk/status/2111317436104376706"
- },
- "videos": [
-  {
-   "id": "t--rezLMP1c",
-   "title": "Omar Suleiman: When You Need to Feel Loved (Allah's Names, Ep. 10: kindness and appreciation)",
-   "start": 0
-  }
- ],
  "name": {
-  "ar": "الوهاب",
-  "tr": "Al-Wahhab",
-  "meaning": "The Bestower",
-  "text": "He gives freely, with nothing owed: \"Our Lord, grant us mercy from Yourself. Indeed, You are the Bestower\" (3:8). Everything you have is a gift, so ask Him and thank Him.",
-  "url": "https://quran.com/3/8"
+  "ar": "الشكور",
+  "tr": "Ash-Shakur",
+  "meaning": "The Most Appreciative",
+  "text": "\"Indeed, our Lord is Forgiving and Appreciative\" (35:34). He rewards even small deeds many times over, so no effort you make for Him is lost.",
+  "url": "https://quran.com/35/34"
  },
  "pm": {
   "name": {
-   "ar": "الغفار",
-   "tr": "Al-Ghaffar",
-   "meaning": "The Ever-Forgiving",
-   "text": "\"I am Ever-Forgiving to whoever repents, believes and does good\" (20:82). Close the day with istighfar and put down today's mistakes.",
-   "url": "https://quran.com/20/82"
-  },
-  "quote": {
-   "by": "Mufti Menk",
-   "date": "15 Oct 2026",
-   "text": "Almighty, We ask You to hide our faults, forgive our sins and protect us from all evil and harm in this world and the Hereafter. Aameen.",
-   "url": "https://x.com/muftimenk/status/2110621834819350869"
+   "ar": "الوكيل",
+   "tr": "Al-Wakil",
+   "meaning": "The Trustee, the Disposer of affairs",
+   "text": "\"Sufficient for us is Allah, and He is the best Disposer of affairs\" (3:173). Hand tomorrow's caseload to Him after doing your best, then rest.",
+   "url": "https://quran.com/3/173"
   }
  },
  "world": [

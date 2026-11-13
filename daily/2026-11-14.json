@@ -1,0 +1,75 @@
+{
+ "date": "2026-11-14",
+ "hijri": "4 Jamadilakhir 1448",
+ "fast": {
+  "type": "Sunnah fast · Monday",
+  "date": "2026-11-16",
+  "why": "Monday is a day deeds are presented to Allah, and the Prophet ﷺ liked to be fasting when his deeds were presented. Make your niyyah on Sunday night, or before Zuhr on Monday if you haven't eaten.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "Your free time and health: even a few spare minutes between cases are a gift many people lack. Today, say Alhamdulillah for your health and spend five of those minutes on dhikr or a short dua.",
+ "verse": {
+  "ref": "Ar-Ra'd 13:28",
+  "text": "Those who believe, and whose hearts find comfort in the remembrance of Allah. Surely in the remembrance of Allah do hearts find comfort.",
+  "url": "https://quran.com/13/28"
+ },
+ "hadith": {
+  "ref": "Sahih al-Bukhari 6412",
+  "text": "There are two blessings that many people lose out on: health and free time.",
+  "url": "https://sunnah.com/bukhari:6412"
+ },
+ "lesson": {
+  "title": "Daily duas part 4: morning shukr",
+  "text": "Abu Dawud 5073 records a dua for the morning: \"Allahumma ma asbaha bi min ni'matin aw bi ahadin min khalqik, faminka wahdaka la sharika lak, falakal-hamdu wa lakash-shukr\" (O Allah, whatever blessing I or any of Your creation woke up with is from You alone, so all praise and thanks are Yours). Saying it makes you notice that each morning begins with gifts you did not earn. It takes ten seconds and turns the day toward shukr.",
+  "url": "https://sunnah.com/abudawud:5073"
+ },
+ "name": {
+  "ar": "الشكور",
+  "tr": "Ash-Shakur",
+  "meaning": "The Most Appreciative",
+  "text": "\"Indeed, our Lord is Forgiving and Appreciative\" (35:34). He rewards even small deeds many times over, so no effort you make for Him is lost.",
+  "url": "https://quran.com/35/34"
+ },
+ "pm": {
+  "name": {
+   "ar": "الوكيل",
+   "tr": "Al-Wakil",
+   "meaning": "The Trustee, the Disposer of affairs",
+   "text": "\"Sufficient for us is Allah, and He is the best Disposer of affairs\" (3:173). Hand tomorrow's caseload to Him after doing your best, then rest.",
+   "url": "https://quran.com/3/173"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}
