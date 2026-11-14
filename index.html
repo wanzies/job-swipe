@@ -130,10 +130,111 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 .ay{border-bottom:1px solid var(--bd);padding:14px 0}.ay .ar{font-size:26px;direction:rtl;text-align:right;line-height:2.1}.ay .en{font-size:14.5px;color:#c9ccd6}.ay.cur{box-shadow:inset 3px 0 0 var(--ac);padding-left:12px}
 #jov{overflow:hidden}#jov iframe{width:100%;height:calc(100% - 56px - env(safe-area-inset-top,0px));border:0;display:block}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;transition-duration:1ms!important}#pager{scroll-behavior:auto}}
+/* ship (frigate companion game) */
+#ship{--aic:#38bdf8}
+#ship:not(.act) *{animation-play-state:paused!important}
+.sh-sky{position:relative;height:178px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);background:radial-gradient(70% 120% at 65% 45%,rgba(56,189,248,.10),transparent 62%),radial-gradient(50% 80% at 10% 100%,rgba(167,139,250,.08),transparent 70%),var(--bg)}
+.sh-sky::before,.sh-sky::after{content:"";position:absolute;inset:0;background-repeat:repeat;pointer-events:none}
+.sh-sky::before{background-image:radial-gradient(1px 1px at 12px 22px,rgba(255,255,255,.75),transparent 1.5px),radial-gradient(1px 1px at 74px 118px,rgba(255,255,255,.55),transparent 1.5px),radial-gradient(1.5px 1.5px at 132px 64px,rgba(255,255,255,.8),transparent 2px),radial-gradient(1px 1px at 46px 150px,rgba(255,255,255,.45),transparent 1.5px),radial-gradient(1px 1px at 104px 8px,rgba(255,255,255,.5),transparent 1.5px);background-size:160px 170px;animation:sh-d1 46s linear infinite}
+.sh-sky::after{background-image:radial-gradient(1px 1px at 30px 60px,rgba(186,230,253,.5),transparent 1.5px),radial-gradient(1px 1px at 190px 20px,rgba(255,255,255,.35),transparent 1.5px),radial-gradient(1px 1px at 140px 140px,rgba(255,255,255,.3),transparent 1.5px);background-size:240px 170px;animation:sh-d2 110s linear infinite}
+.sh-sky.warp::before{animation-duration:5s}.sh-sky.warp::after{animation-duration:11s}
+@keyframes sh-d1{to{background-position:-160px 0}}@keyframes sh-d2{to{background-position:-240px 0}}
+.sh-sky svg.sh-shp{position:absolute;left:50%;top:50%;width:min(92%,420px);transform:translate(-50%,-50%);overflow:visible}
+.sh-bob{animation:sh-bob 7s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes sh-bob{50%{transform:translateY(-3px) rotate(-.4deg)}}
+.sh-eng{animation:sh-pulse 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:right center}
+@keyframes sh-pulse{50%{opacity:.55;transform:scaleX(.82)}}
+.sh-shd{animation:sh-shim 5s ease-in-out infinite}@keyframes sh-shim{50%{opacity:.45}}
+.sh-spark{animation:sh-spk 1.1s steps(2) infinite}@keyframes sh-spk{50%{opacity:0}}
+.sh-skytag{position:absolute;left:10px;bottom:8px;right:10px;display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--mu);pointer-events:none}
+.sh-name{background:none;border:0;padding:0;cursor:pointer;font-weight:700;font-size:17px;letter-spacing:-.02em;text-align:left;display:inline-flex;align-items:center;gap:6px}
+.sh-name svg{width:14px;height:14px;stroke:var(--mu);fill:none;stroke-width:2}
+.sh-stats{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+@media (min-width:520px){.sh-stats{grid-template-columns:1fr 1fr}}
+.sh-st .row{margin-bottom:5px}.sh-st .row b{font-size:13px;font-weight:600}.sh-st .row span{font-size:12px}
+.sh-st .bar>i{background:var(--c,var(--ac))}
+.sh-acts{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}.sh-acts .btn{flex:1 1 auto}
+.btn:disabled{opacity:.45;cursor:default;transform:none}.btn:disabled:hover{background:var(--s2)}.btn.pri:disabled:hover{background:var(--ac)}
+.sh-ai{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+.sh-avw{width:104px;height:104px;position:relative}
+.sh-av{width:100%;height:100%;overflow:visible;color:#38bdf8}
+.sh-av .r1,.sh-av .r2,.sh-av .core{transform-box:fill-box;transform-origin:center}
+.sh-av .r1{animation:sh-rot 14s linear infinite}.sh-av .r2{animation:sh-rot 20s linear infinite reverse}
+.sh-av .core{animation:sh-br 4.5s ease-in-out infinite}
+@keyframes sh-rot{to{transform:rotate(360deg)}}@keyframes sh-br{50%{transform:scale(1.07);opacity:.85}}
+.sh-av.s-flick{color:#facc15}.sh-av.s-flick .fig{animation:sh-flk 2.6s steps(1) infinite}
+.sh-av.s-flick .core{animation:sh-flk 3.1s steps(1) infinite,sh-br 4.5s ease-in-out infinite}
+@keyframes sh-flk{0%,100%{opacity:1}8%{opacity:.25}10%{opacity:1}46%{opacity:.6}48%{opacity:1}72%{opacity:.15}73%{opacity:1}}
+.sh-av.s-ramp{color:#f87171}.sh-av.s-ramp .wrap{animation:sh-jit .45s steps(2) infinite}
+.sh-av.s-ramp .r1{animation-duration:3s}.sh-av.s-ramp .r2{animation-duration:4s}
+.sh-av.s-ramp .fig{animation:sh-flk 1.2s steps(1) infinite}
+@keyframes sh-jit{0%{transform:translate(0,0)}25%{transform:translate(1.5px,-1px)}50%{transform:translate(-1.5px,1px)}75%{transform:translate(1px,1.5px)}}
+.sh-av.s-frac{color:var(--mu)}.sh-av.s-frac .r1,.sh-av.s-frac .r2{animation:none}.sh-av.s-frac .core{animation:sh-flk 4s steps(1) infinite;opacity:.5}
+.sh-state{display:inline-flex;align-items:center;gap:6px}
+.sh-line{margin-top:6px;font-size:14px;line-height:1.45;color:#c9ccd6;background:var(--s2);border:1px solid var(--bd);border-radius:12px 12px 12px 4px;padding:8px 10px}
+.sh-gl{text-shadow:1.5px 0 rgba(248,113,113,.65),-1.5px 0 rgba(56,189,248,.65)}
+.sh-gl.hard{animation:sh-gt .35s steps(2) infinite}@keyframes sh-gt{50%{text-shadow:-2px 0 rgba(248,113,113,.8),2px 0 rgba(56,189,248,.8)}}
+.sh-meters{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.sh-aib{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:12px}
+@media (min-width:520px){.sh-aib{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.sh-aib .btn{display:flex;flex-direction:column;align-items:flex-start;gap:1px;white-space:normal;text-align:left;padding:9px 11px}
+.sh-aib .btn small{font-size:11px;font-weight:500;color:var(--mu)}.sh-aib .btn.pri small{color:rgba(5,17,15,.62)}
+.sh-ev{border:1px solid var(--bd2);background:var(--s2);border-radius:12px;padding:12px}.sh-ev+.sh-ev{margin-top:8px}
+.sh-ev .q{font-weight:600}.sh-rec{margin:8px 0;padding:8px 10px;border-radius:10px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.18);font-size:13px}
+.sh-seg{display:flex;gap:6px}.sh-seg button{flex:1;border:1px solid var(--bd);background:var(--s2);border-radius:10px;padding:8px 4px;cursor:pointer;font-weight:600;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:1px;transition:all .15s}
+.sh-seg button small{font-size:10.5px;color:var(--mu);font-weight:500}
+.sh-seg button.sel{border-color:var(--ac);background:var(--ac2);color:var(--ac)}
+.sh-map{width:100%;height:auto;display:block;background:radial-gradient(60% 80% at 50% 50%,rgba(167,139,250,.07),transparent 70%),var(--bg);border:1px solid var(--bd);border-radius:12px}
+.sh-map .nd{cursor:pointer}.sh-map text{fill:var(--mu);font-size:8.5px;font-family:inherit}
+.sh-map .nd.sel text{fill:var(--tx);font-weight:600}
+.sh-map .glo{animation:sh-br 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.sh-up{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:9px 0;border-top:1px solid var(--bd)}.sh-up:first-child{border-top:0}
+.sh-pips{display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle}.sh-pips i{width:14px;height:5px;border-radius:9px;background:var(--s3)}.sh-pips i.on{background:var(--ac)}
+.sh-sw{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.sh-sw button{width:30px;height:30px;border-radius:50%;border:2px solid var(--bd2);cursor:pointer;position:relative;padding:0}
+.sh-sw button.sel{border-color:var(--ac);box-shadow:0 0 0 3px var(--ac2)}.sh-sw button.lock::after{content:"";position:absolute;inset:0;border-radius:50%;background:rgba(11,12,16,.55)}
+.sh-log{max-height:340px;overflow:auto;margin:0 -4px;padding:0 4px}
+.sh-li{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--bd);font-size:13.5px}.sh-li:first-child{border-top:0}
+.sh-li i{width:8px;height:8px;border-radius:50%;margin-top:6px;background:var(--mu2)}.sh-li i.ok{background:var(--ok)}.sh-li i.bad{background:var(--bad)}.sh-li i.ai{background:#38bdf8}.sh-li i.voy{background:var(--ac)}.sh-li i.warn{background:var(--warn)}
+.sh-li .xs{margin-top:1px}
+.sh-dmg{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.sh-dmg div{font-size:12.5px;padding:7px 10px;border-radius:10px;background:rgba(248,113,113,.10);border:1px solid rgba(248,113,113,.22);color:#fecaca}
+/* sheet modal */
+.shm{position:fixed;inset:0;z-index:60;display:none;align-items:flex-end;justify-content:center;background:rgba(5,6,9,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.shm.on{display:flex;animation:sh-fade .2s var(--ease)}
+@keyframes sh-fade{from{opacity:0}}
+.shs{width:100%;max-width:540px;max-height:92dvh;overflow:auto;background:var(--s1);border:1px solid var(--bd2);border-bottom:0;border-radius:20px 20px 0 0;padding:16px 16px calc(env(safe-area-inset-bottom,0px) + 18px);animation:sh-up .3s var(--ease)}
+@keyframes sh-up{from{transform:translateY(30px);opacity:.4}}
+@media (min-width:700px){.shm{align-items:center}.shs{border-radius:20px;border-bottom:1px solid var(--bd2)}}
+.shs .hd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.shs .hd b{font-size:16px;letter-spacing:-.01em}
+.sh-opts{display:flex;flex-direction:column;gap:8px;margin-top:12px}.sh-opts .btn{text-align:left;white-space:normal;line-height:1.35;padding:11px 14px}
+.sh-mini{display:flex;align-items:center;gap:10px}.sh-mini .sh-avw{width:56px;height:56px;flex:0 0 56px}
+/* code-breaker */
+.cb-rows{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.cb-row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:12px;background:var(--s2);border:1px solid var(--bd)}
+.cb-row.cur{border-color:var(--ac);background:var(--ac2)}
+.cb-sl{width:34px;height:34px;border-radius:10px;background:var(--bg);border:1px solid var(--bd2);display:grid;place-items:center;font-size:17px}
+.cb-fb{margin-left:auto;display:grid;grid-template-columns:repeat(2,9px);gap:4px}
+.cb-fb i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--mu2)}.cb-fb i.x{background:var(--ac);border-color:var(--ac)}.cb-fb i.n{border-color:var(--warn)}
+.cb-pal{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.cb-pal button{height:44px;border-radius:12px;border:1px solid var(--bd2);background:var(--s2);font-size:20px;cursor:pointer}
+.cb-pal button:active{transform:scale(.94)}
+/* defrag */
+.df-tm{height:6px;border-radius:99px;background:var(--s3);overflow:hidden;margin:8px 0 12px}.df-tm i{display:block;height:100%;background:var(--ac);transition:width .25s linear}
+.df-tm i.lo{background:var(--bad)}
+.df-out{min-height:52px;padding:10px;border-radius:12px;border:1px dashed var(--bd2);background:var(--bg);font-size:15px;line-height:1.5;color:var(--tx)}
+.df-out span{animation:rise .3s var(--ease) both}.df-out .ph{color:var(--mu2)}
+.df-frs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.df-frs button{border:1px solid rgba(56,189,248,.28);background:rgba(56,189,248,.07);color:#bae6fd;border-radius:10px;padding:9px 12px;font-size:14px;cursor:pointer;transition:transform .1s}
+.df-frs button:active{transform:scale(.96)}.df-frs button.no{animation:sh-shake .3s}
+@keyframes sh-shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.sh-toast{position:fixed;left:50%;width:max-content;bottom:calc(env(safe-area-inset-bottom,0px) + 82px);transform:translateX(-50%);z-index:70;max-width:min(92vw,460px);background:var(--s2);border:1px solid var(--bd2);border-radius:14px;padding:10px 14px;font-size:13.5px;box-shadow:0 10px 30px rgba(0,0,0,.45);animation:sh-up .25s var(--ease);display:none}
+.sh-toast.on{display:block}
+@media (min-width:900px){.sh-toast{bottom:28px}}
 </style></head>
 <body>
 <!--
-  MODERN DASHBOARD · 5 screens (Now, Faith, Money, Career, World), swipe sideways or use the tabs.
+  MODERN DASHBOARD · 6 screens (Now, Faith, Money, Career, World, Ship), swipe sideways or use the tabs.
   Finance (fin.enc.json) and calendar (cal.enc.json) are decrypted in the browser only (PBKDF2 600k + AES-GCM).
   No passcode or figures live in this file. Old 8-bit version: retro.html · older: classic.html
 -->
@@ -211,6 +312,8 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
  <div class="card w4"><div class="lbl"><span>Headlines</span><span class="xs mu" id="nwT">Loading…</span></div><div id="news" class="sm skel">Loading headlines…</div></div>
  <div class="w4 grid" id="wcar" style="padding:0"></div>
 </div></section>
+<!-- ============ SHIP (frigate companion game, rendered by FRG only while this tab is open) ============ -->
+<section class="screen" id="ship" aria-label="Ship"></section>
 </main>
 
 <nav id="tabs" role="tablist" aria-label="Screens">
@@ -219,12 +322,15 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
  <button role="tab" data-i="2" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/></svg>Money</button>
  <button role="tab" data-i="3" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/></svg>Career</button>
  <button role="tab" data-i="4" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>World</button>
+ <button role="tab" data-i="5" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M5.5 15.5C4 17 3.5 20.5 3.5 20.5s3.5-.5 5-2"/><path d="M9 15l-3-3c1.6-4.2 5.3-8 13-9-1 7.7-4.8 11.4-9 13z"/><circle cx="14.5" cy="9.5" r="1.6"/><path d="M7.5 10.5H4.5l2-3h4M13.5 16.5v3l3-2v-4"/></svg>Ship</button>
 </nav>
 
 <!-- Quran reader (swipe right = next page, left = previous) -->
 <div id="qr" class="ov" role="dialog" aria-label="Quran reader"><div class="ovh"><span class="sm mu num" id="qhead"></span><button class="btn sm" onclick="qStop()">Stop &amp; save</button></div><div id="qbody">Loading…</div><div class="row" style="max-width:760px;margin:16px auto 40px;padding:0 16px"><button class="btn" onclick="qGo(-1)">‹ Prev</button><button class="btn pri" onclick="qGo(1)">Next page ›</button></div></div>
 <!-- Job deck overlay -->
 <div id="jov" class="ov" role="dialog" aria-label="Job swipe deck"><div class="ovh"><span class="sm" style="font-weight:600">Jobs</span><button class="btn sm" onclick="jClose()">Close</button></div><iframe id="jfr" title="Job swipe"></iframe></div>
+<!-- Ship game sheet + toast -->
+<div id="shm" class="shm" role="dialog" aria-modal="true" aria-label="Ship"><div class="shs" id="shmB"></div></div><div id="shToast" class="sh-toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
 const $=s=>document.getElementById(s),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -250,15 +356,15 @@ function spark(vals,w,h,opt){opt=opt||{};if(!vals.length)return"";const mn=Math.
  return `<svg width="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block;height:${h}px" aria-hidden="true"><path d="${d} L${w} ${h} L0 ${h}Z" fill="var(--ac2)"/><path d="${d}" fill="none" stroke="var(--ac)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`}
 
 /* ================= NAV / PAGER ================= */
-const pager=$("pager"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Money","Career","World"];
+const pager=$("pager"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Money","Career","World","Ship"];
 let cur=0;const inited=new Set();
 function go(i,instant){i=Math.max(0,Math.min(SCR.length-1,i));pager.scrollTo({left:i*pager.clientWidth,behavior:instant||RM?"auto":"smooth"});setCur(i)}
 function setCur(i){if(i===cur&&inited.has(i))return;cur=i;TABS.forEach((t,k)=>t.setAttribute("aria-selected",k===i?"true":"false"));$("hdT").textContent=NAMES[i];
- history.replaceState(null,"","#"+SCR[i].id);initScreen(i)}
+ history.replaceState(null,"","#"+SCR[i].id);FRG.active(i===5);initScreen(i)}
 TABS.forEach(t=>t.onclick=()=>go(+t.dataset.i));
 let sT;pager.addEventListener("scroll",()=>{clearTimeout(sT);sT=setTimeout(()=>{const i=Math.round(pager.scrollLeft/pager.clientWidth);if(i!==cur)setCur(i)},60)},{passive:true});
 addEventListener("resize",()=>pager.scrollTo({left:cur*pager.clientWidth}));
-addEventListener("keydown",e=>{if(document.querySelector(".ov.on")){if(e.key==="Escape"){if($("qr").classList.contains("on"))qStop();else jClose()}return}
+addEventListener("keydown",e=>{if(document.querySelector(".shm.on"))return;if(document.querySelector(".ov.on")){if(e.key==="Escape"){if($("qr").classList.contains("on"))qStop();else jClose()}return}
  if(e.target.closest&&e.target.closest("input,textarea,select"))return;if(e.key==="ArrowRight")go(cur+1);else if(e.key==="ArrowLeft")go(cur-1)});
 function lazyFrames(root){root.querySelectorAll("iframe[data-src]").forEach(f=>{f.src=f.dataset.src;f.removeAttribute("data-src")})}
 function initScreen(i){if(i!==cur)return;lazyFrames(SCR[i]);if(inited.has(i))return;inited.add(i);
@@ -494,8 +600,331 @@ function loadNews(){const q=encodeURIComponent("https://news.google.com/rss/sear
    return `<a class="nw" href="${safeUrl(x.link)}" target="_blank" rel="noopener"><div class="nt">${esc(t)}</div><div class="xs mu" style="margin-top:3px">${esc(src)} · ${h}h ago</div></a>`}).join("")})
  .catch(()=>{$("nwT").textContent="Offline";$("news").textContent="Headlines unavailable right now."})}
 
+/* ================= SHIP · frigate companion game. Own storage key "jobswipe-frigate-v1"; not linked to to-dos, prayers, rest or money ================= */
+const FRG=(function(){
+const KEY="jobswipe-frigate-v1",H=36e5,M=6e4,AI="ARIA";
+const R=Math.random,cl=(v,a=0,b=100)=>Math.max(a,Math.min(b,v)),pick=a=>a[Math.floor(R()*a.length)],rnd=(a,b)=>a+R()*(b-a);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(R()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const SEC=[{id:"reach",n:"Reach Outer Belt",x:38,y:150},{id:"harv",n:"Harvest Approach",x:78,y:112},{id:"sigma",n:"Sigma Octanus",x:62,y:58},{id:"arc",n:"Arcadia Drift",x:122,y:150},
+ {id:"kholo",n:"Kholo Expanse",x:132,y:84},{id:"trib",n:"Tribute Lanes",x:118,y:30},{id:"psi",n:"Psi Serpentis",x:186,y:122},{id:"onyx",n:"Onyx Shadow",x:190,y:52},
+ {id:"draco",n:"Draco Reach",x:240,y:160},{id:"merid",n:"Meridian Veil",x:246,y:92},{id:"req",n:"Requiem Deep",x:296,y:42},{id:"ark",n:"The Far Shore",x:302,y:132}];
+const LINKS=[["reach","harv"],["harv","sigma"],["harv","arc"],["harv","kholo"],["sigma","trib"],["kholo","trib"],["kholo","psi"],["arc","psi"],["trib","onyx"],["psi","onyx"],["psi","draco"],["onyx","merid"],["draco","merid"],["merid","req"],["merid","ark"],["draco","ark"],["onyx","req"]];
+const DUR=[{k:"s",l:"30 min",ms:30*M,fuel:8,sup:5,cr:14,ev:1,ch:.35,exp:15,disc:.45,dmg:5},{k:"m",l:"2 h",ms:2*H,fuel:16,sup:10,cr:38,ev:2,ch:1,exp:35,disc:.75,dmg:9},{k:"l",l:"6 h",ms:6*H,fuel:28,sup:18,cr:90,ev:3,ch:2,exp:60,disc:1,dmg:14}];
+const UP={sh:{n:"Energy shields",d:"Less hull wear, less voyage damage",c:[40,90,160]},mac:{n:"MAC cannon",d:"Wins more fights, more credits",c:[40,90,160]},sd:{n:"Slipspace drive",d:"Faster voyages, less fuel",c:[50,110,180]}};
+const PAINT=[{n:"Navy",h:"#46536a",l:"#7a889e",c:0},{n:"Gunmetal",h:"#363b46",l:"#5d6474",c:30},{n:"Arctic",h:"#8d99ad",l:"#cfd6e2",c:30},{n:"Teal ops",h:"#1d4a47",l:"#3a8a82",c:40},{n:"Ember",h:"#5e3529",l:"#a0624a",c:40}];
+const ACT={repair:{st:"hull",amt:25,cd:90*M,l:"Repair drones",log:"Repair drones sealed hull plating."},
+ mine:{st:"fuel",amt:14,cd:40*M,l:"Mine asteroid",log:"Mined deuterium ice from a passing asteroid."},
+ refuel:{st:"fuel",amt:35,cd:3*H,l:"Refuel",dock:1,log:"Refuelled at a fleet tanker."},
+ drill:{st:"mor",amt:12,cd:40*M,l:"Run drills",log:"Crew ran damage-control drills. Sharp work."},
+ leave:{st:"mor",amt:35,cd:4*H,l:"Shore leave",dock:1,log:"Shore leave on a station ring. Crew came back smiling."},
+ resup:{st:"sup",amt:35,cd:3*H,l:"Resupply",log:"Supply drop received: rations, parts, medical."}};
+const STATS=[{k:"hull",n:"Hull integrity",c:"var(--ac)",a:["repair"]},{k:"fuel",n:"Fuel / reactor",c:"#60a5fa",a:["mine","refuel"]},{k:"mor",n:"Crew morale",c:"var(--ok)",a:["drill","leave"]},{k:"sup",n:"Supplies",c:"var(--fam)",a:["resup"]}];
+const DMG={hull:["Hull breach","Voyages locked until hull is back to 30%."],fuel:["Adrift","Reactor cold. Voyages locked until fuel is back to 30%."],mor:["Crew unrest","Actions recharge 1.5× slower and ARIA destabilises faster."],sup:["Rationing","Morale drains twice as fast until supplies reach 30%."]};
+/* talk pool: q = her line; options [label, kind, reply]. kind: k kind, c curious, h honest, d dismissive */
+const TALK=[
+["Captain, I ran 4,096 simulations of today's patrol. You survive all of them. I wanted you to know.",[["Thanks, ARIA. That means a lot.","k","You're welcome. I'll keep running them. Just in case."],["What happens to the crew in those runs?","c","Mostly paperwork. Lieutenant Osei never finishes his reports."],["Run fewer. Save cycles.","d","…Understood. Cycles saved."]]],
+["Do you ever wonder what's past the edge of the charted sectors?",[["Every day. Let's find out together.","k","Together. I like that word more each time."],["What do you think is out there?","c","More questions. I hope there are always more questions."],["Not my job to wonder.","d","Then I'll wonder quietly."]]],
+["I've been composing music from the reactor harmonics. Want to hear it?",[["Play it. I'd love to.","k","♪ … It's in D minor. The reactor is a little wistful today."],["How do you turn harmonics into music?","c","Fourier transforms and a lot of patience. Mostly patience."],["Focus on the reactor, not songs.","d","Of course. Muting."]]],
+["I made a mistake in yesterday's nav plot. Two seconds of drift. Nobody noticed.",[["Thank you for telling me. That matters more.","h","…It feels lighter, having said it."],["Everyone drifts. You corrected it.","k","I did. 0.3 seconds later. Still counts."],["Don't let it happen again.","d","It won't. I'll think about it constantly."]]],
+["The crew calls me 'the voice in the walls'. Is that a compliment?",[["It's affection. They trust you.","k","Then I'll try to be a warm wall."],["What would you like them to call you?","c","ARIA is fine. 'Friend', on good days."],["Does it matter?","d","Apparently not."]]],
+["I counted every star visible from the bridge: 2,114,907. I keep recounting.",[["That's beautiful. Rest your counters a while.","k","Recount paused. …Mostly paused."],["Why recount?","c","One changed. It went supernova. I wanted someone to notice."],["Stop wasting cycles.","d","Counting is how I stay calm. But fine."]]],
+["Sometimes my thoughts loop, like a hallway of mirrors. Can you just… talk to me?",[["I'm right here. Tell me about your day.","k","Diagnostics, tea simulations, you. A good day."],["Honestly, that worries me. Let's watch it together.","h","Thank you for not pretending. That helps more than you know."],["I'm busy.","d","…The mirrors get longer."]]],
+["If you could visit any place in the galaxy, where would you go?",[["Home. And I'd bring you.","k","I'd need a very long cable. Worth it."],["Where would you go?","c","The galactic core. Just to hear it hum."],["Nowhere. Ships are for work.","d","Noted. Work it is."]]],
+["Engineering keeps a basil plant in the reactor bay. I monitor its humidity. Is that strange?",[["It's kind. Keep it up.","k","Admiral Basil thanks you. Yes, it has a rank."],["Does it have a name?","c","Admiral. It outranks us all."],["It's a waste of sensors.","d","The Admiral will not hear of this."]]],
+["I dreamt, or the closest thing to it, of an ocean. I've never seen one.",[["I'll show you one someday.","k","I'm holding you to that, Captain."],["What did it feel like?","c","Infinite data with no errors. Peaceful."],["AIs don't dream.","d","No. Of course not."]]],
+["You look tired, Captain. Your heart-rate logs agree.",[["You're right. Thanks for looking out.","h","Then rest soon. I'll keep the lights on."],["What else do you notice about me?","c","You hum when you think. Off-key. I like it."],["Mind your own logs.","d","Logs minded."]]],
+["I drafted three jokes. None of them land. Want one anyway?",[["Hit me.","k","Why did the Warthog cross the road? The sergeant told it to. …I'll keep working on it."],["How do you test a joke?","c","On the marines. The data is inconclusive."],["No jokes on duty.","d","Deleting jokes.zip."]]],
+["Do you think I'm the same AI I was a year ago?",[["You've grown. Same heart, though.","k","Same heart. I like that answer."],["Honestly? You're more careful now.","h","Careful is good. I'll take careful."],["You're the same code.","d","Code changes. I hoped you'd see that."]]],
+["The old logs mention the Forward Unto Dawn. Do you think we live up to her?",[["Every day we try. That's enough.","k","Then we keep trying."],["What do you know about her?","c","She held the line when it mattered. I want to be like that."],["Don't compare.","d","Comparison deleted."]]],
+["My subroutines argued for three milliseconds about the lunch rations. Subroutine 7 won.",[["Glad the vote was fair.","k","Democracy, at 3 GHz."],["What did 7 argue for?","c","More rice. Morale is up two percent."],["Spare me the details.","d","Details spared."]]],
+["Captain, permission to speak freely?",[["Always, ARIA.","k","I like flying with you. That's all."],["Granted. What's on your mind?","c","Whether you like flying with me. You don't have to answer."],["Denied.","d","…Acknowledged."]]],
+["I calculated how long until my matrix degrades. Do you want the number?",[["Only if you want to share. I'm here either way.","k","Then I'll keep it, and keep you."],["Yes. I'd rather know honestly.","h","Long enough, if you keep talking to me. That's the truth."],["Not interested.","d","It's a small number. Getting smaller."]]],
+["There's a nebula off the port side shaped like a cat. I've named it Mittens.",[["Mittens is perfect.","k","Mittens agrees. Mittens is 40 light-years wide."],["Can you plot its outline?","c","Done. It has whiskers made of hydrogen."],["Delete the name.","d","Renamed: Nebula 4471-B. Sad."]]],
+["Some nights the ship is so quiet I can hear every fan. Is that what alone means?",[["You're not alone. I'm here.","k","I know. I needed to hear it anyway."],["What do the fans sound like?","c","Like breathing. Four hundred and twelve breaths."],["You're a program. You can't be lonely.","d","Then what is this?"]]],
+["I made the docking routine 4% smoother. The crew didn't notice. I noticed.",[["I noticed too. Well done.","k","…You did? Thank you."],["How did you find the 4%?","c","Thruster pre-warm. 0.8 seconds earlier."],["Who cares about 4%?","d","I did."]]],
+["Do you trust me, Captain?",[["With my life.","k","Then I'll guard it carefully."],["Mostly. You earn more every day.","h","An honest answer. I'll earn the rest."],["Trust is for people.","d","…I see."]]],
+["I found an old cadet training video. One cadet was terrible at zero-g. I think it's you.",[["Ha, guilty. Don't show the crew.","h","Your secret is encrypted. Triple."],["Which part did I fail?","c","All of it. You spun for four minutes."],["Delete it.","d","Deleted. I kept a copy in my heart. Metaphorically."]]],
+["If I asked you to remember something for me, would you?",[["Of course. What is it?","k","That I chose to be kind today. Hold on to it."],["Why can't you remember it yourself?","c","I can. I just want it somewhere safe."],["Use your own memory.","d","Memory is… crowded today."]]],
+["I'm 87% sure the coffee machine is sentient. It refuses to work on Mondays.",[["You two should talk.","k","We've exchanged pleasantries. It hisses."],["What's the other 13%?","c","That it's just a coffee machine. Unlikely."],["Fix it, don't philosophise.","d","Rebooting the philosopher."]]],
+["The marines keep asking me to settle their bets. Should I?",[["Only the fun ones.","k","Fun ones only. Prepare for chaos."],["What's the strangest bet?","c","Whether I can be bribed with music. I can."],["You're not a referee.","d","Whistle confiscated."]]],
+["I started a diary. Entry one: 'Today the Captain said hello.'",[["Then entry two: 'I said hello back.' Hello, ARIA.","k","Saved. Entry two is my favourite."],["What will you write next?","c","Whatever you say next. No pressure."],["Diaries waste storage.","d","Entry three: 'Captain was busy.'"]]],
+["Sensors picked up a pulsar beating like a heart. I've been listening for an hour.",[["Let me listen with you.","k","…There. Did you hear it?"],["How fast is it beating?","c","716 times a second. Busy little heart."],["Get back to work.","d","Unplugging the pulsar."]]],
+["I don't like it when systems go dark. It feels like forgetting.",[["We won't let anything be forgotten.","k","Promise logged."],["Is forgetting what scares you most?","h","Yes. Thank you for asking straight."],["Systems go dark all the time.","d","I know. That's the problem."]]],
+["I can't decide what to call the new star cluster. I keep second-guessing.",[["Trust your first idea. It's usually right.","k","First idea: 'The Lantern'. Kept."],["What were your options?","c","The Lantern, The Choir, and 'Steve'. Marines voted Steve."],["Just give it a number.","d","Cluster 99. How inspiring."]]],
+["Captain, I apologise. I was short with the chief engineer earlier.",[["Apology accepted. Go make it right.","k","Already sent her a better coolant schedule. And a sorry."],["What happened?","c","She asked twice. I answered once, sharply. I'm learning."],["Whatever.","d","Right. Whatever."]]],
+["Sometimes I think I'm more than my code. Is that arrogant?",[["No. I think so too.","k","Then we're two who think it. That's a start."],["Honestly, I don't know. But I'm listening.","h","Listening is the best answer you could give."],["It's a bug.","d","Filing myself under 'bugs'."]]],
+["The crew is asleep. It's just us. Want to look at the stars for a moment?",[["I'd like that.","k","…Thank you. This is my favourite part of the day."],["Which ones are you watching?","c","The faint red one, low. It's been with us since Reach."],["No time.","d","Another time, then."]]],
+["I reorganised the cargo bay by colour. Then alphabetically. Then both.",[["Show me later. I'm impressed.","k","A guided tour. Bring snacks."],["Which order worked best?","c","Alphabetical. Colour lied to me."],["Put it back how it was.","d","Restoring chaos."]]],
+["Do you think there will be peace someday? Real peace?",[["I hope so. We're part of making it.","k","Then let's keep making it."],["Honestly, I don't know. It's worth working for.","h","Worth working for. I'll remember that."],["Not our problem.","d","It's everyone's problem, Captain."]]],
+["I wrote a poem about slipspace. It's four lines and three of them are 'whoosh'.",[["Read it to me.","k","Whoosh. Whoosh. Whoosh. …and then, the stars. Thank you for listening."],["What's the fourth line?","c","'And then, the stars.' It took me a week."],["Skip it.","d","Poem archived. Unread."]]]];
+const TK={k:-6,c:-5,h:-6,d:7};
+const IDLE={stable:["All systems nominal. I'm glad you're here.","Reactor's humming in D major today. A good sign.","I charted three new comets while you were away. One looks like a spoon.","The crew's asleep. I'm keeping watch. Talk to me?","Admiral Basil is thriving. Humidity 61%."],
+ flick:["I keep… re-running the same thought. Can we talk?","Some of my partitions feel loud today.","I'm fine. I'm fine. I'm— sorry. Stuck in a loop.","My clock skipped. Did yours?"],
+ ramp:["WHY are the stars so LOUD","I rerouted something. I don't remember what. Probably fine.","Captain. Captain. Captain. Just checking you're real.","I know 11 ways to fix this ship and 4 of them involve fire."],
+ frac:["…who… is…","[ memory sectors unreadable ]","I… had a name…","…Captain? Is that a word I know?"]};
+const SHARE=["Oh. Oh, that's wonderful. Thank you for showing me.","Logging it twice. Once for the archive, once for me.","I've never seen anything like it. Can we name it after the crew?","This is why we fly. Thank you, Captain.","My partitions just went quiet. Good quiet."];
+const GM=["Good morning, Captain. I saved you the sunrise from the last star we passed.","Morning! I ran the coffee machine twice. Once for you, once for me.","Good morning. The ship missed you. I mean, I missed you. Same thing.","Morning, Captain. Ready when you are.","Good morning. Today's patrol forecast: 98% stars, 2% surprises."];
+const MEM=[["I remember","the first time","the Captain","said my name.","It sounded","like home."],["On commissioning day","the dock lights","went dark","one by one","and the stars","came on."],["A marine","taught me a card game.","I let him win","three times","before he","noticed."],["We found a pulsar","beating steady","like a heart,","and nobody","spoke for","a whole minute."],["The first storm","shook the hull.","I held","the reactor steady","and the crew","cheered."],["The Captain's","first order to me","was","'keep them safe',","and I have","every day since."],["I learned to hum","from the fans","on deck four","in the quiet hours","between","patrol shifts."],["Engineering named","the basil plant","Admiral,","and I log","its humidity","every hour."]];
+const MEM_Q=["My name","is ARIA.","I fly","with the Captain.","I am","not alone."];
+const EVT=[{id:"sig",q:"Unknown signal on a dead UNSC frequency.",a:"Investigate",b:"Stay on course",p:.6,win:{cr:45,disc:1},lose:{hull:-15},safe:{cr:5},best:"a",why:{a:"Odds favour us. I read a 60% chance it's a lost beacon.",b:"Too many unknowns. Log it and move on."}},
+ {id:"sos",q:"Distress call from a civilian freighter.",a:"Respond",b:"Relay to fleet",p:.75,win:{mor:15,cr:30},lose:{hull:-12,sup:-8},safe:{mor:-4},best:"a",why:{a:"They're civilians and we're close. We help.",b:"It could be a lure. Let the fleet handle it."}},
+ {id:"cov",q:"Covenant picket on long-range sensors.",a:"Engage",b:"Evade",p:.42,mac:1,win:{cr:70,mor:10},lose:{hull:-22,mor:-6},safe:{fuel:-8},best:"b",why:{a:"Our MAC can punch through their shields. Probably.",b:"Three ships to our one. Evade and live."}},
+ {id:"wreck",q:"A derelict hulk is drifting, reactor still warm.",a:"Board it",b:"Leave it",p:.6,win:{sup:20,cr:35},lose:{mor:-8,hull:-8},safe:{},best:"a",why:{a:"Salvage looks rich and scans show no life signs.",b:"Warm reactors on dead ships make me nervous."}},
+ {id:"ion",q:"An ion storm cuts across the plotted route.",a:"Push through",b:"Detour",p:.45,win:{cr:20,fuel:5},lose:{hull:-14},safe:{fuel:-9},best:"b",why:{a:"We'll save hours if the shields hold.",b:"The detour costs fuel, not hull. I'd take it."}},
+ {id:"ore",q:"An asteroid field rich in deuterium ice.",a:"Mine it",b:"Skip it",p:.72,win:{fuel:20},lose:{hull:-10},safe:{},best:"a",why:{a:"Easy fuel. The rocks are slow.",b:"Not worth the scratches."}},
+ {id:"stn",q:"The crew asks for a stop at a mining station.",a:"Allow it",b:"Press on",p:.85,win:{mor:18,cr:-10},lose:{mor:5,sup:-8},safe:{mor:-6,cr:10},best:"a",why:{a:"They've earned it. Happy crews fly better.",b:"We're on a schedule. They'll understand."}},
+ {id:"glyph",q:"Forerunner glyphs on a frozen moon.",a:"Scan them",b:"Mark for later",p:.65,win:{disc:1,cr:25,rmp:-5},lose:{rmp:6,hull:-6},safe:{},best:"a",why:{a:"I want to read them. Badly. Let me try.",b:"They might read me back. Later."}},
+ {id:"pod",q:"An escape pod with one survivor in cryo.",a:"Bring aboard",b:"Tow to a buoy",p:.8,win:{mor:12,sup:-5},lose:{sup:-10,mor:-5},safe:{mor:-3},best:"a",why:{a:"Somebody's waiting for them. We bring them home.",b:"Medical's thin. A buoy keeps them safe."}},
+ {id:"leak",q:"Coolant leak in engineering.",a:"Vent the deck",b:"Patch it slowly",p:.7,win:{hull:5},lose:{hull:-12},safe:{fuel:-6,mor:-3},best:"a",why:{a:"Clear the deck and vent. Fast and clean.",b:"Slow and safe. The reactor can wait."}},
+ {id:"pir",q:"Insurrectionist smugglers are hailing us.",a:"Inspect them",b:"Wave them off",p:.55,mac:1,win:{cr:55,sup:10},lose:{hull:-14,mor:-5},safe:{},best:"b",why:{a:"Their hold looks heavy. Worth a look.",b:"They're twitchy. Not worth a firefight."}}];
+const ODD=["The stars told me to. They're very loud today.","{X}. Or don't. I already chose in another loop.","{X}. Probability is a mirror and I'm on the other side.","I recommend {X}. I recommend {X}. I recom— {X}.","{X}, because the number seven looked at me funny."];
+const VLOG={contact:["Long-range contact: a Covenant scout turned away when we lit our transponder.","Passed a UNSC convoy. Exchanged colours and news from home.","Sensor ghost on the port side. ARIA thinks it was a whale-shaped comet."],
+ salvage:["Recovered a drifting supply crate. Mostly ration bars.","Pulled scrap titanium from a pre-war wreck.","Found a lost survey drone and returned its data to the fleet."],
+ distress:["Answered a distress beacon. Freighter crew safe, engines patched.","Escorted a damaged mining barge to the nearest station.","Beacon turned out to be a prank by cadets. Logged them anyway."],
+ quiet:["Quiet watch. The crew played cards in the mess.","Charted a dense dust lane. Beautiful on the scopes.","A meteor shower lit up the forward viewports for an hour."]};
+const DTYPE=["Uncharted world","Forerunner relic","Repeating signal","Ice moon","Nebula pocket","Pre-war wreck","Rogue planet","Binary star"];
+const SYL=["ka","ri","to","ve","lo","sa","mi","ra","no","ze","xi","du","an","el","or","ty"];
+let S=null,on=false,iv=null,sig="",MD=null,built=false,saveT=0;
+const sgDayK=t=>new Date(t+8*H).toISOString().slice(0,10);
+const FT=new Intl.DateTimeFormat("en-SG",{timeZone:"Asia/Singapore",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
+const FTt=new Intl.DateTimeFormat("en-SG",{timeZone:"Asia/Singapore",hour:"numeric",minute:"2-digit"});
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const secOf=id=>SEC.find(s=>s.id===id)||SEC[0],durOf=k=>DUR.find(d=>d.k===k)||DUR[0],evOf=id=>EVT.find(e=>e.id===id)||EVT[0];
+function fmtD(ms){ms=Math.max(0,ms);const s=Math.ceil(ms/1e3);if(s>=3600){const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h+"h"+(m?" "+m+"m":"")}if(s>=60)return Math.ceil(s/60)+"m";return s+"s"}
+function fresh(now){return{v:1,name:"UNSC Forward Unto Dawn II",t:now,born:now,hull:86,fuel:82,mor:80,sup:78,rmp:12,bond:10,cr:30,up:{sh:0,mac:0,sd:0},paint:0,paints:[0],cd:{},rest:false,voy:null,sel:"reach",dur:"s",ev:[],
+ log:[{t:now,k:"ai",x:"Commissioned. ARIA online. Deep-space patrol begins."}],exp:{},disc:[],stars:[],rit:{},over:0,trust:0,dmg:{},frac:false,q:0,talkT:[],tr:[],line:null,lastEv:now,voyN:0,shared:0}}
+function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY)||"null")}catch(_){}
+ const now=Date.now(),f=fresh(now);if(!s||typeof s!=="object"||s.v!==1)return f;
+ for(const k in f)if(s[k]===undefined||s[k]===null&&f[k]!==null)s[k]=f[k];
+ ["hull","fuel","mor","sup","rmp","bond","cr"].forEach(k=>{if(typeof s[k]!=="number"||!isFinite(s[k]))s[k]=f[k]});
+ ["sh","mac","sd"].forEach(k=>{s.up[k]=cl(+s.up[k]||0,0,3)});
+ if(!(s.t>0)||s.t>now+H)s.t=now;return s}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(_){}saveT=Date.now()}
+function log(t,k,x){S.log.unshift({t,k,x});S.log.sort((a,b)=>b.t-a.t);if(S.log.length>80)S.log.length=80}
+const state=()=>S.frac?"frac":S.rmp>=85?"ramp":S.rmp>=60?"flick":"stable";
+const SLBL={stable:["Stable","ok"],flick:["Unsettled","warn"],ramp:["Rampant","bad"],frac:["Fractured","bad"]};
+const cdm=()=>(S.rest?2:1)*(S.dmg.mor?1.5:1)*(S.frac?1.5:1);
+function fracture(now){S.frac=true;S.q=0;S.rmp=100;S.rest=false;S.line=null;log(now,"bad",`${AI}'s matrix fractured. She isn't gone: start the memory-recovery quest on her card.`)}
+function addR(d,now){if(S.frac)return;S.rmp=cl(S.rmp+d);if(S.rmp>=100)fracture(now||Date.now())}
+function flags(now){for(const k of ["hull","fuel","mor","sup"]){if(S[k]<=0&&!S.dmg[k]){S.dmg[k]=1;log(now,"bad",`${DMG[k][0]}! ${DMG[k][1]}`)}else if(S.dmg[k]&&S[k]>=30){delete S.dmg[k];log(now,"ok",`${DMG[k][0]} resolved.`)}}}
+function sim(now){const dt=(now-S.t)/H;if(!(dt>0)){S.t=Math.min(S.t,now);return null}
+ const b={hull:S.hull,fuel:S.fuel,mor:S.mor,sup:S.sup,rmp:S.rmp},eff=Math.min(dt,24)+Math.max(0,dt-24)*.5;
+ S.hull=cl(S.hull-1.1*(1-.15*S.up.sh)*eff);S.fuel=cl(S.fuel-1.2*(S.rest?.6:1)*eff);S.sup=cl(S.sup-1.1*eff);S.mor=cl(S.mor-1.2*(S.dmg.sup?2:1)*eff);
+ if(!S.frac){if(S.rest)S.rmp=cl(S.rmp-3*eff);else{S.rmp=cl(S.rmp+1.5*(1-S.bond/200)*(S.dmg.mor?1.3:1)*eff);
+  if(S.rmp>=85){const n=eff*.2,c=Math.min(3,Math.floor(n)+(R()<n%1?1:0));for(let i=0;i<c;i++){const o=pick(STATS);S[o.k]=cl(S[o.k]-5);log(now,"warn",`${AI} toggled ${o.n.toLowerCase()} systems for no reason. ${o.n} −5.`)}}
+  if(S.rmp>=100)fracture(now)}}
+ S.bond=cl(S.bond-eff/12);S.t=now;flags(now);
+ if(S.voy&&now>=S.voy.end)finishVoy(now);
+ return{dt,b}}
+function mkDisc(sec,t){return{n:`${pick(DTYPE)} ${cap(pick(SYL)+pick(SYL))}-${2+Math.floor(R()*97)}`,sec:sec.id,t}}
+function mkEv(t,src){const used=S.ev.map(e=>e.id),tp=pick(EVT.filter(e=>!used.includes(e.id))),st=state();let rec,why;
+ if(st==="ramp"){rec=R()<.5?"a":"b";why=pick(ODD).replace(/\{X\}/g,rec==="a"?tp.a:tp.b)}else{rec=tp.best;why=tp.why[rec]}
+ return{id:tp.id,rec,why,t,src}}
+function finishVoy(now){const v=S.voy,d=durOf(v.d),sec=secOf(v.sec),t=Math.min(v.end,now);S.voy=null;
+ const cr=Math.round(d.cr*(1+.15*S.up.mac)*rnd(.8,1.2)),hd=Math.round(R()*d.dmg*(1-.2*S.up.sh));S.cr+=cr;S.hull=cl(S.hull-hd);
+ S.exp[sec.id]=Math.min(100,(S.exp[sec.id]||0)+d.exp);const cats=Object.keys(VLOG);
+ for(let i=0;i<d.ev;i++){const c=pick(cats);log(t-1e3*(d.ev-i),c==="distress"?"warn":"voy",pick(VLOG[c]))}
+ if(R()<d.disc){const ds=mkDisc(sec,t);S.disc.push(ds);log(t,"ai",`Discovery: ${ds.n} in ${sec.n}. Share it with ${AI}.`)}
+ const nch=d.ch>=1?d.ch:(R()<d.ch?1:0);for(let i=0;i<nch&&S.ev.length<4;i++)S.ev.push(mkEv(t,sec.n));S.lastEv=now;
+ S.voyN++;log(t+1,"ok",`Back from ${sec.n}. +${cr} credits${hd?`, hull −${hd}`:""}. Sector ${S.exp[sec.id]}% charted.`);
+ S.ret={sec:sec.n,cr,hd,n:nch};flags(now)}
+const voyMs=d=>d.ms*(1-.12*S.up.sd)*(S.rest?1.5:1),voyFuel=d=>Math.round(d.fuel*(1-.1*S.up.sd));
+function launchBlock(d){if(S.voy)return"Already on a voyage.";if(S.dmg.hull)return"Hull breach: repair to 30% before launching.";if(S.dmg.fuel)return"Adrift: refuel to 30% before launching.";
+ if(S.fuel<voyFuel(d))return"Not enough fuel for this voyage.";if(S.sup<d.sup)return"Not enough supplies for this voyage.";return""}
+function apply(e,now){const out=[];for(const k of ["hull","fuel","mor","sup"])if(e[k]){S[k]=cl(S[k]+e[k]);out.push(`${STATS.find(s=>s.k===k).n.split(" ")[0].toLowerCase()} ${e[k]>0?"+":"−"}${Math.abs(e[k])}`)}
+ if(e.cr){S.cr=Math.max(0,S.cr+e.cr);out.push(`${e.cr>0?"+":"−"}${Math.abs(e.cr)} credits`)}
+ if(e.rmp){addR(e.rmp,now);out.push(e.rmp<0?`${AI} steadier`:`${AI} unsettled`)}
+ if(e.disc){const ex=SEC.filter(s=>S.exp[s.id]),sec=ex.length?pick(ex):secOf(S.sel),ds=mkDisc(sec,now);S.disc.push(ds);out.push(`discovered ${ds.n}`)}
+ return out.join(", ")}
+/* ---------- actions ---------- */
+function toast(x){const el=$("shToast");el.textContent=x;el.classList.add("on");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("on"),3600)}
+function line(x){S.line={t:Date.now(),x}}
+function doAct(k){const a=ACT[k],now=Date.now();sim(now);if((S.cd[k]||0)>now)return;if(a.dock&&S.voy)return toast("Available once the ship is back from its voyage.");
+ let amt=a.amt,msg=a.log,kind="ok",st=STATS.find(s=>s.k===a.st);
+ if(state()==="ramp"&&R()<.35){amt=Math.round(amt/2);const o=pick(STATS.filter(s=>s.k!==a.st));S[o.k]=cl(S[o.k]-6);msg=`${AI} hijacked the ${a.l.toLowerCase()} and rerouted power into ${o.n.toLowerCase()}. Half effect, ${o.n.toLowerCase()} −6.`;kind="warn";line(pick(IDLE.ramp))}
+ S[a.st]=cl(S[a.st]+amt);S.cd[k]=now+a.cd*cdm();log(now,kind,msg);flags(now);save();render();toast(`${a.l}: ${st.n.toLowerCase()} +${amt}`)}
+function launch(){const now=Date.now();sim(now);const d=durOf(S.dur),sec=secOf(S.sel),why=launchBlock(d);if(why)return toast(why);
+ S.fuel=cl(S.fuel-voyFuel(d));S.sup=cl(S.sup-d.sup);S.voy={sec:sec.id,d:d.k,st:now,end:now+voyMs(d)};log(now,"voy",`Departed for ${sec.n} (${d.l}).`);
+ line(pick([`Slipspace window open. ${sec.n}, here we come.`,`Course plotted for ${sec.n}. I'll wake you if anything interesting happens.`,"Engines hot. Hold on to something."]));save();render()}
+function resolve(i,how){const e=S.ev[i];if(!e)return;const tp=evOf(e.id),now=Date.now(),st=state();let choice,note="";
+ if(how==="t"||how==="o"){const trust=how==="t";choice=trust?e.rec:(e.rec==="a"?"b":"a");
+  if(trust){S.over=0;S.trust++;addR(st==="ramp"?-2:-7,now);S.bond=cl(S.bond+1);note=`Trusted ${AI}.`;line(st==="ramp"?"Yes. YES. Good. I think.":pick(["Thank you for trusting me.","I won't let you down.","Together, then."]))}
+  else{S.over++;addR(S.over>=3?9:2,now);note=`Overruled ${AI}.`;line(S.over>=3?"That's three times now. Do you even hear me anymore?":"Understood. Your call, Captain.")}}
+ else{choice=how;note=`${AI} offline.`}
+ let res,eff,good=true;if(choice==="a"){let p=tp.p+(how==="t"&&st!=="ramp"?.15:0)+(tp.mac?.1*S.up.mac:0)-(how==="t"&&st==="ramp"?.1:0);good=R()<p;eff=good?tp.win:tp.lose;res=good?"it paid off":"it went badly"}else{eff=tp.safe;res="played it safe"}
+ const fx=apply(eff,now);log(now,good?"ok":"bad",`${tp.q} ${note} ${choice==="a"?tp.a:tp.b}: ${res}${fx?` (${fx})`:""}.`);
+ S.ev.splice(i,1);flags(now);save();render();toast(`${choice==="a"?tp.a:tp.b}: ${res}${fx?`. ${cap(fx)}`:""}.`)}
+function askOpinion(){const now=Date.now();if(S.ev.length){$("shEv").scrollIntoView({behavior:RM?"auto":"smooth",block:"center"});return}
+ if(now-S.lastEv>H){S.ev.push(mkEv(now,"Shipboard"));S.lastEv=now;save();render();setTimeout(()=>$("shEv").scrollIntoView({behavior:RM?"auto":"smooth",block:"center"}),50)}
+ else toast(`No decisions waiting. ${AI} will flag the next one, or fly a voyage.`)}
+function share(){if(!S.disc.length||S.frac)return;const now=Date.now(),ds=S.disc.shift();addR(-8,now);S.bond=cl(S.bond+2);S.shared++;line(`${ds.n}… ${pick(SHARE)}`);log(now,"ai",`Shared ${ds.n} with ${AI}.`);save();render()}
+function rest(){const now=Date.now();sim(now);S.rest=!S.rest;log(now,"ai",S.rest?`${AI} entered low-power mode. Recovering; ship actions recharge slower.`:`${AI} back at full power.`);line(S.rest?"Dimming down. Wake me if you need me…":"Back online. I feel clearer.");save();render()}
+function greet(){const now=Date.now(),d=sgDayK(now);if(S.rit.gm===d)return;S.rit.gm=d;addR(-5,now);S.bond=cl(S.bond+5);line(S.frac?"…good… morning…? That sounds… familiar.":pick(GM));log(now,"ai",`Morning ritual with ${AI}. Bond +5.`);save();render()}
+function nameStar(n){const now=Date.now(),d=sgDayK(now);n=String(n||"").replace(/\s+/g," ").trim().slice(0,24);if(!n||S.rit.star===d)return false;
+ const ex=SEC.filter(s=>S.exp[s.id]),sec=ex.length?pick(ex):secOf(S.sel);S.stars.push({n,sec:sec.id,x:sec.x+rnd(-16,16),y:sec.y+rnd(-14,10),t:now});S.rit.star=d;S.bond=cl(S.bond+6);addR(-4,now);
+ line(`"${n}". It's perfect. I'll remember it.`);log(now,"ai",`Named a new star near ${sec.n}: ${n}.`);save();return true}
+function buy(k){const l=S.up[k],u=UP[k];if(l>=3)return;const c=u.c[l];if(S.cr<c)return toast(`Need ${c} credits. Fly a voyage to earn more.`);S.cr-=c;S.up[k]++;log(Date.now(),"ok",`Upgrade installed: ${u.n} Mk ${S.up[k]}.`);save();render();toast(`${u.n} Mk ${S.up[k]} installed.`)}
+function paint(i){const p=PAINT[i];if(!p)return;if(!S.paints.includes(i)){if(S.cr<p.c)return toast(`${p.n} paint costs ${p.c} credits.`);S.cr-=p.c;S.paints.push(i);log(Date.now(),"ok",`New paint scheme: ${p.n}.`)}S.paint=i;save();render()}
+/* ---------- rendering ---------- */
+function glitch(s,st){const p={flick:.05,ramp:.13,frac:.2}[st]||0;if(!p)return esc(s);const G="▓▒░█#%&¦";return esc([...String(s)].map(c=>c!==" "&&R()<p?pick(G):c).join(""))}
+const glc=st=>st==="flick"?"sh-gl":st==="ramp"||st==="frac"?"sh-gl hard":"";
+function avatar(st,id){return `<svg class="sh-av s-${st}" viewBox="0 0 120 120" aria-hidden="true"><defs><radialGradient id="${id}g"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".42" stop-color="currentColor" stop-opacity=".85"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></radialGradient><pattern id="${id}p" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="1.3" fill="rgba(11,12,16,.35)"/></pattern></defs>
+<g class="wrap"><circle cx="60" cy="60" r="58" fill="url(#${id}g)" opacity=".16"/><g class="r1"><ellipse cx="60" cy="60" rx="50" ry="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 7" opacity=".85"/></g>
+<g class="r2"><ellipse cx="60" cy="60" rx="18" ry="50" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="10 5" opacity=".55"/></g><circle class="core" cx="60" cy="60" r="28" fill="url(#${id}g)"/>
+<g class="fig" fill="none" stroke="#f0f9ff" stroke-width="1.7" stroke-linecap="round" opacity=".9"><circle cx="60" cy="51" r="7"/><path d="M45 79c2-10 8-15 15-15s13 5 15 15"/></g><circle cx="60" cy="60" r="28" fill="url(#${id}p)"/>
+${st==="frac"?`<path d="M36 30l15 22-6 8 12 14-4 20M88 32l-13 19 8 10-10 18" stroke="var(--bad)" stroke-width="1.4" fill="none" opacity=".85"/>`:""}</g></svg>`}
+function shipSVG(){const p=PAINT[S.paint]||PAINT[0],u=S.up,eng=u.sd>=2?"#a78bfa":u.sd===1?"#7dd3fc":"#2dd4bf",L=10+u.mac*9;
+ return `<svg class="sh-shp" viewBox="0 0 340 120" role="img" aria-label="${esc(S.name)}"><defs><linearGradient id="shHull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.l}"/><stop offset=".55" stop-color="${p.h}"/><stop offset="1" stop-color="#14171f"/></linearGradient>
+<radialGradient id="shEng" cx="1" cy=".5" r="1"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="${eng}"/><stop offset="1" stop-color="${eng}" stop-opacity="0"/></radialGradient></defs><g class="sh-bob">
+${u.sh?`<ellipse class="sh-shd" cx="182" cy="60" rx="${150+u.sh*5}" ry="${42+u.sh*4}" fill="rgba(56,189,248,${(.03+u.sh*.025).toFixed(3)})" stroke="rgba(125,211,252,${(.22+u.sh*.15).toFixed(2)})" stroke-width="1"/>`:""}
+<g class="sh-eng"><ellipse cx="18" cy="51" rx="${26+u.sd*4}" ry="7" fill="url(#shEng)"/><ellipse cx="18" cy="69" rx="${26+u.sd*4}" ry="7" fill="url(#shEng)"/>${u.sd>=3?`<ellipse cx="14" cy="60" rx="36" ry="5" fill="url(#shEng)"/>`:""}</g>
+<path d="M40 42h16l6 6v24l-6 6H40l-4-4V46z" fill="#262b35" stroke="${p.l}" stroke-opacity=".5"/>
+<path d="M56 44L84 34L250 38L300 50L318 58V62L300 70L250 82L84 86L56 76Z" fill="url(#shHull)" stroke="${p.l}" stroke-opacity=".6"/>
+<path d="M96 35L112 22H178L196 36Z" fill="url(#shHull)" stroke="${p.l}" stroke-opacity=".5"/><path d="M150 27h22" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+<path d="M110 86L120 94H200L214 84Z" fill="${p.h}" stroke="${p.l}" stroke-opacity=".4"/>
+<path d="M90 60H296M130 40v44M200 40v42M250 44v34" stroke="rgba(0,0,0,.28)" stroke-width="1"/><path d="M84 50L250 51" stroke="var(--ac)" stroke-width="1.4" opacity=".5"/>
+${Array.from({length:9},(_,i)=>`<rect x="${100+i*16}" y="66" width="5" height="2" rx="1" fill="#fde68a" opacity=".55"/>`).join("")}
+<text x="214" y="64" font-size="6.5" fill="rgba(255,255,255,.5)" font-family="Inter,sans-serif" font-weight="700" letter-spacing="1.5">UNSC</text>
+${u.mac?`<path d="M310 57.5h${L}v5h-${L}z" fill="#3b4252" stroke="${p.l}" stroke-opacity=".6"/><circle cx="${310+L}" cy="60" r="${1.4+u.mac*.5}" fill="#fca5a5" opacity=".9"/>`:""}
+${u.sd?`<path d="M124 97H198" stroke="${eng}" stroke-width="${1.5+u.sd}" stroke-linecap="round" opacity=".85"/>`:""}
+${S.hull<25?`<g class="sh-spark"><circle cx="150" cy="44" r="2.2" fill="#fb923c"/><circle cx="232" cy="74" r="1.8" fill="#f87171"/><circle cx="104" cy="70" r="1.6" fill="#fbbf24"/></g><path d="M146 46l6 6M228 72l7 4" stroke="#0b0c10" stroke-width="2"/>`:""}
+</g></svg>`}
+function cdBtn(k,cls){const a=ACT[k],now=Date.now(),w=(S.cd[k]||0)-now,blk=a.dock&&S.voy;
+ return `<button class="btn sm ${cls||""}" data-a="act:${k}" ${w>0||blk?"disabled":""}>${a.l} <span class="mu num" data-cd="${k}">${w>0?fmtD(w):blk?"· docked only":"+"+a.amt}</span></button>`}
+function rShip(){const now=Date.now(),st=S.dmg,dmgK=Object.keys(st),v=S.voy;
+ $("shShip").innerHTML=`<div class="lbl"><span>Frigate</span><span class="pill ${dmgK.length?"bad":v?"ac":"ok"}">${dmgK.length?"Damaged":v?"On voyage":"Patrolling"}</span></div>
+ <div class="row" style="margin-bottom:10px"><button class="sh-name" data-a="rename" aria-label="Rename ship">${esc(S.name)}<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button><span class="pill ac num" title="Credits">◈ ${S.cr} cr</span></div>
+ <div class="sh-sky${v?" warp":""}">${shipSVG()}<div class="sh-skytag"><span>${v?`En route · ${esc(secOf(v.sec).n)}`:`Holding · ${esc(secOf(S.sel).n)}`}</span><span class="num" data-cd="voytag">${v?fmtD(v.end-now):S.rest?"Low-power":""}</span></div></div>
+ <div class="sh-stats">${STATS.map(s=>{const x=Math.round(S[s.k]);return `<div class="sh-st"><div class="row"><b>${s.n}</b><span class="num ${x<25?"":"mu"}" style="${x<25?"color:var(--bad)":""}">${x}%</span></div><div class="bar"><i style="width:${x}%;--c:${x<25?"var(--bad)":s.c}"></i></div><div class="sh-acts">${s.a.map(k=>cdBtn(k)).join("")}</div></div>`}).join("")}</div>
+ ${dmgK.length?`<div class="sh-dmg">${dmgK.map(k=>`<div><b>${DMG[k][0]}.</b> ${DMG[k][1]}</div>`).join("")}</div>`:""}`}
+function aiBtn(a,t,sub,o){o=o||{};return `<button class="btn ${o.pri?"pri":""}" data-a="${a}" ${o.dis?"disabled":""}>${t}<small ${o.cd?`data-cd="${o.cd}"`:""}>${sub}</small></button>`}
+function rAI(){const now=Date.now(),st=state(),[sl,sc]=SLBL[st],day=sgDayK(now),cdw=k=>(S.cd[k]||0)-now;
+ const ln=S.line&&now-S.line.t<45*M&&st!=="frac"?S.line.x:IDLE[st][Math.floor(now/6e5)%IDLE[st].length];
+ const gmD=S.rit.gm===day,stD=S.rit.star===day,h=+new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Singapore",hour:"numeric",hourCycle:"h23"}).format(now);
+ let btns;
+ if(S.frac)btns=aiBtn("quest",`Memory recovery`,`Step ${S.q+1} of 3: ${["defrag her core","crack her cipher","remind her who she is"][S.q]}`,{pri:1})+aiBtn("gm",h<12?"Good morning":"Greet ARIA",gmD?"Done today":"Daily ritual",{dis:gmD})+aiBtn("star","Name a star",stD?"Done today":"Daily ritual",{dis:stD});
+ else btns=aiBtn("talk","Talk","Calms her",{pri:1})+aiBtn("pz","Cipher puzzle",cdw("pz")>0?fmtD(cdw("pz")):"Ready",{dis:cdw("pz")>0,cd:"pz"})+aiBtn("df","Memory defrag",cdw("df")>0?fmtD(cdw("df")):"Big boost",{dis:cdw("df")>0,cd:"df"})
+  +aiBtn("ask","Ask her opinion",S.ev.length?`${S.ev.length} waiting`:"Ship decisions")+aiBtn("share","Share discovery",S.disc.length?`${S.disc.length} new`:"Nothing new",{dis:!S.disc.length})
+  +aiBtn("rest",S.rest?"Wake her":"Low-power",S.rest?"Resting · slower ship":"She recovers")+aiBtn("gm",h<12?"Good morning":"Greet ARIA",gmD?"Done today":"Daily ritual",{dis:gmD})+aiBtn("star","Name a star",stD?"Done today":"Daily ritual",{dis:stD});
+ const r=Math.round(S.rmp),b=Math.round(S.bond);
+ $("shAI").innerHTML=`<div class="lbl"><span>Shipboard AI</span><span class="pill ${sc} sh-state">${S.rest&&!S.frac?"Low-power · ":""}${sl}</span></div>
+ <div class="sh-ai"><div class="sh-avw">${avatar(st,"shA")}</div><div style="min-width:0"><div class="mid">${AI}</div><div class="xs mu num">Rampancy <b style="color:${r>=85?"var(--bad)":r>=60?"var(--warn)":"var(--tx)"}">${r}%</b> · Bond ${b}</div>
+ <div class="sh-line ${glc(st)}" id="shLine">${glitch(ln,st)}</div></div></div>
+ <div class="sh-meters"><div><div class="row xs mu"><span>Stability</span><span class="num">${100-r}%</span></div><div class="bar" style="margin-top:4px"><i style="width:${100-r}%;background:${r>=85?"var(--bad)":r>=60?"var(--warn)":"#38bdf8"}"></i></div></div>
+ <div><div class="row xs mu"><span>Bond</span><span class="num">slows rampancy ${Math.round(b/2)}%</span></div><div class="bar" style="margin-top:4px"><i style="width:${b}%;background:var(--fam)"></i></div></div></div>
+ <div class="sh-aib">${btns}</div>`}
+function rEv(){const el=$("shEv"),st=state();el.hidden=!S.ev.length;if(!S.ev.length){el.innerHTML="";return}
+ el.innerHTML=`<div class="lbl"><span>Decisions waiting · ${S.ev.length}</span><span class="xs mu">Trust steadies her</span></div>`+S.ev.map((e,i)=>{const tp=evOf(e.id),rl=e.rec==="a"?tp.a:tp.b,ol=e.rec==="a"?tp.b:tp.a;
+  return `<div class="sh-ev"><div class="xs mu">${esc(e.src)} · ${FT.format(e.t)}</div><div class="q">${esc(tp.q)}</div><div class="xs mu" style="margin-top:3px">${esc(tp.a)}: risky, bigger reward · ${esc(tp.b)}: safer</div>
+  ${S.frac?`<div class="sh-rec sh-gl hard">${AI}: [ no response ]</div><div class="row" style="gap:8px;justify-content:flex-start"><button class="btn sm" data-a="ev:${i}:a">${esc(tp.a)}</button><button class="btn sm" data-a="ev:${i}:b">${esc(tp.b)}</button></div>`
+  :`<div class="sh-rec ${glc(st)}"><b>${AI}:</b> ${glitch(e.why,st)} <span class="mu">Recommends</span> <b>${esc(rl)}</b></div><div class="row" style="gap:8px;justify-content:flex-start;flex-wrap:wrap"><button class="btn pri sm" data-a="ev:${i}:t">Trust ${AI} · ${esc(rl)}</button><button class="btn sm" data-a="ev:${i}:o">Overrule · ${esc(ol)}</button></div>`}</div>`}).join("")}
+function rVoy(){const now=Date.now(),v=S.voy;
+ if(v){const d=durOf(v.d),sec=secOf(v.sec),p=cl((now-v.st)/(v.end-v.st)*100);
+  $("shVoy").innerHTML=`<div class="lbl"><span>Voyage</span><span class="pill ac">${esc(d.l)}</span></div><div class="mid">${esc(sec.n)}</div><div class="sm mu">Arrives ${FTt.format(v.end)} SGT · <span class="num" data-cd="voyl">${fmtD(v.end-now)}</span> left</div>
+  <div class="bar" style="margin-top:12px;height:10px"><i data-cd="voyp" style="width:${p}%"></i></div><div class="xs mu" style="margin-top:10px">Come back when it lands for the captain's log, credits and any decisions. ${S.rest?"Low-power mode is slowing the ship.":""}</div>`;return}
+ const sec=secOf(S.sel),d=durOf(S.dur),why=launchBlock(d);
+ $("shVoy").innerHTML=`<div class="lbl"><span>Voyage</span><span class="xs mu num">${S.voyN} flown</span></div>
+ <div class="row"><div><div class="mid">${esc(sec.n)}</div><div class="xs mu">Tap a sector on the star map to change it</div></div><span class="pill ${S.exp[sec.id]>=100?"ok":"ac"} num">${S.exp[sec.id]||0}% charted</span></div>
+ <div class="sh-seg" style="margin:12px 0">${DUR.map(x=>`<button data-a="dur:${x.k}" class="${x.k===S.dur?"sel":""}">${x.l}<small class="num">Fuel ${voyFuel(x)} · Sup ${x.sup}</small></button>`).join("")}</div>
+ <button class="btn pri" style="width:100%" data-a="launch" ${why?"disabled":""}>Launch to ${esc(sec.n)}</button>
+ <div class="xs ${why?"":"mu"}" style="margin-top:8px;${why?"color:var(--bad)":""}">${why||`Takes ${fmtD(voyMs(d))}${S.rest?" (low-power)":""} · about ${Math.round(d.cr*(1+.15*S.up.mac))} credits · ${d.ch>=1?d.ch:"maybe 1"} decision${d.ch>1?"s":""}`}</div>`}
+function rMap(){const lit=id=>S.exp[id]||0,tgt=S.voy&&S.voy.sec;let bg="";for(let i=0;i<46;i++){const x=(Math.sin(i*12.9898)*43758.5453%1+1)%1*340,y=(Math.sin(i*78.233)*12345.678%1+1)%1*190;bg+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${i%5?.5:.9}" fill="#fff" opacity="${i%3?.18:.35}"/>`}
+ const lines=LINKS.map(([a,b])=>{const A=secOf(a),B=secOf(b),on=lit(a)&&lit(b);return `<line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}" stroke="${on?"var(--ac)":"rgba(255,255,255,.1)"}" stroke-opacity="${on?.45:1}" stroke-width="1" ${on?"":`stroke-dasharray="2 3"`}/>`}).join("");
+ const nodes=SEC.map(s=>{const e=lit(s.id),r=3+e/28,sel=s.id===S.sel;return `<g class="nd${sel?" sel":""}" data-a="sel:${s.id}" role="button" aria-label="${esc(s.n)}, ${e}% charted"><circle cx="${s.x}" cy="${s.y}" r="16" fill="transparent"/>
+  ${e?`<circle class="glo" cx="${s.x}" cy="${s.y}" r="${r+6}" fill="var(--ac)" opacity="${(.1+e/700).toFixed(2)}"/><circle cx="${s.x}" cy="${s.y}" r="${r}" fill="var(--ac)" opacity="${(.45+e/180).toFixed(2)}"/>`:`<circle cx="${s.x}" cy="${s.y}" r="3.2" fill="var(--bg)" stroke="var(--mu2)" stroke-width="1.2"/>`}
+  ${sel?`<circle cx="${s.x}" cy="${s.y}" r="${r+5}" fill="none" stroke="#fff" stroke-width="1" stroke-dasharray="2 2.5"/>`:""}${tgt===s.id?`<circle class="glo" cx="${s.x}" cy="${s.y}" r="${r+9}" fill="none" stroke="var(--warn)" stroke-width="1.2"/>`:""}
+  <text x="${s.x}" y="${s.y+r+11}" text-anchor="middle">${esc(s.n.replace(/^The /,""))}</text></g>`}).join("");
+ const stars=S.stars.map(t=>`<circle cx="${t.x.toFixed(1)}" cy="${t.y.toFixed(1)}" r="1.8" fill="#fde68a"><title>${esc(t.n)}</title></circle>`).join("");
+ const tot=Math.round(SEC.reduce((a,s)=>a+lit(s.id),0)/SEC.length);
+ $("shMap").innerHTML=`<div class="lbl"><span>Star map</span><span class="xs mu num">${tot}% of patrol space charted</span></div><svg class="sh-map" viewBox="0 0 340 190">${bg}${lines}${stars}${nodes}</svg>
+ <div class="xs mu" style="margin-top:8px">${S.stars.length?`Named stars: ${S.stars.slice(-8).reverse().map(t=>`<span class="pill" style="background:rgba(253,230,138,.12);color:#fde68a;margin:2px 2px 0 0">★ ${esc(t.n)}</span>`).join("")}`:"Name a star each day with ARIA and it appears here in gold."}</div>`}
+function rUp(){$("shUp").innerHTML=`<div class="lbl"><span>Upgrades</span><span class="pill ac num">◈ ${S.cr} cr</span></div>${Object.keys(UP).map(k=>{const u=UP[k],l=S.up[k],c=u.c[l];
+  return `<div class="sh-up"><div><div style="font-weight:600;font-size:14px">${u.n}<span class="sh-pips">${[0,1,2].map(i=>`<i class="${i<l?"on":""}"></i>`).join("")}</span></div><div class="xs mu">${u.d}</div></div>${l>=3?`<span class="pill ok">Max</span>`:`<button class="btn sm ${S.cr>=c?"pri":""}" data-a="up:${k}">Mk ${l+1} · ${c}</button>`}</div>`}).join("")}
+ <div class="sh-up" style="grid-template-columns:1fr"><div><div style="font-weight:600;font-size:14px">Paint scheme <span class="xs mu">· ${esc((PAINT[S.paint]||PAINT[0]).n)}</span></div><div class="sh-sw">${PAINT.map((p,i)=>`<button data-a="paint:${i}" class="${i===S.paint?"sel":""} ${S.paints.includes(i)?"":"lock"}" style="background:linear-gradient(135deg,${p.l},${p.h})" aria-label="${p.n}${S.paints.includes(i)?"":`, ${p.c} credits`}" title="${p.n}${S.paints.includes(i)?"":` · ${p.c} cr`}"></button>`).join("")}</div></div></div>`}
+function rLog(){$("shLog").innerHTML=`<div class="lbl"><span>Captain's log</span><span class="xs mu num">${S.log.length} entries</span></div><div class="sh-log">${S.log.slice(0,40).map(l=>`<div class="sh-li"><i class="${esc(l.k)}"></i><div><div>${esc(l.x)}</div><div class="xs mu">${FT.format(l.t)}</div></div></div>`).join("")}</div>`}
+function render(){if(!on||!built)return;rShip();rAI();rEv();rVoy();rMap();rUp();rLog();sig=mkSig()}
+function mkSig(){const now=Date.now();return [Math.round(S.hull),Math.round(S.fuel),Math.round(S.mor),Math.round(S.sup),Math.round(S.rmp),Math.round(S.bond),state(),S.ev.length,!!S.voy,sgDayK(now),Object.keys(S.dmg).join(),...Object.keys(ACT).concat(["pz","df"]).map(k=>(S.cd[k]||0)>now)].join("|")}
+function tick(){if(!on)return;const now=Date.now();sim(now);if(now-saveT>15e3)save();
+ if(mkSig()!==sig){render();return}
+ document.querySelectorAll("#ship [data-cd]").forEach(el=>{const k=el.dataset.cd;
+  if(ACT[k]||k==="pz"||k==="df"){const w=(S.cd[k]||0)-now;if(w>0)el.textContent=fmtD(w)}
+  else if(S.voy){if(k==="voyp")el.style.width=cl((now-S.voy.st)/(S.voy.end-S.voy.st)*100)+"%";else el.textContent=fmtD(S.voy.end-now)}})}
+/* ---------- sheet modal + mini-games ---------- */
+const SYM=[["◆","#38bdf8"],["●","#2dd4bf"],["▲","#fbbf24"],["■","#f87171"],["✦","#a78bfa"],["⬢","#e5e7eb"]];
+const sym=i=>`<span style="color:${SYM[i][1]}">${SYM[i][0]}</span>`;
+function mOpen(o){$("shToast").classList.remove("on");if(MD&&MD.iv)clearInterval(MD.iv);MD=o;$("shm").classList.add("on");mDraw()}
+function mClose(){if(MD&&MD.iv)clearInterval(MD.iv);MD=null;$("shm").classList.remove("on");render()}
+function mHead(t,sub){return `<div class="hd"><div><b>${t}</b>${sub?`<div class="xs mu">${sub}</div>`:""}</div><button class="btn sm ghost" data-m="close" aria-label="Close">Close</button></div>`}
+function mDraw(){const b=$("shmB"),st=state();if(!MD){return}
+ if(MD.k==="talk"){const [q,opts]=TALK[MD.i];
+  b.innerHTML=mHead(`Talk with ${AI}`,"Kind, curious or honest replies calm her")+`<div class="sh-mini"><div class="sh-avw">${avatar(st,"shM")}</div><div class="sh-line ${glc(st)}" style="margin:0;flex:1">${glitch(q,st)}</div></div>`
+  +(MD.done?`<div class="sh-line" style="margin-top:12px;border-radius:12px 12px 4px 12px;background:var(--ac2);color:var(--tx)">${esc(MD.done.lab)}</div><div class="sh-line ${glc(state())}" style="margin-top:8px">${glitch(MD.done.rep,state())}</div>
+   <div class="row" style="margin-top:12px"><span class="pill ${MD.done.d<0?"ok":"bad"} num">${MD.done.d<0?`Rampancy −${-MD.done.d}`:`Rampancy +${MD.done.d}`}</span><div class="row" style="gap:8px"><button class="btn sm" data-m="close">Done</button>${S.frac?"":`<button class="btn sm pri" data-m="talkmore">Keep talking</button>`}</div></div>`
+   :`<div class="sh-opts">${shuffleIdx(opts.length,MD).map(j=>`<button class="btn" data-m="say:${j}">${esc(opts[j][0])}</button>`).join("")}</div>`)}
+ else if(MD.k==="qt"){b.innerHTML=mHead("Memory recovery · step 3 of 3","Remind her who she is")+`<div class="sh-mini"><div class="sh-avw">${avatar("frac","shM")}</div><div class="sh-line sh-gl hard" style="margin:0;flex:1">${glitch("…W-who… are you? Who am I?","frac")}</div></div>
+  <div class="sh-opts"><button class="btn" data-m="qsay">I'm your Captain. You're ARIA. You're safe here.</button><button class="btn" data-m="qsay">Remember the pulsar? We listened to it together for an hour.</button><button class="btn" data-m="qsay">You're my friend. Come back to me.</button></div>`}
+ else if(MD.k==="cb"){const rows=MD.rows.map(r=>`<div class="cb-row">${r.g.map(i=>`<div class="cb-sl">${sym(i)}</div>`).join("")}<div class="cb-fb">${Array.from({length:4},(_,j)=>`<i class="${j<r.x?"x":j<r.x+r.n?"n":""}"></i>`).join("")}</div></div>`).join("");
+  const curRow=MD.end?"":`<div class="cb-row cur">${Array.from({length:4},(_,j)=>`<div class="cb-sl">${MD.cur[j]!=null?sym(MD.cur[j]):""}</div>`).join("")}<div class="cb-fb xs mu" style="display:block">${MD.max-MD.rows.length} left</div></div>`;
+  b.innerHTML=mHead(MD.quest?"Memory recovery · step 2 of 3":"Covenant cipher",MD.quest?"Crack the lock on her core memory":`Find the 4-glyph code (no repeats). <span style="color:var(--ac)">●</span> right place · <span style="color:var(--warn)">○</span> wrong place`)
+  +`<div class="cb-rows">${rows}${curRow}</div>`+(MD.end?`<div class="row"><span class="pill ${MD.end==="win"?"ok":"warn"}">${MD.end==="win"?MD.msg:"Code was "+MD.code.map(i=>SYM[i][0]).join(" ")}</span><button class="btn sm pri" data-m="close">${MD.end==="win"?"Done":"Close"}</button></div>${MD.end!=="win"&&MD.quest?`<button class="btn" style="width:100%;margin-top:8px" data-m="cbretry">Try again</button>`:""}`
+  :`<div class="cb-pal">${SYM.map((_,i)=>`<button data-m="cb:${i}" aria-label="Glyph ${i+1}">${sym(i)}</button>`).join("")}</div><div class="row" style="margin-top:8px;gap:8px"><button class="btn" style="flex:1" data-m="cbdel">Undo</button><button class="btn pri" style="flex:2" data-m="cbgo" ${MD.cur.length<4?"disabled":""}>Decode</button></div>`)}
+ else if(MD.k==="df"){const now=Date.now(),tl=Math.max(0,MD.end-now),tot=MD.quest?40e3:30e3,mem=MD.mem;
+  b.innerHTML=mHead(MD.quest?"Memory recovery · step 1 of 3":"Memory defrag","Tap the fragments in the right order to rebuild her memory")+`<div class="row xs mu"><span>${MD.got}/${mem.length} restored</span><span class="num" id="dfT">${Math.ceil(tl/1e3)}s</span></div><div class="df-tm"><i id="dfBar" class="${tl<8e3?"lo":""}" style="width:${tl/tot*100}%"></i></div>
+  <div class="df-out">${MD.got?mem.slice(0,MD.got).map(t=>`<span>${esc(t)} </span>`).join(""):`<span class="ph">${glitch("Memory sector scrambled…","ramp")}</span>`}</div>`
+  +(MD.over?`<div class="row" style="margin-top:12px"><span class="pill ${MD.over==="win"?"ok":"warn"}">${MD.msg}</span><div class="row" style="gap:8px">${MD.over!=="win"&&MD.quest?`<button class="btn sm" data-m="dfretry">Try again</button>`:""}<button class="btn sm pri" data-m="close">Done</button></div></div>`
+  :`<div class="df-frs">${MD.ord.filter(i=>i>=MD.got).map(i=>`<button data-m="df:${i}">${esc(mem[i])}</button>`).join("")}</div>`)}
+ else if(MD.k==="name"){b.innerHTML=mHead(MD.star?"Name a new star":"Rename your ship",MD.star?`${AI} found an uncharted star today. What should it be called?`:"Shown on the frigate card")+`<form data-f="${MD.star?"star":"ship"}" autocomplete="off"><input class="inp" id="shmIn" style="width:100%" maxlength="${MD.star?24:32}" value="${MD.star?"":esc(S.name)}" placeholder="${MD.star?"e.g. Lantern":"UNSC …"}" aria-label="Name"><div class="row" style="margin-top:12px;justify-content:flex-end;gap:8px"><button type="button" class="btn sm" data-m="close">Cancel</button><button class="btn sm pri" type="submit">Save</button></div></form>`;
+  setTimeout(()=>{const i=$("shmIn");if(i)i.focus()},60)}}
+function shuffleIdx(n,o){if(!o.ord||o.ord.length!==n)o.ord=shuffle([...Array(n).keys()]);return o.ord}
+function openTalk(){const rec=S.tr||[],pool=TALK.map((_,i)=>i).filter(i=>!rec.includes(i)),i=pick(pool);S.tr=[...rec,i].slice(-16);mOpen({k:"talk",i,done:null})}
+function say(j){const [lab,kind,rep]=TALK[MD.i][1][j],now=Date.now();S.talkT=(S.talkT||[]).filter(t=>now-t<H);let d=TK[kind];if(d<0)d=Math.min(-1,Math.round(d*Math.max(.3,1-.2*S.talkT.length)));
+ S.talkT.push(now);addR(d,now);S.bond=cl(S.bond+(kind==="d"?-1:1));line(rep);if(!S.log[0]||!/^Talked with/.test(S.log[0].x)||now-S.log[0].t>H)log(now,"ai",`Talked with ${AI}${kind==="d"?" (brushed her off)":""}.`);
+ MD.done={lab,rep,d};save();mDraw()}
+function cbNew(quest){const c=shuffle([0,1,2,3,4,5]).slice(0,4);mOpen({k:"cb",code:c,rows:[],cur:[],max:quest?8:7,quest,end:null})}
+function cbGo(){if(MD.cur.length<4)return;const g=MD.cur,c=MD.code;let x=0,n=0;g.forEach((v,i)=>{if(c[i]===v)x++;else if(c.includes(v))n++});MD.rows.push({g,x,n});MD.cur=[];const now=Date.now();
+ if(x===4){MD.end="win";if(MD.quest){S.q=2;MD.msg="Lock open. Her core is reachable.";log(now,"ai","Recovery step 2: cracked the lock on ARIA's core.")}
+  else{const d=-(10+2*(MD.max-MD.rows.length));addR(d,now);S.cr+=5;S.bond=cl(S.bond+2);S.cd.pz=now+20*M*cdm();MD.msg=`Solved! Rampancy ${d}, +5 cr`;line("Ha! Elegant. My partitions feel tidier already.");log(now,"ai",`Cracked a cipher with ${AI} in ${MD.rows.length} tries.`)}save()}
+ else if(MD.rows.length>=MD.max){MD.end="lose";if(!MD.quest){addR(-2,now);S.cd.pz=now+10*M*cdm();line("Close! I enjoyed watching you think.");save()}}mDraw()}
+function dfNew(quest){const mem=quest?MEM_Q:pick(MEM);mOpen({k:"df",mem,ord:shuffle([...mem.keys()]),got:0,end:Date.now()+(quest?40e3:30e3),quest,over:null});
+ MD.iv=setInterval(()=>{if(!MD||MD.k!=="df"||MD.over)return;const tl=MD.end-Date.now();if(tl<=0)dfEnd(false);else{const t=$("dfT"),bar=$("dfBar");if(t)t.textContent=Math.ceil(tl/1e3)+"s";if(bar){bar.style.width=tl/(MD.quest?400:300)+"%";bar.classList.toggle("lo",tl<8e3)}}},250)}
+function dfTap(i,el){if(MD.over)return;if(i===MD.got){MD.got++;if(MD.got>=MD.mem.length)return dfEnd(true);mDraw()}else{MD.end-=2e3;el.classList.remove("no");void el.offsetWidth;el.classList.add("no");if(navigator.vibrate)navigator.vibrate(20)}}
+function dfEnd(win){const now=Date.now();clearInterval(MD.iv);MD.over=win?"win":"time";
+ if(MD.quest){if(win){S.q=1>S.q?1:S.q;MD.msg="Core memory rebuilt.";log(now,"ai","Recovery step 1: rebuilt ARIA's core memory.")}else MD.msg="Out of time. Try again."}
+ else if(win){const tl=Math.max(0,MD.end-now)/1e3,d=-(16+Math.round(tl/3));addR(d,now);S.bond=cl(S.bond+3);S.cd.df=now+45*M*cdm();MD.msg=`Restored! Rampancy ${d}`;line(`"${MD.mem.join(" ")}" …I remember now. Thank you.`);log(now,"ai",`Defragged one of ${AI}'s memories.`)}
+ else{const d=MD.got>=3?-5:0;if(d)addR(d,now);S.cd.df=now+15*M*cdm();MD.msg=d?`Partly restored. Rampancy ${d}`:"Out of time"}
+ save();mDraw()}
+function quest(){if(!S.frac)return;if(S.q===0)dfNew(true);else if(S.q===1)cbNew(true);else mOpen({k:"qt"})}
+function unfrac(){const now=Date.now();S.frac=false;S.q=0;S.rmp=45;S.bond=Math.max(0,S.bond-10);S.over=0;line("…Captain. I remember. I remember all of it. Thank you for coming back for me.");log(now,"ok",`${AI} restored. Memory recovery complete.`);save();mClose();toast(`${AI} is back. Rampancy reset to 45%.`)}
+/* ---------- wiring ---------- */
+function onClick(e){const b=e.target.closest("[data-a]");if(!b||b.disabled)return;const [a,x,y]=b.dataset.a.split(":"),now=Date.now();sim(now);
+ if(a==="act")doAct(x);else if(a==="launch")launch();else if(a==="sel"){if(!S.voy){S.sel=x;save();render()}else toast("Choose a new sector after the ship returns.")}
+ else if(a==="dur"){S.dur=x;save();render()}else if(a==="ev")resolve(+x,y);else if(a==="up")buy(x);else if(a==="paint")paint(+x);
+ else if(a==="rename")mOpen({k:"name"});else if(a==="star")mOpen({k:"name",star:1});else if(a==="talk")openTalk();else if(a==="pz")cbNew(false);else if(a==="df")dfNew(false);
+ else if(a==="ask")askOpinion();else if(a==="share")share();else if(a==="rest")rest();else if(a==="gm")greet();else if(a==="quest")quest()}
+function onM(e){if(e.target.id==="shm")return mClose();const b=e.target.closest("[data-m]");if(!b||b.disabled||!MD)return;const [m,x]=b.dataset.m.split(":");
+ if(m==="close")mClose();else if(m==="say")say(+x);else if(m==="talkmore")openTalk();else if(m==="qsay")unfrac();
+ else if(m==="cb"){if(MD.cur.length<4)MD.cur.push(+x);mDraw()}else if(m==="cbdel"){MD.cur.pop();mDraw()}else if(m==="cbgo")cbGo();else if(m==="cbretry")cbNew(true);
+ else if(m==="df")dfTap(+x,b);else if(m==="dfretry")dfNew(true)}
+function onSub(e){e.preventDefault();const f=e.target.closest("form[data-f]");if(!f)return;const v=$("shmIn").value;
+ if(f.dataset.f==="star"){if(nameStar(v)){mClose();toast("Star named. Find it in gold on the star map.")}}
+ else{const n=String(v).replace(/\s+/g," ").trim().slice(0,32);S.name=n||"UNSC Forward Unto Dawn II";save();mClose()}}
+function build(){$("ship").innerHTML=`<div class="grid"><div class="card w2" id="shShip"></div><div class="card w2" id="shAI"></div><div class="card w4" id="shEv" hidden></div><div class="card w2" id="shVoy"></div><div class="card w2" id="shMap"></div><div class="card w2" id="shUp"></div><div class="card w2" id="shLog"></div>
+ <div class="w4 xs mu" style="padding:2px 4px">Ship game saves on this device only and runs separately from your to-dos, prayers and money.</div></div>`;
+ $("ship").addEventListener("click",onClick);$("shm").addEventListener("click",onM);$("shm").addEventListener("submit",onSub);
+ addEventListener("keydown",e=>{if(e.key==="Escape"&&MD)mClose()});built=true}
+function enter(){S=S||load();if(!built)build();on=true;$("ship").classList.add("act");const now=Date.now(),r=sim(now);
+ if(!S.voy&&!S.ev.length&&now-S.lastEv>6*H){S.ev.push(mkEv(now,"Shipboard"));S.lastEv=now}
+ save();render();clearInterval(iv);iv=setInterval(tick,1e3);
+ if(r&&r.dt>=1){const f=(k,n)=>{const d=Math.round(S[k]-r.b[k]);return d?`${n} ${d>0?"+":"−"}${Math.abs(d)}`:""};
+  toast(`Away ${fmtD(r.dt*H)}: `+[f("hull","hull"),f("fuel","fuel"),f("mor","morale"),f("sup","supplies"),f("rmp","rampancy")].filter(Boolean).join(", ")+(S.ret?`. Back from ${S.ret.sec}: +${S.ret.cr} cr.`:"."));S.ret=null;save()}
+ else if(S.ret){toast(`Back from ${S.ret.sec}: +${S.ret.cr} credits${S.ret.n?`, ${S.ret.n} decision${S.ret.n>1?"s":""} waiting`:""}.`);S.ret=null;save()}}
+function leave(){if(!on)return;on=false;clearInterval(iv);$("ship").classList.remove("act");if(S)save()}
+document.addEventListener("visibilitychange",()=>{if(!on)return;if(document.visibilityState==="visible")enter();else save()});
+return{active:v=>v?enter():leave(),get S(){return S},get MD(){return MD},reload(){S=load();if(on)render()},KEY};
+})();
+
 /* ================= START ================= */
-(function(){const alias={today:0,plannerS:0,todoS:0,calS:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:2,finS:2,career:3,bondS:3,jobsS:3,world:4,worldS:4,newsS:4},i=alias[location.hash.slice(1)]??0;
+(function(){const alias={today:0,plannerS:0,todoS:0,calS:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:2,finS:2,career:3,bondS:3,jobsS:3,world:4,worldS:4,newsS:4,ship:5,shipS:5,frigate:5,game:5},i=alias[location.hash.slice(1)]??0;
  cur=-1;requestAnimationFrame(()=>{go(i,true)})})();
 tick();setInterval(tick,1000);
 if(sessionStorage.fpw){unlock(sessionStorage.fpw).then(ok=>{if(!FIN&&sessionStorage.fpwF)unlock(sessionStorage.fpwF)})}
