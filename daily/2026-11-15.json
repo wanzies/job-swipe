@@ -1,0 +1,75 @@
+{
+ "date": "2026-11-15",
+ "hijri": "5 Jamadilakhir 1448",
+ "fast": {
+  "type": "Sunnah fast · Monday",
+  "date": "2026-11-16",
+  "why": "Tomorrow is Monday, a day deeds are presented to Allah, and the Prophet ﷺ liked to be fasting then. Make your niyyah tonight (Sunday night) before Subuh, or before Zuhr tomorrow if you haven't eaten.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "Safety: you woke up secure, with a roof and food for today. Many people lack one of these. Today, thank a family member or colleague by name, and say Alhamdulillah for a day of safety.",
+ "verse": {
+  "ref": "Al-Baqarah 2:152",
+  "text": "So remember Me; I will remember you. And be grateful to Me and do not deny Me.",
+  "url": "https://quran.com/2/152"
+ },
+ "hadith": {
+  "ref": "Jami' at-Tirmidhi 2346",
+  "text": "Whoever among you wakes up secure in his community, healthy in his body, with his food for the day, it is as if the whole world has been gathered for him.",
+  "url": "https://sunnah.com/tirmidhi:2346"
+ },
+ "lesson": {
+  "title": "Aqidah part 2: Ihsan",
+  "text": "In the Hadith of Jibril (Sahih Muslim 8) the Prophet ﷺ defined ihsan: 'to worship Allah as if you see Him, and if you do not see Him, truly He sees you.' Together with Islam and Iman it completes the deen. In practice, it means doing even a tiring case file or a rushed solat with sincerity, because Allah is aware of it. That awareness lifts the heart: no effort goes unseen.",
+  "url": "https://sunnah.com/muslim:8"
+ },
+ "name": {
+  "ar": "الفتاح",
+  "tr": "Al-Fattah",
+  "meaning": "The Opener, the Judge",
+  "text": "\"Say: Our Lord will bring us together, then judge between us in truth, and He is the Knowing Judge (Al-Fattah)\" (34:26). He opens doors of rizq, ease and understanding that you cannot see yet.",
+  "url": "https://quran.com/34/26"
+ },
+ "pm": {
+  "name": {
+   "ar": "الحافظ",
+   "tr": "Al-Hafiz",
+   "meaning": "The Guardian",
+   "text": "\"Allah is the best Guardian, and He is the most merciful of the merciful\" (12:64). Before you sleep, place your family and tomorrow in His protection.",
+   "url": "https://quran.com/12/64"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}
