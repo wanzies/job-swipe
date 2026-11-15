@@ -590,15 +590,15 @@ async function decEnc(url,pw){const res=await fetch(url+"?"+Date.now(),{cache:"n
 let FIN=null,CAL=null;
 async function unlockFrom(inId,errId){const el=$(inId),pw=el.value;if(!pw)return;$(errId).textContent="Unlocking…";const ok=await unlock(pw);if(ok){el.value="";$(errId).textContent=""}else $(errId).textContent="Wrong passcode"}
 async function unlock(pw){const calNew=!CAL;const [f,c]=await Promise.allSettled([FIN?Promise.resolve(FIN):decEnc("fin.enc.json",pw),CAL?Promise.resolve(CAL):decEnc("cal.enc.json",pw)]);let any=false;
- if(f.status==="fulfilled"){FIN=f.value;any=true;fRender(FIN);if(!sessionStorage.fpw)sessionStorage.fpw=pw;else if(sessionStorage.fpw!==pw)sessionStorage.fpwF=pw}else if(f.reason&&f.reason.missing)finMissing();
- if(c.status==="fulfilled"){if(calNew){CAL=c.value;cRender(CAL);sessionStorage.fpw=pw}any=true}else if(c.reason&&c.reason.missing){cMissing();}
+ if(f.status==="fulfilled"){FIN=f.value;any=true;fRender(FIN);if(!sessionStorage.fpw)sessionStorage.fpw=pw}else if(f.reason&&f.reason.missing)finMissing();
+ if(c.status==="fulfilled"){if(calNew){CAL=c.value;cRender(CAL)}if(!sessionStorage.fpw)sessionStorage.fpw=pw;any=true}else if(c.reason&&c.reason.missing){cMissing();}
  if(any){$("unlockCard").hidden=true;$("lockBtn").hidden=false;if(!FIN&&!(f.reason&&f.reason.missing))finOtherCode()}
  return any}
 function lockAll(){sessionStorage.removeItem("fpw");sessionStorage.removeItem("fpwF");location.reload()}
 function finMissing(){$("fin").innerHTML=`<div class="card w4"><div class="lbl">Money</div><div class="sm mu">Finance data hasn't been published yet.</div></div>`}
-function finOtherCode(){$("fin").innerHTML=`<div class="card w4"><div class="lbl">🔒 Money uses a different passcode</div>
- <form class="unlock" onsubmit="event.preventDefault();unlockFrom('pwFin','errFin')"><input class="inp num" id="pwFin" type="password" inputmode="numeric" autocomplete="off" placeholder="Finance passcode" aria-label="Finance passcode"><button class="btn pri" type="submit">Unlock</button></form><div class="err" id="errFin"></div><div class="xs mu">Your calendar unlocked, but the finance file was encrypted with another passcode. Enter that one here; it is remembered until you close the tab.</div></div>`;
- $("finLine").hidden=false;$("finLine").innerHTML=`<div class="row"><span class="sm mu">🔒 Money: enter its passcode on the Money tab</span><span class="pill">Open ›</span></div>`}
+function finOtherCode(){$("fin").innerHTML=`<div class="card w4"><div class="lbl">🔒 Money didn't unlock</div>
+ <form class="unlock" onsubmit="event.preventDefault();unlockFrom('pwFin','errFin')"><input class="inp num" id="pwFin" type="password" inputmode="numeric" autocomplete="off" placeholder="Passcode" aria-label="Money passcode"><button class="btn pri" type="submit">Unlock</button></form><div class="err" id="errFin"></div><div class="xs mu">The dashboard passcode didn't open the finance file. If you still have the older Money passcode, enter it here.</div></div>`;
+ $("finLine").hidden=false;$("finLine").innerHTML=`<div class="row"><span class="sm mu">🔒 Money didn't unlock with the dashboard passcode</span><span class="pill">Open ›</span></div>`}
 /* --- calendar --- */
 function cFmtTime(iso,allDay){if(allDay)return"All day";const t=Date.parse(iso);if(!isFinite(t))return"";const p=sgParts(t);return fmt12(p.h,p.min)}
 function cFmtSynced(iso){const t=Date.parse(iso);if(!isFinite(t))return"";const p=sgParts(t);return p.d+" "+MO[p.m-1]+", "+fmt12(p.h,p.min)}
@@ -1326,7 +1326,7 @@ return{active:v=>v?enter():leave(),get S(){return S},get B(){return B},skirmish:
 (function(){const alias={today:0,plannerS:0,todoS:0,calS:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:2,finS:2,career:3,bondS:3,jobsS:3,world:4,worldS:4,newsS:4,ship:5,shipS:5,frigate:5,game:5},i=alias[location.hash.slice(1)]??0;
  cur=-1;requestAnimationFrame(()=>{go(i,true)})})();
 tick();setInterval(tick,1000);
-if(sessionStorage.fpw){unlock(sessionStorage.fpw).then(ok=>{if(!FIN&&sessionStorage.fpwF)unlock(sessionStorage.fpwF)})}
+if(sessionStorage.fpw){unlock(sessionStorage.fpw)}
 else fetch("cal.enc.json?"+Date.now(),{method:"HEAD"}).catch(()=>{});
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
