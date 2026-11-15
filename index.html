@@ -275,6 +275,12 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 .cb-sub.dmg{border-color:rgba(251,191,36,.5)}.cb-sub.dmg.lo{border-color:var(--bd2)}.cb-sub.dead{border-color:rgba(248,113,113,.65);background:rgba(248,113,113,.10)}.cb-sub.dead small{color:#fecaca;font-weight:600}
 .cb-sub.fix{border-color:var(--ac);background:var(--ac2)}.cb-sub.fix small{color:#99f6e4}
 .cb-keys{display:none}
+.cb-pwh{margin-bottom:4px}
+@media (max-width:899px){.cb-side{gap:6px}.cb-pwh{display:none}.cb-pr{grid-template-columns:minmax(0,1fr) 30px minmax(96px,128px) 30px;gap:6px;padding:1px 0}.cb-pr small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cb-pb{height:28px}.cb-pre{margin-top:4px}}
+.cb-tut{position:absolute;left:8px;right:8px;top:8px;z-index:2;display:none;gap:8px;align-items:flex-start;background:rgba(19,21,27,.94);border:1px solid rgba(45,212,191,.45);border-radius:14px;padding:9px 10px;font-size:12.5px;line-height:1.4;color:#d7dae3;box-shadow:0 8px 24px rgba(0,0,0,.4);animation:sh-up .25s var(--ease)}
+.cb-tut.on{display:flex}.cb-tut .n{flex:0 0 auto;font:700 10.5px Inter,sans-serif;color:var(--ac);border:1px solid rgba(45,212,191,.45);border-radius:9px;padding:1px 6px;margin-top:1px}.cb-tut .tx{flex:1;min-width:0}.cb-tut .tx b{color:var(--tx)}
+.cb-tut .bt{display:flex;flex-direction:column;gap:4px;flex:0 0 auto}.cb-tut .btn{padding:4px 9px;font-size:11.5px}
+@media (min-width:900px){.cb-tut{left:50%;right:auto;width:min(460px,calc(100% - 16px));transform:translateX(-50%)}}
 .cb-cover{position:absolute;inset:0;z-index:3;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(5,6,9,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .cb-cover.on{display:flex;animation:sh-fade .25s var(--ease)}
 .cb-endc{width:100%;max-width:440px;background:var(--s1);border:1px solid var(--bd2);border-radius:20px;padding:18px;animation:sh-up .3s var(--ease)}
@@ -670,7 +676,7 @@ const SEC=[{id:"reach",n:"Reach Outer Belt",x:38,y:150},{id:"harv",n:"Harvest Ap
  {id:"draco",n:"Draco Reach",x:240,y:160},{id:"merid",n:"Meridian Veil",x:246,y:92},{id:"req",n:"Requiem Deep",x:296,y:42},{id:"ark",n:"The Far Shore",x:302,y:132}];
 const LINKS=[["reach","harv"],["harv","sigma"],["harv","arc"],["harv","kholo"],["sigma","trib"],["kholo","trib"],["kholo","psi"],["arc","psi"],["trib","onyx"],["psi","onyx"],["psi","draco"],["onyx","merid"],["draco","merid"],["merid","req"],["merid","ark"],["draco","ark"],["onyx","req"]];
 const DUR=[{k:"s",l:"30 min",ms:30*M,fuel:8,sup:5,cr:14,ev:1,ch:.35,exp:15,disc:.45,dmg:5},{k:"m",l:"2 h",ms:2*H,fuel:16,sup:10,cr:38,ev:2,ch:1,exp:35,disc:.75,dmg:9},{k:"l",l:"6 h",ms:6*H,fuel:28,sup:18,cr:90,ev:3,ch:2,exp:60,disc:1,dmg:14}];
-const UP={sh:{n:"Energy shields",d:"Combat: +25 shield capacity, +25% recharge. Less voyage damage.",c:[40,90,160],sv:[3,6,10]},mac:{n:"MAC cannon",d:"Combat: +140 damage per shot, faster charge. More voyage credits.",c:[40,90,160],sv:[3,6,10]},sd:{n:"Slipspace drive",d:"Combat: +4% evasion, faster dodge and emergency jump. Faster voyages.",c:[50,110,180],sv:[3,6,10]}};
+const UP={sh:{n:"Energy shields",d:"Combat: +15 shield capacity, +15% recharge. Less voyage damage.",c:[40,90,160],sv:[3,6,10]},mac:{n:"MAC cannon",d:"Combat: +60 damage per shot, faster charge. More voyage credits.",c:[40,90,160],sv:[3,6,10]},sd:{n:"Slipspace drive",d:"Combat: +3% evasion, faster dodge and emergency jump. Faster voyages.",c:[50,110,180],sv:[3,6,10]}};
 const PAINT=[{n:"Navy",h:"#46536a",l:"#7a889e",c:0},{n:"Gunmetal",h:"#363b46",l:"#5d6474",c:30},{n:"Arctic",h:"#8d99ad",l:"#cfd6e2",c:30},{n:"Teal ops",h:"#1d4a47",l:"#3a8a82",c:40},{n:"Ember",h:"#5e3529",l:"#a0624a",c:40}];
 const ACT={repair:{st:"hull",amt:25,cd:90*M,l:"Repair drones",log:"Repair drones sealed hull plating."},
  mine:{st:"fuel",amt:14,cd:40*M,l:"Mine asteroid",log:"Mined deuterium ice from a passing asteroid."},
@@ -752,15 +758,17 @@ const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 const secOf=id=>SEC.find(s=>s.id===id)||SEC[0],durOf=k=>DUR.find(d=>d.k===k)||DUR[0],evOf=id=>EVT.find(e=>e.id===id)||EVT[0];
 function fmtD(ms){ms=Math.max(0,ms);const s=Math.ceil(ms/1e3);if(s>=3600){const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h+"h"+(m?" "+m+"m":"")}if(s>=60)return Math.ceil(s/60)+"m";return s+"s"}
 function fresh(now){return{v:1,name:"UNSC Forward Unto Dawn II",t:now,born:now,hull:86,fuel:82,mor:80,sup:78,rmp:12,bond:10,cr:30,up:{sh:0,mac:0,sd:0},paint:0,paints:[0],cd:{},rest:false,voy:null,sel:"reach",dur:"s",ev:[],
- log:[{t:now,k:"ai",x:"Commissioned. ARIA online. Deep-space patrol begins."}],exp:{},disc:[],stars:[],rit:{},over:0,trust:0,dmg:{},frac:false,q:0,talkT:[],tr:[],line:null,lastEv:now,voyN:0,shared:0,slv:0,cbt:{w:0,l:0,r:0,k:0},pend:[],pw:[4,4,4]}}
+ log:[{t:now,k:"ai",x:"Commissioned. ARIA online. Deep-space patrol begins."}],exp:{},disc:[],stars:[],rit:{},over:0,trust:0,dmg:{},frac:false,q:0,talkT:[],tr:[],line:null,lastEv:now,voyN:0,shared:0,slv:0,cbt:{w:0,l:0,r:0,k:0},pend:[],pw:[4,4,4],tut:0,slvG:1,bsnap:null}}
 function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY)||"null")}catch(_){}
- const now=Date.now(),f=fresh(now);if(!s||typeof s!=="object"||s.v!==1)return f;
+ const now=Date.now(),f=fresh(now);if(!s||typeof s!=="object"||s.v!==1)return f;const mig=s.slvG===undefined;
  for(const k in f)if(s[k]===undefined||s[k]===null&&f[k]!==null)s[k]=f[k];
  ["hull","fuel","mor","sup","rmp","bond","cr"].forEach(k=>{if(typeof s[k]!=="number"||!isFinite(s[k]))s[k]=f[k]});
  ["sh","mac","sd"].forEach(k=>{s.up[k]=cl(+s.up[k]||0,0,3)});
  if(typeof s.slv!=="number"||!isFinite(s.slv)||s.slv<0)s.slv=0;if(!s.cbt||typeof s.cbt!=="object")s.cbt=f.cbt;["w","l","r","k"].forEach(k=>{if(!(s.cbt[k]>=0))s.cbt[k]=0});
  if(!Array.isArray(s.pend))s.pend=[];s.pend=s.pend.filter(x=>x&&SEC.some(z=>z.id===x.sec)).slice(0,3);
  if(!Array.isArray(s.pw)||s.pw.length!==3||!s.pw.every(v=>Number.isInteger(v)&&v>=0&&v<=8)||s.pw.reduce((a,b)=>a+b,0)>12)s.pw=[4,4,4];
+ if(mig){s.slv+=10;s.slvG=1;s.slvMsg=1;s.log.unshift({t:now,k:"ok",x:"Quartermaster grant: +10 salvage to get your upgrades started."})}
+ if(s.tut!==1)s.tut=0;const bs=s.bsnap;if(bs&&(typeof bs!=="object"||!SEC.some(z=>z.id===bs.secId)||!Array.isArray(bs.en)||!Array.isArray(bs.waves)||!Array.isArray(bs.pw)||!(bs.t>=0)))s.bsnap=null;
  if(!(s.t>0)||s.t>now+H)s.t=now;return s}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(_){}saveT=Date.now()}
 function log(t,k,x){S.log.unshift({t,k,x});S.log.sort((a,b)=>b.t-a.t);if(S.log.length>80)S.log.length=80}
@@ -909,7 +917,7 @@ function rUp(){$("shUp").innerHTML=`<div class="lbl"><span>Upgrades</span><span>
  <div class="sh-up" style="grid-template-columns:1fr"><div><div style="font-weight:600;font-size:14px">Paint scheme <span class="xs mu">· ${esc((PAINT[S.paint]||PAINT[0]).n)}</span></div><div class="sh-sw">${PAINT.map((p,i)=>`<button data-a="paint:${i}" class="${i===S.paint?"sel":""} ${S.paints.includes(i)?"":"lock"}" style="background:linear-gradient(135deg,${p.l},${p.h})" aria-label="${p.n}${S.paints.includes(i)?"":`, ${p.c} credits`}" title="${p.n}${S.paints.includes(i)?"":` · ${p.c} cr`}"></button>`).join("")}</div></div></div>`}
 function rLog(){$("shLog").innerHTML=`<div class="lbl"><span>Captain's log</span><span class="xs mu num">${S.log.length} entries</span></div><div class="sh-log">${S.log.slice(0,40).map(l=>`<div class="sh-li"><i class="${esc(l.k)}"></i><div><div>${esc(l.x)}</div><div class="xs mu">${FT.format(l.t)}</div></div></div>`).join("")}</div>`}
 function render(){if(!on||!built)return;rBt();rShip();rAI();rEv();rVoy();rMap();rUp();rLog();sig=mkSig()}
-function mkSig(){const now=Date.now();return [S.pend.length,S.slv,!!B,Math.round(S.hull),Math.round(S.fuel),Math.round(S.mor),Math.round(S.sup),Math.round(S.rmp),Math.round(S.bond),state(),S.ev.length,!!S.voy,sgDayK(now),Object.keys(S.dmg).join(),...Object.keys(ACT).concat(["pz","df"]).map(k=>(S.cd[k]||0)>now)].join("|")}
+function mkSig(){const now=Date.now();return [S.pend.length,S.slv,!!B,!!S.bsnap,Math.round(S.hull),Math.round(S.fuel),Math.round(S.mor),Math.round(S.sup),Math.round(S.rmp),Math.round(S.bond),state(),S.ev.length,!!S.voy,sgDayK(now),Object.keys(S.dmg).join(),...Object.keys(ACT).concat(["pz","df"]).map(k=>(S.cd[k]||0)>now)].join("|")}
 function tick(){if(!on)return;const now=Date.now();sim(now);if(now-saveT>15e3)save();
  if(mkSig()!==sig){render();return}
  document.querySelectorAll("#ship [data-cd]").forEach(el=>{const k=el.dataset.cd;
@@ -978,38 +986,60 @@ const scX=(x,y)=>GE.port?VW/2+x*GE.k:8+y*GE.k,scY=(x,y)=>GE.port?VH-8-y*GE.k:VH/
 const sang=(dx,dy)=>GE.port?Math.atan2(-dy,dx):Math.atan2(dx,dy);
 const er=e=>ET[e.k].r*GE.ds/GE.k,shipPt=(lx,ly)=>({x:B.sx+ly*GE.ds/GE.k,y:SHF()+lx*GE.ds/GE.k});
 const fw=()=>B.pw[0]/4,fs=()=>B.pw[1]/4,fe=()=>B.pw[2]/4;
-const shMax=()=>60+25*S.up.sh,macDmg=()=>260+140*S.up.mac;
-const macCT=()=>(5.2-.8*S.up.mac)/(.4+.6*fw())*(B.sub.mac<50?1.5:1),arcCD=()=>10/(.5+.5*fw());
-const evaCD=()=>13/(.5+.5*fe())*(1-.12*S.up.sd)*(B.sub.eng<50?1.4:1),shRate=()=>5*(.25+.75*fs())*(1+.25*S.up.sh)*(B.sub.shd<50?.6:1);
+const shMax=()=>Math.round((60+15*S.up.sh)*(B&&B.pw?.75+.25*fs():1)),macDmg=()=>260+60*S.up.mac;
+const macCT=()=>(5.2-.35*S.up.mac)/(.4+.6*fw())*(B.sub.mac<50?1.5:1),arcCD=()=>10/(.5+.5*fw());
+const evaCD=()=>10/(.5+.5*fe())*(1-.08*S.up.sd)*(B.sub.eng<50?1.4:1),shRate=()=>5*(.25+.75*fs())*(1+.15*S.up.sh)*(B.sub.shd<50?.6:1);
 const pdRate=()=>5*(.5+.5*fw()),crews=()=>2+(S.mor>=60?1:0),crewN=()=>Object.keys(B.crew).length;
 const live=()=>B.en.filter(e=>!e.gh),selE=()=>B.en.find(e=>e.id===B.sel)||null,eName=e=>B.fac==="innie"?ET[e.k].ni:ET[e.k].n;
-function evasion(){if(B.sub.eng<=0)return 0;if(B.evaT>0)return .85;return(.025*B.pw[2]+.04*S.up.sd)*(B.sub.eng<50?.5:1)}
+function evasion(){if(B.sub.eng<=0)return 0;if(B.evaT>0)return .85;return(.025*B.pw[2]+.03*S.up.sd)*(B.sub.eng<50?.5:1)}
 function threat(e){if(e.gh)return 0;const d=hyp(e.x,e.y,B.sx,SHF());let t=ET[e.k].th+(1-Math.min(1,d/700))*3;if(e.k==="c"&&e.tc<2.5)t+=2;if(e.lz>0)t+=5;if(e.k==="f"&&e.st==="in"&&d<430)t+=1.5;if(e.hp/e.mx<.3)t+=1;return t}
 const thrL=t=>t>=9?["Critical","#f87171"]:t>=6?["High","#fb923c"]:t>=4?["Medium","#fbbf24"]:["Low","#34d399"];
 const km=d=>(d*.02).toFixed(1)+" km",brg=e=>String(Math.round((Math.atan2(e.x-B.sx,e.y-SHF())*180/Math.PI+360)%360)).padStart(3,"0");
-function mkWaves(diff,boss){const n=2+Math.ceil(diff/2),W=[];for(let w=1;w<=n;w++)W.push({f:Math.min(8,1+diff+w),c:Math.min(3,Math.floor((diff+w-1)/2)),b:w===n&&(diff>=3||boss)?1:0});return W}
+/* difficulty curve: one table per threat level drives waves, enemy toughness, damage, fire rate and speed (tuned with simulated lazy/competent players) */
+const CURVE={hp:[1.1,1.2,1.32,1.45,1.6],dm:[.95,.98,1.02,1.07,1.12],fr:[.92,.95,1,1.04,1.08],sp:[1,1.03,1.06,1.1,1.14]},balOf=d=>{const i=Math.max(0,Math.min(4,Math.round(d)-1));return{hp:CURVE.hp[i],dm:CURVE.dm[i],fr:CURVE.fr[i],sp:CURVE.sp[i]}};
+const WAVES=[[[3,1],[4,1],[5,2],[5,2]],[[4,1],[5,1],[5,2],[6,2]],[[4,1],[5,2],[6,2],[4,2]],[[5,2],[6,2],[6,2],[7,3],[4,2]],[[5,2],[6,2],[6,3],[7,2],[5,2]]];
+function mkWaves(diff,boss){const T=WAVES[Math.max(0,Math.min(4,Math.round(diff)-1))];return T.map(([f,c],i)=>({f,c,b:i===T.length-1&&(diff>=3||boss)?1:0}))}
 function btBlock(){if(S.dmg.hull||S.hull<15)return"Hull too damaged to fight. Repair it to at least 15% first.";if(S.fuel<5)return"Not enough fuel to engage. Need 5%.";if(S.sup<3)return"Not enough supplies to engage. Need 3%.";return""}
-function btStart(o){o=o||{};if(B)return false;const now=Date.now();sim(now);const why=btBlock();if(why){toast(why);return false}
+function btStart(o){o=o||{};if(B)return false;const now=Date.now();sim(now);if(S.bsnap){toast("A battle is still in progress. Resume or abandon it on the Battle stations card.");return false}const why=btBlock();if(why){toast(why);return false}
  const sec=secOf(o.sec||(S.voy?S.voy.sec:S.sel)),diff=difOf(sec.id);S.fuel=cl(S.fuel-3);S.sup=cl(S.sup-2);addR(2,now);
  const pw=Array.isArray(S.pw)&&S.pw.length===3&&S.pw.every(v=>v>=0&&v<=8)&&S.pw.reduce((a,b)=>a+b,0)<=12?S.pw.slice():[4,4,4];
- B={sec,diff,fac:o.fac||"cov",src:o.src||"Skirmish",waves:mkWaves(diff,o.boss),w:-1,q:[],en:[],pj:[],ms:[],sl:[],tr:[],fx:[],t:0,id:1,sel:null,
+ B={sec,diff,bal:balOf(diff),fac:o.fac||"cov",src:o.src||"Skirmish",waves:mkWaves(diff,o.boss),w:-1,q:[],en:[],pj:[],ms:[],sl:[],tr:[],fx:[],t:0,id:1,sel:null,
   sh:shMax(),shUp:true,shT:-9,shHit:0,heat:0,over:false,pdOn:false,pdFiring:false,pdMode:"trk",pdAcc:0,pdAim:null,trS:0,arcCd:0,lock:null,salvo:null,macC:0,macCh:false,macTold:false,
   evaT:0,evaDur:1,evaCd:0,evaMax:1,evaDir:1,sx:0,pw,sub:{pdA:100,pdB:100,arc:100,mac:100,shd:100,eng:100},crew:{},
   cl:null,msg:null,aiT:3,glT:5,static:0,flash:0,shake:0,kills:{f:0,c:0,b:0},cr:0,sv:0,taken:0,fol:0,ovr:0,rmpD:2,shots:0,hits:0,
-  jump:null,waveT:1.4,endF:null,res:null,resT:0,pause:false,rew:null,avS:"",stars:Array.from({length:90},()=>({x:R(),y:R(),z:.15+R()*.85}))};
- log(now,"warn",`Battle stations: ${B.src==="Skirmish"?"skirmish":"engagement"} in ${sec.n} (threat ${diff}/5).`);save();cbOpen();
+  jump:null,waveT:S.tut?1.4:3.5,tut:S.tut?null:{i:0,t:0},snT:0,endF:null,res:null,resT:0,pause:false,rew:null,avS:"",stars:Array.from({length:90},()=>({x:R(),y:R(),z:.15+R()*.85}))};
+ log(now,"warn",`Battle stations: ${B.src==="Skirmish"?"skirmish":"engagement"} in ${sec.n} (threat ${diff}/5).`);snap();save();cbOpen();
  btMsg(S.frac?"[ ARIA offline. Manual targeting only. ]":pick(["Contacts inbound, Captain. Tap one to lock it. I'll call threats as I see them.","Battle stations. I'll flag the targets that matter. Your call on everything.","Weapons free. I've got your back."]),1);return true}
+/* --- mid-battle snapshot: saved inside the same save key so closing the page can resume the fight --- */
+const SNX=["stars","fx","tr","cl","sec","msg","pause","rew","aline","avS","res","resT"];
+function snap(){if(!B||B.res){S.bsnap=null;return}const o={secId:B.sec.id,at:Date.now()};for(const k in B)if(!SNX.includes(k))o[k]=B[k];S.bsnap=o}
+function btResume(){const o=S.bsnap;if(!o||B)return;const sec=secOf(o.secId);
+ B=Object.assign({},o,{sec,stars:Array.from({length:90},()=>({x:R(),y:R(),z:.15+R()*.85})),fx:[],tr:[],cl:null,msg:null,pause:false,res:null,resT:0,rew:null,avS:"",aiT:(o.t||0)+3,lock:null,salvo:null,jump:null,static:0,flash:0,shake:0});
+ delete B.secId;delete B.at;if(!B.bal)B.bal=balOf(B.diff);if(!B.sub||typeof B.sub!=="object")B.sub={pdA:100,pdB:100,arc:100,mac:100,shd:100,eng:100};if(!B.crew||typeof B.crew!=="object")B.crew={};if(!B.kills)B.kills={f:0,c:0,b:0};
+ ["en","pj","ms","sl","q","waves"].forEach(k=>{if(!Array.isArray(B[k]))B[k]=[]});B.en=B.en.filter(e=>e&&ET[e.k]&&isFinite(e.x)&&isFinite(e.y));
+ cbOpen();btMsg("Back on the bridge. Battle restored where you left it.",1);btPause(true)}
+function btAbandon(){if(!S.bsnap||B)return;const sec=secOf(S.bsnap.secId),now=Date.now();S.bsnap=null;S.fuel=cl(S.fuel+3);S.sup=cl(S.sup+2);log(now,"voy",`Stood down from the unfinished battle in ${sec.n}. Fuel and supplies refunded.`);save();render();toast("Battle abandoned. Fuel +3 and supplies +2 refunded.")}
+const TUT=[["Tap a <b>hostile contact</b> in the tactical view to lock it.",()=>!!B.sel],["Tap <b>PD turrets</b> to open fire on your lock. They overheat, so let them vent.",()=>B.pdOn],
+ ["Tap <b>MAC cannon</b> to charge it, then tap again to fire. Save it for corvettes and cruisers.",()=>B.macCh||B.macC>=1||B.sl.length>0],
+ ["Torpedo inbound? Switch <b>PD mode</b> to Intercept. Torpedoes punch partly through shields.",()=>B.pdMode==="int"],
+ ["Shields low? Pick <b>Defence</b> under Power. Tap <b>Evasive</b> to dodge bolts and the cruiser's red lance line.",null]];
+function tutEnd(){if(B)B.tut=null;S.tut=1;save();if(EL.cbTut)EL.cbTut.classList.remove("on")}
+function tutGo(x){if(!B||!B.tut)return;if(x==="x")return tutEnd();B.tut.i++;B.tut.t=B.t;if(B.tut.i>=TUT.length)tutEnd();tutHud()}
+function tutHud(){const el=EL.cbTut;if(!el)return;const T=B&&B.tut;if(!T||B.res||T.i>=TUT.length){el.classList.remove("on");return}
+ const st=TUT[T.i];if(st[1]&&B.t-T.t>.6&&st[1]()){T.i++;T.t=B.t;if(T.i>=TUT.length)return tutEnd();return tutHud()}
+ if(el.dataset.i!==String(T.i)){el.dataset.i=T.i;const last=T.i===TUT.length-1;el.innerHTML=`<span class="n num">${T.i+1}/${TUT.length}</span><div class="tx">${TUT[T.i][0]}</div><div class="bt"><button class="btn sm pri" data-c="tut:n">${last?"Got it":"Next"}</button>${last?"":`<button class="btn sm" data-c="tut:x">Skip tips</button>`}</div>`}
+ el.classList.add("on")}
 /* --- overlay --- */
 function cbBuild(){const d=document.createElement("div");d.id="cbt";d.className="cbt";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label","Tactical combat");
  d.innerHTML=`<div class="cb-top"><div class="cb-ttl"><b id="cbSec"></b><span id="cbWave"></span></div>
  <div class="cb-bars"><div class="cb-mb"><div class="row"><span>Hull</span><b class="num" id="cbHullT"></b></div><div class="cb-bar"><i id="cbHull"></i></div></div><div class="cb-mb"><div class="row"><span>Shields</span><b class="num" id="cbShT"></b></div><div class="cb-bar"><i id="cbSh" style="background:#38bdf8"></i></div></div></div>
  <div class="cb-tb"><button class="btn sm" data-c="pause" id="cbPauseB">Pause</button><button class="btn sm" data-c="retreat" id="cbRetB">Retreat</button></div></div>
- <div class="cb-main"><div class="cb-view" id="cbView"><canvas id="cbCv" aria-label="Tactical view. Tap a contact to lock it."></canvas></div>
+ <div class="cb-main"><div class="cb-view" id="cbView"><canvas id="cbCv" aria-label="Tactical view. Tap a contact to lock it."></canvas><div class="cb-tut" id="cbTut" role="status" aria-live="polite"></div></div>
  <div class="cb-side"><div class="cb-aria"><div class="sh-avw" id="cbAv"></div><div class="tx" id="cbAt"></div><div class="bt" id="cbAb" hidden><button class="btn sm pri" data-c="fol" id="cbFol">Follow</button><button class="btn sm" data-c="ovr">Overrule</button></div></div>
  <div class="cb-tgt" id="cbTgt"></div>
  <div class="cb-wpn">${WPN.map(([k,n],i)=>`<button class="cb-w" data-c="${k}" id="w_${k}"><span class="r"><b>${n}</b><kbd>${i+1}</kbd></span><small id="w_${k}_s"></small><span class="m"><i id="w_${k}_m"></i></span></button>`).join("")}</div>
  <div class="sh-seg cb-seg"><button data-c="tab:pw" id="cbTpw">Power</button><button data-c="tab:rp" id="cbTrp">Repairs</button></div>
- <div class="cb-pn" id="cbPw"><div class="row xs mu" style="margin-bottom:4px"><span>Reactor <b id="pwFree" class="num"></b></span><span>+ pulls from the biggest other system</span></div>
+ <div class="cb-pn" id="cbPw"><div class="row xs mu cb-pwh"><span>Reactor <b id="pwFree" class="num"></b></span><span>+ pulls from the biggest other system</span></div>
  ${PWN.map(([n,c],i)=>`<div class="cb-pr"><div><b>${n}</b><small id="pwe${i}"></small></div><button class="cb-pb" data-c="pw:${i}:-1" aria-label="Less power to ${n}">−</button><div class="cb-pips" style="--c:${c}" id="pw${i}">${"<i></i>".repeat(8)}</div><button class="cb-pb" data-c="pw:${i}:1" aria-label="More power to ${n}">+</button></div>`).join("")}
  <div class="cb-pre">${PRESET.map(([n],i)=>`<button class="btn sm" data-c="pre:${i}">${n}</button>`).join("")}</div></div>
  <div class="cb-pn" id="cbRp"><div class="row xs mu" style="margin-bottom:6px"><span id="rpCrew"></span><span>Tap a system to send or recall a crew</span></div><div class="cb-rp">${SUBS.map(([k,n])=>`<button class="cb-sub" data-c="rp:${k}" id="rp_${k}"><b>${n}</b><small id="rp_${k}s"></small><span class="m"><i id="rp_${k}m"></i></span></button>`).join("")}</div></div>
@@ -1019,18 +1049,19 @@ function cbBuild(){const d=document.createElement("div");d.id="cbt";d.className=
  ["pointerdown","pointermove","pointerup","touchstart","touchmove","touchend","wheel","mousedown"].forEach(t=>d.addEventListener(t,e=>e.stopPropagation(),{passive:true}));
  cv.addEventListener("touchmove",e=>e.preventDefault(),{passive:false});cv.addEventListener("pointerdown",cvTap);d.addEventListener("click",cbClick);addEventListener("keydown",cbKey);
  if(window.ResizeObserver)new ResizeObserver(cbSize).observe(EL.cbView);else addEventListener("resize",cbSize);cbBuilt=true}
-function cbOpen(){if(!cbBuilt)cbBuild();const d=$("cbt");d.classList.add("on");d.tabIndex=-1;try{d.focus({preventScroll:true})}catch(_){}EL.cbCover.classList.remove("on");EL.cbCover.innerHTML="";cbTabs();cbSize();lastF=0;hud();kick()}
+function cbOpen(){if(!cbBuilt)cbBuild();const d=$("cbt");d.classList.add("on");if(EL.cbTut){EL.cbTut.dataset.i="";EL.cbTut.classList.remove("on")}d.tabIndex=-1;try{d.focus({preventScroll:true})}catch(_){}EL.cbCover.classList.remove("on");EL.cbCover.innerHTML="";cbTabs();cbSize();lastF=0;hud();kick()}
 function cbClose(){if(B&&!B.res)return;B=null;if(raf)cancelAnimationFrame(raf);raf=0;const d=$("cbt");if(d)d.classList.remove("on");render()}
 function cbTabs(){EL.cbTpw.classList.toggle("sel",cbTab==="pw");EL.cbTrp.classList.toggle("sel",cbTab==="rp");EL.cbPw.classList.toggle("on",cbTab==="pw");EL.cbRp.classList.toggle("on",cbTab==="rp")}
 function cbSize(){if(!cv||!B)return;const r=EL.cbView.getBoundingClientRect();if(!r.width||!r.height)return;VW=r.width;VH=r.height;dpr=Math.min(2,devicePixelRatio||1);cv.width=Math.round(VW*dpr);cv.height=Math.round(VH*dpr);
  const port=VH>=VW*.9,k=port?Math.min((VH-16)/760,VW/560):Math.min((VW-16)/760,VH/560);GE={port,k,ds:Math.max(k,.55)};draw()}
 function kick(){if(!raf)raf=requestAnimationFrame(loop)}
-function loop(ts){raf=0;if(!B)return;const dt=lastF?Math.min(.05,(ts-lastF)/1e3):0;lastF=ts;if(!B.pause){if(!B.res)step(dt);else B.resT+=dt;fxStep(dt)}draw();if(ts-hudT>100){hud();hudT=ts}
+function loop(ts){raf=0;if(!B)return;const dt=lastF?Math.min(.05,(ts-lastF)/1e3):0;lastF=ts;if(!B.pause){if(!B.res)step(dt);else B.resT+=dt;fxStep(dt)}if(!B.res&&B.t-B.snT>3){B.snT=B.t;snap();save()}draw();if(ts-hudT>100){hud();hudT=ts}
  if(!B.pause&&!(B.res&&B.resT>2.5))kick()}
-function btPause(p){if(!B||B.res)return;B.pause=p;if(p){EL.cbCover.innerHTML=`<div class="cb-endc" style="text-align:center"><div class="mid">Paused</div><div class="sm mu" style="margin:6px 0 14px">Combat holds while you're away. Nothing moves until you resume.</div><button class="btn pri" data-c="resume" style="width:100%">Resume</button></div>`;EL.cbCover.classList.add("on")}
+function btPause(p){if(!B||B.res)return;B.pause=p;if(p){snap();save();EL.cbCover.innerHTML=`<div class="cb-endc" style="text-align:center"><div class="mid">Paused</div><div class="sm mu" style="margin:6px 0 14px">Combat holds while you're away. Nothing moves until you resume.</div><button class="btn pri" data-c="resume" style="width:100%">Resume</button></div>`;EL.cbCover.classList.add("on")}
  else{EL.cbCover.classList.remove("on");EL.cbCover.innerHTML="";lastF=0;kick()}hud()}
-function cbClick(e){const b=e.target.closest("[data-c]");if(!b||!B||b.disabled)return;const [c,x,y]=b.dataset.c.split(":");
- if(c==="close")return cbClose();if(c==="again"){cbClose();btStart({});return}if(c==="resume")return btPause(false);if(c==="pause")return btPause(!B.pause);if(B.res||B.pause)return;
+function cbClick(e){const b=e.target.closest("[data-c]");if(!b||!B||b.disabled)return;const [c,x,y]=b.dataset.c.split(":");if(c==="tut"){tutGo(x);return}
+ if(c==="close")return cbClose();if(c==="again"){cbClose();btStart({});return}if(c==="resume")return btPause(false);if(c==="pause")return btPause(!B.pause);if(B.res||B.pause)return;cbCmd(c,x,y)}
+function cbCmd(c,x,y){if(!B||B.res)return;
  if(c==="pd")pdToggle();else if(c==="pdm")pdModeT();else if(c==="arc")arcGo();else if(c==="mac")macGo();else if(c==="shd")shdGo();else if(c==="eva")evaGo();
  else if(c==="pw")pwAdj(+x,+y);else if(c==="pre"){B.pw=PRESET[+x][1].slice();S.pw=B.pw.slice();if(B.cl&&B.cl.k==="pwr"&&+x===2)aiFollow(true)}
  else if(c==="rp")rpGo(x);else if(c==="tab"){cbTab=x;cbTabs()}else if(c==="fol")aiFollow();else if(c==="ovr")aiOverrule();else if(c==="retreat")jumpGo();hud()}
@@ -1053,7 +1084,7 @@ function macFire(){const o=shipPt(58,0),e=selE();let a;if(e&&!e.gh){a=S.frac?{x:
  const d=hyp(a.x,a.y,o.x,o.y)||1;B.sl.push({x:o.x,y:o.y,x0:o.x,y0:o.y,vx:(a.x-o.x)/d*SLUG,vy:(a.y-o.y)/d*SLUG,t:0});B.macC=0;B.macCh=false;B.shake=Math.max(B.shake,7);B.shots++;B.fx.push({k:"muz",x:o.x,y:o.y,t:0,life:.3})}
 function shdGo(){if(B.sub.shd<=0)return btMsg("Shield emitters offline. Send a repair crew.",0);B.shUp=!B.shUp}
 function evaGo(){if(B.sub.eng<=0)return btMsg("Engines offline. Send a repair crew.",0);if(B.evaCd>0)return btMsg(`Thrusters recharging: ${Math.ceil(B.evaCd)}s.`,0);
- B.evaT=B.evaDur=1.4+.12*B.pw[2];B.evaCd=B.evaMax=evaCD();B.evaDir=R()<.5?-1:1;if(B.cl&&B.cl.k==="eva")aiFollow(true)}
+ B.evaT=B.evaDur=1.6+.12*B.pw[2];B.evaCd=B.evaMax=evaCD();B.evaDir=R()<.5?-1:1;if(B.cl&&B.cl.k==="eva")aiFollow(true)}
 function pwAdj(i,d){const p=B.pw;if(d>0){if(p[i]>=8)return;if(p[0]+p[1]+p[2]>=12){const j=[0,1,2].filter(x=>x!==i).sort((a,b)=>p[b]-p[a])[0];if(p[j]<=0)return;p[j]--}p[i]++}else{if(p[i]<=0)return;p[i]--}S.pw=p.slice();
  if(i===1&&d>0&&B.cl&&B.cl.k==="pwr")aiFollow(true)}
 function rpGo(k){if(B.crew[k]){delete B.crew[k];return}if(B.sub[k]>=100)return btMsg(`${subN(k)} is fully operational.`,0);if(crewN()>=crews())return btMsg(`All ${crews()} repair crews are busy. Recall one first.`,0);
@@ -1091,29 +1122,29 @@ function glUpd(dt){B.static=Math.max(0,B.static-dt);B.glT-=dt;if(B.glT>0)return;
  else if(st==="frac"&&B.sel&&R()<.1){B.sel=null;B.static=.4;btMsg("[ targeting core unreadable ] Lock lost.",0)}}
 function spawnGhost(){const L=LAT();B.en.push({id:B.id++,k:R()<.7?"f":"c",gh:true,x:rnd(-L,L),y:rnd(220,VF()*.8),vx:rnd(-25,25),vy:-12,hp:1,mx:1,t:0,fl:0,life:7,tc:9,lz:0,st:"in"})}
 /* --- simulation --- */
-function spawnE(k){const T=ET[k],hm=1+.12*(B.diff-1),L=LAT(),vf=VF();
+function spawnE(k){const T=ET[k],h0=(B.bal||balOf(B.diff)).hp,hm=k==="b"?1+(h0-1)*.5:h0,L=LAT(),vf=VF();
  const e={id:B.id++,k,x:rnd(-L*.8,L*.8),y:vf+30+R()*50,vx:0,vy:-T.sp*.6,hp:T.hp*hm,mx:T.hp*hm,t:0,fl:0,ph:R()*6.3,fc:1.5+R()*2,tc:3+R()*3,lc:6+R()*3,lz:0,st:"in",n:0};
  e.bx=e.x;e.ay=k==="f"?rnd(170,320):k==="c"?rnd(vf*.5,vf*.66):vf*.78;e.oy=vf*.8;B.en.push(e)}
-function nextWave(){B.w++;const W=B.waves[B.w],q=[];for(let i=0;i<W.f;i++)q.push({k:"f",d:i?.55:.2});for(let i=0;i<W.c;i++)q.push({k:"c",d:1.1});if(W.b)q.push({k:"b",d:1.6});B.q=q;
+function nextWave(){B.w++;const W=B.waves[B.w],q=[];for(let i=0;i<W.f;i++)q.push({k:"f",d:i?.9:.2});for(let i=0;i<W.c;i++)q.push({k:"c",d:1.4});if(W.b)q.push({k:"b",d:1.8});B.q=q;
  btMsg(W.b?`Wave ${B.w+1} of ${B.waves.length}. Capital ship on approach! Cruiser-class. Charge the MAC.`:`Wave ${B.w+1} of ${B.waves.length}: ${W.f} fighter${W.f>1?"s":""}${W.c?`, ${W.c} corvette${W.c>1?"s":""}`:""}.`,1)}
 function waveUpd(dt){if(B.q.length){B.q[0].d-=dt;if(B.q[0].d<=0)spawnE(B.q.shift().k);return}if(live().length||B.endF!=null)return;
  if(B.waveT>0){B.waveT-=dt;if(B.waveT<=0)nextWave();return}
- if(B.w>=B.waves.length-1)B.endF=1.4;else{B.waveT=3;btMsg(`Wave ${B.w+1} cleared. More contacts on the way.`,1)}}
+ if(B.w>=B.waves.length-1)B.endF=1.4;else{B.waveT=4;btMsg(`Wave ${B.w+1} cleared. More contacts on the way.`,1)}}
 function steer(e,tx,ty,sp,acc,dt){const dx=tx-e.x,dy=ty-e.y,d=Math.hypot(dx,dy)||1,s=Math.min(sp,d*1.5),a=Math.min(1,acc*dt);e.vx+=(dx/d*s-e.vx)*a;e.vy+=(dy/d*s-e.vy)*a;e.x+=e.vx*dt;e.y+=e.vy*dt}
-const dmM=()=>1+.1*(B.diff-1);
+const dmM=()=>(B.bal||balOf(B.diff)).dm,frM=()=>(B.bal||balOf(B.diff)).fr;
 function fireBolt(e,dmg){const X=B.sx+rnd(-14,14),Y=SHF(),d=hyp(X,Y,e.x,e.y)||1;B.pj.push({k:"b",x:e.x,y:e.y,vx:(X-e.x)/d*360,vy:(Y-e.y)/d*360,dmg:dmg*dmM(),t:0})}
 function fireTorp(e,off){const X=B.sx+(off||0),Y=SHF(),d=hyp(X,Y,e.x,e.y)||1;B.pj.push({k:"t",x:e.x+(off||0)*.3,y:e.y,vx:(X-e.x)/d*95,vy:(Y-e.y)/d*95,dmg:12*dmM(),hp:6,t:0})}
-function enUpd(e,dt){e.t+=dt;e.fl=Math.max(0,e.fl-dt);const L=LAT(),sp=ET[e.k].sp*(1+.04*(B.diff-1)),Y=SHF(),d=hyp(e.x,e.y,B.sx,Y);
+function enUpd(e,dt){e.t+=dt;e.fl=Math.max(0,e.fl-dt);const L=LAT(),sp=ET[e.k].sp*(B.bal||balOf(B.diff)).sp,Y=SHF(),d=hyp(e.x,e.y,B.sx,Y);
  if(e.gh){e.life-=dt;e.x+=e.vx*dt;e.y+=e.vy*dt;if(e.life<=0)e.dead=true;return}
  if(e.k==="f"){if(e.st==="in")steer(e,cl(e.bx+Math.sin(e.t*1.7+e.ph)*90,-L,L),e.ay,sp,2.6,dt);else steer(e,e.bx,e.oy,sp,2.6,dt);e.fc-=dt;
-  if(e.st==="in"&&d<430&&e.fc<=0){fireBolt(e,2.4);e.fc=1.1+R()*.7;if(++e.n>=3){e.st="out";e.n=0;e.bx=rnd(-L,L);e.oy=rnd(VF()*.55,VF()*.8)}}
+  if(e.st==="in"&&d<470&&e.fc<=0){fireBolt(e,2.4);e.fc=(1.1+R()*.7)/frM();if(++e.n>=3){e.st="out";e.n=0;e.bx=rnd(-L,L);e.oy=rnd(VF()*.55,VF()*.8)}}
   if(e.st==="out"&&Math.abs(e.y-e.oy)<40){e.st="in";e.bx=rnd(-L*.8,L*.8);e.ay=rnd(170,300)}}
- else if(e.k==="c"){steer(e,cl(e.bx+Math.sin(e.t*.35+e.ph)*60,-L,L),e.ay,sp,1,dt);e.fc-=dt;e.tc-=dt;if(e.y<VF()){if(e.fc<=0){fireBolt(e,3.2);e.fc=2.6+R()}if(e.tc<=0){fireTorp(e);e.tc=7.5+R()*2}}}
- else{steer(e,cl(e.bx+Math.sin(e.t*.2)*40,-L*.6,L*.6),e.ay,sp,.6,dt);if(e.y>VF())return;e.fc-=dt;e.tc-=dt;if(e.fc<=0){fireBolt(e,3.5);e.fc=1.8+R()}if(e.tc<=0){[-40,0,40].forEach(o=>fireTorp(e,o));e.tc=10+R()*2}
+ else if(e.k==="c"){steer(e,cl(e.bx+Math.sin(e.t*.35+e.ph)*60,-L,L),e.ay,sp,1,dt);e.fc-=dt;e.tc-=dt;if(e.y<VF()){if(e.fc<=0){fireBolt(e,3.2);e.fc=(2.6+R())/frM()}if(e.tc<=0){fireTorp(e);e.tc=(7.5+R()*2)/frM()}}}
+ else{steer(e,cl(e.bx+Math.sin(e.t*.2)*40,-L*.6,L*.6),e.ay,sp,.6,dt);if(e.y>VF())return;e.fc-=dt;e.tc-=dt;if(e.fc<=0){fireBolt(e,3.5);e.fc=(1.8+R())/frM()}if(e.tc<=0){[-40,0,40].forEach(o=>fireTorp(e,o));e.tc=(10+R()*2)/frM()}
   if(e.lz>0){e.lz-=dt;if(e.lz<=0){e.lz=0;fireLance(e)}}else{e.lc-=dt;if(e.lc<=0){e.lz=3;e.lc=14+R()*4}}}}
 function fireLance(e){const dodge=B.evaT>0||B.sub.eng>0&&R()<evasion()*.3;B.fx.push({k:"beam",x:e.x,y:e.y,x1:B.sx+(dodge?B.evaDir*70:0),y1:SHF()-(dodge?0:10),t:0,life:.45});
  if(dodge)btMsg("Lance missed! Nice flying.",1);else hit(20*dmM(),"lance")}
-function hit(d,kind){let rem=d;if(B.shUp&&B.sub.shd>0&&B.sh>0){const a=Math.min(B.sh,kind==="lance"?d*.5:d);B.sh-=a;rem=d-a;B.shHit=.4}B.shT=B.t;
+function hit(d,kind){let rem=d;if(B.shUp&&B.sub.shd>0&&B.sh>0){const a=Math.min(B.sh,kind==="lance"?d*.5:kind[0]==="t"?d*.6:d);B.sh-=a;rem=d-a;B.shHit=.4}B.shT=B.t;
  if(rem>.01){S.hull=cl(S.hull-rem);B.taken+=rem;B.flash=Math.min(.55,.15+rem*.03);B.shake=Math.max(B.shake,Math.min(9,2+rem*.5));
   if(R()<Math.min(.7,.1+rem/14)){const k=pick(SUBS)[0],was=B.sub[k];B.sub[k]=Math.max(0,was-rnd(25,55));
    if(was>0&&B.sub[k]<=0){subOff(k);btMsg(`${subN(k)} knocked offline! Send a repair crew.`,1)}else if(was>=50&&B.sub[k]<50)btMsg(`${subN(k)} damaged.`,1)}
@@ -1126,7 +1157,7 @@ function dmgE(e,d){if(e.dead)return;e.hp-=d;e.fl=.12;if(e.hp>0)return;const T=ET
 function pdTarget(){const X=B.sx,Y=SHF(),dd=o=>hyp(o.x,o.y,X,Y),inR=o=>dd(o)<PDR,s=selE();const tor=B.pj.filter(p=>p.k==="t"&&!p.pass&&!p.dead&&inR(p)).sort((a,b)=>dd(a)-dd(b));
  if(B.pdMode==="int"){if(tor[0])return tor[0];const f=live().filter(e=>e.k==="f"&&!e.dead&&inR(e)).sort((a,b)=>dd(a)-dd(b))[0];return f||(s&&!s.gh&&inR(s)?s:null)}
  if(s&&!s.gh&&inR(s))return s;return tor.find(p=>dd(p)<240)||null}
-function pdShot(tg){const st=state(),acc=(tg.k==="t"?.6:tg.k==="f"?.5:.93)*(st==="ramp"||st==="frac"?.72:st==="flick"?.88:1),h=R()<acc;
+function pdShot(tg){const st=state(),acc=(tg.k==="t"?.6:tg.k==="f"?.56*(1-.45*Math.min(1,hyp(tg.x,tg.y,B.sx,SHF())/PDR)):.93)*(st==="ramp"||st==="frac"?.72:st==="flick"?.88:1),h=R()<acc;
  let side=B.trS=B.trS^1;if(B.sub[side?"pdB":"pdA"]<=0)side^=1;const o=shipPt(4,side?12:-12);B.pdAim=Math.atan2(scY(tg.x,tg.y)-scY(o.x,o.y),scX(tg.x,tg.y)-scX(o.x,o.y));
  const m=h?0:28;B.tr.push({x0:o.x,y0:o.y,x1:tg.x+rnd(-m,m),y1:tg.y+rnd(-m,m),t:.07});if(B.tr.length>40)B.tr.shift();B.shots++;
  if(h){B.hits++;if(tg.k==="t"){tg.hp-=2.4;if(tg.hp<=0){tg.dead=true;boom(tg.x,tg.y,.6,"#a5f3fc");ftxt(tg.x,tg.y,"Intercepted","#a5f3fc")}}else dmgE(tg,2.4)}}
@@ -1150,7 +1181,7 @@ function slUpd(dt){for(const s of B.sl){for(let i=0;i<4&&s.t<1.4;i++){s.x+=s.vx*
   if(e){const d=macDmg();B.hits++;ftxt(e.x,e.y,"−"+d,"#fde68a");boom(s.x,s.y,1.4,"#fde68a");dmgE(e,d);s.t=9;break}}s.t+=dt}B.sl=B.sl.filter(s=>s.t<1.4)}
 function step(dt){B.t+=dt;B.flash=Math.max(0,B.flash-dt*1.5);B.shake=Math.max(0,B.shake-dt*20);B.shHit=Math.max(0,B.shHit-dt);B.arcCd=Math.max(0,B.arcCd-dt);B.evaCd=Math.max(0,B.evaCd-dt);
  B.evaT=Math.max(0,B.evaT-dt);B.sx=B.evaT>0?Math.sin((1-B.evaT/B.evaDur)*Math.PI)*45*B.evaDir:0;
- if(B.sub.shd<=0)B.sh=0;else if(B.t-B.shT>(B.shUp?2.2:.4))B.sh=Math.min(shMax(),B.sh+shRate()*(B.shUp?1:1.8)*dt);
+ if(B.sub.shd<=0)B.sh=0;else{const calm=B.t-B.shT>(B.shUp?2:.4);B.sh=Math.min(shMax(),B.sh+shRate()*(B.shUp?1:1.8)*(calm?1:B.shUp?.2:1)*dt)}
  if(B.macCh&&B.sub.mac>0){B.macC=Math.min(1,B.macC+dt/macCT());if(B.macC>=1)B.macCh=false}
  if(B.lock){const e=B.en.find(x=>x.id===B.lock.id&&!x.dead);if(!e)B.lock=null;else if((B.lock.t+=dt)>=B.lock.need){B.salvo={id:e.id,n:B.sub.arc<50?4:6,i:0,t:0};B.lock=null;B.arcCd=arcCD()}}
  if(B.salvo&&(B.salvo.t-=dt)<=0){const s=B.salvo,sd=s.i%2?1:-1,o=shipPt(-26,12*sd);B.ms.push({x:o.x,y:o.y,vx:110*sd,vy:60,sp:120,tid:s.id,life:5,tr:[]});s.i++;s.t=.09;if(s.i>=s.n)B.salvo=null}
@@ -1165,7 +1196,7 @@ function btEnd(res){if(!B||B.res)return;B.res=res;B.pdOn=false;B.cl=null;const n
  if(res==="win"){cr+=Math.round(5*B.diff*B.waves.length);sv+=B.diff;S.mor=cl(S.mor+6);S.cbt.w++;S.exp[sec.id]=Math.min(100,(S.exp[sec.id]||0)+8);if(B.fol>B.ovr&&!S.frac){addR(-3,now);B.rmpD-=3}}
  else if(res==="lose"){cr=Math.round(cr*.5);sv=0;S.hull=0;S.mor=cl(S.mor-12);addR(6,now);B.rmpD+=6;S.cbt.l++}
  else{cr=Math.round(cr*.5);sv=Math.floor(sv*.5);S.mor=cl(S.mor-5);S.fuel=cl(S.fuel-6);S.cbt.r++}
- S.cr+=cr;S.slv+=sv;S.cbt.k+=kills;B.rew={cr,sv,kills};
+ S.cr+=cr;S.slv+=sv;S.cbt.k+=kills;B.rew={cr,sv,kills};S.bsnap=null;if(B.tut)tutEnd();
  const ln=S.frac?"":res==="win"?(B.fol>=B.ovr?pick(["We make a good team, Captain.","Clean work. I logged every one of your calls.","That's how it's done. Together."]):"We won. Next time, listen to me a little more?"):res==="lose"?"Emergency jump… I've got us. Get the hull patched before we fight again.":"Jump complete. We live to fight another day.";
  if(ln)line(ln);B.aline=ln;
  log(now,res==="win"?"ok":"bad",res==="win"?`Victory in ${sec.n}: ${kills} kills. +${cr} credits, +${sv} salvage.`:res==="lose"?`Frigate crippled in ${sec.n}. Emergency jump. Hull breached; morale −12. Kept ${cr} credits.`:`Retreated from ${sec.n} by emergency jump. +${cr} credits, +${sv} salvage.`);
@@ -1194,7 +1225,7 @@ function hud(){if(!B||!cbBuilt)return;const st=state(),L=live(),hl=Math.round(S.
  const eo=B.sub.eng<=0;wSet("eva",eo?"Offline":B.evaT>0?"Evading!":B.evaCd>0?`Recharging ${Math.ceil(B.evaCd)}s`:`Ready · ${Math.round(evasion()*100)}% dodge`,eo?0:B.evaCd>0?(1-B.evaCd/B.evaMax)*100:100,eo?"off":B.evaT>0?"on":B.evaCd<=0?"rdy":"");
  const e=selE();if(e&&!e.gh){const th=thrL(threat(e));EL.cbTgt.innerHTML=`<span class="cb-lk">◎ ${esc(eName(e))}</span><span class="cb-hp"><i style="width:${e.hp/e.mx*100}%"></i></span><span class="num">${Math.ceil(e.hp)}/${Math.round(e.mx)}</span><span class="num mu">${km(hyp(e.x,e.y,B.sx,SHF()))} · ${brg(e)}°</span><span style="color:${th[1]};font-weight:600">${th[0]}</span>`}
  else EL.cbTgt.innerHTML=`<span class="mu">No lock. Tap a contact in the tactical view${matchMedia("(min-width:900px)").matches?" or press Tab":""}.</span>`;
- const used=B.pw[0]+B.pw[1]+B.pw[2];EL.pwFree.textContent=`${used}/12${used<12?` · ${12-used} free`:""}`;
+ const used=B.pw[0]+B.pw[1]+B.pw[2];EL.pwFree.textContent=`${used}/12${used<12?` · ${12-used} free`:""}`;EL.cbTpw.textContent=`Power · ${B.pw.join("/")}`;tutHud();
  B.pw.forEach((v,i)=>{[...EL["pw"+i].children].forEach((p,j)=>p.classList.toggle("on",j<v))});
  EL.pwe0.textContent=`PD ${Math.round(pdRate()*10)/10}/s · MAC ${macCT().toFixed(1)}s · Archer ${Math.round(arcCD())}s`;EL.pwe1.textContent=`Recharge ${shRate().toFixed(1)}/s · max ${sm}`;EL.pwe2.textContent=`Evasion ${Math.round(evasion()*100)}% · dodge every ${Math.round(evaCD())}s`;
  let dmg=0;SUBS.forEach(([k])=>{const v=Math.round(B.sub[k]),c=!!B.crew[k];if(v<100)dmg++;EL["rp_"+k].className="cb-sub "+(c?"fix":v<=0?"dead":v<50?"dmg":v<100?"dmg lo":"");
@@ -1276,20 +1307,21 @@ function drawSel(st){const c=cx;
  c.font="500 10.5px Inter,system-ui,sans-serif";c.fillStyle="#8a90a2";c.fillText(l2,lx+8,ly+34);c.fillStyle=th[1];c.font="700 10.5px Inter,system-ui,sans-serif";c.fillText(l3,lx+8,ly+46)}
 function rBt(){const sec=secOf(S.voy?S.voy.sec:S.sel),d=difOf(sec.id),W=mkWaves(d),why=btBlock(),c=S.cbt,thr=n=>`<span class="sh-thr" aria-label="Threat ${n} of 5">${[1,2,3,4,5].map(i=>`<i class="${i<=n?"on":""}"></i>`).join("")}</span>`;
  const blips=S.pend.map((p,i)=>{const a=-2.6+i*.9+difOf(p.sec)*.1,r=60+difOf(p.sec)*9;return `<circle cx="${(170+Math.cos(a)*r).toFixed(1)}" cy="${(130+Math.sin(a)*r).toFixed(1)}" r="3.5" fill="${p.fac==="innie"?"#fb923c":"#e879f9"}" class="sh-spark"/>`}).join("");
+ const bs=S.bsnap,resB=bs?`<div class="sh-ev" style="margin-bottom:10px;border-color:rgba(251,191,36,.45)"><div class="xs mu">Unfinished battle · ${FT.format(bs.at||Date.now())}</div><div class="q">Battle in ${esc(secOf(bs.secId).n)} · wave ${Math.max(1,(bs.w|0)+1)} of ${bs.waves.length}</div><div class="xs mu">Pick up where you left off, or stand down and get the fuel and supplies back.</div><div class="row" style="gap:8px;justify-content:flex-start;margin-top:8px"><button class="btn pri sm" data-a="bres">Resume battle</button><button class="btn sm" data-a="babn">Abandon · refund</button></div></div>`:"";
  $("shBt").innerHTML=`<div class="lbl"><span>Battle stations</span><span class="pill ${S.pend.length?"warn":"ac"} num">${S.pend.length?`${S.pend.length} contact${S.pend.length>1?"s":""}`:`${c.w}W · ${c.l}L${c.r?` · ${c.r}R`:""}`}</span></div>
  <div class="sh-radar"><svg viewBox="0 0 340 130" preserveAspectRatio="xMidYMax meet" aria-hidden="true">${[40,80,120].map(r=>`<circle cx="170" cy="130" r="${r}" fill="none" stroke="rgba(45,212,191,.16)" stroke-dasharray="2 4"/>`).join("")}<path d="M170 130V8M50 130h240" stroke="rgba(45,212,191,.12)"/>
  <g class="sh-sweep"><path d="M170 130L170 10A120 120 0 0 1 230 26Z" fill="rgba(45,212,191,.10)"/></g>${blips}<path d="M170 112l-6 14h12z" fill="var(--ac)"/></svg>
- <div class="sh-skytag"><span>${S.pend.length?"Hostiles on scope":"Scopes clear"}</span><span class="num">${c.k} kills</span></div></div>
+ <div class="sh-skytag"><span>${S.pend.length?"Hostiles on scope":"Scopes clear"}</span><span class="num">${c.k} kills</span></div></div>${resB}
  <div class="row"><div style="min-width:0"><div class="mid" style="font-size:18px">${esc(sec.n)}</div><div class="xs mu">Threat ${thr(d)} · ${W.length} waves${W[W.length-1].b?" · cruiser at the end":""}</div></div><span class="pill warn num" title="Salvage">⚙ ${S.slv}</span></div>
  ${S.pend.map((p,i)=>`<div class="sh-ev" style="margin-top:10px"><div class="xs mu">${esc(p.src)} · ${FT.format(p.t)}</div><div class="q">${p.fac==="innie"?"Insurrectionist raiders":"Covenant patrol"} near ${esc(secOf(p.sec).n)}</div><div class="xs mu">Threat ${difOf(p.sec)}/5 · a win pays out credits and salvage</div><div class="row" style="gap:8px;justify-content:flex-start;margin-top:8px"><button class="btn pri sm" data-a="eng:${i}" ${why?"disabled":""}>Engage</button><button class="btn sm" data-a="slip:${i}">Slip away · fuel −5</button></div></div>`).join("")}
- <button class="btn ${S.pend.length?"":"pri"}" style="width:100%;margin-top:12px" data-a="skirm" ${why?"disabled":""}>Skirmish in ${esc(sec.n)}</button>
+ <button class="btn ${S.pend.length?"":"pri"}" style="width:100%;margin-top:12px" data-a="skirm" ${why||bs?"disabled":""}>Skirmish in ${esc(sec.n)}</button>
  <div class="xs ${why?"":"mu"}" style="margin-top:8px;${why?"color:var(--bad)":""}">${why||"Costs fuel 3 and supplies 2. Pick a sector on the star map for tougher fights and bigger payouts."}</div>
  <details class="sh-help" id="shHelpD" ${openD.has("shHelpD")?"open":""}><summary>How to fight</summary><ul>
  <li><b>Tap a contact</b> to lock it. The lock shows its hull, range and threat.</li>
  <li><b>PD turrets</b> fire fast but overheat. <b>Track</b> hits your locked target; <b>Intercept</b> shoots down torpedoes.</li>
  <li><b>Archer pods</b> lock on, then fire a homing salvo. Then they reload.</li>
  <li><b>MAC</b>: tap to charge, then tap again to fire at the gold lead marker. Huge damage, slow round.</li>
- <li><b>Shields</b> soak hits. Lower them to recharge faster. <b>Evasive</b> dodges bolts and the cruiser's lance.</li>
+ <li><b>Shields</b> soak hits and grow with shield power. Torpedoes punch partly through, so intercept them. <b>Evasive</b> dodges bolts and the cruiser's lance.</li>
  <li><b>Power</b> moves 12 reactor pips between weapons, shields and engines. <b>Repairs</b> sends crews to knocked-out systems.</li>
  <li><b>${AI}</b> calls targets. Following her calms her; overruling her unsettles her. A rampant ${AI} glitches your targeting.</li></ul></details>`}
 /* ---------- wiring ---------- */
@@ -1297,7 +1329,7 @@ function onClick(e){const b=e.target.closest("[data-a]");if(!b||b.disabled)retur
  if(a==="act")doAct(x);else if(a==="launch")launch();else if(a==="sel"){if(!S.voy){S.sel=x;save();render()}else toast("Choose a new sector after the ship returns.")}
  else if(a==="dur"){S.dur=x;save();render()}else if(a==="ev")resolve(+x,y);else if(a==="up")buy(x);else if(a==="paint")paint(+x);
  else if(a==="rename")mOpen({k:"name"});else if(a==="star")mOpen({k:"name",star:1});else if(a==="talk")openTalk();else if(a==="pz")cbNew(false);else if(a==="df")dfNew(false);
- else if(a==="skirm")btStart({});else if(a==="eng"){const p=S.pend[+x];if(p&&btStart({sec:p.sec,fac:p.fac,src:p.src})){S.pend.splice(+x,1);save();render()}}
+ else if(a==="skirm")btStart({});else if(a==="bres")btResume();else if(a==="babn")btAbandon();else if(a==="eng"){const p=S.pend[+x];if(p&&btStart({sec:p.sec,fac:p.fac,src:p.src})){S.pend.splice(+x,1);save();render()}}
   else if(a==="slip"){const p=S.pend[+x];if(p){S.pend.splice(+x,1);S.fuel=cl(S.fuel-5);S.mor=cl(S.mor-3);log(now,"voy",`Slipped away from hostiles near ${secOf(p.sec).n}. Fuel −5, morale −3.`);save();render();toast("Contact avoided. Fuel −5, morale −3.")}}
   else if(a==="ask")askOpinion();else if(a==="share")share();else if(a==="rest")rest();else if(a==="gm")greet();else if(a==="quest")quest()}
 function onM(e){if(e.target.id==="shm")return mClose();const b=e.target.closest("[data-m]");if(!b||b.disabled||!MD)return;const [m,x]=b.dataset.m.split(":");
@@ -1313,13 +1345,17 @@ function build(){$("ship").innerHTML=`<div class="grid"><div class="card w2" id=
  addEventListener("keydown",e=>{if(e.key==="Escape"&&MD)mClose()});built=true}
 function enter(){S=S||load();if(!built)build();on=true;$("ship").classList.add("act");const now=Date.now(),r=sim(now);
  if(!S.voy&&!S.ev.length&&now-S.lastEv>6*H){S.ev.push(mkEv(now,"Shipboard"));S.lastEv=now}
- save();render();clearInterval(iv);iv=setInterval(tick,1e3);
+ save();render();clearInterval(iv);iv=setInterval(tick,1e3);grantMsg();
  if(r&&r.dt>=1){const f=(k,n)=>{const d=Math.round(S[k]-r.b[k]);return d?`${n} ${d>0?"+":"−"}${Math.abs(d)}`:""};
   toast(`Away ${fmtD(r.dt*H)}: `+[f("hull","hull"),f("fuel","fuel"),f("mor","morale"),f("sup","supplies"),f("rmp","rampancy")].filter(Boolean).join(", ")+(S.ret?`. Back from ${S.ret.sec}: +${S.ret.cr} cr.`:"."));S.ret=null;save()}
+ else if(S.bsnap&&!B)toast("You left a battle unfinished. Resume it from Battle stations.");
  else if(S.ret){toast(`Back from ${S.ret.sec}: +${S.ret.cr} credits${S.ret.n?`, ${S.ret.n} decision${S.ret.n>1?"s":""} waiting`:""}${S.ret.con?". Hostile contact: battle stations!":""}.`);S.ret=null;save()}}
+function grantMsg(){if(S&&S.slvMsg){delete S.slvMsg;save();setTimeout(()=>toast("Quartermaster grant: +10 salvage so you can start buying upgrades."),3200)}}
 function leave(){if(B&&!B.res)btPause(true);if(!on)return;on=false;clearInterval(iv);$("ship").classList.remove("act");if(S)save()}
+addEventListener("pagehide",()=>{if(B&&!B.res){snap();save()}});
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="visible"&&B&&!B.res)btPause(true);if(!on)return;if(document.visibilityState==="visible")enter();else save()});
-return{active:v=>v?enter():leave(),get S(){return S},get B(){return B},skirmish:o=>btStart(o),scr:e=>({x:scX(e.x,e.y),y:scY(e.x,e.y)}),get MD(){return MD},reload(){S=load();if(on)render()},KEY};
+return{active:v=>v?enter():leave(),get S(){return S},get B(){return B},skirmish:o=>btStart(o),scr:e=>({x:scX(e.x,e.y),y:scY(e.x,e.y)}),get MD(){return MD},reload(){S=load();if(on)render()},KEY,
+ _dbg:{step:dt=>{if(B&&!B.res){step(dt);fxStep(dt)}},cmd:c=>{const [a,x,y]=String(c).split(":");cbCmd(a,x,y)},threat:e=>threat(e),ev:()=>evasion(),shMax:()=>shMax()}};
 })();
 
 /* ================= START ================= */
