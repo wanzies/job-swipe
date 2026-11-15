@@ -43,7 +43,7 @@ function render(){deck.innerHTML="";const left=jobs.map((j,i)=>i).filter(i=>!res
  <div class="chips"><span class="chip">💰 ${j.pay}</span><span class="chip">📍 ${j.loc}</span><span class="chip">⏳ ${j.close}</span></div>
  <p class="why">✅ ${j.why}</p><p class="risk">⚠️ Main risk: ${j.risk}</p>
  ${j.fit?`<details><summary>More details</summary><div class="sec">Fit</div><p>${j.fit}</p><div class="sec">Welfare</div><p>${j.wel}</p></details>`:''}
- <p style="margin-top:12px"><a href="${j.R}" target="_blank">${j.R.includes("spreadsheets")?"📊 Open shortlist sheet ↗":/mycareersfuture|changiairport/.test(j.R)?"🔗 Open job ad ↗":"📄 Open resume ↗"}</a></p>`;
+ ${j.R?`<p style="margin-top:12px"><a href="${j.R}" target="_blank">${j.R.includes("spreadsheets")?"📊 Open shortlist sheet ↗":/mycareersfuture|changiairport/.test(j.R)?"🔗 Open job ad ↗":"📄 Open resume ↗"}</a></p>`:`<p style="margin-top:12px;opacity:.7">Resume held back until this role is vetted.</p>`}`;
  deck.appendChild(c)});drag(deck.lastChild)}
 function decide(c,v){const i=c.dataset.i;res[i]=v;localStorage.setItem(KEY,JSON.stringify(res));
  const x=v==="pass"?-600:v==="yes"?600:0,y=v==="love"?-800:0;c.style.transition="transform .35s ease";c.style.transform=`translate(${x}px,${y}px) rotate(${x/20}deg)`;
