@@ -1,0 +1,75 @@
+{
+ "date": "2026-11-16",
+ "hijri": "6 Jamadilakhir 1448",
+ "fast": {
+  "type": "Sunnah fast · Monday (today)",
+  "date": "2026-11-16",
+  "why": "Today is Monday, a day deeds are presented to Allah. If you haven't eaten since Subuh, you can still make your niyyah for a sunnah fast before Zuhr. Next sunnah fast: Thursday 19 Nov.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "Time and strength: the ability to get up, walk and work today is a gift many cannot count on. Today, say 'Alhamdulillah' after each solat for the strength to carry your day, and thank one teammate who helped you.",
+ "verse": {
+  "ref": "At-Talaq 65:3",
+  "text": "And whoever relies upon Allah, then He is sufficient for him. Indeed, Allah will accomplish His purpose.",
+  "url": "https://quran.com/65/3"
+ },
+ "hadith": {
+  "ref": "Sahih Muslim 2664",
+  "text": "The strong believer is better and more beloved to Allah than the weak believer, though there is good in both. Strive for what benefits you, seek help from Allah, and do not feel helpless.",
+  "url": "https://sunnah.com/muslim:2664"
+ },
+ "lesson": {
+  "title": "Fasting (Shafi'i): the niyyah",
+  "text": "In the Shafi'i school, an obligatory fast such as Ramadan needs the niyyah made every night, before Subuh (based on Abu Dawud 2454). A sunnah fast is more flexible: if you haven't eaten or drunk since Subuh, you may make the niyyah before Zuhr (based on Aisha's hadith, Sahih Muslim 1154). So even on a busy Monday you can still catch the reward of a sunnah fast.",
+  "url": "https://sunnah.com/muslim:1154"
+ },
+ "name": {
+  "ar": "اللطيف",
+  "tr": "Al-Latif",
+  "meaning": "The Subtle, the Gentle",
+  "text": "\"Does He who created not know, while He is the Subtle, the Acquainted?\" (67:14). He brings ease through paths you don't notice, in ways you only understand later.",
+  "url": "https://quran.com/67/14"
+ },
+ "pm": {
+  "name": {
+   "ar": "الوكيل",
+   "tr": "Al-Wakil",
+   "meaning": "The Trustee, the Disposer of affairs",
+   "text": "\"Sufficient for us is Allah, and He is the best Disposer of affairs\" (3:173). Hand over tomorrow's worries to Him before you sleep.",
+   "url": "https://quran.com/3/173"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}
