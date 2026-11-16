@@ -133,7 +133,7 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 /* ship (frigate companion game) */
 #ship{--aic:#38bdf8}
 #ship:not(.act) *{animation-play-state:paused!important}
-.sh-sky{position:relative;height:178px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);background:radial-gradient(70% 120% at 65% 45%,rgba(56,189,248,.10),transparent 62%),radial-gradient(50% 80% at 10% 100%,rgba(167,139,250,.08),transparent 70%),var(--bg)}
+.sh-sky{position:relative;height:186px;border-radius:12px;overflow:hidden;border:1px solid var(--bd);background:radial-gradient(70% 120% at 65% 45%,rgba(56,189,248,.10),transparent 62%),radial-gradient(50% 80% at 10% 100%,rgba(167,139,250,.08),transparent 70%),var(--bg)}
 .sh-sky::before,.sh-sky::after{content:"";position:absolute;inset:0;background-repeat:repeat;pointer-events:none}
 .sh-sky::before{background-image:radial-gradient(1px 1px at 12px 22px,rgba(255,255,255,.75),transparent 1.5px),radial-gradient(1px 1px at 74px 118px,rgba(255,255,255,.55),transparent 1.5px),radial-gradient(1.5px 1.5px at 132px 64px,rgba(255,255,255,.8),transparent 2px),radial-gradient(1px 1px at 46px 150px,rgba(255,255,255,.45),transparent 1.5px),radial-gradient(1px 1px at 104px 8px,rgba(255,255,255,.5),transparent 1.5px);background-size:160px 170px;animation:sh-d1 46s linear infinite}
 .sh-sky::after{background-image:radial-gradient(1px 1px at 30px 60px,rgba(186,230,253,.5),transparent 1.5px),radial-gradient(1px 1px at 190px 20px,rgba(255,255,255,.35),transparent 1.5px),radial-gradient(1px 1px at 140px 140px,rgba(255,255,255,.3),transparent 1.5px);background-size:240px 170px;animation:sh-d2 110s linear infinite}
@@ -146,6 +146,16 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 @keyframes sh-pulse{50%{opacity:.55;transform:scaleX(.82)}}
 .sh-shd{animation:sh-shim 5s ease-in-out infinite}@keyframes sh-shim{50%{opacity:.45}}
 .sh-spark{animation:sh-spk 1.1s steps(2) infinite}@keyframes sh-spk{50%{opacity:0}}
+.sh-sky svg.sh-shp.fa{width:min(100%,460px)}
+.fa-tur{animation:fa-tur 11s ease-in-out infinite}@keyframes fa-tur{0%,100%{transform:rotate(-28deg)}30%{transform:rotate(32deg)}55%{transform:rotate(8deg)}80%{transform:rotate(-40deg)}}
+.fa-blk{animation:fa-blk 1.6s steps(1) infinite}@keyframes fa-blk{0%{opacity:1}12%{opacity:.15}}
+.fa-stb{animation:fa-stb 2.2s linear infinite}@keyframes fa-stb{0%,6%{opacity:1}7%,100%{opacity:.08}}
+.fa-vent{animation:fa-vent 2.4s ease-in-out infinite}@keyframes fa-vent{50%{opacity:.35}}
+.fa-mac{animation:fa-vent 3s ease-in-out infinite}
+.fa-engs{animation:fa-eng 1.4s ease-in-out infinite}@keyframes fa-eng{50%{opacity:.72}}
+.fa-shd{animation:sh-shim 4s ease-in-out infinite}.fa-shs{animation:fa-shs 6s linear infinite}@keyframes fa-shs{to{stroke-dashoffset:-134}}
+.fa-spk{animation:sh-spk .5s steps(2) infinite}.fa-emb{animation:fa-vent 1.3s ease-in-out infinite}
+.fa-vnt{animation:fa-vnt 1.8s ease-out infinite;transform-box:fill-box;transform-origin:center}@keyframes fa-vnt{0%{transform:translate(0,0) scale(.3);opacity:.9}100%{transform:translate(9px,-5px) scale(2.4);opacity:0}}
 .sh-skytag{position:absolute;left:10px;bottom:8px;right:10px;display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--mu);pointer-events:none}
 .sh-name{background:none;border:0;padding:0;cursor:pointer;font-weight:700;font-size:17px;letter-spacing:-.02em;text-align:left;display:inline-flex;align-items:center;gap:6px}
 .sh-name svg{width:14px;height:14px;stroke:var(--mu);fill:none;stroke-width:2}
@@ -667,6 +677,196 @@ function loadNews(){const q=encodeURIComponent("https://news.google.com/rss/sear
  .catch(()=>{$("nwT").textContent="Offline";$("news").textContent="Headlines unavailable right now."})}
 
 /* ================= SHIP · frigate companion game. Own storage key "jobswipe-frigate-v1"; not linked to to-dos, prayers, rest or money ================= */
+/* ---------- frigate art: original procedural three-quarter model (no external assets) ---------- */
+const FART=(()=>{
+const N=a=>{const l=Math.hypot(a[0],a[1],a[2])||1;return[a[0]/l,a[1]/l,a[2]/l]},sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
+const hx=h=>{const n=parseInt(h.slice(1),16);return[n>>16&255,n>>8&255,n&255]},mx=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
+const cs=(c,a)=>{const r=c.map(v=>Math.round(Math.max(0,Math.min(255,v))));return a==null?`rgb(${r})`:`rgba(${r},${a})`},scl=(c,k)=>c.map(v=>v*k);
+const cen=p=>{let x=0,y=0,z=0;for(const q of p){x+=q[0];y+=q[1];z+=q[2]}return[x/p.length,y/p.length,z/p.length]};
+function newell(p){let a=0,b=0,c=0;for(let i=0;i<p.length;i++){const u=p[i],v=p[(i+1)%p.length];a+=(u[1]-v[1])*(u[2]+v[2]);b+=(u[2]-v[2])*(u[0]+v[0]);c+=(u[0]-v[0])*(u[1]+v[1])}return[a,b,c]}
+/* cross-sections in (y,z): chamfered rectangle, octagon */
+const rq=(y0,y1,zb,zt,ct,cb)=>{ct=ct||0;cb=cb==null?ct:cb;return[[y0+ct,zt],[y1-ct,zt],[y1,zt-ct],[y1,zb+cb],[y1-cb,zb],[y0+cb,zb],[y0,zb+cb],[y0,zt-ct]]};
+const oc=(r,yc,zc)=>Array.from({length:8},(_,i)=>{const a=(i+.5)*Math.PI/4;return[yc+Math.cos(a)*r,zc+Math.sin(a)*r]});
+function mkPart(P,m,o){const pt={f:[],L:o.L??2,o:o.o||0,dc:[],m};P.push(pt);return pt}
+function addF(pt,p,ref,m,ex){let n=newell(p);const a=Math.hypot(n[0],n[1],n[2]);if(a<1e-3)return;n=[n[0]/a,n[1]/a,n[2]/a];const c=cen(p);
+ if(dot(n,sub(c,ref))<0){p=p.slice().reverse();n=[-n[0],-n[1],-n[2]]}pt.f.push(Object.assign({p,n,c,m,ar:a/2},ex||{}))}
+/* loft along x through sections [[x,[[y,z]..]],..] */
+function loft(P,secs,m,o){o=o||{};const pt=mkPart(P,m,o),n=secs[0][1].length,sc=secs.map(([x,q])=>cen(q.map(([y,z])=>[x,y,z])));
+ for(let i=0;i<secs.length-1;i++){const [x0,q0]=secs[i],[x1,q1]=secs[i+1],ref=lerp(sc[i],sc[i+1],.5);
+  for(let j=0;j<n;j++){const k=(j+1)%n,q=[[x0,...q0[j]],[x0,...q0[k]],[x1,...q1[k]],[x1,...q1[j]]];addF(pt,q,ref,m,{pl:o.pl,q})}}
+ const ca=o.caps||[1,1],xa=secs[0][0],xb=secs[secs.length-1][0],dx=Math.sign(xb-xa)||1;
+ if(ca[0])addF(pt,secs[0][1].map(([y,z])=>[xa,y,z]),[xa+dx,sc[0][1],sc[0][2]],o.capM||m,{cap:1});
+ if(ca[1])addF(pt,secs[secs.length-1][1].map(([y,z])=>[xb,y,z]),[xb-dx,sc[sc.length-1][1],sc[sc.length-1][2]],o.capM2||o.capM||m,{cap:2});return pt}
+/* vertical extrusion of an (x,y) polygon */
+function ext(P,poly,z0,z1,m,o){o=o||{};const pt=mkPart(P,m,o),c=cen(poly.map(([x,y])=>[x,y,(z0+z1)/2]));
+ for(let i=0;i<poly.length;i++){const a=poly[i],b=poly[(i+1)%poly.length];addF(pt,[[a[0],a[1],z0],[b[0],b[1],z0],[b[0],b[1],z1],[a[0],a[1],z1]],c,m)}
+ addF(pt,poly.map(([x,y])=>[x,y,z1]),c,o.topM||m,{cap:1});addF(pt,poly.map(([x,y])=>[x,y,z0]),c,m,{cap:1});return pt}
+const ring=(r,xc,yc,n)=>Array.from({length:n||8},(_,i)=>{const a=(i+.5)*Math.PI*2/(n||8);return[xc+Math.cos(a)*r,yc+Math.sin(a)*r]});
+function rng(s){return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646}}
+/* key positions (model units: x bow+, y starboard+, z up) */
+const K={pd:[[6,-8.6,12.2],[6,8.6,12.2]],arc:[[60,-12.3,16.5],[60,12.3,16.5]],noz:[[-109,-8,2.5],[-109,8,2.5],[-109,-8,-6],[-109,8,-6]],shd:[[-22,-13.2,10.4],[-22,13.2,10.4],[38.5,-16,16.5],[38.5,16,16.5]]};
+const muzX=mac=>mac?104+7*mac:103;
+function build(u){u=u||{};const P=[],sh=u.sh|0,mac=u.mac|0,sd=u.sd|0;
+ // main hull: armoured aft block, narrow waist, hammerhead prow
+ const hull=loft(P,[[-100,rq(-15,15,-11,9,4,5)],[-94,rq(-19,19,-14,12,5,6)],[-52,rq(-19,19,-14,12,5,6)],[-45,rq(-15,15,-12,10.5,4,5)],[30,rq(-14,14,-11,10,4,5)],[37,rq(-20,20,-20,16.5,5,9)],[82,rq(-20,20,-18,16.5,5,9)],[94,rq(-17,17,-12,16,4,6)],[103,rq(-10,10,-3,12,3,3)]],"h",{L:1,pl:1});
+ hull.base=1;
+ // ventral keel
+ loft(P,[[-76,rq(-6,6,-20,-12,0,3)],[-60,rq(-7,7,-23,-12,0,3.5)],[16,rq(-6,6,-19.5,-10,0,3)],[30,rq(-4,4,-14,-10,0,2)]],"d",{L:0,pl:1});
+ // engines: four nozzles + housing
+ loft(P,[[-98,rq(-14,14,-11,7,3,3)],[-103,rq(-13,13,-10,6,3,3)]],"d",{L:0});
+ K.noz.forEach(([x,y,z])=>loft(P,[[-101,oc(4.4,y,z)],[-104,oc(4.6,y,z)],[-109,oc(5.8,y,z)]],"m",{L:0,caps:[0,1],capM:"n"}));
+ // stern sponsons with wingtip pods
+ [-1,1].forEach(s=>{const y=v=>s*v,sec=(a,b,zb,zt,c)=>rq(Math.min(y(a),y(b)),Math.max(y(a),y(b)),zb,zt,c,c),L=s>0?2:0;
+  loft(P,[[-97,sec(17,27,-6,-1,1)],[-72,sec(17,27,-6,-1,1)],[-60,sec(17,19.5,-5,-2,.8)]],"h",{L,pl:1});
+  loft(P,[[-100,oc(2,y(28),-3.5)],[-96,oc(2.6,y(28),-3.5)],[-74,oc(2.6,y(28),-3.5)],[-68,oc(1.2,y(28),-3.5)]],"m",{L});
+  loft(P,[[-44,sec(14.6,16,-4,-2,.5)],[29,sec(13.6,15,-4,-2,.5)]],"m",{L});loft(P,[[38,sec(19.6,21,-8,-6,.5)],[84,sec(19.6,21,-8,-6,.5)]],"m",{L});
+  // armour plates (shield upgrade)
+  const pl=(x0,x1,yy,zb,zt)=>loft(P,[[x0,sec(yy,yy+1.4,zb,zt,.6)],[x1,sec(yy,yy+1.4,zb,zt,.6)]],"a",{L,pl:1});
+  if(sh>=1){pl(-40,-16,13.6,-7,6);pl(-13,12,13.6,-7,6)}if(sh>=2){pl(44,62,19.6,-12,9);pl(64,78,19.6,-11,9)}if(sh>=3){pl(-90,-70,18.6,1,9.5);pl(-68,-55,18.6,1,9.5)}
+ });
+ // stepped superstructure + bridge
+ const s1=loft(P,[[-68,rq(-11,11,9,15,3,0)],[-14,rq(-10,10,9,15,3,0)],[-5,rq(-6,6,9,12.5,2.5,0)]],"h",{o:1,pl:1});
+ loft(P,[[-60,rq(-8,8,14,19.5,2.5,0)],[-26,rq(-7,7,14,19.5,2.5,0)],[-19,rq(-4.5,4.5,14,17,2,0)]],"h",{o:2,pl:1});
+ const br=loft(P,[[-52,rq(-5,5,18,23,1.5,0)],[-36,rq(-5,5,18,23,1.5,0)],[-32,rq(-4,4,18,20.6,1.2,0)]],"a",{o:3});
+ // prow armour cap and MAC spine housing
+ loft(P,[[41,rq(-9,9,15.5,18.2,2,0)],[80,rq(-9.5,9.5,15.5,18.2,2,0)],[92,rq(-7,7,15,17.2,2,0)]],"a",{o:1,pl:1});
+ loft(P,[[-7,rq(-3,3,9,13.2,1.2,0)],[42,rq(-3,3,9,13.2,1.2,0)]],"d",{o:1});
+ if(mac){const X=muzX(mac);loft(P,[[100,oc(3.7,0,4.5)],[X-2.5,oc(3.4,0,4.5)],[X-2,oc(4.5,0,4.5)],[X,oc(4.5,0,4.5)]],"m",{o:5,caps:[0,1],capM:"n"})}
+ // greebles: sensor blocks, vents, conduits
+ const r=rng(7331),gb=(x0,x1,y0,y1,z0,h,m,o)=>loft(P,[[x0,rq(y0,y1,z0,z0+h,Math.min(.8,h/3),0)],[x1,rq(y0,y1,z0,z0+h,Math.min(.8,h/3),0)]],m,{o:o||0});
+ for(let i=0;i<7;i++){const x=-92+i*3.6+r()*1.2,s=i%2?1:-1;gb(x,x+2.6,s>0?12.5:-17,s>0?17:-12.5,11.6,1+r()*1.6,r()<.5?"m":"d")}
+ for(let i=0;i<5;i++){const x=-38+i*8.5;if(Math.abs(x-6)<6)continue;[-1,1].forEach(s=>gb(x,x+5,s>0?9:-12.5,s>0?12.5:-9,10,.9+r(),"m"))}
+ gb(94,99,-5,5,15.2,1.4,"d",2);gb(-96,-90,-4,4,11.6,2.2,"m");
+ [-1,1].forEach(s=>gb(-80,-74,s>0?5:-8,s>0?8:-5,14.6,1.4,"d",2));
+ // point-defence turret rings
+ K.pd.forEach(([x,y])=>ext(P,ring(3.3,x,y),10,12.2,"m",{o:4,topM:"d"}));
+ // shield emitter nodes
+ K.shd.forEach(([x,y,z])=>ext(P,ring(1.5,x,y,6),z-.6,z+.9,"m",{o:2,topM:"e"}));
+ // slipspace vents (drive upgrade), as decals on the aft block side
+ hull.vents=sd;br.win=1;s1.mast=1;return P}
+/* ---------- projection ---------- */
+function mkProj(v){const ct=Math.cos(v.th),st=Math.sin(v.th),cp=Math.cos(v.ph),sp=Math.sin(v.ph),f=v.f||0;
+ const rot=p=>{const x1=p[0]*ct-p[1]*st,y1=p[0]*st+p[1]*ct;return[x1,y1*cp+p[2]*sp,-y1*sp+p[2]*cp]};
+ const P=p=>{const r=rot(p),s=f?f/(f-r[1]):1;return[r[0]*s*v.k+v.ox,-r[2]*s*v.k+v.oy,r[1]]};
+ P.vis=(n,c)=>{const rn=rot(n);if(!f)return rn[1]>.02;const rc=rot(c);return rn[0]*-rc[0]+rn[1]*(f-rc[1])+rn[2]*-rc[2]>.02};
+ P.aff=(c,u,w)=>{const a=P(c),b=P([c[0]+u[0],c[1]+u[1],c[2]+u[2]]),d=P([c[0]+w[0],c[1]+w[1],c[2]+w[2]]);return[b[0]-a[0],b[1]-a[1],d[0]-a[0],d[1]-a[1],a[0],a[1]]};return P}
+const LT=N([.22,.2,.95]),RIM=N([-.7,.55,.3]);
+function pal(p){const H=hx(p.h),Lc=hx(p.l);return{h:[H,Lc],a:[mx(H,Lc,.45),mx(Lc,[255,255,255],.25)],d:[[38,42,52],[78,86,102]],m:[[62,68,82],[128,138,156]],n:[[10,11,15],[30,32,40]],e:[[30,90,110],[120,220,250]]}}
+function col(m,n,PL){const [b,hi]=PL[m]||PL.h,d=Math.max(0,dot(n,LT)),r=Math.max(0,dot(n,RIM));const s=.1+.9*d;
+ let c=s<.62?mx(scl(b,.22),b,s/.62):mx(b,hi,(s-.62)/.38*.85);if(m!=="n")c=mx(c,[120,220,240],r*r*r*.28);return c}
+function prep(P,pr){const parts=P.map(pt=>({pt,d:pr(cen(pt.f.map(f=>f.c)))[2]})).sort((a,b)=>a.pt.L-b.pt.L||a.pt.o-b.pt.o||a.d-b.d);const out=[];
+ for(const {pt} of parts){const fs=pt.f.filter(f=>pr.vis(f.n,f.c)).map(f=>({f,d:pr(f.c)[2],s:f.p.map(pr)})).sort((a,b)=>a.d-b.d);out.push({pt,fs})}return out}
+/* panel seams for lofted faces */
+function seams(f,i){const q=f.q;if(!q||!f.pl||f.ar<10)return[];const L=[],a=q[0],b=q[1],c=q[2],d=q[3],len=Math.abs(d[0]-a[0]),n=Math.max(1,Math.round(len/12)),wd=Math.hypot(...sub(b,a)),r=rng(i*97+13);
+ for(let k=1;k<n;k++){const t=k/n+(r()-.5)*.04;L.push([lerp(a,d,t),lerp(b,c,t)])}
+ if(wd>7){const s=.38+r()*.24;for(let k=0;k<n;k++){const t0=k/n,t1=(k+1)/n,ss=k%2?s:1-s;L.push([lerp(lerp(a,b,ss),lerp(d,c,ss),t0+.01),lerp(lerp(a,b,ss),lerp(d,c,ss),t1-.01)])}}
+ if(wd>5&&len>10&&r()<.6){const t=.2+r()*.5,s=.2+r()*.4,dt=Math.min(.18,5/len),ds=Math.min(.3,3/wd),pt=(u,v)=>lerp(lerp(a,b,v),lerp(d,c,v),u);L.push([pt(t,s),pt(t+dt,s)],[pt(t+dt,s),pt(t+dt,s+ds)],[pt(t+dt,s+ds),pt(t,s+ds)],[pt(t,s+ds),pt(t,s)])}return L}
+/* decals: windows, hull text, vents, hatches; each returns 3D anchors */
+function hullNo(name){let h=0;for(const ch of String(name||""))h=(h*31+ch.charCodeAt(0))>>>0;return"FFG-"+(101+h%799)}
+const shortName=n=>String(n||"Frigate").replace(/^\s*UNSC\s+/i,"").toUpperCase().slice(0,26);
+const WIN=[];for(let x=47;x<77;x+=3.4)WIN.push([x,20,6.5]);for(let x=-37;x<25;x+=2.8)if(x<-20||x>-12)WIN.push([x,14,3.2]);for(let x=-64;x<-16;x+=3)WIN.push([x,11,12.7]);
+/* ---------- overview SVG (three-quarter view, perspective) ---------- */
+const OV={th:.47,ph:.33,f:520,k:1,ox:0,oy:0},VB=[400,168];let ovFit=null;
+function fitOV(){if(ovFit)return ovFit;const pr=mkProj(Object.assign({},OV,{k:1,ox:0,oy:0}));let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+ for(const pt of build({sh:3,mac:3,sd:3}))for(const f of pt.f)for(const p of f.p){const s=pr(p);x0=Math.min(x0,s[0]);x1=Math.max(x1,s[0]);y0=Math.min(y0,s[1]);y1=Math.max(y1,s[1])}
+ const k=Math.min((VB[0]-70)/(x1-x0),(VB[1]-26)/(y1-y0));ovFit=Object.assign({},OV,{k,ox:46-x0*k+(VB[0]-70-(x1-x0)*k)/2,oy:13-y0*k+(VB[1]-26-(y1-y0)*k)/2});return ovFit}
+const F2=v=>Math.round(v*10)/10,pts=s=>s.map(p=>F2(p[0])+","+F2(p[1])).join(" "),M=a=>`matrix(${a.map(v=>Math.round(v*1000)/1000).join(",")})`;
+function svg(o){const V=fitOV(),pr=mkProj(V),PL=pal(o.p),u=o.up||{},P=build(u),id=o.id||"fa",eng=o.eng==null?1:o.eng,sd=u.sd|0;
+ const engC=sd>=2?"#a78bfa":sd===1?"#7dd3fc":"#5eead4",dm=o.dmg||{};let defs="",gi=0,body="";
+ const grad=(s,c,f)=>{let a=0,b=0;if(Math.abs(f.n[2])>.85){a=s.reduce((m,p,i)=>f.p[i][0]>f.p[m][0]?i:m,0);b=s.reduce((m,p,i)=>f.p[i][0]<f.p[m][0]?i:m,0)}else{a=s.reduce((m,p,i)=>f.p[i][2]>f.p[m][2]?i:m,0);b=s.reduce((m,p,i)=>f.p[i][2]<f.p[m][2]?i:m,0)}
+  if(a===b)return cs(c);const g=`${id}g${gi++}`;defs+=`<linearGradient id="${g}" gradientUnits="userSpaceOnUse" x1="${F2(s[a][0])}" y1="${F2(s[a][1])}" x2="${F2(s[b][0])}" y2="${F2(s[b][1])}"><stop offset="0" stop-color="${cs(scl(c,1.13))}"/><stop offset="1" stop-color="${cs(scl(c,.78))}"/></linearGradient>`;return`url(#${g})`};
+ const seg=(L)=>L.map(([a,b])=>{const p=pr(a),q=pr(b);return`M${F2(p[0])} ${F2(p[1])}L${F2(q[0])} ${F2(q[1])}`}).join("");
+ let fi=0,ov="";
+   ov+=`<g fill="#fde68a">${WIN.filter(w=>w[1]>12).map(w=>{const p=pr(w);return`<circle cx="${F2(p[0])}" cy="${F2(p[1])}" r=".55" opacity="${(.45+.4*((w[0]*7)%3)/3).toFixed(2)}"/>`}).join("")}</g>`;
+   ov+=`<text transform="${M(pr.aff([47,20.05,3],[1,0,0],[0,0,-1]))}" font-size="7.4" font-weight="800" font-family="Inter,system-ui,sans-serif" letter-spacing=".6" fill="rgba(235,240,250,.62)">${o.num}</text>`;
+   const nm=shortName(o.name),fsz=Math.min(4.4,(58/(nm.length+5)-.5)/.66);ov+=`<text transform="${M(pr.aff([-38,14.05,-2.6],[1,0,0],[0,0,-1]))}" font-size="${F2(fsz)}" font-weight="700" font-family="Inter,system-ui,sans-serif" letter-spacing=".5" fill="rgba(235,240,250,.5)">UNSC ${esc(nm)}</text>`;
+ for(const {pt,fs} of prep(P,pr)){let g="";
+  for(const {f,s} of fs){const c=col(f.m,f.n,PL),big=f.ar>40;g+=`<polygon points="${pts(s)}" fill="${big?grad(s,c,f):cs(c)}" stroke="${cs(mx(c,[235,240,250],.3),.32)}" stroke-width=".4" stroke-linejoin="round"/>`;
+   const L=seams(f,fi++);if(L.length)g+=`<path d="${seg(L)}" stroke="rgba(4,6,10,.42)" stroke-width=".55" fill="none"/>`}
+  if(pt.vents&&fs.length){for(let r=0;r<Math.min(3,pt.vents);r++)for(let i=0;i<6;i++){const x=-88+i*5,z=5-r*5;const m=pr.aff([x,19.05,z],[3.6,0,0],[0,0,-1]);g+=`<rect class="fa-vent" transform="${M(m)}" width="1" height="1.3" rx=".3" fill="${engC}" style="animation-delay:${(i*.17+r*.3).toFixed(2)}s"/>`}
+   if(pt.vents>=3)for(let i=0;i<5;i++){const m=pr.aff([-90+i*4,-6,12.05],[2.4,0,0],[0,12,0]);g+=`<rect class="fa-vent" transform="${M(m)}" width="1" height="1" fill="${engC}" opacity=".85" style="animation-delay:${(i*.2).toFixed(2)}s"/>`}}
+  if(pt.base){// windows, hull number, name, MAC muzzle bore, Archer hatches
+   g+=`<g transform="${M(pr.aff([60,0,16.52],[1,0,0],[0,1,0]))}">${[-1,1].map(s=>[0,1,2,3].map(i=>[0,1].map(j=>`<rect x="${-11+i*5.4}" y="${s>0?10.4+j*2.2:-14.6+j*2.2}" width="4.6" height="1.8" rx=".3" fill="#2a2f3a" stroke="rgba(0,0,0,.5)" stroke-width=".25"/>`).join("")).join("")).join("")}</g>`;
+   if(!u.mac){const m=pr.aff([103.05,0,4.5],[0,1,0],[0,0,-1]);g+=`<g transform="${M(m)}"><circle r="3.2" fill="#07080b" stroke="#6b7280" stroke-width=".5"/><circle class="fa-mac" r="1.6" fill="#fde68a"/></g>`}}
+  if(pt.f[0]&&pt.f[0].cap===undefined&&false){}
+  if(pt.f.some(f=>f.cap===2&&f.m==="n")&&u.mac){const X=muzX(u.mac),m=pr.aff([X+.05,0,4.5],[0,1,0],[0,0,-1]);g+=`<g transform="${M(m)}"><circle r="2" fill="#07080b"/><circle class="fa-mac" r="1.4" fill="#fde68a"/></g>`}
+  if(pt.win)g+=`<path d="${seg([[[-35.5,-3,21.8],[-35.5,3,21.8]]])}" stroke="#7dd3fc" stroke-width="1.6" stroke-linecap="round" opacity=".9"/><path d="${seg([[[-33.6,-2.6,20.4],[-33.6,2.6,20.4]]])}" stroke="#bae6fd" stroke-width=".8" opacity=".8"/>`;
+  if(pt.mast)g+=`<path d="${seg([[[-46,-2,23],[-46,-2,33]],[[-42,2,23],[-42,2,29]],[[-46,-2,30],[-46,2.6,30]]])}" stroke="#9aa3b5" stroke-width=".6"/>`;
+  body+=g}
+ // turrets (rotating idle sweep), lights, engines, shield, damage
+ const tur=K.pd.map(([x,y,z],i)=>`<g transform="${M(pr.aff([x,y,z],[1,0,0],[0,1,0]))}"><g class="fa-tur" style="animation-delay:${-i*3.1}s"><circle r="2.5" fill="${cs(col("m",[0,0,1],PL))}" stroke="#1f2430" stroke-width=".4"/><rect x="0" y="-1.15" width="7.5" height=".85" rx=".3" fill="#cbd5e1"/><rect x="0" y=".3" width="7.5" height=".85" rx=".3" fill="#94a3b8"/><circle r="1" fill="#1f2430"/></g></g>`).join("");
+ const lt=(p,c,cls,dl)=>{const s=pr(p);return`<circle class="${cls}" cx="${F2(s[0])}" cy="${F2(s[1])}" r="1.15" fill="${c}" style="animation-delay:${dl}s"/>`};
+ const lights=lt([-86,28.5,-3.5],"#4ade80","fa-blk",0)+lt([102,0,12.4],"#fff","fa-stb",0)+lt([-46,-2,33],"#fca5a5","fa-blk",1.1)+lt([-99,0,9],"#fbbf24","fa-blk",.8);
+ const ng=dm.fuel?.15:Math.max(.25,eng),pl=(14+10*ng+5*sd);
+ const engs=K.noz.map(([x,y,z],i)=>`<g transform="${M(pr.aff([x,y,z],[-1,0,0],[0,0,-1]))}"><ellipse cx="${F2(pl/2)}" rx="${F2(pl/2+2)}" ry="${F2(3.6+ng*.9)}" fill="url(#${id}pl)" opacity="${F2(.75+.25*Math.min(1,ng))}"/></g><g transform="${M(pr.aff([x,y,z],[0,1,0],[0,0,-1]))}"><circle r="${F2(4.6+ng)}" fill="url(#${id}eg)"/></g>`).join("");
+ defs+=`<radialGradient id="${id}eg"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="${engC}"/><stop offset="1" stop-color="${engC}" stop-opacity="0"/></radialGradient><linearGradient id="${id}pl" x1="0" x2="1"><stop offset="0" stop-color="${engC}" stop-opacity=".95"/><stop offset=".3" stop-color="${engC}" stop-opacity=".6"/><stop offset="1" stop-color="${engC}" stop-opacity="0"/></linearGradient>`;
+ // shield bubble
+ let shd="";if(o.shield){const c=pr([0,0,0]),a=pr([118,0,0]),b=pr([-118,0,0]);const cx=(a[0]+b[0])/2,cy=(a[1]+b[1])/2,rx=Math.hypot(a[0]-b[0],a[1]-b[1])/2,ang=Math.atan2(a[1]-b[1],a[0]-b[0])*180/Math.PI,ry=rx*.36,al=.18+.12*o.shield;
+  defs+=`<radialGradient id="${id}sh"><stop offset=".72" stop-color="#38bdf8" stop-opacity="0"/><stop offset=".97" stop-color="#7dd3fc" stop-opacity="${F2(al)}"/><stop offset="1" stop-color="#e0f2fe" stop-opacity="${F2(al+.25)}"/></radialGradient>`;
+  shd=`<g transform="translate(${F2(cx)} ${F2(cy+6)}) rotate(${F2(ang)})"><ellipse rx="${F2(rx)}" ry="${F2(ry+8)}" fill="url(#${id}sh)" class="fa-shd"/><ellipse class="fa-shs" rx="${F2(rx)}" ry="${F2(ry+8)}" fill="none" stroke="#bae6fd" stroke-width=".8" stroke-dasharray="18 40 6 70" opacity=".55"/></g>`}
+ // damage FX on the ship itself
+ let dfx="";const DZ=[];if(dm.hull||o.hullLo)DZ.push([-20,14.05,2,"s"],[60,20.05,-4,"s"],[-70,19.05,4,"s"]);if(dm.fuel)DZ.push([-96,19,0,"s"]);
+ if(o.hullLo&&!dm.hull)DZ.length=2;
+ if(DZ.length){dfx=DZ.map(([x,y,z],i)=>{const m=pr.aff([x,y,z],[1,0,0],[0,0,-1]);return`<g transform="${M(m)}"><ellipse rx="10" ry="6" fill="url(#${id}sc)"/><ellipse rx="4.2" ry="2.4" fill="#050506"/><path class="fa-emb" d="M-4.2 0a4.2 2.4 0 1 0 8.4 0a4.2 2.4 0 1 0-8.4 0" fill="none" stroke="#fb923c" stroke-width=".7"/><path d="M-9-2l4 1.5M5-1.5l4.5-2M3 2l5 2.5M-6 2.5l-3 2" stroke="#0b0c10" stroke-width=".8" fill="none"/></g>`}).join("")
+  +DZ.map(([x,y,z],i)=>{const p=pr([x,y,z]);return`<g transform="translate(${F2(p[0])} ${F2(p[1])})"><g class="fa-spk" style="animation-delay:${i*.37}s"><circle r="1.3" cx="1" cy="-1.5" fill="#fde68a"/><circle r="1" cx="-2.5" cy="1" fill="#fb923c"/><circle r=".8" cx="3" cy="1.5" fill="#fff"/><path d="M0 0l4-5M0 0l-5-3" stroke="#fde68a" stroke-width=".5"/></g><circle class="fa-vnt" r="3" fill="rgba(203,213,225,.55)" style="animation-delay:${i*.6}s"/><circle class="fa-vnt" r="1.8" fill="rgba(203,213,225,.45)" style="animation-delay:${i*.6+.9}s"/></g>`}).join("");
+  defs+=`<radialGradient id="${id}sc"><stop offset="0" stop-color="#050505" stop-opacity=".9"/><stop offset=".45" stop-color="#1c1410" stop-opacity=".7"/><stop offset=".7" stop-color="#7c2d12" stop-opacity=".25"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>`}
+ return`<svg class="sh-shp fa" viewBox="0 0 ${VB[0]} ${VB[1]}" role="img" aria-label="${esc(o.name)}, ${o.num}"><defs>${defs}</defs><g class="sh-bob"><g class="fa-engs">${engs}</g>${body}${ov}${tur}${dfx}${lights}${shd}</g></svg>`}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+/* ---------- combat sprite (orthographic, high three-quarter, ship-local: x forward, y starboard) ---------- */
+const CS=.64,CPH=.98,SPH=Math.sin(CPH),CPHc=Math.cos(CPH);
+const cpt=(x,y,z)=>[x*CS,(y*SPH-z*CPHc)*CS];// model -> ship-local units (ds=1)
+const spC={};
+function sprite(o,ds,dpr){const key=[o.p.h,o.p.l,o.up.sh,o.up.mac,o.up.sd,o.num,Math.round(ds*100),dpr].join("|");if(spC.key===key)return spC.v;
+ const k=CS*ds*dpr,P=build(o.up),PL=pal(o.p);let pr=mkProj({th:0,ph:CPH,f:0,k,ox:0,oy:0}),x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+ for(const pt of P)for(const f of pt.f)for(const p of f.p){const s=pr(p);x0=Math.min(x0,s[0]);x1=Math.max(x1,s[0]);y0=Math.min(y0,s[1]);y1=Math.max(y1,s[1])}
+ const pad=4*dpr,W=Math.ceil(x1-x0+2*pad),H=Math.ceil(y1-y0+2*pad),ox=pad-x0,oy=pad-y0;pr=mkProj({th:0,ph:CPH,f:0,k,ox,oy});
+ const cv=document.createElement("canvas");cv.width=W;cv.height=H;const c=cv.getContext("2d");c.lineJoin="round";let fi=0;
+ for(const {pt,fs} of prep(P,pr)){for(const {f,s} of fs){const cc=col(f.m,f.n,PL);c.beginPath();s.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.closePath();
+   if(f.ar>40){const zi=f.p.reduce((m,p,i)=>p[0]>f.p[m][0]?i:m,0),zj=f.p.reduce((m,p,i)=>p[0]<f.p[m][0]?i:m,0),g=c.createLinearGradient(s[zi][0],s[zi][1],s[zj][0],s[zj][1]);g.addColorStop(0,cs(scl(cc,1.12)));g.addColorStop(1,cs(scl(cc,.8)));c.fillStyle=g}else c.fillStyle=cs(cc);
+   c.fill();c.strokeStyle=cs(mx(cc,[235,240,250],.3),.32);c.lineWidth=.45*dpr;c.stroke();
+   const L=seams(f,fi++);if(L.length&&ds*dpr>.7){c.beginPath();for(const [a,b] of L){const p=pr(a),q=pr(b);c.moveTo(p[0],p[1]);c.lineTo(q[0],q[1])}c.strokeStyle="rgba(4,6,10,.4)";c.lineWidth=.5*dpr;c.stroke()}}
+  if(pt.vents)for(let r=0;r<Math.min(3,pt.vents);r++)for(let i=0;i<6;i++){const a=pr([-88+i*5,19,5-r*5]),b=pr([-84.4+i*5,19,5-r*5]);c.strokeStyle=o.engC;c.lineWidth=Math.max(1,k*.9);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.stroke()}
+  if(pt.vents>=3)for(let i=0;i<5;i++){const a=pr([-89+i*4,-6,12.1]),b=pr([-89+i*4,6,12.1]);c.strokeStyle=o.engC;c.lineWidth=Math.max(1,k*.8);c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.stroke()}
+  if(pt.base){c.fillStyle="rgba(253,230,138,.7)";for(const w of WIN){const n=w[1]>12.5?[0,1,0]:[0,0,1];if(!pr.vis(n,w))continue;const p=pr(w);c.fillRect(p[0]-.5*dpr,p[1]-.5*dpr,1*dpr,1*dpr)}
+   const m=pr.aff([86,-5.6,14.3],[-1,0,0],[0,1,0]);c.save();c.setTransform(...m);c.font="800 4.2px Inter,system-ui,sans-serif";c.fillStyle="rgba(235,240,250,.5)";c.fillText(o.num,0,0);c.restore()}
+  if(pt.win){c.strokeStyle="#7dd3fc";c.lineWidth=Math.max(1,k*1.4);c.beginPath();const a=pr([-35.5,-3,21.8]),b=pr([-35.5,3,21.8]);c.moveTo(a[0],a[1]);c.lineTo(b[0],b[1]);c.stroke()}}
+ spC.key=key;spC.v={cv,ox,oy,dpr};return spC.v}
+/* ---------- enemies (original curved alien designs) ---------- */
+const enC={};
+function enSprite(kind,inn,R,dpr,wh){const key=kind+inn+Math.round(R*10)+dpr+(wh?1:0);if(enC[key])return enC[key];
+ const pal=inn?{d:"#1c1917",m:"#57534e",h:"#d6d3d1",g:"#fb923c",g2:"#fdba74"}:{d:"#1e0b3d",m:"#5b2bb5",h:"#c4b5fd",g:"#2dd4bf",g2:"#e879f9"};
+ const s=R*dpr,S=Math.ceil(s*4.2),cv=document.createElement("canvas");cv.width=cv.height=S;const c=cv.getContext("2d");c.translate(S/2,S/2);
+ const halo=c.createRadialGradient(0,0,0,0,0,s*1.9);halo.addColorStop(0,pal.g2+"26");halo.addColorStop(.55,pal.g2+"0c");halo.addColorStop(1,pal.g2+"00");if(!wh){c.fillStyle=halo;c.beginPath();c.arc(0,0,s*1.9,0,7);c.fill()}
+ c.scale(s,s);c.lineJoin="round";
+ const body=(fn,hl)=>{c.beginPath();fn();if(wh){c.fillStyle="#fff";c.fill();return}const g=c.createLinearGradient(0,-1,0,1);g.addColorStop(0,pal.h);g.addColorStop(.35,pal.m);g.addColorStop(1,pal.d);c.fillStyle=g;c.fill();
+  c.save();c.clip();const sp=c.createRadialGradient(hl[0],hl[1],0,hl[0],hl[1],hl[2]);sp.addColorStop(0,"rgba(255,255,255,.55)");sp.addColorStop(1,"rgba(255,255,255,0)");c.fillStyle=sp;c.fillRect(-2,-2,4,4);c.restore();
+  c.strokeStyle=pal.g2+"aa";c.lineWidth=1.2/s;c.stroke()};
+ const glow=(x,y,r,cl)=>{if(wh)return;const g=c.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,"#fff");g.addColorStop(.3,cl);g.addColorStop(1,cl+"00");c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,7);c.fill()};
+ const seam=(fn,cl,w)=>{if(wh)return;c.beginPath();fn();c.strokeStyle=cl;c.lineWidth=w/s;c.lineCap="round";c.stroke()};
+ if(kind==="f"){glow(-.7,0,.5,pal.g2);
+  body(()=>{c.moveTo(1,0);c.bezierCurveTo(.6,-.16,.25,-.42,-.05,-1);c.bezierCurveTo(-.12,-.62,-.3,-.42,-.66,-.3);c.quadraticCurveTo(-.5,0,-.66,.3);c.bezierCurveTo(-.3,.42,-.12,.62,-.05,1);c.bezierCurveTo(.25,.42,.6,.16,1,0)},[.25,-.35,.9]);
+  seam(()=>{c.moveTo(.8,0);c.quadraticCurveTo(.15,-.1,-.45,0)},pal.g+"dd",1.4);seam(()=>{c.moveTo(.3,-.28);c.bezierCurveTo(.12,-.45,0,-.65,-.04,-.88);c.moveTo(.3,.28);c.bezierCurveTo(.12,.45,0,.65,-.04,.88)},pal.g2+"aa",1.1);
+  glow(.42,0,.22,pal.g);glow(-.05,-.95,.12,pal.g2);glow(-.05,.95,.12,pal.g2)}
+ else if(kind==="c"){glow(-.95,0,.5,pal.g2);
+  [-1,1].forEach(k=>body(()=>{c.moveTo(.25,k*.22);c.bezierCurveTo(-.05,k*.62,-.5,k*.86,-1,k*.9);c.bezierCurveTo(-.72,k*.66,-.62,k*.42,-.5,k*.24);c.closePath()},[-.35,k*.6-.15,.55]));
+  body(()=>{c.moveTo(1,0);c.bezierCurveTo(.8,-.3,.3,-.36,-.3,-.32);c.bezierCurveTo(-.8,-.28,-1,-.16,-1,0);c.bezierCurveTo(-1,.16,-.8,.28,-.3,.32);c.bezierCurveTo(.3,.36,.8,.3,1,0)},[.2,-.25,.85]);
+  body(()=>{c.moveTo(.62,0);c.bezierCurveTo(.4,-.16,-.1,-.18,-.5,-.12);c.quadraticCurveTo(-.62,0,-.5,.12);c.bezierCurveTo(-.1,.18,.4,.16,.62,0)},[.1,-.12,.5]);
+  seam(()=>{c.moveTo(.88,-.08);c.bezierCurveTo(.4,-.27,-.4,-.28,-.9,-.13)},pal.g+"dd",1.5);seam(()=>{c.moveTo(.88,.08);c.bezierCurveTo(.4,.27,-.4,.28,-.9,.13)},pal.g2+"88",1.1);
+  seam(()=>{c.moveTo(-.2,-.5);c.bezierCurveTo(-.45,-.66,-.7,-.76,-.92,-.84);c.moveTo(-.2,.5);c.bezierCurveTo(-.45,.66,-.7,.76,-.92,.84)},pal.g+"99",1.1);
+  glow(.72,0,.16,pal.g);glow(.05,0,.1,pal.g)}
+ else{glow(-1,0,.32,pal.g2);
+  [-1,1].forEach(k=>{body(()=>{c.moveTo(.1,k*.16);c.bezierCurveTo(.5,k*.42,.85,k*.44,1.02,k*.3);c.bezierCurveTo(.82,k*.3,.62,k*.24,.5,k*.1);c.closePath()},[.6,k*.3-.08,.4]);
+   body(()=>{c.moveTo(-.05,k*.2);c.bezierCurveTo(-.3,k*.5,-.65,k*.66,-1,k*.64);c.bezierCurveTo(-.82,k*.5,-.72,k*.32,-.62,k*.18);c.closePath()},[-.4,k*.45-.1,.45]);
+   seam(()=>{c.moveTo(-.1,k*.3);c.bezierCurveTo(-.35,k*.48,-.62,k*.58,-.92,k*.6)},pal.g+"bb",1.4);seam(()=>{c.moveTo(.3,k*.22);c.bezierCurveTo(.55,k*.36,.8,k*.38,.96,k*.31)},pal.g2+"aa",1.2);glow(-.96,k*.63,.1,pal.g2);glow(.98,k*.3,.07,pal.g)});
+  body(()=>{c.moveTo(.72,0);c.bezierCurveTo(.62,-.2,.25,-.24,-.2,-.23);c.bezierCurveTo(-.7,-.22,-.98,-.15,-1.02,0);c.bezierCurveTo(-.98,.15,-.7,.22,-.2,.23);c.bezierCurveTo(.25,.24,.62,.2,.72,0)},[.2,-.16,.7]);
+  body(()=>{c.moveTo(.42,0);c.bezierCurveTo(.3,-.1,-.2,-.12,-.68,-.08);c.quadraticCurveTo(-.76,0,-.68,.08);c.bezierCurveTo(-.2,.12,.3,.1,.42,0)},[0,-.08,.5]);
+  seam(()=>{for(let i=0;i<6;i++){const x=.5-i*.24;c.moveTo(x,-.2);c.quadraticCurveTo(x-.06,0,x,.2)}},"rgba(0,0,0,.3)",1);
+  seam(()=>{c.moveTo(.66,-.06);c.bezierCurveTo(.2,-.18,-.5,-.18,-.95,-.07);c.moveTo(.66,.06);c.bezierCurveTo(.2,.18,-.5,.18,-.95,.07)},pal.g+"aa",1.4);glow(.82,0,.14,pal.g);glow(-.3,0,.07,pal.g);glow(.15,0,.06,pal.g)}
+ enC[key]=cv;return cv}
+let glowS=null;function glowSprite(){if(glowS)return glowS;const S=64,cv=document.createElement("canvas");cv.width=cv.height=S;const c=cv.getContext("2d"),g=c.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,"rgba(255,255,255,1)");g.addColorStop(.25,"rgba(255,255,255,.55)");g.addColorStop(1,"rgba(255,255,255,0)");c.fillStyle=g;c.fillRect(0,0,S,S);glowS=cv;return cv}
+return{svg,sprite,enSprite,glowSprite,K,cpt,CS,SPH,CPHc,muzX,hullNo,build}})();
+
 const FRG=(function(){
 const KEY="jobswipe-frigate-v1",H=36e5,M=6e4,AI="ARIA";
 const R=Math.random,cl=(v,a=0,b=100)=>Math.max(a,Math.min(b,v)),pick=a=>a[Math.floor(R()*a.length)],rnd=(a,b)=>a+R()*(b-a);
@@ -846,31 +1046,19 @@ function avatar(st,id){return `<svg class="sh-av s-${st}" viewBox="0 0 120 120" 
 <g class="r2"><ellipse cx="60" cy="60" rx="18" ry="50" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="10 5" opacity=".55"/></g><circle class="core" cx="60" cy="60" r="28" fill="url(#${id}g)"/>
 <g class="fig" fill="none" stroke="#f0f9ff" stroke-width="1.7" stroke-linecap="round" opacity=".9"><circle cx="60" cy="51" r="7"/><path d="M45 79c2-10 8-15 15-15s13 5 15 15"/></g><circle cx="60" cy="60" r="28" fill="url(#${id}p)"/>
 ${st==="frac"?`<path d="M36 30l15 22-6 8 12 14-4 20M88 32l-13 19 8 10-10 18" stroke="var(--bad)" stroke-width="1.4" fill="none" opacity=".85"/>`:""}</g></svg>`}
-function shipSVG(){const p=PAINT[S.paint]||PAINT[0],u=S.up,eng=u.sd>=2?"#a78bfa":u.sd===1?"#7dd3fc":"#2dd4bf",L=10+u.mac*9;
- return `<svg class="sh-shp" viewBox="0 0 340 120" role="img" aria-label="${esc(S.name)}"><defs><linearGradient id="shHull" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${p.l}"/><stop offset=".55" stop-color="${p.h}"/><stop offset="1" stop-color="#14171f"/></linearGradient>
-<radialGradient id="shEng" cx="1" cy=".5" r="1"><stop offset="0" stop-color="#fff"/><stop offset=".22" stop-color="${eng}"/><stop offset="1" stop-color="${eng}" stop-opacity="0"/></radialGradient></defs><g class="sh-bob">
-${u.sh?`<ellipse class="sh-shd" cx="182" cy="60" rx="${150+u.sh*5}" ry="${42+u.sh*4}" fill="rgba(56,189,248,${(.03+u.sh*.025).toFixed(3)})" stroke="rgba(125,211,252,${(.22+u.sh*.15).toFixed(2)})" stroke-width="1"/>`:""}
-<g class="sh-eng"><ellipse cx="18" cy="51" rx="${26+u.sd*4}" ry="7" fill="url(#shEng)"/><ellipse cx="18" cy="69" rx="${26+u.sd*4}" ry="7" fill="url(#shEng)"/>${u.sd>=3?`<ellipse cx="14" cy="60" rx="36" ry="5" fill="url(#shEng)"/>`:""}</g>
-<path d="M40 42h16l6 6v24l-6 6H40l-4-4V46z" fill="#262b35" stroke="${p.l}" stroke-opacity=".5"/>
-<path d="M56 44L84 34L250 38L300 50L318 58V62L300 70L250 82L84 86L56 76Z" fill="url(#shHull)" stroke="${p.l}" stroke-opacity=".6"/>
-<path d="M96 35L112 22H178L196 36Z" fill="url(#shHull)" stroke="${p.l}" stroke-opacity=".5"/><path d="M150 27h22" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round" opacity=".9"/>
-<path d="M110 86L120 94H200L214 84Z" fill="${p.h}" stroke="${p.l}" stroke-opacity=".4"/>
-<path d="M90 60H296M130 40v44M200 40v42M250 44v34" stroke="rgba(0,0,0,.28)" stroke-width="1"/><path d="M84 50L250 51" stroke="var(--ac)" stroke-width="1.4" opacity=".5"/>
-${Array.from({length:9},(_,i)=>`<rect x="${100+i*16}" y="66" width="5" height="2" rx="1" fill="#fde68a" opacity=".55"/>`).join("")}
-<text x="214" y="64" font-size="6.5" fill="rgba(255,255,255,.5)" font-family="Inter,sans-serif" font-weight="700" letter-spacing="1.5">UNSC</text>
-${u.mac?`<path d="M310 57.5h${L}v5h-${L}z" fill="#3b4252" stroke="${p.l}" stroke-opacity=".6"/><circle cx="${310+L}" cy="60" r="${1.4+u.mac*.5}" fill="#fca5a5" opacity=".9"/>`:""}
-${u.sd?`<path d="M124 97H198" stroke="${eng}" stroke-width="${1.5+u.sd}" stroke-linecap="round" opacity=".85"/>`:""}
-${S.hull<25?`<g class="sh-spark"><circle cx="150" cy="44" r="2.2" fill="#fb923c"/><circle cx="232" cy="74" r="1.8" fill="#f87171"/><circle cx="104" cy="70" r="1.6" fill="#fbbf24"/></g><path d="M146 46l6 6M228 72l7 4" stroke="#0b0c10" stroke-width="2"/>`:""}
-</g></svg>`}
+let shpC={k:"",el:null};
+function shipSVG(){const p=PAINT[S.paint]||PAINT[0],u=S.up,num=FART.hullNo(S.name),eng=Array.isArray(S.pw)?S.pw[2]/4:1,dm={hull:!!S.dmg.hull,fuel:!!S.dmg.fuel},hullLo=S.hull<25;
+ const k=[S.paint,u.sh,u.mac,u.sd,S.name,eng,dm.hull,dm.fuel,hullLo].join("|");if(shpC.k!==k){shpC.k=k;const t=document.createElement("div");t.innerHTML=FART.svg({p,up:u,name:S.name,num,eng,dmg:dm,hullLo,shield:u.sh,id:"faO"});shpC.el=t.firstElementChild}
+ return shpC.el}
 function cdBtn(k,cls){const a=ACT[k],now=Date.now(),w=(S.cd[k]||0)-now,blk=a.dock&&S.voy;
  return `<button class="btn sm ${cls||""}" data-a="act:${k}" ${w>0||blk?"disabled":""}>${a.l} <span class="mu num" data-cd="${k}">${w>0?fmtD(w):blk?"· docked only":"+"+a.amt}</span></button>`}
 function rShip(){const now=Date.now(),st=S.dmg,dmgK=Object.keys(st),v=S.voy;
  $("shShip").innerHTML=`<div class="lbl"><span>Frigate · resources</span><span class="pill ${dmgK.length?"bad":v?"ac":"ok"}">${dmgK.length?"Damaged":v?"On voyage":"Patrolling"}</span></div>
  <div class="row" style="margin-bottom:10px"><button class="sh-name" data-a="rename" aria-label="Rename ship">${esc(S.name)}<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></button><span><span class="pill ac num" title="Credits">◈ ${S.cr} cr</span> <span class="pill warn num" title="Salvage">⚙ ${S.slv}</span></span></div>
- <div class="sh-sky${v?" warp":""}">${shipSVG()}<div class="sh-skytag"><span>${v?`En route · ${esc(secOf(v.sec).n)}`:`Holding · ${esc(secOf(S.sel).n)}`}</span><span class="num" data-cd="voytag">${v?fmtD(v.end-now):S.rest?"Low-power":""}</span></div></div>
+ <div class="sh-sky${v?" warp":""}" id="shSky"><div class="sh-skytag"><span>${v?`En route · ${esc(secOf(v.sec).n)}`:`Holding · ${esc(secOf(S.sel).n)}`}</span><span class="num" data-cd="voytag">${v?fmtD(v.end-now):S.rest?"Low-power":""}</span></div></div>
  <div class="sh-stats">${STATS.map(s=>{const x=Math.round(S[s.k]);return `<div class="sh-st"><div class="row"><b>${s.n}</b><span class="num ${x<25?"":"mu"}" style="${x<25?"color:var(--bad)":""}">${x}%</span></div><div class="bar"><i style="width:${x}%;--c:${x<25?"var(--bad)":s.c}"></i></div></div>`}).join("")}</div>
  <details class="sh-mt" id="shMtD" ${openD.has("shMtD")?"open":""}><summary>Maintenance between battles</summary><div class="sh-stats" style="margin-top:6px">${STATS.map(s=>`<div class="sh-st"><div class="xs mu">${s.n}</div><div class="sh-acts">${s.a.map(k=>cdBtn(k)).join("")}</div></div>`).join("")}</div></details>
- ${dmgK.length?`<div class="sh-dmg">${dmgK.map(k=>`<div><b>${DMG[k][0]}.</b> ${DMG[k][1]}</div>`).join("")}</div>`:""}`}
+ ${dmgK.length?`<div class="sh-dmg">${dmgK.map(k=>`<div><b>${DMG[k][0]}.</b> ${DMG[k][1]}</div>`).join("")}</div>`:""}`;const sky=$("shSky");if(sky)sky.prepend(shipSVG())}
 function aiBtn(a,t,sub,o){o=o||{};return `<button class="btn ${o.pri?"pri":""}" data-a="${a}" ${o.dis?"disabled":""}>${t}<small ${o.cd?`data-cd="${o.cd}"`:""}>${sub}</small></button>`}
 function rAI(){const now=Date.now(),st=state(),[sl,sc]=SLBL[st],day=sgDayK(now),cdw=k=>(S.cd[k]||0)-now;
  const ln=S.line&&now-S.line.t<45*M&&st!=="frac"?S.line.x:IDLE[st][Math.floor(now/6e5)%IDLE[st].length];
@@ -976,7 +1164,6 @@ const SUBS=[["pdA","PD turret A"],["pdB","PD turret B"],["arc","Archer pods"],["
 const PRESET=[["Attack",[7,3,2]],["Balanced",[4,4,4]],["Defence",[2,7,3]],["Evasive",[3,3,6]]];
 const PWN=[["Weapons","#f87171"],["Shields","#38bdf8"],["Engines","#2dd4bf"]];
 const WPN=[["pd","PD turrets"],["pdm","PD mode"],["arc","Archer pods"],["mac","MAC cannon"],["shd","Shields"],["eva","Evasive"]];
-const HULL=[[58,0],[50,8],[22,9],[14,14],[-20,14],[-30,11],[-48,12],[-53,6],[-53,-6],[-48,-12],[-30,-11],[-20,-14],[14,-14],[22,-9],[50,-8]];
 const ODD_T=["The {N}. THE {N}. It's looking at me.","Shoot the {N}. Or the stars. One of them is lying.","{N}. I checked 9,000 futures. Trust me. Please."];
 const PDR=520,ARR=900,SLUG=1500;
 let B=null,raf=0,cv=null,cx=null,VW=0,VH=0,dpr=1,lastF=0,hudT=0,GE={port:true,k:.5,ds:.55},cbBuilt=false,cbTab="pw",EL={};
@@ -1079,8 +1266,9 @@ function pdModeT(){B.pdMode=B.pdMode==="trk"?"int":"trk";if(B.pdMode==="int"&&B.
 function arcGo(){if(B.sub.arc<=0)return btMsg("Archer pods offline. Send a repair crew.",0);if(B.arcCd>0)return btMsg(`Archer pods reloading: ${Math.ceil(B.arcCd)}s.`,0);if(B.lock||B.salvo)return;
  const e=selE();if(!e)return btMsg("Lock a target first: tap a contact.",0);if(hyp(e.x,e.y,B.sx,SHF())>ARR)return btMsg("Target is out of Archer range.",0);B.lock={id:e.id,t:0,need:(S.frac?2:1)*(B.sub.arc<50?1.4:1)}}
 function macGo(){if(B.sub.mac<=0)return btMsg("MAC offline. Send a repair crew.",0);if(B.macC>=1)return macFire();if(!B.macCh){B.macCh=true;if(!B.macTold){B.macTold=true;btMsg(S.frac?"MAC charging. No lead computer: aim ahead of the target yourself.":"MAC charging. Fire when my lead marker sits on the target's path.",1)}}}
-function leadPt(e){const o=shipPt(58,0);let px=e.x,py=e.y;for(let i=0;i<3;i++){const t=hyp(px,py,o.x,o.y)/SLUG;px=e.x+e.vx*t;py=e.y+e.vy*t}return{x:px,y:py}}
-function macFire(){const o=shipPt(58,0),e=selE();let a;if(e&&!e.gh){a=S.frac?{x:e.x,y:e.y}:leadPt(e);if(state()==="ramp"){a.x+=rnd(-35,35);a.y+=rnd(-35,35)}}else a={x:o.x,y:o.y+1200};
+const macO=()=>shipPt(...FART.cpt(FART.muzX(S.up.mac),0,4.5)),pdO=i=>shipPt(...FART.cpt(...FART.K.pd[i])),arcO=i=>shipPt(...FART.cpt(...FART.K.arc[i]));
+function leadPt(e){const o=macO();let px=e.x,py=e.y;for(let i=0;i<3;i++){const t=hyp(px,py,o.x,o.y)/SLUG;px=e.x+e.vx*t;py=e.y+e.vy*t}return{x:px,y:py}}
+function macFire(){const o=macO(),e=selE();let a;if(e&&!e.gh){a=S.frac?{x:e.x,y:e.y}:leadPt(e);if(state()==="ramp"){a.x+=rnd(-35,35);a.y+=rnd(-35,35)}}else a={x:o.x,y:o.y+1200};
  const d=hyp(a.x,a.y,o.x,o.y)||1;B.sl.push({x:o.x,y:o.y,x0:o.x,y0:o.y,vx:(a.x-o.x)/d*SLUG,vy:(a.y-o.y)/d*SLUG,t:0});B.macC=0;B.macCh=false;B.shake=Math.max(B.shake,7);B.shots++;B.fx.push({k:"muz",x:o.x,y:o.y,t:0,life:.3})}
 function shdGo(){if(B.sub.shd<=0)return btMsg("Shield emitters offline. Send a repair crew.",0);B.shUp=!B.shUp}
 function evaGo(){if(B.sub.eng<=0)return btMsg("Engines offline. Send a repair crew.",0);if(B.evaCd>0)return btMsg(`Thrusters recharging: ${Math.ceil(B.evaCd)}s.`,0);
@@ -1158,7 +1346,7 @@ function pdTarget(){const X=B.sx,Y=SHF(),dd=o=>hyp(o.x,o.y,X,Y),inR=o=>dd(o)<PDR
  if(B.pdMode==="int"){if(tor[0])return tor[0];const f=live().filter(e=>e.k==="f"&&!e.dead&&inR(e)).sort((a,b)=>dd(a)-dd(b))[0];return f||(s&&!s.gh&&inR(s)?s:null)}
  if(s&&!s.gh&&inR(s))return s;return tor.find(p=>dd(p)<240)||null}
 function pdShot(tg){const st=state(),acc=(tg.k==="t"?.6:tg.k==="f"?.56*(1-.45*Math.min(1,hyp(tg.x,tg.y,B.sx,SHF())/PDR)):.93)*(st==="ramp"||st==="frac"?.72:st==="flick"?.88:1),h=R()<acc;
- let side=B.trS=B.trS^1;if(B.sub[side?"pdB":"pdA"]<=0)side^=1;const o=shipPt(4,side?12:-12);B.pdAim=Math.atan2(scY(tg.x,tg.y)-scY(o.x,o.y),scX(tg.x,tg.y)-scX(o.x,o.y));
+ let side=B.trS=B.trS^1;if(B.sub[side?"pdB":"pdA"]<=0)side^=1;const o=pdO(side);pdTurL=side;B.pdAim=Math.atan2(scY(tg.x,tg.y)-scY(o.x,o.y),scX(tg.x,tg.y)-scX(o.x,o.y));
  const m=h?0:28;B.tr.push({x0:o.x,y0:o.y,x1:tg.x+rnd(-m,m),y1:tg.y+rnd(-m,m),t:.07});if(B.tr.length>40)B.tr.shift();B.shots++;
  if(h){B.hits++;if(tg.k==="t"){tg.hp-=2.4;if(tg.hp<=0){tg.dead=true;boom(tg.x,tg.y,.6,"#a5f3fc");ftxt(tg.x,tg.y,"Intercepted","#a5f3fc")}}else dmgE(tg,2.4)}}
 function pdUpd(dt){const tf=["pdA","pdB"].reduce((a,k)=>a+(B.sub[k]<=0?0:B.sub[k]<50?.6:1),0);let firing=false;
@@ -1184,7 +1372,7 @@ function step(dt){B.t+=dt;B.flash=Math.max(0,B.flash-dt*1.5);B.shake=Math.max(0,
  if(B.sub.shd<=0)B.sh=0;else{const calm=B.t-B.shT>(B.shUp?2:.4);B.sh=Math.min(shMax(),B.sh+shRate()*(B.shUp?1:1.8)*(calm?1:B.shUp?.2:1)*dt)}
  if(B.macCh&&B.sub.mac>0){B.macC=Math.min(1,B.macC+dt/macCT());if(B.macC>=1)B.macCh=false}
  if(B.lock){const e=B.en.find(x=>x.id===B.lock.id&&!x.dead);if(!e)B.lock=null;else if((B.lock.t+=dt)>=B.lock.need){B.salvo={id:e.id,n:B.sub.arc<50?4:6,i:0,t:0};B.lock=null;B.arcCd=arcCD()}}
- if(B.salvo&&(B.salvo.t-=dt)<=0){const s=B.salvo,sd=s.i%2?1:-1,o=shipPt(-26,12*sd);B.ms.push({x:o.x,y:o.y,vx:110*sd,vy:60,sp:120,tid:s.id,life:5,tr:[]});s.i++;s.t=.09;if(s.i>=s.n)B.salvo=null}
+ if(B.salvo&&(B.salvo.t-=dt)<=0){const s=B.salvo,sd=s.i%2?1:-1,o=arcO(sd>0?1:0);B.ms.push({x:o.x,y:o.y,vx:110*sd,vy:60,sp:120,tid:s.id,life:5,tr:[]});s.i++;s.t=.09;if(s.i>=s.n)B.salvo=null}
  for(const k in B.crew){const was=B.sub[k];B.sub[k]=Math.min(100,was+10*(S.sup>15?1:.6)*dt);if(was<=0&&B.sub[k]>0)btMsg(`${subN(k)} back online.`,1);if(B.sub[k]>=100)delete B.crew[k]}
  pdUpd(dt);for(const e of B.en)if(!e.dead)enUpd(e,dt);pjUpd(dt);msUpd(dt);slUpd(dt);B.en=B.en.filter(e=>!e.dead);if(B.res)return;
  aiUpd();glUpd(dt);waveUpd(dt);
@@ -1245,8 +1433,11 @@ function draw(){if(!cx||!B||!VW)return;const c=cx,W=VW,Hh=VH,k=GE.k,ds=GE.ds,st=
  c.lineWidth=1;c.setLineDash([3,7]);c.strokeStyle="rgba(45,212,191,.13)";c.beginPath();c.arc(X0,Y0,PDR*k,0,7);c.stroke();c.strokeStyle="rgba(251,191,36,.07)";c.beginPath();c.arc(X0,Y0,ARR*k,0,7);c.stroke();c.setLineDash([]);
  for(const e of B.en)if(e.lz>0){const a=.25+.35*Math.abs(Math.sin(B.t*12));c.strokeStyle=`rgba(248,113,113,${a})`;c.lineWidth=1+(3-e.lz)*1.5;c.setLineDash([6,6]);c.beginPath();c.moveTo(scX(e.x,e.y),scY(e.x,e.y));c.lineTo(X0,Y0);c.stroke();c.setLineDash([])}
  const inn=B.fac==="innie";
- for(const p of B.pj){const x=scX(p.x,p.y),y=scY(p.x,p.y);if(p.k==="b"){const tx=scX(p.x-p.vx*.04,p.y-p.vy*.04),ty=scY(p.x-p.vx*.04,p.y-p.vy*.04);c.strokeStyle=inn?"#fdba74":"#c4b5fd";c.lineWidth=2;c.beginPath();c.moveTo(tx,ty);c.lineTo(x,y);c.stroke()}
-  else{const r=Math.max(4,7*ds),gg=c.createRadialGradient(x,y,0,x,y,r*2.2);gg.addColorStop(0,"#fff");gg.addColorStop(.3,inn?"#fb923c":"#d946ef");gg.addColorStop(1,"rgba(217,70,239,0)");c.fillStyle=gg;c.beginPath();c.arc(x,y,r*2.2,0,7);c.fill()}}
+ c.globalCompositeOperation="lighter";
+ for(const p of B.pj){const x=scX(p.x,p.y),y=scY(p.x,p.y);if(p.k==="b"){const tx=scX(p.x-p.vx*.05,p.y-p.vy*.05),ty=scY(p.x-p.vx*.05,p.y-p.vy*.05);c.globalAlpha=1;c.lineCap="round";c.strokeStyle=inn?"rgba(251,146,60,.45)":"rgba(192,132,252,.5)";c.lineWidth=5;c.beginPath();c.moveTo(tx,ty);c.lineTo(x,y);c.stroke();c.strokeStyle=inn?"#ffedd5":"#ccfbf1";c.lineWidth=1.8;c.stroke();gl(c,inn?"#fb923c":"#2dd4bf",x,y,7,7,.9)}
+  else{const r=Math.max(4,7*ds),pu=.85+.15*Math.sin(B.t*18+p.x);c.globalAlpha=1;c.lineCap="round";c.strokeStyle=inn?"rgba(251,146,60,.3)":"rgba(217,70,239,.3)";c.lineWidth=r*.9;c.beginPath();c.moveTo(scX(p.x-p.vx*.2,p.y-p.vy*.2),scY(p.x-p.vx*.2,p.y-p.vy*.2));c.lineTo(x,y);c.stroke();
+   gl(c,inn?"#fb923c":"#d946ef",x,y,r*2.6*pu,r*2.6*pu,.95);gl(c,inn?"#fdba74":"#2dd4bf",x,y,r*1.3,r*1.3,.9);gl(c,"#ffffff",x,y,r*.6,r*.6,1)}}
+ c.globalCompositeOperation="source-over";c.globalAlpha=1;
  for(const e of B.en)drawEnemy(e);
  for(const m of B.ms){c.strokeStyle="rgba(253,186,116,.35)";c.lineWidth=2;c.beginPath();m.tr.forEach(([a,b],i)=>i?c.lineTo(scX(a,b),scY(a,b)):c.moveTo(scX(a,b),scY(a,b)));c.stroke();c.fillStyle="#fff7ed";c.beginPath();c.arc(scX(m.x,m.y),scY(m.x,m.y),2,0,7);c.fill()}
  for(const t of B.tr){c.strokeStyle="rgba(253,230,138,.85)";c.lineWidth=1.2;c.beginPath();c.moveTo(scX(t.x0,t.y0),scY(t.x0,t.y0));c.lineTo(scX(t.x1,t.y1),scY(t.x1,t.y1));c.stroke()}
@@ -1257,7 +1448,7 @@ function draw(){if(!cx||!B||!VW)return;const c=cx,W=VW,Hh=VH,k=GE.k,ds=GE.ds,st=
   if(f.k==="boom"){const r=(10+26*f.s)*ds*(.3+p);const gg=c.createRadialGradient(x,y,0,x,y,r);gg.addColorStop(0,`rgba(255,255,255,${.9*(1-p)})`);gg.addColorStop(.4,f.c+Math.round((1-p)*200).toString(16).padStart(2,"0"));gg.addColorStop(1,"rgba(0,0,0,0)");c.fillStyle=gg;c.beginPath();c.arc(x,y,r,0,7);c.fill();c.strokeStyle=`rgba(255,255,255,${.5*(1-p)})`;c.lineWidth=1;c.beginPath();c.arc(x,y,r*1.3,0,7);c.stroke()}
   else if(f.k==="p"){c.fillStyle=f.c;c.globalAlpha=1-p;c.fillRect(x-1,y-1,2,2);c.globalAlpha=1}
   else if(f.k==="txt"){c.globalAlpha=1-p;c.fillStyle=f.c;c.font="700 11px Inter,system-ui,sans-serif";c.textAlign="center";c.fillText(f.tx,x,y-10);c.textAlign="left";c.globalAlpha=1}
-  else if(f.k==="muz"){const r=30*ds*(1-p)+4;const gg=c.createRadialGradient(x,y,0,x,y,r);gg.addColorStop(0,"rgba(255,255,255,.95)");gg.addColorStop(1,"rgba(165,243,252,0)");c.fillStyle=gg;c.beginPath();c.arc(x,y,r,0,7);c.fill()}
+  else if(f.k==="muz"){const r=30*ds*(1-p)+4;c.save();c.translate(x,y);c.rotate(sang(0,1));c.globalCompositeOperation="lighter";gl(c,"#a5f3fc",r*.9,0,r*2.2,r*.45,1-p);gl(c,"#fde68a",0,0,r*1.1,r*1.1,1-p);gl(c,"#ffffff",0,0,r*.5,r*.5,1-p);c.restore();c.globalAlpha=1}
   else if(f.k==="hitS"){const r=14*ds+16*p;c.strokeStyle=f.sh?`rgba(56,189,248,${1-p})`:`rgba(251,146,60,${1-p})`;c.lineWidth=2;c.beginPath();c.arc(x,y,r,0,7);c.stroke()}
   else if(f.k==="beam"){const x1=scX(f.x1,f.y1),y1=scY(f.x1,f.y1);c.strokeStyle=`rgba(248,113,113,${1-p})`;c.lineWidth=8*(1-p)+2;c.beginPath();c.moveTo(x,y);c.lineTo(x1,y1);c.stroke();c.strokeStyle=`rgba(255,255,255,${1-p})`;c.lineWidth=2;c.stroke()}}
  drawSel(st);
@@ -1266,29 +1457,72 @@ function draw(){if(!cx||!B||!VW)return;const c=cx,W=VW,Hh=VH,k=GE.k,ds=GE.ds,st=
  if(B.flash>0){const gg=c.createRadialGradient(W/2,Hh/2,Math.min(W,Hh)*.3,W/2,Hh/2,Math.max(W,Hh)*.75);gg.addColorStop(0,"rgba(248,113,113,0)");gg.addColorStop(1,`rgba(248,113,113,${B.flash})`);c.fillStyle=gg;c.fillRect(0,0,W,Hh)}
  if(B.static>0||(st==="ramp"&&R()<.05)){c.fillStyle=`rgba(255,255,255,${.04+.06*R()})`;for(let i=0;i<14;i++)c.fillRect(0,R()*Hh,W,1+R()*2);c.fillStyle="rgba(248,113,113,.06)";c.fillRect(rnd(-8,8),0,W,Hh)}
  if(B.w<0||B.waveT>0&&B.waveT<3&&!B.q.length&&!live().length&&!B.res){c.fillStyle="rgba(236,238,244,.85)";c.font="700 13px Inter,system-ui,sans-serif";c.textAlign="center";c.fillText(B.w<0?"CONTACTS INBOUND":`WAVE ${B.w+2} INBOUND`,W/2,Hh*.3);c.textAlign="left"}}
-function drawShip(X,Y){const c=cx,ds=GE.ds,p=PAINT[S.paint]||PAINT[0],a=sang(0,1);c.save();c.translate(X,Y);c.rotate(a);c.scale(ds,ds);
- const eg=c.createRadialGradient(-54,0,0,-54,0,24+(B.evaT>0?14:0));eg.addColorStop(0,"rgba(204,251,241,.95)");eg.addColorStop(.35,"rgba(45,212,191,.55)");eg.addColorStop(1,"rgba(45,212,191,0)");c.fillStyle=eg;c.beginPath();c.arc(-54,0,24+(B.evaT>0?14:0),0,7);c.fill();
- c.beginPath();HULL.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();const hg=c.createLinearGradient(0,-14,0,14);hg.addColorStop(0,p.l);hg.addColorStop(.55,p.h);hg.addColorStop(1,"#1a1d25");c.fillStyle=hg;c.fill();c.strokeStyle="rgba(255,255,255,.28)";c.lineWidth=1/ds;c.stroke();
- c.strokeStyle="rgba(0,0,0,.35)";c.beginPath();c.moveTo(-44,0);c.lineTo(48,0);c.moveTo(14,-14);c.lineTo(14,14);c.moveTo(-20,-14);c.lineTo(-20,14);c.stroke();
- if(B.macC>0){c.strokeStyle=`rgba(253,230,138,${.25+.75*B.macC})`;c.lineWidth=1.5+2.5*B.macC;c.beginPath();c.moveTo(-36,0);c.lineTo(58,0);c.stroke();if(B.macC>=1){c.fillStyle=`rgba(255,255,255,${.6+.4*Math.sin(B.t*10)})`;c.beginPath();c.arc(58,0,3,0,7);c.fill()}}
- c.fillStyle="rgba(125,211,252,.9)";c.fillRect(-12,-3,7,6);
- [["pdA",-12],["pdB",12]].forEach(([k,y])=>{const v=B.sub[k];c.fillStyle=v<=0?"#7f1d1d":v<50?"#a16207":"#334155";c.beginPath();c.arc(4,y,4,0,7);c.fill();c.strokeStyle=v<=0?"#f87171":"#cbd5e1";c.lineWidth=1.4;
-  const ang=B.pdAim!=null&&B.pdFiring?B.pdAim-a:0;c.beginPath();c.moveTo(4,y);c.lineTo(4+Math.cos(ang)*8,y+Math.sin(ang)*8);c.stroke()});
- [-12,12].forEach(y=>{const v=B.sub.arc;c.fillStyle=v<=0?"#7f1d1d":"#3f3f46";c.fillRect(-30,y-3,9,6);c.fillStyle=B.arcCd>0||v<=0?"#57534e":"#fdba74";for(let i=0;i<3;i++)c.fillRect(-29+i*3,y-1,2,2)});
- if(B.sub.eng<=0||B.sub.shd<=0||B.sub.mac<=0){c.fillStyle=`rgba(251,146,60,${.5+.5*Math.sin(B.t*14)})`;c.beginPath();c.arc(-6,8,2,0,7);c.arc(24,-6,1.6,0,7);c.fill()}
+/* --- frigate + enemy art (sprites cached by FART; only animated parts are drawn per frame) --- */
+let AFX=[],afxT=-1,tAng=[0,0],hatchO=0,pdTurL=0,scorchS=null;const GLC={};
+function glw(col){if(GLC[col])return GLC[col];const cv=document.createElement("canvas");cv.width=cv.height=64;const g=cv.getContext("2d");g.drawImage(FART.glowSprite(),0,0);g.globalCompositeOperation="source-in";g.fillStyle=col;g.fillRect(0,0,64,64);return GLC[col]=cv}
+function gl(c,col,x,y,rx,ry,al){if(al<=0||rx<=0||ry<=0)return;c.globalAlpha=Math.min(1,al);c.drawImage(glw(col),x-rx,y-ry,rx*2,ry*2)}
+function scorch(){if(scorchS)return scorchS;const cv=document.createElement("canvas");cv.width=cv.height=64;const g=cv.getContext("2d");let r=7;
+ for(let i=0;i<7;i++){const x=32+Math.cos(i*2.4)*r*(i%3),y=32+Math.sin(i*2.4)*r*(i%3)*.8,rr=12+((i*7)%9),gg=g.createRadialGradient(x,y,0,x,y,rr);gg.addColorStop(0,"rgba(8,6,5,.75)");gg.addColorStop(.6,"rgba(40,22,12,.35)");gg.addColorStop(1,"rgba(0,0,0,0)");g.fillStyle=gg;g.beginPath();g.arc(x,y,rr,0,7);g.fill()}
+ g.strokeStyle="rgba(251,146,60,.55)";g.lineWidth=1.2;g.beginPath();g.moveTo(24,30);g.lineTo(31,34);g.lineTo(28,39);g.moveTo(34,28);g.lineTo(40,33);g.stroke();return scorchS=cv}
+const DMGZ={pdA:[[6,-8.6,12.5]],pdB:[[6,8.6,12.5]],arc:[[60,-12.3,16.6],[60,12.3,16.6]],mac:[[24,0,13.3],[92,0,15]],shd:[[-22,-13.2,10.5],[38.5,16,16.6]],eng:[[-96,-8,7],[-96,9,-2]]};
+function drawShip(X,Y){const c=cx,ds=GE.ds,p=PAINT[S.paint]||PAINT[0],a=sang(0,1),u=S.up,K=FART.K,engC=u.sd>=2?"#a78bfa":u.sd===1?"#7dd3fc":"#5eead4";
+ const sp=FART.sprite({p,up:u,num:FART.hullNo(S.name),engC},ds,dpr),U=FART.CS*ds,L=(x,y,z)=>{const q=FART.cpt(x,y,z);return[q[0]*ds,q[1]*ds]};
+ const dt=afxT<0||B.t<afxT?0:Math.min(.1,B.t-afxT),t=B.t;afxT=B.t;
+ c.save();c.translate(X,Y);c.rotate(a);
+ // engine plumes scale with engine power (and flare while evading)
+ const ep=(B.sub.eng<=0?.12:B.sub.eng<50?.6:1)*(.45+.45*fe())+(B.evaT>0?.7:0);c.globalCompositeOperation="lighter";
+ for(const [x,y,z] of K.noz){const [lx,ly]=L(x+2,y,z),len=(14+22*ep)*U,w=(4.2+1.8*ep)*U,fl=.9+.1*Math.sin(t*37+y);
+  gl(c,engC,lx-len*.55,ly,len*.8*fl,w,.3+.4*Math.min(1.4,ep));gl(c,engC,lx,ly,w*1.7,w*1.7,.55);gl(c,"#ffffff",lx,ly,w*.75,w*.75,.35+.5*Math.min(1,ep))}
+ c.globalCompositeOperation="source-over";c.globalAlpha=1;
+ c.drawImage(sp.cv,-sp.ox/dpr,-sp.oy/dpr,sp.cv.width/dpr,sp.cv.height/dpr);
+ const q4=(pts,f)=>{c.beginPath();pts.forEach((p,i)=>i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.closePath();c.fillStyle=f;c.fill()};
+ // Archer hatches swing open while locking / firing a salvo
+ hatchO+=((B.lock||B.salvo?1:0)-hatchO)*Math.min(1,dt*9);const ho=hatchO,arcDead=B.sub.arc<=0;
+ for(const sd of[-1,1])for(let i=0;i<4;i++)for(let j=0;j<2;j++){const x0=49+i*5.4,x1=x0+4.6,y0=sd>0?10.4+j*2.2:-14.6+j*2.2,y1=y0+1.8,z=16.55;
+  q4([L(x0,y0,z),L(x1,y0,z),L(x1,y1,z),L(x0,y1,z)],ho>.03?`rgba(253,186,116,${(.25+.7*ho).toFixed(2)})`:"#1d2129");
+  const th=ho*1.9,yh=sd>0?y1:y0,yi=yh-sd*1.8*Math.cos(th),h=1.8*Math.sin(th);q4([L(x0,yh,z),L(x1,yh,z),L(x1,yi,z+h),L(x0,yi,z+h)],arcDead?"#4b1d1d":ho>.03?"#5b6474":"#2f3542")}
+ if(ho>.05){c.globalCompositeOperation="lighter";for(const [x,y,z] of K.arc){const [lx,ly]=L(x,y,z);gl(c,"#fb923c",lx,ly,14*U,7*U,.5*ho)}c.globalCompositeOperation="source-over"}
+ // MAC charge glows along the spine; muzzle pulses when ready
+ const mc=B.sub.mac>0?B.macC||0:0;if(mc>0){const A=L(-7,0,13.3),Bq=L(42,0,13.3),C2=L(41,0,18.3),D=L(90,0,17.3),Mz=L(FART.muzX(u.mac),0,4.5);c.globalCompositeOperation="lighter";c.lineCap="round";
+  c.globalAlpha=1;c.strokeStyle=`rgba(253,230,138,${(.2+.55*mc).toFixed(2)})`;c.lineWidth=(1.2+2.4*mc)*U;c.beginPath();c.moveTo(A[0],A[1]);c.lineTo(Bq[0],Bq[1]);c.moveTo(C2[0],C2[1]);c.lineTo(D[0],D[1]);c.stroke();
+  c.strokeStyle=`rgba(255,255,255,${(.6*mc).toFixed(2)})`;c.lineWidth=.6*U;c.stroke();
+  for(let i=0;i<3;i++){const f=(t*1.6*(.5+mc)+i/3)%1,P=f<.5?[A[0]+(Bq[0]-A[0])*f*2,A[1]+(Bq[1]-A[1])*f*2]:[C2[0]+(D[0]-C2[0])*(f*2-1),C2[1]+(D[1]-C2[1])*(f*2-1)];gl(c,"#fde68a",P[0],P[1],3*U,3*U,.8*mc)}
+  const pu=mc>=1?.8+.2*Math.sin(t*12):mc;gl(c,"#fde68a",Mz[0],Mz[1],(4+7*mc)*U,(4+7*mc)*U,.35+.6*pu);gl(c,"#ffffff",Mz[0],Mz[1],2.4*U,2.4*U,mc);c.globalCompositeOperation="source-over";c.globalAlpha=1}
+ // point-defence turrets track their target
+ const pt=B.pdOn&&!B.over?pdTarget():null,lk=pt||selE();
+ for(let i=0;i<2;i++){const k=i?"pdB":"pdA",v=B.sub[k],[x,y,z]=K.pd[i],[tx,ty]=L(x,y,z+.8);let tg=tAng[i];
+  if(lk&&v>0){const o=pdO(i);tg=Math.atan2(scY(lk.x,lk.y)-scY(o.x,o.y),scX(lk.x,lk.y)-scX(o.x,o.y))-a}let d=tg-tAng[i];d=Math.atan2(Math.sin(d),Math.cos(d));tAng[i]+=d*Math.min(1,dt*10);
+  c.save();c.translate(tx,ty);c.rotate(tAng[i]);c.lineCap="butt";c.strokeStyle=v<=0?"#7f1d1d":"#cbd5e1";c.lineWidth=Math.max(.9,.75*U);c.beginPath();c.moveTo(0,-.8*U);c.lineTo(8.5*U,-.8*U);c.moveTo(0,.8*U);c.lineTo(8.5*U,.8*U);c.stroke();
+  c.beginPath();c.arc(0,0,2.7*U,0,7);c.fillStyle=v<=0?"#7f1d1d":v<50?"#a16207":"#3b4352";c.fill();c.strokeStyle="rgba(226,232,240,.5)";c.lineWidth=Math.max(.6,.4*U);c.stroke();c.fillStyle="rgba(255,255,255,.22)";c.beginPath();c.arc(-.8*U,-.8*U,1.1*U,0,7);c.fill();
+  if(B.pdFiring&&v>0&&pdTurL===i&&R()<.8){c.globalCompositeOperation="lighter";gl(c,"#fde68a",9.5*U,0,3.2*U,3.2*U,.9);c.globalCompositeOperation="source-over"}c.restore()}
+ c.globalAlpha=1;c.globalCompositeOperation="lighter";
+ // shield emitters, running lights
+ if(B.shUp&&B.sub.shd>0)for(const [x,y,z] of K.shd){const [lx,ly]=L(x,y,z+1);gl(c,"#38bdf8",lx,ly,4*U,4*U,.55+.3*Math.sin(t*5+x))}
+ const bl=(P,col,on)=>{if(!on)return;const q=L(...P);gl(c,col,q[0],q[1],4*U,4*U,.9);gl(c,"#ffffff",q[0],q[1],1.2*U,1.2*U,1)};
+ bl([-86,28.5,-3.5],"#4ade80",t%1.6<1.4);bl([-86,-28.5,-3.5],"#f87171",(t+.8)%1.6<1.4);bl([102,0,12.4],"#ffffff",t%2.2<.14);bl([-46,-2,33],"#f87171",t%1.2<.6);
+ c.globalCompositeOperation="source-over";c.globalAlpha=1;
+ // per-subsystem damage: scorch decals, sparks and venting on the hit region; cleared once repaired to 100%
+ for(const k in DMGZ){const v=B.sub[k];if(v>=100)continue;const sev=1-v/100;
+  for(const [x,y,z] of DMGZ[k]){const [lx,ly]=L(x,y,z),r=(4+6*sev)*U;c.globalAlpha=.55+.45*sev;c.drawImage(scorch(),lx-r,ly-r*.8,r*2,r*1.6);
+   if(dt>0&&AFX.length<140){if(v<75&&R()<dt*(3+14*sev))for(let n=0;n<2;n++)AFX.push({k:"s",x:lx,y:ly,vx:rnd(-40,40)*U,vy:rnd(-40,40)*U,t:0,life:rnd(.2,.5)});
+    if(v<=40&&R()<dt*(5+8*sev))AFX.push({k:"v",x:lx,y:ly,vx:-rnd(6,16)*U,vy:rnd(-5,5)*U-4*U,t:0,life:rnd(.9,1.6),r:rnd(1.2,2.2)*U})}}}
+ c.globalAlpha=1;
+ for(const f of AFX){f.t+=dt;f.x+=f.vx*dt;f.y+=f.vy*dt;const q=f.t/f.life;if(q>=1)continue;
+  if(f.k==="s"){c.strokeStyle=q<.4?"#fef3c7":"#fb923c";c.globalAlpha=1-q;c.lineWidth=Math.max(.8,.5*U);c.beginPath();c.moveTo(f.x,f.y);c.lineTo(f.x-f.vx*.04,f.y-f.vy*.04);c.stroke()}
+  else{c.globalAlpha=.4*(1-q);c.fillStyle="#cbd5e1";c.beginPath();c.arc(f.x,f.y,f.r*(1+q*2.5),0,7);c.fill()}}
+ AFX=AFX.filter(f=>f.t<f.life);c.globalAlpha=1;
  c.restore();
- if(B.sub.shd>0&&B.sh>0){const f=B.sh/shMax();c.save();c.translate(X,Y);c.rotate(a);c.scale(ds,ds);c.beginPath();c.ellipse(2,0,72,30,0,0,7);c.lineWidth=(B.shUp?1.6:1)/ds;c.setLineDash(B.shUp?[]:[4,6]);
-  c.strokeStyle=`rgba(56,189,248,${Math.min(1,(B.shUp?.2+.5*f:.12)+B.shHit)})`;c.stroke();c.fillStyle=`rgba(56,189,248,${(B.shUp?.03+.05*f:0)+B.shHit*.25})`;c.fill();c.restore()}}
-function drawEnemy(e){const c=cx,X=scX(e.x,e.y),Y=scY(e.x,e.y),ds=GE.ds,T=ET[e.k],inn=B.fac==="innie",col=inn?["#292524","#78716c","#fdba74","#fb923c"]:["#2e1065","#7c3aed","#c4b5fd","#e879f9"];
- const ang=e.k==="f"&&Math.hypot(e.vx,e.vy)>8?sang(e.vx,e.vy):sang(B.sx-e.x,SHF()-e.y);c.save();c.translate(X,Y);if(e.gh)c.globalAlpha=.2+.45*R();
- const gg=c.createRadialGradient(0,0,0,0,0,T.r*ds*1.8);gg.addColorStop(0,col[3]+"40");gg.addColorStop(1,col[3]+"00");c.fillStyle=gg;c.beginPath();c.arc(0,0,T.r*ds*1.8,0,7);c.fill();
- c.rotate(ang);c.scale(ds,ds);const bg=c.createLinearGradient(0,-T.r,0,T.r);bg.addColorStop(0,col[2]);bg.addColorStop(.5,col[1]);bg.addColorStop(1,col[0]);c.fillStyle=e.fl>0?"#fff":bg;c.strokeStyle=col[2];c.lineWidth=.8/ds;c.beginPath();
- if(e.k==="f"){c.moveTo(13,0);c.quadraticCurveTo(-1,-4,-10,-12);c.quadraticCurveTo(-4,0,-10,12);c.quadraticCurveTo(-1,4,13,0)}
- else if(e.k==="c"){c.moveTo(25,0);c.bezierCurveTo(14,-12,-14,-13,-22,-7);c.quadraticCurveTo(-28,0,-22,7);c.bezierCurveTo(-14,13,14,12,25,0)}
- else{c.moveTo(50,0);c.bezierCurveTo(30,-22,-30,-25,-46,-11);c.quadraticCurveTo(-54,0,-46,11);c.bezierCurveTo(-30,25,30,22,50,0);c.fill();c.stroke();c.beginPath();c.ellipse(-8,-21,18,6,0,0,7);c.ellipse(-8,21,18,6,0,0,7)}
- c.fill();c.stroke();c.fillStyle=e.gh?"#f87171":col[3];if(e.k!=="f"){c.beginPath();c.arc(-T.r*.6,0,T.r*.12,0,7);c.arc(T.r*.35,0,T.r*.08,0,7);c.fill()}
- if(e.lz>0){c.fillStyle=`rgba(248,113,113,${.6+.4*Math.sin(B.t*20)})`;c.beginPath();c.arc(T.r*.9,0,4+(3-e.lz)*2,0,7);c.fill()}
- c.restore();
+ // shield bubble
+ if(B.sub.shd>0&&B.sh>0){const f=B.sh/shMax(),up=B.shUp,rx=80*ds,ry=34*ds,ox=4*ds;c.save();c.translate(X,Y);c.rotate(a);
+  c.save();c.translate(ox,0);c.scale(1,ry/rx);const g=c.createRadialGradient(0,0,rx*.5,0,0,rx);g.addColorStop(0,"rgba(56,189,248,0)");g.addColorStop(.82,`rgba(56,189,248,${((up?.04+.07*f:.015)+B.shHit*.18).toFixed(3)})`);g.addColorStop(1,`rgba(186,230,253,${Math.min(.85,(up?.22+.35*f:.08)+B.shHit*.6).toFixed(3)})`);c.fillStyle=g;c.beginPath();c.arc(0,0,rx,0,7);c.fill();c.restore();
+  c.beginPath();c.ellipse(ox,0,rx,ry,0,0,7);c.lineWidth=up?1.4:1;c.setLineDash(up?[]:[4,6]);c.strokeStyle=`rgba(125,211,252,${Math.min(1,(up?.25+.45*f:.14)+B.shHit).toFixed(3)})`;c.stroke();
+  if(up){c.setLineDash([26*ds,70*ds,8*ds,90*ds]);c.lineDashOffset=-t*46*ds;c.lineWidth=2.2;c.strokeStyle=`rgba(224,242,254,${(.25+.4*f).toFixed(3)})`;c.stroke();c.beginPath();c.ellipse(ox,0,rx*.93,ry*.86,0,0,7);c.setLineDash([10*ds,120*ds]);c.lineDashOffset=t*30*ds;c.lineWidth=1;c.strokeStyle=`rgba(186,230,253,${(.2+.25*f).toFixed(3)})`;c.stroke()}
+  c.setLineDash([]);c.restore()}}
+function drawEnemy(e){const c=cx,X=scX(e.x,e.y),Y=scY(e.x,e.y),ds=GE.ds,T=ET[e.k],inn=B.fac==="innie";
+ const ang=e.k==="f"&&Math.hypot(e.vx,e.vy)>8?sang(e.vx,e.vy):sang(B.sx-e.x,SHF()-e.y),rr=T.r*ds,sp=FART.enSprite(e.k,inn,rr,dpr),w=sp.width/dpr;c.save();c.translate(X,Y);if(e.gh)c.globalAlpha=.2+.45*R();
+ c.rotate(ang);c.drawImage(sp,-w/2,-w/2,w,w);if(e.fl>0){const ws=FART.enSprite(e.k,inn,rr,dpr,1);c.globalAlpha=Math.min(1,.5+e.fl*6);c.drawImage(ws,-w/2,-w/2,w,w);c.globalAlpha=1}
+ if(e.lz>0){c.globalCompositeOperation="lighter";const pr=.6+.4*Math.sin(B.t*20);gl(c,"#f87171",rr*.85,0,rr*(.25+(3-e.lz)*.12),rr*(.25+(3-e.lz)*.12),pr);gl(c,"#ffffff",rr*.85,0,rr*.1,rr*.1,pr);c.globalCompositeOperation="source-over"}
+ c.restore();c.globalAlpha=1;
  if(!e.gh&&e.hp<e.mx&&e.id!==B.sel){const w=Math.max(18,T.r*ds*1.8),y=Y-T.r*ds-9;c.fillStyle="rgba(255,255,255,.12)";c.fillRect(X-w/2,y,w,3);c.fillStyle=e.hp/e.mx<.3?"#f87171":"#c4b5fd";c.fillRect(X-w/2,y,w*e.hp/e.mx,3)}}
 function rrect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
 function drawSel(st){const c=cx;
@@ -1355,7 +1589,7 @@ function leave(){if(B&&!B.res)btPause(true);if(!on)return;on=false;clearInterval
 addEventListener("pagehide",()=>{if(B&&!B.res){snap();save()}});
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState!=="visible"&&B&&!B.res)btPause(true);if(!on)return;if(document.visibilityState==="visible")enter();else save()});
 return{active:v=>v?enter():leave(),get S(){return S},get B(){return B},skirmish:o=>btStart(o),scr:e=>({x:scX(e.x,e.y),y:scY(e.x,e.y)}),get MD(){return MD},reload(){S=load();if(on)render()},KEY,
- _dbg:{step:dt=>{if(B&&!B.res){step(dt);fxStep(dt)}},cmd:c=>{const [a,x,y]=String(c).split(":");cbCmd(a,x,y)},threat:e=>threat(e),ev:()=>evasion(),shMax:()=>shMax()}};
+ _dbg:{step:dt=>{if(B&&!B.res){step(dt);fxStep(dt)}},ship:()=>B&&({x:scX(B.sx,SHF()),y:scY(B.sx,SHF()),ds:GE.ds,port:GE.port}),cmd:c=>{const [a,x,y]=String(c).split(":");cbCmd(a,x,y)},threat:e=>threat(e),ev:()=>evasion(),shMax:()=>shMax()}};
 })();
 
 /* ================= START ================= */
