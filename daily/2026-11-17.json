@@ -1,0 +1,75 @@
+{
+ "date": "2026-11-17",
+ "hijri": "7 Jamadilakhir 1448",
+ "fast": {
+  "type": "Sunnah fast · Thursday (in 2 days)",
+  "date": "2026-11-19",
+  "why": "Thursday is a day deeds are presented to Allah. Plan your sahur or make niyyah before Zuhr if you haven't eaten since Subuh.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "Family: someone at home or on the phone who worries about you and makes du'a for you. Today, call or message one family member with a sincere thank-you, and say 'Alhamdulillah' for them after Maghrib.",
+ "verse": {
+  "ref": "Ibrahim 14:7",
+  "text": "If you are grateful, I will surely increase you [in favour].",
+  "url": "https://quran.com/14/7"
+ },
+ "hadith": {
+  "ref": "Sahih Muslim 2999",
+  "text": "How wonderful is the affair of the believer, for all his affairs are good. If he is given ease he is grateful, and that is good for him; if hardship touches him he is patient, and that is good for him.",
+  "url": "https://sunnah.com/muslim:2999"
+ },
+ "lesson": {
+  "title": "Seerah: Khadijah (RA) comforts the Prophet ﷺ",
+  "text": "After the first revelation in Cave Hira, the Prophet ﷺ returned trembling. Khadijah (RA) reassured him: 'Never! Allah will never disgrace you. You keep good ties, bear the burden of the weak, help the needy and assist those in hardship.' Lesson: steady, kind character and a supportive companion carry us through fear, and we should be that support for others too.",
+  "url": "https://sunnah.com/bukhari:3"
+ },
+ "name": {
+  "ar": "الحفيظ",
+  "tr": "Al-Hafiz",
+  "meaning": "The Preserver, the Guardian",
+  "text": "\"Indeed my Lord is Guardian over all things\" (11:57). He guards you, your family and your deeds, even when you are too busy to notice.",
+  "url": "https://quran.com/11/57"
+ },
+ "pm": {
+  "name": {
+   "ar": "الغفور",
+   "tr": "Al-Ghafur",
+   "meaning": "The Forgiving",
+   "text": "\"Do not despair of the mercy of Allah. Indeed, Allah forgives all sins\" (39:53). Close the day with istighfar and sleep lightly.",
+   "url": "https://quran.com/39/53"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}
