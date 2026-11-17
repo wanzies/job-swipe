@@ -1,0 +1,75 @@
+{
+ "date": "2026-11-18",
+ "hijri": "8 Jamadilakhir 1448",
+ "fast": {
+  "type": "Sunnah fast · Thursday (tomorrow)",
+  "date": "2026-11-19",
+  "why": "Thursday is a day deeds are presented to Allah. Make niyyah tonight, or before Zuhr if you haven't eaten since Subuh.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "Your body: legs that carried you, hands that wrote, eyes that read, all working without you asking. Today, say 'Alhamdulillah' as you stand for each prayer, and pray two rakaat Duha if you can.",
+ "verse": {
+  "ref": "An-Nahl 16:18",
+  "text": "And if you should count the favors of Allah, you could not enumerate them. Indeed, Allah is Forgiving and Merciful.",
+  "url": "https://quran.com/16/18"
+ },
+ "hadith": {
+  "ref": "Sahih Muslim 720",
+  "text": "Every morning charity is due on every joint of yours... and two rak'ahs which one prays in the forenoon (Duha) suffice for all that.",
+  "url": "https://sunnah.com/muslim:720"
+ },
+ "lesson": {
+  "title": "Names of Allah: Al-Hamid, the Praiseworthy",
+  "text": "Al-Hamid means the One deserving all praise, whether or not anyone praises Him. Allah says: 'Allah is Free of need and Praiseworthy' (14:8). When you say 'Alhamdulillah' you are using His name's root: praise belongs to Him for every blessing and even in hardship. Practise: say Alhamdulillah after a meal and after sneezing, and mean it.",
+  "url": "https://quran.com/14/8"
+ },
+ "name": {
+  "ar": "الحميد",
+  "tr": "Al-Hamid",
+  "meaning": "The Praiseworthy",
+  "text": "\"Indeed, Allah is Free of need and Praiseworthy\" (14:8). Every good thing in your day is from Him, so every thanks returns to Him.",
+  "url": "https://quran.com/14/8"
+ },
+ "pm": {
+  "name": {
+   "ar": "الوكيل",
+   "tr": "Al-Wakil",
+   "meaning": "The Trustee, the Disposer of affairs",
+   "text": "\"Sufficient for us is Allah, and He is the best Disposer of affairs\" (3:173). Hand tomorrow's caseload to Him, do your part, then rest.",
+   "url": "https://quran.com/3/173"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}

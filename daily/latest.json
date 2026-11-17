@@ -1,43 +1,43 @@
 {
- "date": "2026-11-17",
- "hijri": "7 Jamadilakhir 1448",
+ "date": "2026-11-18",
+ "hijri": "8 Jamadilakhir 1448",
  "fast": {
-  "type": "Sunnah fast · Thursday (in 2 days)",
+  "type": "Sunnah fast · Thursday (tomorrow)",
   "date": "2026-11-19",
-  "why": "Thursday is a day deeds are presented to Allah. Plan your sahur or make niyyah before Zuhr if you haven't eaten since Subuh.",
+  "why": "Thursday is a day deeds are presented to Allah. Make niyyah tonight, or before Zuhr if you haven't eaten since Subuh.",
   "src": "Jami' at-Tirmidhi 747",
   "url": "https://sunnah.com/tirmidhi:747"
  },
- "blessing": "Family: someone at home or on the phone who worries about you and makes du'a for you. Today, call or message one family member with a sincere thank-you, and say 'Alhamdulillah' for them after Maghrib.",
+ "blessing": "Your body: legs that carried you, hands that wrote, eyes that read, all working without you asking. Today, say 'Alhamdulillah' as you stand for each prayer, and pray two rakaat Duha if you can.",
  "verse": {
-  "ref": "Ibrahim 14:7",
-  "text": "If you are grateful, I will surely increase you [in favour].",
-  "url": "https://quran.com/14/7"
+  "ref": "An-Nahl 16:18",
+  "text": "And if you should count the favors of Allah, you could not enumerate them. Indeed, Allah is Forgiving and Merciful.",
+  "url": "https://quran.com/16/18"
  },
  "hadith": {
-  "ref": "Sahih Muslim 2999",
-  "text": "How wonderful is the affair of the believer, for all his affairs are good. If he is given ease he is grateful, and that is good for him; if hardship touches him he is patient, and that is good for him.",
-  "url": "https://sunnah.com/muslim:2999"
+  "ref": "Sahih Muslim 720",
+  "text": "Every morning charity is due on every joint of yours... and two rak'ahs which one prays in the forenoon (Duha) suffice for all that.",
+  "url": "https://sunnah.com/muslim:720"
  },
  "lesson": {
-  "title": "Seerah: Khadijah (RA) comforts the Prophet ﷺ",
-  "text": "After the first revelation in Cave Hira, the Prophet ﷺ returned trembling. Khadijah (RA) reassured him: 'Never! Allah will never disgrace you. You keep good ties, bear the burden of the weak, help the needy and assist those in hardship.' Lesson: steady, kind character and a supportive companion carry us through fear, and we should be that support for others too.",
-  "url": "https://sunnah.com/bukhari:3"
+  "title": "Names of Allah: Al-Hamid, the Praiseworthy",
+  "text": "Al-Hamid means the One deserving all praise, whether or not anyone praises Him. Allah says: 'Allah is Free of need and Praiseworthy' (14:8). When you say 'Alhamdulillah' you are using His name's root: praise belongs to Him for every blessing and even in hardship. Practise: say Alhamdulillah after a meal and after sneezing, and mean it.",
+  "url": "https://quran.com/14/8"
  },
  "name": {
-  "ar": "الحفيظ",
-  "tr": "Al-Hafiz",
-  "meaning": "The Preserver, the Guardian",
-  "text": "\"Indeed my Lord is Guardian over all things\" (11:57). He guards you, your family and your deeds, even when you are too busy to notice.",
-  "url": "https://quran.com/11/57"
+  "ar": "الحميد",
+  "tr": "Al-Hamid",
+  "meaning": "The Praiseworthy",
+  "text": "\"Indeed, Allah is Free of need and Praiseworthy\" (14:8). Every good thing in your day is from Him, so every thanks returns to Him.",
+  "url": "https://quran.com/14/8"
  },
  "pm": {
   "name": {
-   "ar": "الغفور",
-   "tr": "Al-Ghafur",
-   "meaning": "The Forgiving",
-   "text": "\"Do not despair of the mercy of Allah. Indeed, Allah forgives all sins\" (39:53). Close the day with istighfar and sleep lightly.",
-   "url": "https://quran.com/39/53"
+   "ar": "الوكيل",
+   "tr": "Al-Wakil",
+   "meaning": "The Trustee, the Disposer of affairs",
+   "text": "\"Sufficient for us is Allah, and He is the best Disposer of affairs\" (3:173). Hand tomorrow's caseload to Him, do your part, then rest.",
+   "url": "https://quran.com/3/173"
   }
  },
  "world": [
