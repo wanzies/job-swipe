@@ -111,13 +111,21 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 .meter{display:flex;gap:4px;margin:8px 0}.meter i{flex:1;height:8px;border-radius:99px;background:var(--s3)}.meter i.on{background:var(--warn)}
 .job{padding:10px 0;border-top:1px solid var(--bd)}.job:first-child{border-top:0}.job .jt{font-weight:600}
 /* nav */
-#tabs{grid-area:nav;display:flex;justify-content:space-around;background:rgba(11,12,16,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--bd);padding:6px 6px calc(env(safe-area-inset-bottom,0px) + 6px);z-index:5}
-#tabs button{flex:1;background:none;border:0;color:var(--mu2);display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:600;padding:6px 0;cursor:pointer;border-radius:12px;transition:color .2s}
-#tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-#tabs button[aria-selected=true]{color:var(--ac)}
+#tabbar{grid-area:nav;position:relative;z-index:5;min-width:0;width:100%;max-width:100%;overflow:hidden;background:rgba(11,12,16,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--bd)}
+#tabs{display:flex;justify-content:flex-start;align-items:stretch;gap:2px;min-width:0;width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;overscroll-behavior-x:contain;touch-action:pan-x;padding:4px 8px calc(env(safe-area-inset-bottom,0px) + 4px)}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 78px;width:78px;min-width:78px;min-height:56px;background:none;border:0;color:var(--mu2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:600;padding:8px 4px;cursor:pointer;border-radius:12px;transition:color .2s,background .2s;scroll-snap-align:center;-webkit-tap-highlight-color:transparent}
+#tabs button svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+#tabs button[aria-selected=true]{color:var(--ac);background:var(--ac2)}
+#tabbar::before,#tabbar::after{content:"";position:absolute;top:0;bottom:0;width:36px;pointer-events:none;z-index:2;opacity:0;transition:opacity .2s}
+#tabbar::before{left:0;background:linear-gradient(to right,rgba(11,12,16,.98),rgba(11,12,16,.65) 40%,transparent)}
+#tabbar::after{right:0;background:linear-gradient(to left,rgba(11,12,16,.98),rgba(11,12,16,.65) 40%,transparent)}
+#tabbar.fade-l::before,#tabbar.fade-r::after{opacity:1}
 @media (min-width:900px){
- #tabs{justify-content:flex-end;gap:4px;border:0;background:transparent;backdrop-filter:none;padding:16px 24px;align-items:center}
- #tabs button{flex:0 0 auto;flex-direction:row;font-size:14px;padding:8px 14px;gap:8px;color:var(--mu)}
+ #tabbar{border:0;background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;overflow:visible;width:auto;max-width:none}
+ #tabbar::before,#tabbar::after{display:none}
+ #tabs{justify-content:flex-end;gap:4px;overflow:visible;scroll-snap-type:none;padding:16px 24px;align-items:center;touch-action:auto}
+ #tabs button{flex:0 0 auto;width:auto;min-width:0;min-height:0;flex-direction:row;font-size:14px;padding:8px 14px;gap:8px;color:var(--mu)}
  #tabs button svg{width:18px;height:18px}
  #tabs button[aria-selected=true]{background:var(--s2);color:var(--tx)}
  .clock{font-size:56px}
@@ -561,6 +569,7 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 <section class="screen" id="kitchen" aria-label="Kitchen"></section>
 </main>
 
+<div id="tabbar">
 <nav id="tabs" role="tablist" aria-label="Screens">
  <button role="tab" data-i="0" aria-selected="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Now</button>
  <button role="tab" data-i="1" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>Faith</button>
@@ -571,6 +580,7 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
  <button role="tab" data-i="6" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>Gym</button>
  <button role="tab" data-i="7" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="5.5" y="2.5" width="13" height="19" rx="2.5"/><path d="M5.5 9.5h13M9 5.5v1.5M9 12.5v3"/></svg>Kitchen</button>
 </nav>
+</div>
 
 <!-- Quran reader (swipe right = next page, left = previous) -->
 <div id="qr" class="ov" role="dialog" aria-label="Quran reader"><div class="ovh"><span class="sm mu num" id="qhead"></span><button class="btn sm" onclick="qStop()">Stop &amp; save</button></div><div id="qbody">Loading…</div><div class="row" style="max-width:760px;margin:16px auto 40px;padding:0 16px"><button class="btn" onclick="qGo(-1)">‹ Prev</button><button class="btn pri" onclick="qGo(1)">Next page ›</button></div></div>
@@ -604,14 +614,19 @@ function spark(vals,w,h,opt){opt=opt||{};if(!vals.length)return"";const mn=Math.
  return `<svg width="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block;height:${h}px" aria-hidden="true"><path d="${d} L${w} ${h} L0 ${h}Z" fill="var(--ac2)"/><path d="${d}" fill="none" stroke="var(--ac)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`}
 
 /* ================= NAV / PAGER ================= */
-const pager=$("pager"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Money","Career","World","Ship","Gym","Kitchen"];
+const pager=$("pager"),tabsEl=$("tabs"),tabbar=$("tabbar"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Money","Career","World","Ship","Gym","Kitchen"];
 let cur=0;const inited=new Set();
+function updateTabFades(){if(!tabbar||!tabsEl)return;const max=tabsEl.scrollWidth-tabsEl.clientWidth;tabbar.classList.toggle("fade-l",tabsEl.scrollLeft>4);tabbar.classList.toggle("fade-r",max>4&&tabsEl.scrollLeft<max-4)}
+function revealTab(i){const t=TABS[i];if(t)t.scrollIntoView({inline:"center",block:"nearest",behavior:RM?"auto":"smooth"});updateTabFades()}
 function go(i,instant){i=Math.max(0,Math.min(SCR.length-1,i));pager.scrollTo({left:i*pager.clientWidth,behavior:instant||RM?"auto":"smooth"});setCur(i)}
 function setCur(i){if(i===cur&&inited.has(i))return;cur=i;TABS.forEach((t,k)=>t.setAttribute("aria-selected",k===i?"true":"false"));$("hdT").textContent=NAMES[i];
- history.replaceState(null,"","#"+SCR[i].id);FRG.active(i===5);GYM.active(i===6);KIT.active(i===7);initScreen(i)}
+ history.replaceState(null,"","#"+SCR[i].id);FRG.active(i===5);GYM.active(i===6);KIT.active(i===7);initScreen(i);revealTab(i)}
 TABS.forEach(t=>t.onclick=()=>go(+t.dataset.i));
 let sT;pager.addEventListener("scroll",()=>{clearTimeout(sT);sT=setTimeout(()=>{const i=Math.round(pager.scrollLeft/pager.clientWidth);if(i!==cur)setCur(i)},60)},{passive:true});
-addEventListener("resize",()=>pager.scrollTo({left:cur*pager.clientWidth}));
+tabsEl.addEventListener("scroll",updateTabFades,{passive:true});
+["touchstart","touchmove","touchend","pointerdown","pointermove","pointerup","wheel"].forEach(ev=>tabbar.addEventListener(ev,e=>e.stopPropagation(),{passive:true}));
+addEventListener("resize",()=>{pager.scrollTo({left:cur*pager.clientWidth});revealTab(cur)});
+updateTabFades();
 addEventListener("keydown",e=>{if(document.querySelector(".shm.on,.cbt.on"))return;if(document.querySelector(".ov.on")){if(e.key==="Escape"){if($("qr").classList.contains("on"))qStop();else jClose()}return}
  if(e.target.closest&&e.target.closest("input,textarea,select"))return;if(e.key==="ArrowRight")go(cur+1);else if(e.key==="ArrowLeft")go(cur-1)});
 function lazyFrames(root){root.querySelectorAll("iframe[data-src]").forEach(f=>{f.src=f.dataset.src;f.removeAttribute("data-src")})}
@@ -2479,7 +2494,7 @@ return{active:v=>v?enter():leave(),unlockK,load,get S(){return SNAP},get P(){ret
 
 /* ================= START ================= */
 (function(){const alias={today:0,plannerS:0,todoS:0,calS:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:2,finS:2,career:3,bondS:3,jobsS:3,world:4,worldS:4,newsS:4,ship:5,shipS:5,frigate:5,game:5,gym:6,gymS:6,workout:6,fitness:6,ippt:6,kitchen:7,kitchenS:7,fridge:7,grocery:7,groceries:7},i=alias[location.hash.slice(1)]??0;
- cur=-1;requestAnimationFrame(()=>{go(i,true)})})();
+ cur=-1;requestAnimationFrame(()=>{go(i,true);requestAnimationFrame(()=>revealTab(i))})})();
 tick();setInterval(tick,1000);
 if(sessionStorage.fpw){unlock(sessionStorage.fpw)}
 else fetch("cal.enc.json?"+Date.now(),{method:"HEAD"}).catch(()=>{});
