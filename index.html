@@ -398,11 +398,85 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 .gy-note{font-size:12.5px;color:#c9ccd6;background:var(--s2);border-radius:12px;padding:9px 11px;margin-top:10px}
 @media (min-width:600px){.gy-two{grid-template-columns:1fr 1fr}}
 .gy-f3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.gy-f3 label{min-width:0}.gy-f3 small{display:block;font-size:10.5px;color:var(--mu);margin:0 0 3px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gy-f3 .inp{width:100%;font-size:16px}
+/* kitchen (FridgeBot fridge) */
+#kitchen{padding-bottom:100px;--kx:var(--bad);--ko:#fb923c;--ky:var(--warn);--kg:var(--ok)}
+.k-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.k-st{border:1px solid var(--bd);background:var(--s2);border-radius:14px;padding:10px 10px 9px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:1px;transition:border-color .15s,background .15s}
+.k-st b{font-size:24px;font-weight:800;letter-spacing:-.03em;line-height:1.1}.k-st span{font-size:11.5px;color:var(--mu);font-weight:600}
+.k-st.x b{color:var(--kx)}.k-st.o b{color:var(--ko)}.k-st.on{border-color:var(--ac);background:var(--ac2)}
+.k-sync{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;font-size:12px;color:var(--mu);flex-wrap:wrap}
+.k-sync .dot{width:7px;height:7px}.k-sync .dot.w{background:var(--warn);box-shadow:0 0 0 3px rgba(251,191,36,.15)}.k-sync .dot.b{background:var(--bad);box-shadow:0 0 0 3px rgba(248,113,113,.15)}
+.k-sync>span{display:inline-flex;align-items:center;gap:7px}
+.k-bar{position:sticky;top:-4px;z-index:4;background:rgba(11,12,16,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:8px 2px;margin:-4px 0;display:flex;flex-direction:column;gap:8px}
+.k-srch{display:flex;gap:8px}.k-srch .inp{flex:1;font-size:16px;padding:9px 12px 9px 34px;background:var(--s1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a90a2' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 11px 50%/16px}
+.k-srch select{flex:0 0 auto;max-width:44%;font-size:14px}
+.k-sel{background:var(--s1);border:1px solid var(--bd2);border-radius:12px;padding:9px 10px;color:var(--tx);font:inherit;font-size:16px;outline:none;min-width:0}
+.k-seg{display:flex;gap:4px;background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:3px}
+.k-seg button{flex:1;border:0;background:none;color:var(--mu);font-weight:600;font-size:13px;padding:7px 4px;border-radius:9px;cursor:pointer;white-space:nowrap}
+.k-seg button[aria-pressed=true]{background:var(--s3);color:var(--tx)}
+.k-seg button small{font-size:11px;color:var(--mu2);margin-left:3px;font-weight:600}
+.k-list{padding:6px 0 4px}
+.k-gh{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mu);padding:12px 14px 4px;display:flex;justify-content:space-between}
+.k-gh:first-child{padding-top:6px}
+.k-it{position:relative;display:flex;align-items:center;gap:6px;padding:9px 10px 9px 16px;border-top:1px solid var(--bd)}
+.k-gh+.k-it{border-top:0}
+.k-it::before{content:"";position:absolute;left:6px;top:9px;bottom:9px;width:4px;border-radius:4px;background:var(--mu2)}
+.k-it.u-x::before{background:var(--kx)}.k-it.u-o::before{background:var(--ko)}.k-it.u-y::before{background:var(--ky)}.k-it.u-g::before{background:var(--kg)}
+.k-it.pend{opacity:.72}.k-it.pend .k-nm b::after{content:" · syncing";font-weight:500;font-size:11px;color:var(--mu)}
+.k-main{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:none;border:0;padding:2px 0;text-align:left;cursor:pointer;color:inherit}
+.k-em{font-size:22px;width:28px;text-align:center;flex:0 0 auto}
+.k-nm{flex:1;min-width:0;display:flex;flex-direction:column}.k-nm b{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k-nm small{font-size:12px;color:var(--mu);white-space:nowrap;overflow:hidden;display:flex;align-items:center;gap:6px;margin-top:2px}.k-sub{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.k-lb{font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:6px;background:var(--s3);color:#c9ccd6;flex:0 0 auto}
+.k-lb.freezer{background:rgba(56,189,248,.14);color:#7dd3fc}.k-lb.pantry{background:rgba(251,191,36,.12);color:#fcd34d}
+.k-dl{flex:0 0 auto;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--s3);color:var(--mu);white-space:nowrap}
+.k-dl.u-x{background:rgba(248,113,113,.16);color:var(--kx)}.k-dl.u-o{background:rgba(251,146,60,.16);color:var(--ko)}.k-dl.u-y{background:rgba(251,191,36,.14);color:var(--ky)}.k-dl.u-g{background:rgba(52,211,153,.13);color:var(--kg)}
+.k-q{display:flex;gap:4px;flex:0 0 auto}
+.k-q button{width:36px;height:36px;border-radius:10px;border:1px solid var(--bd2);background:var(--s2);color:var(--tx);font-weight:700;font-size:13px;cursor:pointer;display:grid;place-items:center;padding:0}
+.k-q button:active{transform:scale(.94)}.k-q button.k-u{color:var(--ok)}.k-q button.k-r{color:var(--mu)}
+.k-q svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.k-empty{padding:26px 16px;text-align:center;color:var(--mu);font-size:14px}.k-empty b{display:block;color:var(--tx);font-size:16px;margin-bottom:4px}
+.k-g{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--bd)}.k-g:first-child{border-top:0}
+.k-ck{width:26px;height:26px;border-radius:8px;border:2px solid var(--bd2);background:none;display:grid;place-items:center;cursor:pointer;flex:0 0 auto;color:#05110f;padding:0}
+.k-ck svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.k-g.b .k-ck{background:var(--ac);border-color:var(--ac)}.k-g.b .k-ck svg{opacity:1}.k-g.b .k-gn b{text-decoration:line-through;color:var(--mu)}
+.k-gn{flex:1;min-width:0}.k-gn b{font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.k-gn small{font-size:11.5px;color:var(--mu)}
+.k-g .btn{flex:0 0 auto}.k-g.pend{opacity:.7}
+.k-ais{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mu2);margin:10px 0 0}
+.k-add{display:flex;gap:8px;margin-bottom:6px}.k-add .inp{flex:1;font-size:16px}.k-add .inp.n{flex:0 0 64px}
+.k-steps{margin:8px 0 0;padding-left:20px;font-size:13px;color:#c9ccd6}.k-steps li{margin:4px 0}.k-steps b{color:var(--tx)}
+.k-con .row{display:flex;gap:8px;margin-top:10px}.k-con .inp{flex:1;font-size:16px;min-width:0}
+.k-flash{animation:kfl 1.2s var(--ease)}@keyframes kfl{0%,40%{box-shadow:0 0 0 2px var(--ac)}100%{box-shadow:0 0 0 0 transparent}}
+#kFab{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 80px);z-index:30;width:56px;height:56px;border-radius:18px;border:0;background:var(--ac);color:#05110f;box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06) inset;display:none;place-items:center;cursor:pointer}
+#kFab svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round}#kFab.on{display:grid;animation:rise .25s var(--ease)}#kFab:active{transform:scale(.94)}
+#kToast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 80px);z-index:61;width:min(92vw,440px);display:none;align-items:center;gap:10px;background:#20232d;border:1px solid var(--bd2);border-radius:14px;padding:10px 10px 10px 14px;box-shadow:0 12px 34px rgba(0,0,0,.5);font-size:14px;overflow:hidden}
+#kToast.on{display:flex;animation:rise .2s var(--ease)}#kToast span{flex:1;min-width:0}#kToast .btn{padding:7px 12px;color:var(--ac)}
+#kToast i{position:absolute;left:0;bottom:0;height:3px;background:var(--ac);width:100%;transform-origin:left}
+.k-sh{position:fixed;inset:0;z-index:60;display:none}.k-sh.on{display:block}
+.k-shb{position:absolute;inset:0;background:rgba(0,0,0,.55);animation:kfade .2s}
+@keyframes kfade{from{opacity:0}}
+.k-shp{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:560px;max-height:92dvh;overflow:auto;background:var(--s1);border:1px solid var(--bd2);border-bottom:0;border-radius:22px 22px 0 0;padding:8px 16px calc(env(safe-area-inset-bottom,0px) + 16px);animation:kup .28s var(--ease)}
+@keyframes kup{from{transform:translateY(40%);opacity:.4}}
+.k-grab{width:40px;height:5px;border-radius:9px;background:var(--s3);margin:2px auto 10px}
+.k-shp h3{margin:0 0 12px;font-size:18px;letter-spacing:-.01em;display:flex;justify-content:space-between;align-items:center}
+.k-fl{display:block;margin-bottom:10px}.k-fl>small{display:block;font-size:11.5px;color:var(--mu);font-weight:600;margin:0 0 4px 2px}
+.k-fl .inp,.k-fl .k-sel{width:100%;font-size:16px}
+.k-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.k-exp{display:flex;gap:6px;position:relative}.k-exp .inp{flex:1;letter-spacing:.04em}.k-exp .btn{padding:9px 12px}
+.k-exp input[type=date]{position:absolute;right:0;bottom:0;width:44px;height:40px;opacity:0;pointer-events:none}
+.k-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.k-chips button{border:1px solid var(--bd2);background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600;cursor:pointer}
+.k-chips button.on{border-color:var(--ac);color:var(--ac);background:var(--ac2)}
+.k-shact{display:flex;gap:8px;margin-top:12px}.k-shact .btn{flex:1;padding:12px;font-size:15px}
+.k-shact2{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.k-shact2 .btn{padding:10px 6px;font-size:13px}
+.k-shact2 .btn.bad{color:var(--bad)}
+.k-meta{font-size:11.5px;color:var(--mu);margin-top:10px}
+@media (min-width:900px){#kFab,#kToast{bottom:24px}#kFab{right:28px}}
+#kToast.on~#kFab{transform:translateY(-64px)}#kFab{transition:transform .2s var(--ease)}
 </style></head>
 <body>
 <!--
-  MODERN DASHBOARD · 7 screens (Now, Faith, Money, Career, World, Ship, Gym), swipe sideways or use the tabs.
-  Finance (fin.enc.json) and calendar (cal.enc.json) are decrypted in the browser only (PBKDF2 600k + AES-GCM).
+  MODERN DASHBOARD · 8 screens (Now, Faith, Money, Career, World, Ship, Gym, Kitchen), swipe sideways or use the tabs.
+  Finance (fin.enc.json), calendar (cal.enc.json) and kitchen (kitchen.enc.json) are decrypted in the browser only (PBKDF2 600k + AES-GCM).
   No passcode or figures live in this file. Old 8-bit version: retro.html · older: classic.html
 -->
 <header id="hd"><div class="ttl" id="hdT">Now</div><div class="meta"><span id="hdM" class="num"></span><button class="lockbtn" id="lockBtn" hidden onclick="lockAll()">Lock</button></div></header>
@@ -483,6 +557,8 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 <section class="screen" id="ship" aria-label="Ship"></section>
 <!-- ============ GYM (workouts; data in localStorage only, rendered by GYM while this tab is open) ============ -->
 <section class="screen" id="gym" aria-label="Gym"></section>
+<!-- ============ KITCHEN ============ -->
+<section class="screen" id="kitchen" aria-label="Kitchen"></section>
 </main>
 
 <nav id="tabs" role="tablist" aria-label="Screens">
@@ -493,6 +569,7 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
  <button role="tab" data-i="4" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>World</button>
  <button role="tab" data-i="5" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M5.5 15.5C4 17 3.5 20.5 3.5 20.5s3.5-.5 5-2"/><path d="M9 15l-3-3c1.6-4.2 5.3-8 13-9-1 7.7-4.8 11.4-9 13z"/><circle cx="14.5" cy="9.5" r="1.6"/><path d="M7.5 10.5H4.5l2-3h4M13.5 16.5v3l3-2v-4"/></svg>Ship</button>
  <button role="tab" data-i="6" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>Gym</button>
+ <button role="tab" data-i="7" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="5.5" y="2.5" width="13" height="19" rx="2.5"/><path d="M5.5 9.5h13M9 5.5v1.5M9 12.5v3"/></svg>Kitchen</button>
 </nav>
 
 <!-- Quran reader (swipe right = next page, left = previous) -->
@@ -527,11 +604,11 @@ function spark(vals,w,h,opt){opt=opt||{};if(!vals.length)return"";const mn=Math.
  return `<svg width="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block;height:${h}px" aria-hidden="true"><path d="${d} L${w} ${h} L0 ${h}Z" fill="var(--ac2)"/><path d="${d}" fill="none" stroke="var(--ac)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`}
 
 /* ================= NAV / PAGER ================= */
-const pager=$("pager"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Money","Career","World","Ship","Gym"];
+const pager=$("pager"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Money","Career","World","Ship","Gym","Kitchen"];
 let cur=0;const inited=new Set();
 function go(i,instant){i=Math.max(0,Math.min(SCR.length-1,i));pager.scrollTo({left:i*pager.clientWidth,behavior:instant||RM?"auto":"smooth"});setCur(i)}
 function setCur(i){if(i===cur&&inited.has(i))return;cur=i;TABS.forEach((t,k)=>t.setAttribute("aria-selected",k===i?"true":"false"));$("hdT").textContent=NAMES[i];
- history.replaceState(null,"","#"+SCR[i].id);FRG.active(i===5);GYM.active(i===6);initScreen(i)}
+ history.replaceState(null,"","#"+SCR[i].id);FRG.active(i===5);GYM.active(i===6);KIT.active(i===7);initScreen(i)}
 TABS.forEach(t=>t.onclick=()=>go(+t.dataset.i));
 let sT;pager.addEventListener("scroll",()=>{clearTimeout(sT);sT=setTimeout(()=>{const i=Math.round(pager.scrollLeft/pager.clientWidth);if(i!==cur)setCur(i)},60)},{passive:true});
 addEventListener("resize",()=>pager.scrollTo({left:cur*pager.clientWidth}));
@@ -2162,8 +2239,246 @@ document.addEventListener("visibilitychange",()=>{if(document.visibilityState===
 return{active:v=>v?enter():leave(),get S(){return S},KEY,EX,PLAN,_dbg:{diagram,solve,rxShow,rxTap,RX}};
 })();
 
+/* ================= KITCHEN · FridgeBot fridge (kitchen.enc.json, PBKDF2 600k + AES-GCM) =================
+   Read: box sync loop exports fridge.db -> kitchen.enc.json. Write: encrypted op batches -> kitchen_ops/ via the
+   GitHub contents API (fine-grained token, stored on this device only, encrypted with the dashboard passcode). */
+const KIT=(()=>{
+const API="https://api.github.com/repos/wanzies/job-swipe/contents/",PK="jobswipe-kitchen-pend-v1",TK="jobswipe-kitchen-tok-v1",CK="jobswipe-kitchen-cache-v1";
+const LOC=[["fridge","Fridge","🧊"],["freezer","Freezer","❄️"],["pantry","Pantry","🗄️"]],LN={fridge:"Fridge",freezer:"Freezer",pantry:"Pantry"};
+const CATS=["Dairy & Eggs","Meat & Poultry","Seafood","Vegetables","Fruits","Bread & Bakery","Frozen","Sauces & Condiments","Drinks","Snacks","Leftovers","Grains & Pantry","Other"];
+const CE={"Dairy & Eggs":"🥚","Meat & Poultry":"🍗","Seafood":"🐟","Vegetables":"🥬","Fruits":"🍎","Bread & Bakery":"🍞","Frozen":"🧊","Sauces & Condiments":"🫙","Drinks":"🧃","Snacks":"🍪","Leftovers":"🍱","Grains & Pantry":"🍚","Other":"📦"};
+const AIS={"Vegetables":"Fruit & Veg","Fruits":"Fruit & Veg","Meat & Poultry":"Meat & Seafood","Seafood":"Meat & Seafood","Dairy & Eggs":"Dairy, Eggs & Chilled","Leftovers":"Dairy, Eggs & Chilled","Bread & Bakery":"Bakery","Frozen":"Frozen","Grains & Pantry":"Rice, Noodles & Dry Goods","Sauces & Condiments":"Sauces, Spices & Condiments","Snacks":"Snacks & Drinks","Drinks":"Snacks & Drinks","Other":"Household & Other"};
+const SHELF={"Dairy & Eggs":[7,60,3],"Meat & Poultry":[2,90,0],"Seafood":[2,90,0],"Vegetables":[6,180,4],"Fruits":[7,180,4],"Bread & Bakery":[7,60,4],"Frozen":[2,120,0],"Sauces & Condiments":[90,180,180],"Drinks":[7,90,180],"Snacks":[30,90,60],"Leftovers":[3,60,0],"Grains & Pantry":[180,365,365],"Other":[7,90,90]};
+const UNITS=["","pcs","kg","g","L","ml","pack","bottle","can","tray","box","bag","loaf","bunch","jar","carton","dozen","slice","cup","tub"];
+const IC={chk:'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',x:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>',plus:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>'};
+let SNAP=null,PEND=[],TOK=null,on=false,built=false,loading=false,err="",sendErr="",flushing=false,lastFetch=0,pollT=null,flushT=null,toastT=null,sendSalt=null,sheet=null;
+const ui={loc:"all",cat:"all",q:"",urg:null},keyC=new Map();
+/* ---------- crypto (same scheme as decEnc; key cached per salt) ---------- */
+const b64=u=>{u=new Uint8Array(u);let s="";for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)};
+const ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)),rnd=n=>crypto.getRandomValues(new Uint8Array(n));
+let keyPw=null;
+async function dk(salt,pw){if(keyPw!==pw){keyC.clear();keyPw=pw}const id=salt;if(keyC.has(id))return keyC.get(id);const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+ const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:ub(salt),iterations:600000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]);keyC.set(id,k);return k}
+async function dec(e,pw){const k=await dk(e.s,pw);return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:ub(e.iv)},k,ub(e.ct))))}
+async function enc(o,pw,salt){salt=salt||b64(rnd(16));const k=await dk(salt,pw),iv=rnd(12);return{s:salt,iv:b64(iv),ct:b64(await crypto.subtle.encrypt({name:"AES-GCM",iv},k,new TextEncoder().encode(JSON.stringify(o))))}}
+const pw=()=>sessionStorage.fpw||"";
+const oid=()=>"k"+Date.now().toString(36)+b64(rnd(6)).replace(/[^A-Za-z0-9]/g,"x");
+/* ---------- dates (SGT) ---------- */
+function todayU(){const p=sgParts();return Date.UTC(p.y,p.m-1,p.d)}
+function isoAdd(d){const t=new Date(todayU()+d*864e5);return t.toISOString().slice(0,10)}
+function dl(e){if(!e)return null;const [y,m,d]=e.slice(0,10).split("-").map(Number);if(!y)return null;return Math.round((Date.UTC(y,m-1,d)-todayU())/864e5)}
+const urg=n=>n==null?"n":n<0?"x":n<=2?"o":n<=5?"y":"g";
+function dlL(n,est){if(n==null)return"No date";const t=est?"~":"";if(n<0)return"Expired"+(n<-1?" "+(-n)+"d":"");if(n===0)return t+"Today";if(n===1)return t+"1 day";return t+n+" days"}
+const dmy=e=>{if(!e)return"";const [y,m,d]=e.slice(0,10).split("-");return d+"/"+m+"/"+y};
+function parseDMY(s){s=(s||"").trim();if(!s)return"";const m=s.match(/^(\d{1,2})[\/.\- ](\d{1,2})(?:[\/.\- ](\d{2,4}))?$/);if(!m)return null;let d=+m[1],mo=+m[2],y=m[3]?+m[3]:0;
+ const p=sgParts();if(!y){y=p.y;if(Date.UTC(y,mo-1,d)<todayU()-60*864e5)y++}else if(y<100)y+=2000;
+ const t=new Date(Date.UTC(y,mo-1,d));if(t.getUTCMonth()!==mo-1||t.getUTCDate()!==d||y<2020||y>2100)return null;return t.toISOString().slice(0,10)}
+const autoExp=(c,l)=>isoAdd((SHELF[c]||SHELF.Other)[["fridge","freezer","pantry"].indexOf(l||"fridge")]??7);
+const defLoc=c=>c==="Frozen"?"freezer":(c==="Grains & Pantry"||c==="Snacks")?"pantry":"fridge";
+function ago(t){if(!t)return"never";const s=(Date.now()-t)/1e3;if(s<60)return"just now";if(s<3600)return Math.round(s/60)+" min ago";if(s<86400)return Math.round(s/3600)+" h ago";return Math.round(s/86400)+" d ago"}
+const fq=(q,u)=>{if(q==null||q==="")return u||"";const n=+q;const s=Number.isInteger(n)?String(n):String(+n.toFixed(2));return u?s+" "+u:s};
+const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim().replace(/(es|s)$/,"");
+/* ---------- pending ops ---------- */
+function loadPend(){try{PEND=JSON.parse(localStorage.getItem(PK)||"[]");if(!Array.isArray(PEND))PEND=[]}catch(e){PEND=[]}}
+function savePend(){try{localStorage.setItem(PK,JSON.stringify(PEND))}catch(e){}}
+function reconcile(){if(!SNAP)return;const ap=SNAP.applied||{},gen=Date.parse(SNAP.gen||0)||0;
+ PEND=PEND.filter(p=>!ap[p.op.op]&&!(p.sent&&p.sentAt&&Date.now()-p.sentAt>6*3600e3));savePend()}
+function view(){const S=SNAP||{items:[],recent:[],grocery:[],staples:[]};
+ let all=[...S.items,...S.recent].map(x=>({...x})),groc=S.grocery.map(x=>({...x})),stap=S.staples.map(x=>({...x}));
+ const fi=o=>o.id!=null?all.find(x=>x.id===o.id):all.find(x=>x._op===o.ref),fg=o=>o.id!=null?groc.find(x=>x.id===o.id):groc.find(x=>x._op===o.ref);
+ for(const p of PEND){const o=p.op;let it;switch(o.t){
+  case"item_add":all.push({id:"p"+o.op,_op:o.op,name:o.name,qty:o.qty??1,unit:o.unit||"",category:o.category||"Other",location:o.location||"fridge",expiry:o.expiry||autoExp(o.category,o.location),expiry_estimated:o.expiry?(o.est?1:0):1,status:"active",added_by:"Dashboard",_p:1});
+   if(o.from_grocery){const g=groc.find(x=>x.id===o.from_grocery);if(g)g.status="cleared"}break;
+  case"item_edit":it=fi(o);if(it){Object.assign(it,o.f);if("est" in o.f)it.expiry_estimated=o.f.est?1:0;it._p=1}break;
+  case"item_use":it=fi(o);if(it){if(o.fraction==null||o.fraction>=1){it.qty=0;it.status="used"}else{it.qty=Math.round(it.qty*(1-o.fraction)*1000)/1000;it._p=1}it.updated_at=new Date().toISOString()}break;
+  case"item_remove":it=fi(o);if(it){it.status=o.status||"removed";it.updated_at=new Date().toISOString()}break;
+  case"item_restore":it=fi(o);if(it){it.status="active";if(o.qty!=null)it.qty=o.qty;it._p=1}break;
+  case"grocery_add":if(!groc.some(g=>g.status==="needed"&&norm(g.name)===norm(o.name)))groc.push({id:"p"+o.op,_op:o.op,name:o.name,qty:o.qty??null,unit:o.unit||"",category:o.category||"Other",aisle:AIS[o.category]||"Household & Other",status:"needed",_p:1});break;
+  case"grocery_set":it=fg(o);if(it){it.status=o.status;it._p=1}break;
+  case"grocery_clear_bought":groc.forEach(g=>{if(g.status==="bought")g.status="cleared"});break;
+  case"staple_set":{const s=stap.find(x=>norm(x.name)===norm(o.name));if(s){s.min_qty=o.min_qty;s.unit=o.unit||""}else stap.push({id:"p"+o.op,name:o.name,min_qty:o.min_qty,unit:o.unit||"",stock:0,_p:1});break}
+  case"staple_remove":stap=stap.filter(s=>s.id!==o.id);break}}
+ const items=all.filter(x=>x.status==="active").map(x=>Object.assign(x,{_d:dl(x.expiry)})).sort((a,b)=>(a._d??1e9)-(b._d??1e9)||String(a.name).localeCompare(b.name));
+ const recent=all.filter(x=>x.status!=="active").sort((a,b)=>String(b.updated_at||"").localeCompare(String(a.updated_at||"")));
+ return{items,recent,groc:groc.filter(g=>g.status==="needed"||g.status==="bought"),stap}}
+const tgt=x=>x._op?{ref:x._op}:{id:x.id};
+function queue(op,label,undo){if(!TOK){needTok();return false}op.op=oid();const now=Date.now();PEND.push({op,at:now,due:now+(undo===false?400:5500),sent:0});savePend();render();
+ if(undo!==false)toast(label,()=>{const gone=new Set([op.op]);PEND=PEND.filter(p=>{if(p.sent)return true;if(gone.has(p.op.op)||gone.has(p.op.ref)){gone.add(p.op.op);return false}return true});savePend();render();toast("Undone",null,1500)});
+ else if(label)toast(label,null,2200);
+ schedFlush();return op}
+function schedFlush(){clearTimeout(flushT);const u=PEND.filter(p=>!p.sent);if(!u.length)return;flushT=setTimeout(flush,Math.max(200,Math.min(...u.map(p=>p.due))-Date.now()+50))}
+async function flush(){if(flushing||!TOK||!pw())return;const now=Date.now(),batch=[];for(const p of PEND){if(p.sent)continue;if(p.due>now)break;batch.push(p)}
+ if(!batch.length){schedFlush();return}flushing=true;
+ try{sendSalt=sendSalt||b64(rnd(16));const env=await enc({v:1,ts:now,ops:batch.map(p=>p.op)},pw(),sendSalt),name="kitchen_ops/"+now+"-"+b64(rnd(6)).replace(/[^A-Za-z0-9]/g,"x")+".enc.json";
+  const r=await fetch(API+name,{method:"PUT",headers:{Authorization:"Bearer "+TOK,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:JSON.stringify({message:"Kitchen edit",content:btoa(JSON.stringify(env)),branch:"main"})});
+  if(r.ok){batch.forEach(p=>{p.sent=1;p.sentAt=Date.now()});sendErr="";savePend();[35e3,65e3,100e3].forEach(t=>setTimeout(()=>{if(PEND.some(p=>p.sent))load()},t))}
+  else sendErr=(r.status===401||r.status===403||r.status===404)?"token":"net"}
+ catch(e){sendErr="net"}
+ flushing=false;rHero();if(sendErr)flushT=setTimeout(flush,sendErr==="token"?6e4:15e3);else schedFlush()}
+/* ---------- token ---------- */
+async function loadTok(){if(TOK||!pw())return;const s=localStorage.getItem(TK);if(!s)return;try{TOK=(await dec(JSON.parse(s),pw())).t||null}catch(e){TOK=null}}
+async function connect(){const el=$("kTok"),m=$("kTokM"),t=(el.value||"").trim();if(!t)return;if(!/^(github_pat_|ghp_)[A-Za-z0-9_]{20,}$/.test(t)){m.textContent="That doesn't look like a GitHub token (it should start with github_pat_).";return}
+ m.textContent="Checking…";try{const r=await fetch("https://api.github.com/repos/wanzies/job-swipe",{headers:{Authorization:"Bearer "+t,Accept:"application/vnd.github+json"}});
+  if(r.status===401){m.textContent="GitHub rejected that token. Check it was copied fully and hasn't expired.";return}
+  if(!r.ok){m.textContent="This token can't see wanzies/job-swipe. Under Repository access, pick that repo.";return}
+  const j=await r.json();if(!(j.permissions&&j.permissions.push)){m.textContent="The token is read-only. Set Contents to “Read and write”.";return}
+  localStorage.setItem(TK,JSON.stringify(await enc({t},pw())));TOK=t;el.value="";m.textContent="";sendErr="";render();toast("Editing connected on this device",null,2500);schedFlush();load()}
+ catch(e){m.textContent="Couldn't reach GitHub. Check your connection and try again."}}
+function disconnect(){if(PEND.some(p=>!p.sent)&&!confirm("Some edits haven't been sent yet. Disconnect anyway?"))return;localStorage.removeItem(TK);TOK=null;PEND=PEND.filter(p=>p.sent);savePend();render()}
+function needTok(){toast("Connect editing first (one-time setup below)",null,2600);const c=$("kCon");if(c){c.scrollIntoView({behavior:RM?"auto":"smooth",block:"center"});c.classList.remove("k-flash");void c.offsetWidth;c.classList.add("k-flash")}}
+/* ---------- load ---------- */
+async function fetchEnv(){if(TOK){try{const r=await fetch(API+"kitchen.enc.json?ref=main",{headers:{Authorization:"Bearer "+TOK,Accept:"application/vnd.github.raw+json"},cache:"no-store"});if(r.ok)return await r.json();if(r.status===401)sendErr="token"}catch(e){}}
+ const r=await fetch("kitchen.enc.json?"+Date.now(),{cache:"no-store"}).catch(()=>null);if(r&&r.ok)return r.json();const e=new Error(r?"missing":"net");e.missing=!!r&&r.status===404;throw e}
+async function load(manual){if(loading||!pw())return;loading=true;if(manual)rHero(true);
+ try{await loadTok();const e=await fetchEnv(),d=await dec(e,pw());SNAP=d;err="";try{localStorage.setItem(CK,JSON.stringify(e))}catch(x){}reconcile()}
+ catch(x){err=x.missing?"missing":x.name==="OperationError"?"pw":"net";if(!SNAP){const c=localStorage.getItem(CK);if(c)try{SNAP=await dec(JSON.parse(c),pw());reconcile()}catch(y){}}}
+ loading=false;lastFetch=Date.now();render();if(PEND.some(p=>!p.sent))schedFlush()}
+async function unlockK(){const el=$("kPw"),e=$("kPwE"),p=el.value;if(!p)return;e.textContent="Unlocking…";
+ try{const r=await fetch("kitchen.enc.json?"+Date.now(),{cache:"no-store"});if(!r.ok){e.textContent=r.status===404?"Kitchen data hasn't synced yet.":"Couldn't load the kitchen file.";return}
+  SNAP=await dec(await r.json(),p);sessionStorage.fpw=p;el.value="";e.textContent="";lastFetch=Date.now();reconcile();await loadTok();render();try{unlock(p)}catch(x){}load()}
+ catch(x){e.textContent=x.name==="OperationError"?"Wrong passcode":"Couldn't unlock right now."}}
+/* ---------- render ---------- */
+function build(){$("kitchen").innerHTML=`<div class="grid"><div class="card w4" id="kHero"></div>
+ <div class="w4 k-bar" id="kBar"><div class="k-srch"><input class="inp" id="kQ" type="search" placeholder="Search" autocomplete="off" aria-label="Search items"><select class="k-sel" id="kCat" aria-label="Category"><option value="all">All categories</option>${CATS.map(c=>`<option value="${esc(c)}">${CE[c]} ${esc(c)}</option>`).join("")}</select></div>
+  <div class="k-seg" id="kLoc" role="group" aria-label="Location"></div></div>
+ <div class="card w4 k-list" id="kList"></div><div class="card w2" id="kGro"></div><div class="card w2" id="kSta"></div><div class="card w2" id="kRec"></div><div class="card w2 k-con" id="kCon"></div>
+ <div class="w4 xs mu" style="padding:2px 4px">Same list as @SheizyBeeFoodBot on Telegram. Colours: red expired · orange 0–2 days · yellow 3–5 · green later · “~” = estimated date.</div></div>`;
+ const K=$("kitchen");K.addEventListener("click",onClick);K.addEventListener("submit",onSubmit);
+ $("kQ").addEventListener("input",e=>{ui.q=e.target.value;rList()});$("kCat").addEventListener("change",e=>{ui.cat=e.target.value;rList()});
+ document.body.insertAdjacentHTML("beforeend",`<div id="kToast" role="status" aria-live="polite"></div><button id="kFab" aria-label="Add item">${IC.plus}</button><div class="k-sh" id="kSh"><div class="k-shb" data-a="close"></div><div class="k-shp" role="dialog" aria-modal="true" aria-label="Item" id="kShp"></div></div>`);
+ $("kFab").onclick=()=>openSheet(null);$("kSh").addEventListener("click",onSheet);$("kSh").addEventListener("submit",e=>{e.preventDefault();saveSheet()});$("kSh").addEventListener("input",onSheetInput);$("kSh").addEventListener("change",onSheetInput);
+ $("kToast").addEventListener("click",e=>{const b=e.target.closest("button");if(b&&toastU){const u=toastU;toastU=null;hideToast();u()}});
+ addEventListener("keydown",e=>{if(e.key==="Escape"&&$("kSh").classList.contains("on"))closeSheet()});
+ built=true}
+function locked(){$("kitchen").innerHTML=`<div class="grid"><div class="card w4"><div class="lbl">🔒 Kitchen is locked</div><div class="sm mu" style="margin-bottom:10px">Your fridge list is encrypted on the public site. Use your dashboard passcode.</div>
+ <form class="unlock" onsubmit="event.preventDefault();KIT.unlockK()"><input class="inp num" id="kPw" type="password" inputmode="numeric" autocomplete="off" placeholder="Passcode" aria-label="Dashboard passcode"><button class="btn pri" type="submit">Unlock</button></form><div class="err" id="kPwE"></div></div></div>`;built=false;$("kFab")&&$("kFab").classList.remove("on")}
+function render(){if(!$("kitchen"))return;if(!pw()){locked();return}if(!built||!$("kHero"))build();rHero();rLoc();rList();rGro();rSta();rRec();rCon();$("kFab").classList.toggle("on",on)}
+function stats(V){let x=0,o=0;V.items.forEach(i=>{if(i._d==null)return;if(i._d<0)x++;else if(i._d<=2)o++});return{x,o,n:V.items.length}}
+function rHero(busy){const h=$("kHero");if(!h)return;const V=view(),s=stats(V),gen=Date.parse(SNAP&&SNAP.gen||"")||0,pu=PEND.filter(p=>!p.sent).length,ps=PEND.filter(p=>p.sent).length;
+ let st,dot="";if(!SNAP){st=err==="missing"?"Waiting for the first sync from the box":err==="pw"?"Kitchen file didn't open with this passcode":loading?"Loading…":"Couldn't load kitchen data";dot="w"}
+ else if(sendErr==="token"){st="Editing token rejected · reconnect below";dot="b"}
+ else if(sendErr==="net"&&pu){st=`${pu} edit${pu>1?"s":""} waiting for connection`;dot="w"}
+ else if(pu||ps){st=pu?`Saving ${pu} edit${pu>1?"s":""}…`:`${ps} edit${ps>1?"s":""} syncing to FridgeBot…`;dot="w"}
+ else st=`Updated ${ago(gen)}${err==="net"?" · offline copy":""}`;
+ h.innerHTML=`<div class="k-stats"><button class="k-st x${ui.urg==="x"?" on":""}" data-a="urg" data-u="x"><b class="num">${s.x}</b><span>Expired</span></button><button class="k-st o${ui.urg==="o"?" on":""}" data-a="urg" data-u="o"><b class="num">${s.o}</b><span>Use soon</span></button><button class="k-st${!ui.urg?" on":""}" data-a="urg" data-u=""><b class="num">${s.n}</b><span>Items</span></button></div>
+ <div class="k-sync"><span><i class="dot ${dot}"></i>${esc(st)}</span><span><span class="mu">${TOK?"✏️ Editing on":"👀 View only"}</span><button class="btn sm" data-a="refresh" ${busy||loading?"disabled":""}>${busy||loading?"Refreshing…":"↻ Refresh"}</button></span></div>`}
+function rLoc(){const V=view(),c={all:V.items.length};LOC.forEach(([k])=>c[k]=V.items.filter(i=>i.location===k).length);
+ $("kLoc").innerHTML=[["all","All",""],...LOC].map(([k,n,e])=>`<button data-a="loc" data-l="${k}" aria-pressed="${ui.loc===k}">${e?e+" ":""}${n}<small>${c[k]}</small></button>`).join("")}
+function rowH(i){const u=urg(i._d),em=CE[i.category]||"📦",sub=[fq(i.qty,i.unit),i.category].filter(Boolean).join(" · ");
+ return `<div class="k-it u-${u}${i._p?" pend":""}"><button class="k-main" data-a="edit" data-id="${esc(i.id)}"><span class="k-em" aria-hidden="true">${em}</span><span class="k-nm"><b>${esc(i.name)}</b><small><span class="k-dl u-${u}" title="${i.expiry?"Expiry "+dmy(i.expiry)+(i.expiry_estimated?" (estimated)":""):"No expiry"}">${esc(dlL(i._d,+i.expiry_estimated))}</span><span class="k-lb ${esc(i.location)}">${esc(LN[i.location]||i.location)}</span><span class="k-sub">${esc(sub)}</span></small></span></button>
+ <div class="k-q"><button class="k-u" data-a="use" data-id="${esc(i.id)}" aria-label="Used up ${esc(i.name)}" title="Used up">${IC.chk}</button><button data-a="half" data-id="${esc(i.id)}" aria-label="Used half of ${esc(i.name)}" title="Used half">½</button><button class="k-r" data-a="rm" data-id="${esc(i.id)}" aria-label="Remove ${esc(i.name)}" title="Remove">${IC.x}</button></div></div>`}
+function rList(){const V=view(),q=norm(ui.q);let L=V.items.filter(i=>(ui.loc==="all"||i.location===ui.loc)&&(ui.cat==="all"||i.category===ui.cat)&&(!q||norm(i.name+" "+(i.brand||"")+" "+i.category).includes(q)));
+ if(ui.urg==="x")L=L.filter(i=>i._d!=null&&i._d<0);else if(ui.urg==="o")L=L.filter(i=>i._d!=null&&i._d>=0&&i._d<=2);
+ const el=$("kList");if(!SNAP){el.innerHTML=`<div class="k-empty"><b>${err==="missing"?"Not synced yet":"Loading your kitchen…"}</b>${err==="missing"?"The box hasn't published the kitchen file yet.":""}</div>`;return}
+ if(!V.items.length){el.innerHTML=`<div class="k-empty"><b>The kitchen is empty</b>Tap + to add what's in the fridge, or tell @SheizyBeeFoodBot.</div>`;return}
+ if(!L.length){el.innerHTML=`<div class="k-empty"><b>Nothing matches</b><button class="btn sm" data-a="clearf" style="margin-top:8px">Clear filters</button></div>`;return}
+ const G=[["Expired",i=>i._d!=null&&i._d<0],["Use soon · 0–2 days",i=>i._d!=null&&i._d>=0&&i._d<=2],["This week · 3–5 days",i=>i._d!=null&&i._d>=3&&i._d<=5],["Later",i=>i._d==null||i._d>5]];
+ el.innerHTML=G.map(([t,f])=>{const r=L.filter(f);return r.length?`<div class="k-gh"><span>${t}</span><span>${r.length}</span></div>`+r.map(rowH).join(""):""}).join("")}
+function rGro(){const V=view(),need=V.groc.filter(g=>g.status==="needed"),got=V.groc.filter(g=>g.status==="bought"),aisles=[...new Set(need.map(g=>g.aisle||"Household & Other"))];
+ const gr=g=>`<div class="k-g${g.status==="bought"?" b":""}${g._p?" pend":""}"><button class="k-ck" data-a="gtick" data-id="${esc(g.id)}" aria-label="${g.status==="bought"?"Untick":"Tick"} ${esc(g.name)}">${IC.chk}</button><span class="k-gn"><b>${esc(g.name)}</b>${g.qty||g.unit?`<small>${esc(fq(g.qty,g.unit))}</small>`:""}</span>${g.status==="bought"?`<button class="btn sm" data-a="gmove" data-id="${esc(g.id)}">Put away</button>`:""}<button class="del" data-a="gdel" data-id="${esc(g.id)}" aria-label="Remove ${esc(g.name)} from list">×</button></div>`;
+ $("kGro").innerHTML=`<div class="lbl">🛒 Grocery list <span class="pill${need.length?" ac":""}">${need.length} to buy</span></div>
+ <form class="k-add" data-f="gadd"><input class="inp" id="kgN" placeholder="Add to the list…" maxlength="80" autocomplete="off" aria-label="Grocery item"><button class="btn pri" type="submit">Add</button></form>
+ ${need.length?aisles.map(a=>`<div class="k-ais">${esc(a)}</div>`+need.filter(g=>(g.aisle||"Household & Other")===a).map(gr).join("")).join(""):`<div class="sm mu" style="padding:6px 0">Nothing on the list.</div>`}
+ ${got.length?`<div class="k-ais" style="display:flex;justify-content:space-between;align-items:center">In the basket · ${got.length}<button class="btn sm" data-a="gclear">Clear ticked</button></div>${got.map(gr).join("")}<div class="xs mu" style="margin-top:6px">“Put away” moves it from the list into the kitchen.</div>`:""}`}
+function rSta(){const V=view();$("kSta").innerHTML=`<div class="lbl">⭐ Always keep <span class="pill">${V.stap.length}</span></div>
+ ${V.stap.length?V.stap.map(s=>{const low=(+s.stock||0)<(+s.min_qty||1),onL=V.groc.some(g=>g.status==="needed"&&norm(g.name)===norm(s.name));return `<div class="k-g"><span class="k-gn"><b>${esc(s.name)}</b><small>have ${esc(fq(s.stock||0,s.unit))} · keep ${esc(fq(s.min_qty,s.unit))}</small></span>${low?(onL?'<span class="pill">On list</span>':`<span class="pill warn">Low</span>`):'<span class="pill ok">OK</span>'}${typeof s.id==="number"?`<button class="del" data-a="sdel" data-id="${s.id}" aria-label="Stop tracking ${esc(s.name)}">×</button>`:""}</div>`}).join(""):`<div class="sm mu" style="padding:2px 0 8px">Staples you always want at home. When stock drops below the minimum, FridgeBot adds them to the grocery list.</div>`}
+ <form class="k-add" data-f="sadd" style="margin-top:8px"><input class="inp" id="ksN" placeholder="e.g. Eggs" maxlength="80" autocomplete="off" aria-label="Staple name"><input class="inp n num" id="ksQ" type="number" inputmode="decimal" min="0.1" step="any" value="1" aria-label="Minimum"><button class="btn" type="submit">Keep</button></form>`}
+function rRec(){const V=view(),R=V.recent.slice(0,12),W={used:"Used",removed:"Removed",discarded:"Tossed"};
+ $("kRec").innerHTML=`<div class="lbl">↩️ Recently used or removed <span class="pill">3 days</span></div>${R.length?R.map(i=>`<div class="k-g"><span class="k-gn"><b>${esc(i.name)}</b><small>${esc(W[i.status]||i.status)}${i.updated_at?" · "+esc(ago(Date.parse(i.updated_at))):""}</small></span><button class="btn sm" data-a="restore" data-id="${esc(i.id)}">Restore</button></div>`).join(""):`<div class="sm mu">Nothing in the last 3 days.</div>`}`}
+function rCon(){const el=$("kCon");if(TOK){const pu=PEND.filter(p=>!p.sent).length;el.innerHTML=`<div class="lbl">✏️ Editing <span class="pill ok">Connected</span></div><div class="sm mu">Changes you make here go to FridgeBot within about a minute, and show up in Telegram and the Sheet.${sendErr==="token"?' <b style="color:var(--bad)">GitHub rejected the token (expired or revoked). Disconnect and paste a new one.</b>':""}${pu?` ${pu} waiting to send.`:""}</div><div class="row" style="margin-top:10px"><button class="btn sm" data-a="disc">Disconnect this device</button></div>`;return}
+ el.innerHTML=`<div class="lbl">✏️ Connect editing <span class="pill">one-time, per device</span></div>
+ <div class="sm" style="color:#c9ccd6">You can view everything now. To add, edit or tick things off here, give this phone a GitHub token that can only change this dashboard's files. It's stored on this device only, encrypted with your passcode.</div>
+ <details style="margin-top:8px"><summary class="sm" style="cursor:pointer;color:var(--ac);font-weight:600">How to make the token (2 min)</summary><ol class="k-steps">
+ <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub › New fine-grained token</a>, signed in as <b>wanzies</b>.</li>
+ <li><b>Token name:</b> Dashboard Kitchen. <b>Expiration:</b> whatever you like (e.g. 90 days or 1 year).</li>
+ <li><b>Repository access:</b> Only select repositories › <b>wanzies/job-swipe</b>.</li>
+ <li><b>Permissions › Repository permissions › Contents:</b> Read and write. Leave everything else as is (Metadata read-only is added automatically).</li>
+ <li>Tap <b>Generate token</b>, copy it (starts with <code>github_pat_</code>) and paste it below.</li></ol></details>
+ <form class="row" data-f="tok"><input class="inp" id="kTok" type="password" autocomplete="off" placeholder="github_pat_…" aria-label="GitHub token"><button class="btn pri" type="submit">Connect</button></form><div class="err" id="kTokM"></div>`}
+/* ---------- actions ---------- */
+const findV=id=>{const V=view();return V.items.find(i=>String(i.id)===id)||V.recent.find(i=>String(i.id)===id)},findG=id=>view().groc.find(g=>String(g.id)===id);
+function act(a,it){if(!it)return;const nm=it.name;
+ if(a==="use")queue({t:"item_use",...tgt(it)},`Used up ${nm}`);
+ else if(a==="half"){const left=Math.round(it.qty*500)/1000;queue({t:"item_use",...tgt(it),fraction:.5},`Used half of ${nm}${it.qty?` · ${fq(left,it.unit)} left`:""}`)}
+ else if(a==="rm")queue({t:"item_remove",...tgt(it),status:"removed"},`Removed ${nm}`);
+ else if(a==="toss")queue({t:"item_remove",...tgt(it),status:"discarded"},`Tossed ${nm}`)}
+function onClick(e){const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,id=b.dataset.id;
+ if(a==="refresh")load(true);
+ else if(a==="urg"){ui.urg=b.dataset.u||null;rHero();rList()}
+ else if(a==="loc"){ui.loc=b.dataset.l;rLoc();rList()}
+ else if(a==="clearf"){Object.assign(ui,{loc:"all",cat:"all",q:"",urg:null});$("kQ").value="";$("kCat").value="all";rHero();rLoc();rList()}
+ else if(a==="edit")openSheet(findV(id));
+ else if(a==="use"||a==="half"||a==="rm")act(a,findV(id));
+ else if(a==="restore"){const it=findV(id);if(it)queue({t:"item_restore",...tgt(it),qty:+it.qty>0?+it.qty:1},`Restored ${it.name}`)}
+ else if(a==="gtick"){const g=findG(id);if(!g)return;const s=g.status==="bought"?"needed":"bought",op=queue({t:"grocery_set",...tgt(g),status:s},s==="bought"?`Ticked ${g.name}`:`Back on the list: ${g.name}`)}
+ else if(a==="gdel"){const g=findG(id);if(g)queue({t:"grocery_set",...tgt(g),status:"cleared"},`Removed ${g.name} from the list`)}
+ else if(a==="gclear")queue({t:"grocery_clear_bought"},"Cleared ticked items");
+ else if(a==="gmove"){const g=findG(id);if(g)openSheet(null,g)}
+ else if(a==="sdel"){const V=view(),s=V.stap.find(x=>String(x.id)===id);if(s)queue({t:"staple_remove",id:s.id},`Stopped tracking ${s.name}`)}
+ else if(a==="disc")disconnect()}
+function onSubmit(e){const f=e.target.dataset.f;if(!f)return;e.preventDefault();
+ if(f==="tok")connect();
+ else if(f==="gadd"){const el=$("kgN"),n=el.value.trim();if(!n)return;if(queue({t:"grocery_add",name:n},`Added ${n} to the list`,false))el.value=""}
+ else if(f==="sadd"){const n=$("ksN").value.trim(),q=+$("ksQ").value||1;if(!n)return;if(queue({t:"staple_set",name:n,min_qty:q,unit:""},`Keeping at least ${fq(q)} ${n}`,false))$("ksN").value=""}}
+/* ---------- toast ---------- */
+let toastU=null;
+function toast(msg,undo,ms){const T=$("kToast");if(!T)return;clearTimeout(toastT);toastU=undo||null;ms=ms||(undo?5000:2400);
+ T.innerHTML=`<span>${esc(msg)}</span>${undo?'<button class="btn sm">Undo</button>':""}<i></i>`;T.classList.remove("on");void T.offsetWidth;T.classList.add("on");
+ const bar=T.querySelector("i");bar.animate([{transform:"scaleX(1)"},{transform:"scaleX(0)"}],{duration:ms,easing:"linear",fill:"forwards"});toastT=setTimeout(hideToast,ms)}
+function hideToast(){const T=$("kToast");T&&T.classList.remove("on");toastU=null}
+/* ---------- bottom sheet (add / edit) ---------- */
+function openSheet(it,fromG){if(!TOK){needTok();return}const ed=!!it,c=ed?it.category:fromG?(fromG.category||"Other"):"",l=ed?it.location:fromG?defLoc(fromG.category):"fridge";
+ sheet={it,fromG,loc:l,est:ed?!!+it.expiry_estimated:false,auto:!ed};
+ const V=view(),names=[...new Set([...V.recent,...V.items].map(i=>i.name))].slice(0,40);
+ $("kShp").innerHTML=`<div class="k-grab"></div><form id="kF" autocomplete="off"><h3>${ed?"Edit item":fromG?"Put away":"Add to the kitchen"}<button type="button" class="btn sm" data-a="close">Close</button></h3>
+ <label class="k-fl"><small>Name</small><input class="inp" id="kfN" maxlength="80" required list="kNames" value="${esc(ed?it.name:fromG?fromG.name:"")}" placeholder="e.g. Fresh milk"><datalist id="kNames">${names.map(n=>`<option value="${esc(n)}">`).join("")}</datalist></label>
+ <div class="k-2"><label class="k-fl"><small>Quantity</small><input class="inp num" id="kfQ" type="number" inputmode="decimal" min="0" step="any" value="${esc(ed?+it.qty:fromG&&fromG.qty?+fromG.qty:1)}"></label>
+ <label class="k-fl"><small>Unit</small><select class="k-sel" id="kfU">${UNITS.map(u=>`<option value="${u}"${(ed?it.unit:fromG?fromG.unit:"")===u?" selected":""}>${u||"—"}</option>`).join("")}</select></label></div>
+ <div class="k-fl"><small>Where</small><div class="k-seg" id="kfL">${LOC.map(([k,n,e])=>`<button type="button" data-a="sloc" data-l="${k}" aria-pressed="${l===k}">${e} ${n}</button>`).join("")}</div></div>
+ <label class="k-fl"><small>Category</small><select class="k-sel" id="kfC">${ed?"":`<option value="">✨ Auto (from the name)</option>`}${CATS.map(x=>`<option value="${esc(x)}"${c===x?" selected":""}>${CE[x]} ${esc(x)}</option>`).join("")}</select></label>
+ <div class="k-fl"><small>Expiry date (DD/MM/YYYY)</small><div class="k-exp"><input class="inp num" id="kfE" inputmode="numeric" maxlength="10" placeholder="DD/MM/YYYY" value="${ed?dmy(it.expiry):""}" aria-label="Expiry DD/MM/YYYY"><button type="button" class="btn" data-a="pick" aria-label="Pick a date">📅</button><input type="date" id="kfD" tabindex="-1" aria-hidden="true"></div>
+ <div class="k-chips"><button type="button" data-a="plus" data-d="3">+3 days</button><button type="button" data-a="plus" data-d="7">+7 days</button><button type="button" data-a="plus" data-d="14">+14 days</button><button type="button" data-a="plus" data-d="auto" class="${sheet.auto?"on":""}">~ Estimate</button></div>
+ <div class="xs mu" id="kfH" style="margin-top:6px"></div></div>
+ <div class="err" id="kfErr"></div>
+ <div class="k-shact"><button class="btn pri" type="submit">${ed?"Save changes":fromG?"Add to kitchen":"Add item"}</button></div>
+ ${ed?`<div class="k-shact2"><button type="button" class="btn" data-a="s-use">✓ Used up</button><button type="button" class="btn" data-a="s-half">½ Used half</button><button type="button" class="btn bad" data-a="s-${it._d!=null&&it._d<0?"toss":"rm"}">${it._d!=null&&it._d<0?"Toss (expired)":"Remove"}</button></div>
+ <div class="k-meta">#${typeof it.id==="number"?it.id:"new"} · added by ${esc(it.added_by||"?")}${it.added_at?" · "+esc(dmy(it.added_at)):""}${it.halal&&it.halal!=="unknown"?" · halal: "+esc(it.halal):""}${it.notes?"<br>"+esc(it.notes):""}</div>`:""}</form>`;
+ $("kSh").classList.add("on");hint();if(!ed&&!fromG)setTimeout(()=>$("kfN")&&$("kfN").focus(),60)}
+function closeSheet(){$("kSh").classList.remove("on");sheet=null}
+function hint(){const h=$("kfH");if(!h||!sheet)return;const raw=$("kfE").value.trim(),iso=parseDMY(raw);
+ if(!raw){const c=$("kfC").value||(sheet.it?sheet.it.category:"Other");h.textContent=sheet.it?"No date set.":`Empty = FridgeBot estimates it (about ${dmy(autoExp(c||"Other",sheet.loc))}, shown with ~).`;return}
+ if(iso===null){h.innerHTML='<span style="color:var(--bad)">Use DD/MM/YYYY, e.g. 24/11/2026</span>';return}
+ const n=dl(iso),[y,m,d]=iso.split("-").map(Number);h.textContent=`${WD[new Date(Date.UTC(y,m-1,d)).getUTCDay()]} ${d} ${MO[m-1]} ${y} · ${n<0?`${-n} day${n<-1?"s":""} ago`:n===0?"today":`in ${n} day${n>1?"s":""}`}${sheet.est?" (estimated)":""}`}
+function onSheetInput(e){const t=e.target;if(!sheet)return;
+ if(t.id==="kfE"&&e.type==="input"){let v=t.value.replace(/[^\d\/]/g,"");if(e.inputType&&!e.inputType.startsWith("delete")){if(/^\d{2}$/.test(v)||/^\d{1,2}\/\d{2}$/.test(v))v+="/"}t.value=v.slice(0,10);sheet.est=false;sheet.auto=false;chipsOn()}
+ if(t.id==="kfD"&&t.value){$("kfE").value=dmy(t.value);sheet.est=false;sheet.auto=false;chipsOn()}
+ hint()}
+function chipsOn(d){document.querySelectorAll("#kShp .k-chips button").forEach(b=>b.classList.toggle("on",d!=null?b.dataset.d===String(d):(b.dataset.d==="auto"&&sheet.auto)))}
+function onSheet(e){const b=e.target.closest("[data-a]");if(!b||!sheet)return;const a=b.dataset.a;
+ if(a==="close"){closeSheet();return}
+ if(a==="sloc"){sheet.loc=b.dataset.l;document.querySelectorAll("#kfL button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.l===sheet.loc));hint();return}
+ if(a==="plus"){const d=b.dataset.d;if(d==="auto"){$("kfE").value=sheet.it?dmy(autoExp($("kfC").value||sheet.it.category,sheet.loc)):"";sheet.est=true;sheet.auto=true}else{$("kfE").value=dmy(isoAdd(+d));sheet.est=false;sheet.auto=false}chipsOn(d);hint();return}
+ if(a==="pick"){const D=$("kfD"),iso=parseDMY($("kfE").value);D.value=iso||isoAdd(0);try{D.showPicker()}catch(x){D.focus();D.click()}return}
+ const m={"s-use":"use","s-half":"half","s-rm":"rm","s-toss":"toss"}[a];if(m){const it=sheet.it;closeSheet();act(m,it)}}
+function saveSheet(){if(!sheet)return;const E=$("kfErr"),name=$("kfN").value.trim().replace(/\s+/g," "),qty=$("kfQ").value===""?1:+$("kfQ").value,unit=$("kfU").value,cat=$("kfC").value,raw=$("kfE").value.trim(),iso=parseDMY(raw);
+ if(!name){E.textContent="Give it a name.";return}if(!(qty>=0&&qty<=100000)){E.textContent="Quantity looks off.";return}if(iso===null){E.textContent="Expiry must be DD/MM/YYYY.";return}
+ const it=sheet.it,fromG=sheet.fromG,loc=sheet.loc,est=sheet.est;
+ if(!it){const op={t:"item_add",name,qty,unit,category:cat||"",location:loc,expiry:iso||null,est:!!(iso&&est)};if(fromG&&typeof fromG.id==="number")op.from_grocery=fromG.id;closeSheet();queue(op,`Added ${name} to the ${LN[loc].toLowerCase()}`);return}
+ const f={};if(name!==it.name)f.name=name;if(qty!==+it.qty)f.qty=qty;if(unit!==(it.unit||""))f.unit=unit;if(cat&&cat!==it.category)f.category=cat;if(loc!==it.location)f.location=loc;
+ if((iso||null)!==(it.expiry||null)){f.expiry=iso||null;f.est=!!est}else if(!!est!==!!+it.expiry_estimated&&iso)f.est=!!est;
+ closeSheet();if(!Object.keys(f).length){toast("No changes",null,1500);return}queue({t:"item_edit",...tgt(it),f},`Saved ${name}`)}
+/* ---------- lifecycle ---------- */
+function enter(){on=true;if(!pw()){locked();return}if(!built)build();render();if(!SNAP||Date.now()-lastFetch>20e3)load();clearInterval(pollT);pollT=setInterval(()=>{if(document.visibilityState==="visible")load()},30e3)}
+function leave(){on=false;clearInterval(pollT);const f=$("kFab");f&&f.classList.remove("on");if($("kSh")&&$("kSh").classList.contains("on"))closeSheet()}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&on&&pw()&&Date.now()-lastFetch>20e3)load()});
+addEventListener("online",()=>{sendErr="";schedFlush()});
+setInterval(()=>{if(on&&SNAP)rHero()},30e3);
+loadPend();if(pw()&&PEND.some(p=>!p.sent))loadTok().then(schedFlush);
+return{active:v=>v?enter():leave(),unlockK,load,get S(){return SNAP},get P(){return PEND},_dbg:{parseDMY,dl,view}};
+})();
+
 /* ================= START ================= */
-(function(){const alias={today:0,plannerS:0,todoS:0,calS:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:2,finS:2,career:3,bondS:3,jobsS:3,world:4,worldS:4,newsS:4,ship:5,shipS:5,frigate:5,game:5,gym:6,gymS:6,workout:6,fitness:6,ippt:6},i=alias[location.hash.slice(1)]??0;
+(function(){const alias={today:0,plannerS:0,todoS:0,calS:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:2,finS:2,career:3,bondS:3,jobsS:3,world:4,worldS:4,newsS:4,ship:5,shipS:5,frigate:5,game:5,gym:6,gymS:6,workout:6,fitness:6,ippt:6,kitchen:7,kitchenS:7,fridge:7,grocery:7,groceries:7},i=alias[location.hash.slice(1)]??0;
  cur=-1;requestAnimationFrame(()=>{go(i,true)})})();
 tick();setInterval(tick,1000);
 if(sessionStorage.fpw){unlock(sessionStorage.fpw)}
