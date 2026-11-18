@@ -1,0 +1,75 @@
+{
+ "date": "2026-11-19",
+ "hijri": "9 Jamadilakhir 1448",
+ "fast": {
+  "type": "Sunnah fast · Thursday (today)",
+  "date": "2026-11-19",
+  "why": "Thursday is a day deeds are presented to Allah. If you didn't intend last night, you may still intend before Zuhr if you haven't eaten since Subuh. Next fast: Monday 23 Nov.",
+  "src": "Jami' at-Tirmidhi 747",
+  "url": "https://sunnah.com/tirmidhi:747"
+ },
+ "blessing": "Your job and the people you can lean on: work is rizq, and someone gave you the chance. Today, thank one colleague or family member by name, and say 'Alhamdulillah' for your salary when you receive it.",
+ "verse": {
+  "ref": "Ali 'Imran 3:159",
+  "text": "And when you have decided, then rely upon Allah. Indeed, Allah loves those who rely upon Him.",
+  "url": "https://quran.com/3/159"
+ },
+ "hadith": {
+  "ref": "Jami' at-Tirmidhi 2516",
+  "text": "If you ask, ask Allah; and if you seek help, seek help from Allah.",
+  "url": "https://sunnah.com/tirmidhi:2516"
+ },
+ "lesson": {
+  "title": "Taharah: the pillars of wudu' (Shafi'i)",
+  "text": "In the Shafi'i school the obligatory acts of wudu' are six: the niyyah when washing the face, washing the face, washing the arms to the elbows, wiping part of the head, washing the feet to the ankles, and doing them in order (tertib). The niyyah is in the heart; saying it aloud is only a help. The Prophet ﷺ said actions are by intentions. Practise: check you wipe the head and wash right to the ankles.",
+  "url": "https://sunnah.com/bukhari:1"
+ },
+ "name": {
+  "ar": "المجيب",
+  "tr": "Al-Mujib",
+  "meaning": "The Responsive One",
+  "text": "\"Indeed, my Lord is near and responsive\" (11:61). Make one dua today for something small, and trust He heard it.",
+  "url": "https://quran.com/11/61"
+ },
+ "pm": {
+  "name": {
+   "ar": "القوي",
+   "tr": "Al-Qawiyy",
+   "meaning": "The All-Strong",
+   "text": "\"Indeed, Allah is Powerful and Exalted in Might\" (22:74). You don't have to carry it alone; take rest tonight and ask Him for strength tomorrow.",
+   "url": "https://quran.com/22/74"
+  }
+ },
+ "world": [
+  {
+   "src": "DOOMSDAY CLOCK",
+   "kind": "clock",
+   "big": "85 SEC",
+   "text": "Bulletin of the Atomic Scientists set it at 85 seconds to midnight on 27 Jan 2026, the closest ever, citing nuclear risk, AI and great-power rivalry.",
+   "url": "https://thebulletin.org/doomsday-clock/2026-statement/"
+  },
+  {
+   "src": "METACULUS FORECAST",
+   "kind": "bar",
+   "pct": 22,
+   "big": "22%",
+   "text": "Forecasters' chance of a 'World War Three' before 2050 (10M+ deaths, major powers involved).",
+   "url": "https://www.metaculus.com/questions/2534/"
+  },
+  {
+   "src": "PREDICTIVE HISTORY · PROF JIANG",
+   "kind": "globe",
+   "vid": "UC11aHtNnc5bEPLI4jf6mnYg",
+   "text": "Prof Jiang's latest lectures on geopolitics and where great-power conflict is heading.",
+   "url": "https://www.youtube.com/@PredictiveHistory"
+  },
+  {
+   "src": "APP DEVELOPER'S GAME THEORY MODEL",
+   "kind": "game",
+   "level": 2,
+   "big": "LOW–MODERATE",
+   "text": "Nuclear deterrence makes all-out war a losing move for every major power, so the stable outcome (flashing) is 'compete, don't fight': trade wars, arms races and proxy conflicts. The real danger is a misread in a crisis like Taiwan or Ukraine, which is why the clock and the forecast are rising. Meter: 2 of 5.",
+   "note": "My own illustrative model, not a forecast from a source."
+  }
+ ]
+}

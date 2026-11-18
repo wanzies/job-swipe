@@ -1,43 +1,43 @@
 {
- "date": "2026-11-18",
- "hijri": "8 Jamadilakhir 1448",
+ "date": "2026-11-19",
+ "hijri": "9 Jamadilakhir 1448",
  "fast": {
-  "type": "Sunnah fast · Thursday (tomorrow)",
+  "type": "Sunnah fast · Thursday (today)",
   "date": "2026-11-19",
-  "why": "Thursday is a day deeds are presented to Allah. Make niyyah tonight, or before Zuhr if you haven't eaten since Subuh.",
+  "why": "Thursday is a day deeds are presented to Allah. If you didn't intend last night, you may still intend before Zuhr if you haven't eaten since Subuh. Next fast: Monday 23 Nov.",
   "src": "Jami' at-Tirmidhi 747",
   "url": "https://sunnah.com/tirmidhi:747"
  },
- "blessing": "Your body: legs that carried you, hands that wrote, eyes that read, all working without you asking. Today, say 'Alhamdulillah' as you stand for each prayer, and pray two rakaat Duha if you can.",
+ "blessing": "Your job and the people you can lean on: work is rizq, and someone gave you the chance. Today, thank one colleague or family member by name, and say 'Alhamdulillah' for your salary when you receive it.",
  "verse": {
-  "ref": "An-Nahl 16:18",
-  "text": "And if you should count the favors of Allah, you could not enumerate them. Indeed, Allah is Forgiving and Merciful.",
-  "url": "https://quran.com/16/18"
+  "ref": "Ali 'Imran 3:159",
+  "text": "And when you have decided, then rely upon Allah. Indeed, Allah loves those who rely upon Him.",
+  "url": "https://quran.com/3/159"
  },
  "hadith": {
-  "ref": "Sahih Muslim 720",
-  "text": "Every morning charity is due on every joint of yours... and two rak'ahs which one prays in the forenoon (Duha) suffice for all that.",
-  "url": "https://sunnah.com/muslim:720"
+  "ref": "Jami' at-Tirmidhi 2516",
+  "text": "If you ask, ask Allah; and if you seek help, seek help from Allah.",
+  "url": "https://sunnah.com/tirmidhi:2516"
  },
  "lesson": {
-  "title": "Names of Allah: Al-Hamid, the Praiseworthy",
-  "text": "Al-Hamid means the One deserving all praise, whether or not anyone praises Him. Allah says: 'Allah is Free of need and Praiseworthy' (14:8). When you say 'Alhamdulillah' you are using His name's root: praise belongs to Him for every blessing and even in hardship. Practise: say Alhamdulillah after a meal and after sneezing, and mean it.",
-  "url": "https://quran.com/14/8"
+  "title": "Taharah: the pillars of wudu' (Shafi'i)",
+  "text": "In the Shafi'i school the obligatory acts of wudu' are six: the niyyah when washing the face, washing the face, washing the arms to the elbows, wiping part of the head, washing the feet to the ankles, and doing them in order (tertib). The niyyah is in the heart; saying it aloud is only a help. The Prophet ﷺ said actions are by intentions. Practise: check you wipe the head and wash right to the ankles.",
+  "url": "https://sunnah.com/bukhari:1"
  },
  "name": {
-  "ar": "الحميد",
-  "tr": "Al-Hamid",
-  "meaning": "The Praiseworthy",
-  "text": "\"Indeed, Allah is Free of need and Praiseworthy\" (14:8). Every good thing in your day is from Him, so every thanks returns to Him.",
-  "url": "https://quran.com/14/8"
+  "ar": "المجيب",
+  "tr": "Al-Mujib",
+  "meaning": "The Responsive One",
+  "text": "\"Indeed, my Lord is near and responsive\" (11:61). Make one dua today for something small, and trust He heard it.",
+  "url": "https://quran.com/11/61"
  },
  "pm": {
   "name": {
-   "ar": "الوكيل",
-   "tr": "Al-Wakil",
-   "meaning": "The Trustee, the Disposer of affairs",
-   "text": "\"Sufficient for us is Allah, and He is the best Disposer of affairs\" (3:173). Hand tomorrow's caseload to Him, do your part, then rest.",
-   "url": "https://quran.com/3/173"
+   "ar": "القوي",
+   "tr": "Al-Qawiyy",
+   "meaning": "The All-Strong",
+   "text": "\"Indeed, Allah is Powerful and Exalted in Might\" (22:74). You don't have to carry it alone; take rest tonight and ask Him for strength tomorrow.",
+   "url": "https://quran.com/22/74"
   }
  },
  "world": [
