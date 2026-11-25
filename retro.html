@@ -109,7 +109,6 @@ input::placeholder{color:var(--fg);opacity:1}
 .rs{display:flex;gap:8px;flex-wrap:wrap}.rs button{flex:1;min-width:48px;font-size:24px;padding:10px 0}
 .rs button.sel{outline:4px solid var(--fg);outline-offset:4px}
 .nw{display:block;text-decoration:none;padding:10px 0;border-bottom:3px dashed var(--fg)}
-.fin .k{font-size:11px;margin-top:12px}.fin .v{font-size:15px;margin-top:4px}
 /* ---------- overlays (Quran reader, job deck) ---------- */
 .ov{position:fixed;inset:0;z-index:50;display:none;background:#FFF4C2;color:#000;--bg:#FFF4C2;--fg:#000;--sh:#fff;overflow:auto;touch-action:pan-y;overscroll-behavior:contain;
  padding:calc(env(safe-area-inset-top,0px) + 14px) calc(env(safe-area-inset-right,0px) + 14px) calc(env(safe-area-inset-bottom,0px) + 14px) calc(env(safe-area-inset-left,0px) + 14px)}
@@ -233,20 +232,6 @@ input::placeholder{color:var(--fg);opacity:1}
   <div class="scroll">
    <div class="box"><div class="rs" id="rs"></div><div id="rtrend" class="px" style="font-size:10px;margin-top:16px;line-height:2"></div></div>
    <button class="b" onclick="setSheet()">⚙ SHEET LINK</button>
-  </div>
- </div>
-</section>
-
-<!-- 08 FINANCE · colour: data-bg/data-fg · locked; figures only appear after the passcode decrypts fin.enc.json · mood: coin -->
-<section class="slide" id="finS" data-bg="#00FF9C" data-fg="#000000" data-mood="coin" aria-label="Finance">
- <div class="inner">
-  <div class="top px"><span class="ico">💰</span><span class="cnt"></span></div>
-  <h2 class="ttl px">FINANCE</h2>
-  <p class="sub px">BALANCE · BILLS · DEBTS · LEAKS</p>
-  <div class="scroll fin">
-   <div class="box" id="fin"><div style="margin-bottom:8px">🔒 Locked</div>
-    <input id="fpw" type="password" inputmode="numeric" autocomplete="off" placeholder="passcode" aria-label="Finance passcode" style="width:140px" onkeydown="if(event.key==='Enter')fUnlock()"> <button class="b" onclick="fUnlock()">UNLOCK</button>
-    <div id="ferr" style="margin-top:8px"></div></div>
   </div>
  </div>
 </section>
@@ -424,15 +409,13 @@ fetch("https://api.rss2json.com/v1/api.json?rss_url="+q).then(r=>r.json()).then(
  .catch(()=>{document.getElementById("nwT").textContent="OFFLINE";document.getElementById("news").textContent="Headlines unavailable right now."})})();
 </script>
 <script>
-/* 💰 FINANCE + 📅 CALENDAR — decrypt fin.enc.json / cal.enc.json in the browser (PBKDF2 + AES-GCM). No passcode or figures live in this file. */
-const $$m=n=>"S$"+(+n).toLocaleString("en-SG",{minimumFractionDigits:2,maximumFractionDigits:2});
+/* 📅 CALENDAR — decrypt cal.enc.json in the browser (PBKDF2 + AES-GCM). No passcode or figures live in this file. */
 const fB=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
 function sgParts(ms){const t=new Date((ms??Date.now())+8*3600*1000);return{y:t.getUTCFullYear(),m:t.getUTCMonth()+1,d:t.getUTCDate(),h:t.getUTCHours(),min:t.getUTCMinutes()}}
 function pad2(n){return String(n).padStart(2,"0")}
 async function decEnc(url,pw){const res=await fetch(url+"?"+Date.now());if(res.status===404){const e=new Error("missing");e.missing=true;throw e}if(!res.ok){const e=new Error("fetch");e.missing=true;throw e}const e=await res.json();const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:fB(e.s),iterations:600000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:fB(e.iv)},k,fB(e.ct))))}
 function unlockErr(id,msg){const r=document.getElementById(id);if(r)r.innerHTML=`<span class="chip">${msg}</span>`}
-async function fUnlock(pw){pw=pw||(document.getElementById("fpw")||{}).value||(document.getElementById("cpw")||{}).value;if(!pw)return;
- try{const d=await decEnc("fin.enc.json",pw);sessionStorage.fpw=pw;fRender(d)}catch(x){if(!x.missing)unlockErr("ferr","✕ Wrong passcode")}
+async function fUnlock(pw){pw=pw||(document.getElementById("cpw")||{}).value;if(!pw)return;
  try{const d=await decEnc("cal.enc.json",pw);sessionStorage.fpw=pw;cRender(d)}catch(x){if(x.missing)cMissing();else if(document.getElementById("cerr"))unlockErr("cerr","✕ Wrong passcode");else cLocked(true)}}
 function cHideWeek(){const w=$("planWeekBox");if(w)w.hidden=true}
 function cShowWeek(){const w=$("planWeekBox");if(w)w.hidden=false}
@@ -487,20 +470,6 @@ const TODO=(()=>{const KEY="jobswipe-todo";let nowFn=()=>Date.now();
  return{check,period,add,toggle,remove,render,hint,setNow(ms){nowFn=typeof ms==="function"?ms:()=>+ms},now:()=>nowFn()}})();
 window.TODO=TODO;
 
-function fBar(p,red){return `<div class="bbar"><i class="${red?"over":""}" style="width:${Math.min(100,p)}%"></i></div>`}
-const neg=(v,s)=>v<0?`<span class="chip">▼ ${s}</span>`:s;
-function fRender(d){const lim=new Date(Date.now()+30*864e5).toISOString().slice(0,10);const due=d.bills_due.filter(b=>!b.paid&&b.due<=lim);const dueT=due.reduce((a,b)=>a+b.amt,0);const safe=d.safe_to_spend!=null?d.safe_to_spend:d.balance.amt-dueT;const wk=d.week;const today=new Date().toISOString().slice(0,10);
-let h=`<div style="display:flex;gap:18px;flex-wrap:wrap"><div><div class="k px">BALANCE (${d.balance.date})</div><div class="v px">${$$m(d.balance.amt)}</div></div><div><div class="k px">SAFE TO SPEND TILL PAYDAY</div><div class="v px">${neg(safe,$$m(safe))}</div></div></div>
-<div style="margin-top:14px">Can I afford it? <input id="fa" type="number" inputmode="decimal" placeholder="S$" style="width:100px"> <button class="b" onclick="fAfford(${safe},${wk.cap-wk.spent})">CHECK</button> <div id="far" style="margin-top:6px"></div></div>
-<div class="k px">THIS WEEK ${$$m(wk.spent)} / ${$$m(wk.cap)}${wk.spent>wk.cap?" · OVER":""}</div>${fBar(wk.spent/wk.cap*100,wk.spent>wk.cap)}
-<div class="k px">BILLS DUE NEXT 30 DAYS (${$$m(dueT)})</div><div>${d.bills_due.sort((a,b)=>a.due<b.due?-1:1).map(b=>`<div class="row"><span>${b.paid?"✅":(b.due<today?"⚠️":"⬜")} ${b.due.slice(5)} ${b.name}</span><b>${$$m(b.amt)}</b></div>`).join("")}</div>
-<div class="k px">DEBTS</div>${d.debts.filter(x=>x.total>0).map(x=>`<div style="margin-top:6px">${x.to}: ${$$m(x.paid)} / ${$$m(x.total)} · ${$$m(x.monthly)}/mo · ${x.left_months} mo left</div>${fBar(x.paid/x.total*100)}`).join("")}${d.debts.some(x=>x.total==0)?`<div style="margin-top:6px">OCBC investment amount not set yet</div>`:""}
-<div class="k px">SAVINGS</div><div>${d.savings?$$m(d.savings):"Not set yet"} · Nov target ${$$m((d.budget_nov.find(b=>/POSB/.test(b.cat))||{limit:0}).limit)}</div>
-<div class="k px">TOP LEAKS (SEP–OCT)</div><div>${d.leaks.map(l=>`<div style="margin-top:6px">🕳 ${l.name} <b>${$$m(l.amt)}</b><br><span>${l.tip}</span></div>`).join("")}</div>
-<div class="k px">MONTHS</div><div>${d.months.map(m=>`<div>${m.m}: in ${$$m(m.in)} · out ${$$m(m.out)} · <b>${neg(m.in-m.out,$$m(m.in-m.out))}</b></div>`).join("")}</div>
-<div class="k px">TIPS</div><ul style="margin:4px 0;padding-left:18px">${d.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
-<button class="b" onclick="sessionStorage.removeItem('fpw');location.reload()">🔒 LOCK</button>`;document.getElementById("fin").innerHTML=h;if(window.BOT&&DECK.cur()===DECK.idx("finS"))BOT.pop("coin")}
-function fAfford(safe,wk){const a=+document.getElementById("fa").value,r=document.getElementById("far");if(!a)return;r.innerHTML=a>safe?`<span class="chip">❌ No, you're short ${$$m(a-safe)} for bills</span>`:a>wk?`<span class="chip">⚠️ Over this week's cap by ${$$m(a-wk)}</span>`:"✅ OK"}
 </script>
 <script>
 /* ===== MASCOT · pixel blob drawn on a 40×40 canvas, scaled 3× with image-rendering: pixelated =====
@@ -657,8 +626,8 @@ const DECK=(()=>{const deck=$("deck"),S=[...deck.querySelectorAll(".slide")],N=S
   const k=e.key;if(k==="ArrowRight"||k==="PageDown"){go(cur+1,"x");e.preventDefault()}else if(k==="ArrowLeft"||k==="PageUp"){go(cur-1,"x");e.preventDefault()}
   else if(k==="ArrowDown"){go(cur+1,"y");e.preventDefault()}else if(k==="ArrowUp"){go(cur-1,"y");e.preventDefault()}
   else if(k==="Home"){go(0,"x");e.preventDefault()}else if(k==="End"){go(N-1,"x");e.preventDefault()}});
- /* start on the screen named in the URL hash (e.g. retro.html#finS) */
- const alias={todoS:"plannerS",calS:"plannerS"},h=alias[location.hash.slice(1)]||location.hash.slice(1),hi=S.findIndex(s=>s.id===h);cur=hi>0?hi:0;S[cur].classList.add("on");chrome();BOT.setMood(S[cur].dataset.mood);
+ /* start on the screen named in the URL hash (e.g. retro.html#today) */
+ const alias={todoS:"plannerS",calS:"plannerS",finS:"today",money:"today"},h=alias[location.hash.slice(1)]||location.hash.slice(1),hi=S.findIndex(s=>s.id===h);cur=hi>0?hi:0;S[cur].classList.add("on");chrome();BOT.setMood(S[cur].dataset.mood);
  return{go,cur:()=>cur,idx:id=>S.findIndex(s=>s.id===id),lazy,N}})();
 window.DECK=DECK;
 if(sessionStorage.fpw)fUnlock(sessionStorage.fpw);

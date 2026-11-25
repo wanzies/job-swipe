@@ -90,10 +90,6 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 .namecard .rev{max-height:0;overflow:hidden;transition:max-height .45s var(--ease),opacity .3s;opacity:0;text-align:left}.namecard.on .rev{max-height:500px;opacity:1}
 .vid{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:var(--s2)}.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .vt{font-size:13px;margin:6px 0 10px;font-weight:500}
-/* money */
-.kv{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--bd);font-size:14px}.kv:first-child{border-top:0}.kv b{font-weight:600;white-space:nowrap}
-.neg{color:var(--bad)}
-.chart text{fill:var(--mu);font-size:10px;font-family:inherit}
 /* world/news */
 .nw{display:block;padding:10px 0;border-top:1px solid var(--bd);color:var(--tx)}.nw:first-child{border-top:0}.nw:hover .nt{color:var(--ac)}.nt{font-weight:500;transition:color .15s}
 .meter{display:flex;gap:4px;margin:8px 0}.meter i{flex:1;height:8px;border-radius:99px;background:var(--s3)}.meter i.on{background:var(--warn)}
@@ -648,8 +644,8 @@ body[data-tab=world] #tabbar::after{background:linear-gradient(to left,rgba(26,8
 </style></head>
 <body data-tab="now">
 <!--
-  MODERN DASHBOARD · per-tab themes (Now = airport departures board, World = 80s city-pop magazine) · 8 screens (Now, Faith, Money, Career, World, Ship, Gym, Kitchen), swipe sideways or use the tabs.
-  Finance (fin.enc.json) and kitchen (kitchen.enc.json) are decrypted in the browser only (PBKDF2 600k + AES-GCM).
+  MODERN DASHBOARD · per-tab themes (Now = airport departures board, World = 80s city-pop magazine) · 7 screens (Now, Faith, Career, World, Ship, Gym, Kitchen), swipe sideways or use the tabs.
+  Kitchen (kitchen.enc.json) is decrypted in the browser only (PBKDF2 600k + AES-GCM).
   No passcode or figures live in this file. Old 8-bit version: retro.html · older: classic.html
 -->
 <header id="hd"><div class="ttl" id="hdT">Now</div><div class="meta"><span id="hdM" class="num"></span><button class="lockbtn" id="lockBtn" hidden onclick="lockAll()">Lock</button></div></header>
@@ -677,7 +673,7 @@ body[data-tab=world] #tabbar::after{background:linear-gradient(to left,rgba(26,8
  <div class="card w1" id="wxCard"><div class="lbl"><span>Weather</span><span id="wxIco"></span></div><div class="big num" id="wxT">--°</div><div class="sm mu" id="wxD">Loading…</div><div id="wxSpark" style="margin-top:8px"></div></div>
  <div class="card w1" id="fastMini"><div class="lbl">Fasting</div><div class="sm skel">Loading…</div></div>
  <div class="card w1"><div class="lbl">Rest today</div><div class="rs" id="rs"></div><div id="rtrend" style="margin-top:10px"></div></div>
- <div class="card w1 tap" onclick="go(3)"><div class="lbl">SPF bond</div><div class="big num" id="bondMini">--</div><div class="xs mu">days to Oct 2027</div><div class="bar" style="margin-top:10px"><i id="bondMiniBar"></i></div></div>
+ <div class="card w1 tap" onclick="go(2)"><div class="lbl">SPF bond</div><div class="big num" id="bondMini">--</div><div class="xs mu">days to Oct 2027</div><div class="bar" style="margin-top:10px"><i id="bondMiniBar"></i></div></div>
  <div class="card w4 tap" id="verseMini" onclick="go(1)"><div class="lbl"><span>Ayah of the day</span><span class="xs mu" id="verseMiniRef"></span></div><div class="qline" id="verseMiniT">…</div></div>
  <div class="w4 xs mu row" style="padding:2px 4px"><span class="num" id="nref"></span><button class="btn ghost sm" onclick="setSheet()">Sheet link</button></div>
 </div></section>
@@ -701,13 +697,6 @@ body[data-tab=world] #tabbar::after{background:linear-gradient(to left,rgba(26,8
  <div class="card w2"><div class="lbl">A word for today</div><div class="verse" id="quote">…</div></div>
  <div class="card w2" id="blessCard" hidden><div class="lbl">Gratitude</div><div class="verse" id="bless"></div></div>
  <div class="card w4"><div class="lbl">Today's talks</div><div id="yt" class="grid" style="gap:12px"></div></div>
-</div></section>
-
-<!-- ============ MONEY ============ -->
-<section class="screen" id="money" aria-label="Money"><div class="grid" id="fin">
- <div class="card w4"><div class="lbl">🔒 Money is locked</div>
-  <form class="unlock" onsubmit="event.preventDefault();unlockFrom('pwFin','errFin')"><input class="inp num" id="pwFin" type="password" inputmode="numeric" autocomplete="off" placeholder="Passcode" aria-label="Passcode"><button class="btn pri" type="submit">Unlock</button></form>
-  <div class="err" id="errFin"></div><div class="xs mu">Balance, bills, debts and spending decrypt on your phone only.</div></div>
 </div></section>
 
 <!-- ============ CAREER ============ -->
@@ -774,12 +763,11 @@ body[data-tab=world] #tabbar::after{background:linear-gradient(to left,rgba(26,8
 <nav id="tabs" role="tablist" aria-label="Screens">
  <button role="tab" data-i="0" aria-selected="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Now</button>
  <button role="tab" data-i="1" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>Faith</button>
- <button role="tab" data-i="2" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 14.5h2"/></svg>Money</button>
- <button role="tab" data-i="3" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/></svg>Career</button>
- <button role="tab" data-i="4" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>World</button>
- <button role="tab" data-i="5" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M5.5 15.5C4 17 3.5 20.5 3.5 20.5s3.5-.5 5-2"/><path d="M9 15l-3-3c1.6-4.2 5.3-8 13-9-1 7.7-4.8 11.4-9 13z"/><circle cx="14.5" cy="9.5" r="1.6"/><path d="M7.5 10.5H4.5l2-3h4M13.5 16.5v3l3-2v-4"/></svg>Ship</button>
- <button role="tab" data-i="6" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>Gym</button>
- <button role="tab" data-i="7" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="5.5" y="2.5" width="13" height="19" rx="2.5"/><path d="M5.5 9.5h13M9 5.5v1.5M9 12.5v3"/></svg>Kitchen</button>
+ <button role="tab" data-i="2" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/></svg>Career</button>
+ <button role="tab" data-i="3" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>World</button>
+ <button role="tab" data-i="4" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M5.5 15.5C4 17 3.5 20.5 3.5 20.5s3.5-.5 5-2"/><path d="M9 15l-3-3c1.6-4.2 5.3-8 13-9-1 7.7-4.8 11.4-9 13z"/><circle cx="14.5" cy="9.5" r="1.6"/><path d="M7.5 10.5H4.5l2-3h4M13.5 16.5v3l3-2v-4"/></svg>Ship</button>
+ <button role="tab" data-i="5" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>Gym</button>
+ <button role="tab" data-i="6" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="5.5" y="2.5" width="13" height="19" rx="2.5"/><path d="M5.5 9.5h13M9 5.5v1.5M9 12.5v3"/></svg>Kitchen</button>
 </nav>
 </div>
 
@@ -815,7 +803,7 @@ function spark(vals,w,h,opt){opt=opt||{};if(!vals.length)return"";const mn=Math.
  return `<svg width="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block;height:${h}px" aria-hidden="true"><path d="${d} L${w} ${h} L0 ${h}Z" fill="var(--ac2)"/><path d="${d}" fill="none" stroke="var(--ac)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`}
 
 /* ================= NAV / PAGER ================= */
-const pager=$("pager"),tabsEl=$("tabs"),tabbar=$("tabbar"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Money","Career","World","Ship","Gym","Kitchen"];
+const pager=$("pager"),tabsEl=$("tabs"),tabbar=$("tabbar"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Career","World","Ship","Gym","Kitchen"];
 let cur=0;const inited=new Set();
 function updateTabFades(){if(!tabbar||!tabsEl)return;const max=tabsEl.scrollWidth-tabsEl.clientWidth;tabbar.classList.toggle("fade-l",tabsEl.scrollLeft>4);tabbar.classList.toggle("fade-r",max>4&&tabsEl.scrollLeft<max-4)}
 function revealTab(i){const t=TABS[i];if(t)t.scrollIntoView({inline:"center",block:"nearest",behavior:RM?"auto":"smooth"});updateTabFades()}
@@ -823,7 +811,7 @@ function go(i,instant){i=Math.max(0,Math.min(SCR.length-1,i));pager.scrollTo({le
 const THEMEC={now:"#050506",world:"#1a0833"};
 function setTheme(id){document.body.dataset.tab=id;const m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",THEMEC[id]||"#0b0c10")}
 function setCur(i){if(i===cur&&inited.has(i))return;cur=i;TABS.forEach((t,k)=>t.setAttribute("aria-selected",k===i?"true":"false"));$("hdT").textContent=NAMES[i];setTheme(SCR[i].id);
- history.replaceState(null,"","#"+SCR[i].id);FRG.active(i===5);GYM.active(i===6);KIT.active(i===7);initScreen(i);if(i===4)MAG.touch();revealTab(i)}
+ history.replaceState(null,"","#"+SCR[i].id);FRG.active(i===4);GYM.active(i===5);KIT.active(i===6);initScreen(i);if(i===3)MAG.touch();revealTab(i)}
 TABS.forEach(t=>t.onclick=()=>go(+t.dataset.i));
 let sT;pager.addEventListener("scroll",()=>{clearTimeout(sT);sT=setTimeout(()=>{const i=Math.round(pager.scrollLeft/pager.clientWidth);if(i!==cur)setCur(i)},60)},{passive:true});
 tabsEl.addEventListener("scroll",updateTabFades,{passive:true});
@@ -834,7 +822,7 @@ addEventListener("keydown",e=>{if(document.querySelector(".shm.on,.cbt.on"))retu
  if(e.target.closest&&e.target.closest("input,textarea,select"))return;if(e.key==="ArrowRight")go(cur+1);else if(e.key==="ArrowLeft")go(cur-1)});
 function lazyFrames(root){root.querySelectorAll("iframe[data-src]").forEach(f=>{f.src=f.dataset.src;f.removeAttribute("data-src")})}
 function initScreen(i){if(i!==cur)return;lazyFrames(SCR[i]);if(inited.has(i))return;inited.add(i);
- if(i===3)loadJobs()}
+ if(i===2)loadJobs()}
 
 /* ================= CLOCK + TICK ================= */
 const PT={today:null,tom:null};let FASTT=null;
@@ -932,7 +920,7 @@ function renderWorld(W){$("wcar").innerHTML=W.map((x,i)=>{let viz="";
  else if(x.big)viz=`<div class="big">${esc(x.big)}</div>`;
  const vid=x.vid?`<div class="vid" style="margin:8px 0"><iframe data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${esc(String(x.vid).slice(2))}" title="${esc(x.src)}" loading="lazy" allowfullscreen></iframe></div>`:"";
  return `<div class="card ${x.vid?"w2":"w2"}" style="animation-delay:${i*40}ms"><div class="lbl">${esc(x.src)}</div>${viz}${vid}<div class="sm" style="color:#c9ccd6">${esc(x.text)}</div><div class="xs mu" style="margin-top:6px">${x.url?`<a href="${safeUrl(x.url)}" target="_blank" rel="noopener">Source ↗</a>`:esc(x.note||"")}</div></div>`}).join("");
- requestAnimationFrame(()=>$("wcar").querySelectorAll("[data-w]").forEach(b=>b.style.width=b.dataset.w+"%"));if(cur===4)lazyFrames(SCR[4])}
+ requestAnimationFrame(()=>$("wcar").querySelectorAll("[data-w]").forEach(b=>b.style.width=b.dataset.w+"%"));if(cur===3)lazyFrames(SCR[3])}
 fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{if(d.pm&&sgParts().h>=18)Object.assign(d,d.pm);D=d;
  $("hijri").textContent=d.hijri||"";
  if(d.fast&&typeof d.fast==="object")renderFast(d.fast);else if(d.fast){$("fastType").textContent="Today";$("fast").textContent=d.fast;$("fastMini").innerHTML=`<div class="lbl">Fasting</div><div class="sm">${esc(d.fast)}</div>`}
@@ -994,48 +982,9 @@ function rDraw(){const r=LS("rest")||{},t=sgDay();$("rs").innerHTML=RL.map((e,i)
  $("rtrend").innerHTML=`<svg width="100%" height="30" viewBox="0 0 140 30" preserveAspectRatio="none" aria-label="Rest, last 7 days">${days.map((d,i)=>{const v=r[d]||0,hh=v?v*5.4:2;return `<rect x="${i*20+3}" y="${30-hh}" width="14" height="${hh}" rx="3" fill="${v?"var(--ac)":"var(--s3)"}" opacity="${d===t?1:.6}"/>`}).join("")}</svg><div class="row xs mu"><span>7 days</span><span>today</span></div>`}
 function rSet(v){const r=LS("rest")||{};r[sgDay()]=v;LS("rest",r);rDraw();logSheet("rest",{day:sgDay(),score:v})}rDraw();
 
-/* ================= ENCRYPTED DATA · fin.enc.json (PBKDF2-SHA256 600k + AES-GCM) ================= */
-const dS=s=>{const m=String(s||"").match(/^(\d{4})-(\d{2})-(\d{2})/);return m?(+m[3])+" "+MO[+m[2]-1]:String(s||"")};
-const money=n=>"S$"+(+n||0).toLocaleString("en-SG",{minimumFractionDigits:2,maximumFractionDigits:2});
-const money0=n=>(n<0?"−":"")+"S$"+Math.abs(+n||0).toLocaleString("en-SG",{maximumFractionDigits:0});
-const fB=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
-async function decEnc(url,pw){const res=await fetch(url+"?"+Date.now(),{cache:"no-store"}).catch(()=>({ok:false}));if(!res.ok){const e=new Error("missing");e.missing=true;throw e}const e=await res.json();const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:fB(e.s),iterations:600000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:fB(e.iv)},k,fB(e.ct))))}
-let FIN=null;
-async function unlockFrom(inId,errId){const el=$(inId),pw=el&&el.value,msg=t=>{const e=$(errId);if(e)e.textContent=t};if(!pw)return;msg("Unlocking…");const ok=await unlock(pw);if(ok){el.value="";msg("")}else msg("Wrong passcode")}
-async function unlock(pw){const [f]=await Promise.allSettled([FIN?Promise.resolve(FIN):decEnc("fin.enc.json",pw)]);let any=false;
- if(f.status==="fulfilled"){FIN=f.value;any=true;fRender(FIN);if(!sessionStorage.fpw)sessionStorage.fpw=pw}else if(f.reason&&f.reason.missing)finMissing();
- if(any){const lb=$("lockBtn");if(lb)lb.hidden=false}
- return any}
+/* ================= PASSCODE LOCK (Kitchen still uses sessionStorage.fpw) ================= */
+function showLock(){const lb=$("lockBtn");if(lb)lb.hidden=false}
 function lockAll(){sessionStorage.removeItem("fpw");sessionStorage.removeItem("fpwF");location.reload()}
-function finMissing(){$("fin").innerHTML=`<div class="card w4"><div class="lbl">Money</div><div class="sm mu">Finance data hasn't been published yet.</div></div>`}
-function finOtherCode(){$("fin").innerHTML=`<div class="card w4"><div class="lbl">🔒 Money didn't unlock</div>
- <form class="unlock" onsubmit="event.preventDefault();unlockFrom('pwFin','errFin')"><input class="inp num" id="pwFin" type="password" inputmode="numeric" autocomplete="off" placeholder="Passcode" aria-label="Money passcode"><button class="btn pri" type="submit">Unlock</button></form><div class="err" id="errFin"></div><div class="xs mu">The dashboard passcode didn't open the finance file. If you still have the older Money passcode, enter it here.</div></div>`}
-/* --- finance --- (fields as published by FA Bot; anything missing is skipped, never invented) */
-function fRender(d){const today=sgDay(),lim=sgDay(Date.now()+30*864e5),A=v=>Array.isArray(v)?v:[];
- const bills=A(d.bills_due).slice().sort((a,b)=>a.due<b.due?-1:1),due=bills.filter(b=>!b.paid&&b.due<=lim),dueT=due.reduce((a,b)=>a+(+b.amt||0),0);
- const bal=d.balance&&isFinite(+d.balance.amt)?+d.balance.amt:null,safe=d.safe_to_spend!=null?+d.safe_to_spend:(bal!=null?bal-dueT:null),wk=d.week&&+d.week.cap?d.week:null;
- const payday=d.payday||d.next_payday,pdDays=payday&&isFinite(Date.parse(payday))?Math.ceil((Date.parse(payday+"T00:00:00+08:00")-Date.now())/864e5):null;
- const nextBill=bills.find(b=>!b.paid&&b.due>=today)||bills.find(b=>!b.paid);
- /* Money screen */
- let h="";
- h+=`<div class="card w2" style="background:radial-gradient(120% 140% at 100% 0%,var(--ac2),transparent 60%),var(--s1)"><div class="lbl"><span>Balance</span><span class="xs mu">${esc(d.balance&&d.balance.date||"")}</span></div><div class="big num" id="mBal">${bal!=null?money(bal):"—"}</div>
-  ${safe!=null?`<div class="sep"></div><div class="lbl" style="margin-bottom:2px">Safe to spend till payday</div><div class="mid num ${safe<0?"neg":""}" id="mSafe">${money(safe)}</div>`:""}</div>`;
- if(wk){const left=wk.cap-wk.spent;h+=`<div class="card w2"><div class="lbl"><span>This week</span>${wk.spent>wk.cap?'<span class="pill bad">Over</span>':`<span class="pill ok">${money0(left)} left</span>`}</div><div class="mid num">${money(wk.spent)} <span class="sm mu">of ${money(wk.cap)}</span></div><div class="bar" style="margin:10px 0"><i class="${wk.spent>wk.cap?"over":""}" data-w="${Math.min(100,wk.spent/wk.cap*100)}"></i></div>
-  <form class="row" style="gap:8px;justify-content:flex-start" onsubmit="event.preventDefault();fAfford(${+safe||0},${left})"><span class="sm mu">Can I afford</span><input class="inp num" id="fa" type="number" inputmode="decimal" placeholder="S$" style="width:90px"><button class="btn sm" type="submit">Check</button></form><div id="far" class="sm" style="margin-top:6px"></div></div>`}
- if(bills.length)h+=`<div class="card w2"><div class="lbl"><span>Bills</span><span class="xs mu">Next 30 days ${money(dueT)}</span></div>${bills.map(b=>{const st=b.paid?'<span class="pill ok">Paid</span>':b.due<today?'<span class="pill bad">Overdue</span>':b.due<=lim?'<span class="pill warn">Due</span>':'<span class="pill">Later</span>';return `<div class="kv"><span>${st} <span class="mu num">${esc(dS(b.due))}</span> ${esc(b.name)}</span><b class="num">${money(b.amt)}</b></div>`}).join("")}</div>`;
- const debts=A(d.debts);if(debts.length)h+=`<div class="card w2"><div class="lbl">Debts</div>${debts.filter(x=>+x.total>0).map(x=>`<div style="margin:6px 0 12px"><div class="row sm"><span style="font-weight:600">${esc(x.to)}</span><span class="num mu">${money0(x.paid)} / ${money0(x.total)}</span></div><div class="bar" style="margin:6px 0"><i data-w="${Math.min(100,x.paid/x.total*100)}"></i></div><div class="xs mu">${money(x.monthly)}/mo${x.left_months!=null?` · ${esc(x.left_months)} mo left`:""}</div></div>`).join("")}${debts.some(x=>+x.total===0)?`<div class="xs mu">${esc(debts.filter(x=>+x.total===0).map(x=>x.to).join(", "))}: amount not set yet</div>`:""}</div>`;
- const bud=A(d.budget_nov).length?A(d.budget_nov):A(d.budget);
- if(d.savings!=null||bud.length){const tgt=bud.find(b=>/POSB|sav/i.test(b.cat||""));h+=`<div class="card w2"><div class="lbl">Savings</div><div class="mid num">${d.savings?money(d.savings):"Not set yet"}</div>${tgt?`<div class="xs mu" style="margin-top:4px">Target ${esc(tgt.cat)} ${money(tgt.limit)}</div>`:""}
-  ${bud.length?`<div class="sep"></div><div class="lbl" style="margin-bottom:4px">Budget</div>${bud.map(b=>`<div class="kv"><span>${esc(b.cat)}</span><b class="num">${money(b.limit)}</b></div>`).join("")}`:""}</div>`}
- const months=A(d.months);if(months.length){const mx=Math.max(...months.map(m=>Math.max(+m.in||0,+m.out||0)))||1,W=280,H=110,bw=Math.min(22,(W/months.length-10)/2);
-  h+=`<div class="card w2"><div class="lbl"><span>Monthly in / out</span><span class="xs mu"><span style="color:var(--ac)">■</span> in <span style="color:var(--bad)">■</span> out</span></div><svg class="chart" viewBox="0 0 ${W} ${H+16}" width="100%" role="img" aria-label="Monthly income and spending">${months.map((m,i)=>{const x=i*(W/months.length)+(W/months.length)/2,hi=(+m.in||0)/mx*H,ho=(+m.out||0)/mx*H;return `<rect x="${x-bw-1}" y="${H-hi}" width="${bw}" height="${hi}" rx="3" fill="var(--ac)"/><rect x="${x+1}" y="${H-ho}" width="${bw}" height="${ho}" rx="3" fill="var(--bad)" opacity=".85"/><text x="${x}" y="${H+13}" text-anchor="middle">${esc(m.m)}</text>`}).join("")}</svg>
-  ${months.map(m=>{const n=(+m.in||0)-(+m.out||0);return `<div class="kv"><span>${esc(m.m)}</span><b class="num ${n<0?"neg":""}">${n<0?"−":"+"}${money(Math.abs(n))}</b></div>`}).join("")}</div>`}
- const leaks=A(d.leaks);if(leaks.length){const lm=Math.max(...leaks.map(l=>+l.amt||0))||1;h+=`<div class="card w2"><div class="lbl">Top leaks</div>${leaks.map(l=>`<div style="margin:6px 0 10px"><div class="row sm"><span style="font-weight:600">${esc(l.name)}</span><b class="num">${money(l.amt)}</b></div><div class="bar" style="height:5px;margin:5px 0"><i class="over" data-w="${(+l.amt||0)/lm*100}"></i></div><div class="xs mu">${esc(l.tip)}</div></div>`).join("")}</div>`}
- const tips=A(d.tips);if(tips.length)h+=`<div class="card w4"><div class="lbl">Tips</div><ul class="sm" style="margin:0;padding-left:18px;color:#c9ccd6">${tips.map(t=>`<li style="margin:4px 0">${esc(t)}</li>`).join("")}</ul></div>`;
- h+=`<div class="w4 row" style="justify-content:flex-end"><button class="btn sm" onclick="lockAll()">Lock</button></div>`;
- $("fin").innerHTML=h;requestAnimationFrame(()=>document.querySelectorAll("#fin [data-w]").forEach(b=>b.style.width=b.dataset.w+"%"));
- if(bal!=null)countUp($("mBal"),bal,money);if(safe!=null)countUp($("mSafe"),safe,money)}
-function fAfford(safe,wk){const a=+$("fa").value,r=$("far");if(!a)return;r.innerHTML=a>safe?`<span class="pill bad">No · short ${money(a-safe)} for bills</span>`:a>wk?`<span class="pill warn">Over this week's cap by ${money(a-wk)}</span>`:'<span class="pill ok">OK</span>'}
 
 /* ================= CAREER · reads TOP / WL arrays from jobs.html (no changes to that file) ================= */
 function loadJobs(){fetch("jobs.html",{cache:"no-cache"}).then(r=>r.text()).then(s=>{const grab=n=>{const m=s.match(new RegExp("const "+n+"=(\\[[\\s\\S]*?\\]);\\n"));try{return m?JSON.parse(m[1]):[]}catch(_){return[]}};
@@ -1103,12 +1052,12 @@ const MAG=(()=>{const KEY="jobswipe-mag-v1",R2J="https://api.rss2json.com/v1/api
   catch(e){if(c)render(c,false,{sg:1,w:1});else render(null,false)}
   finally{busy=false}}
  function touch(){if(!last||Date.now()-last>30*6e4)load()}
- const root=$("mag");if(root)root.addEventListener("click",e=>{const j=e.target.closest("[data-jump]");if(j){const el=$(j.dataset.jump),sc=SCR[4];if(el&&sc)sc.scrollTo({top:el.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-44,behavior:RM?"auto":"smooth"});return}
+ const root=$("mag");if(root)root.addEventListener("click",e=>{const j=e.target.closest("[data-jump]");if(j){const el=$(j.dataset.jump),sc=SCR[3];if(el&&sc)sc.scrollTo({top:el.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-44,behavior:RM?"auto":"smooth"});return}
   if(e.target.closest("[data-mz-retry]")||e.target.closest("#mzRe"))load(true)});
- addEventListener("online",()=>{if(cur===4)load(true)});
+ addEventListener("online",()=>{if(cur===3)load(true)});
  return{load,touch,cached,_t:{txt,clip,mix,norm}}})();
 
-/* ================= SHIP · frigate companion game. Own storage key "jobswipe-frigate-v1"; not linked to to-dos, prayers, rest or money ================= */
+/* ================= SHIP · frigate companion game. Own storage key "jobswipe-frigate-v1"; not linked to to-dos, prayers or rest ================= */
 /* ---------- frigate art: original procedural three-quarter model (no external assets) ---------- */
 const FART=(()=>{
 const N=a=>{const l=Math.hypot(a[0],a[1],a[2])||1;return[a[0]/l,a[1]/l,a[2]/l]},sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
@@ -2006,7 +1955,7 @@ function onSub(e){e.preventDefault();const f=e.target.closest("form[data-f]");if
  if(f.dataset.f==="star"){if(nameStar(v)){mClose();toast("Star named. Find it in gold on the star map.")}}
  else{const n=String(v).replace(/\s+/g," ").trim().slice(0,32);S.name=n||"UNSC Forward Unto Dawn II";save();mClose()}}
 function build(){$("ship").innerHTML=`<div class="grid"><div class="card w2" id="shBt"></div><div class="card w2" id="shAI"></div><div class="card w4" id="shEv" hidden></div><div class="card w2" id="shShip"></div><div class="card w2" id="shVoy"></div><div class="card w2" id="shMap"></div><div class="card w2" id="shUp"></div><div class="card w2" id="shLog"></div>
- <div class="w4 xs mu" style="padding:2px 4px">Ship game saves on this device only and runs separately from your to-dos, prayers and money.</div></div>`;
+ <div class="w4 xs mu" style="padding:2px 4px">Ship game saves on this device only and runs separately from your to-dos and prayers.</div></div>`;
  $("ship").addEventListener("click",onClick);$("ship").addEventListener("toggle",e=>{const d=e.target;if(d.id)d.open?openD.add(d.id):openD.delete(d.id)},true);$("shm").addEventListener("click",onM);$("shm").addEventListener("submit",onSub);
  addEventListener("keydown",e=>{if(e.key==="Escape"&&MD)mClose()});built=true}
 function enter(){S=S||load();if(!built)build();on=true;$("ship").classList.add("act");const now=Date.now(),r=sim(now);
@@ -2513,7 +2462,7 @@ const UNITS=["","pcs","kg","g","L","ml","pack","bottle","can","tray","box","bag"
 const IC={chk:'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',x:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>',plus:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>'};
 let SNAP=null,PEND=[],TOK=null,on=false,built=false,loading=false,err="",sendErr="",flushing=false,lastFetch=0,pollT=null,flushT=null,toastT=null,sendSalt=null,sheet=null;
 const ui={loc:"all",cat:"all",q:"",urg:null},keyC=new Map();
-/* ---------- crypto (same scheme as decEnc; key cached per salt) ---------- */
+/* ---------- crypto (PBKDF2 600k + AES-GCM; key cached per salt) ---------- */
 const b64=u=>{u=new Uint8Array(u);let s="";for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)};
 const ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)),rnd=n=>crypto.getRandomValues(new Uint8Array(n));
 let keyPw=null;
@@ -2595,7 +2544,7 @@ async function load(manual){if(loading||!pw())return;loading=true;if(manual)rHer
  loading=false;lastFetch=Date.now();render();if(PEND.some(p=>!p.sent))schedFlush()}
 async function unlockK(){const el=$("kPw"),e=$("kPwE"),p=el.value;if(!p)return;e.textContent="Unlocking…";
  try{const r=await fetch("kitchen.enc.json?"+Date.now(),{cache:"no-store"});if(!r.ok){e.textContent=r.status===404?"Kitchen data hasn't synced yet.":"Couldn't load the kitchen file.";return}
-  SNAP=await dec(await r.json(),p);sessionStorage.fpw=p;el.value="";e.textContent="";lastFetch=Date.now();reconcile();await loadTok();render();try{unlock(p)}catch(x){}load()}
+  SNAP=await dec(await r.json(),p);sessionStorage.fpw=p;el.value="";e.textContent="";lastFetch=Date.now();reconcile();await loadTok();render();showLock();load()}
  catch(x){e.textContent=x.name==="OperationError"?"Wrong passcode":"Couldn't unlock right now."}}
 /* ---------- render ---------- */
 function build(){$("kitchen").innerHTML=`<div class="grid"><div class="card w4" id="kHero"></div>
@@ -2738,10 +2687,10 @@ return{active:v=>v?enter():leave(),unlockK,load,get S(){return SNAP},get P(){ret
 })();
 
 /* ================= START ================= */
-(function(){const alias={today:0,plannerS:0,todoS:0,todo:0,calS:0,cal:0,calendar:0,schedule:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:2,finS:2,career:3,bondS:3,jobsS:3,world:4,worldS:4,newsS:4,ship:5,shipS:5,frigate:5,game:5,gym:6,gymS:6,workout:6,fitness:6,ippt:6,kitchen:7,kitchenS:7,fridge:7,grocery:7,groceries:7},i=alias[location.hash.slice(1)]??0;
+(function(){const alias={today:0,plannerS:0,todoS:0,todo:0,calS:0,cal:0,calendar:0,schedule:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:0,finS:0,career:2,bondS:2,jobsS:2,world:3,worldS:3,newsS:3,ship:4,shipS:4,frigate:4,game:4,gym:5,gymS:5,workout:5,fitness:5,ippt:5,kitchen:6,kitchenS:6,fridge:6,grocery:6,groceries:6},i=alias[location.hash.slice(1)]??0;
  cur=-1;requestAnimationFrame(()=>{go(i,true);requestAnimationFrame(()=>revealTab(i))})})();
 tick();setInterval(tick,1000);
-if(sessionStorage.fpw){unlock(sessionStorage.fpw)}
+if(sessionStorage.fpw)showLock()
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
 </body></html>
