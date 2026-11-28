@@ -1,5 +1,5 @@
 /* Offline cache for the dashboard: network first, cached copy when offline. Same-origin GET only. */
-const C="daily-v17";
+const C="daily-v18";
 self.addEventListener("install",e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(["./","index.html"]).catch(()=>{})))});
 /* Activate only drops old caches. Never clear localStorage or IndexedDB — Quran, Selawat and tasks live there. */
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
