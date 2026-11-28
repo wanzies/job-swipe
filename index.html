@@ -84,6 +84,8 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 .verse{font-size:16px;line-height:1.55}
 .qline{font-size:16.5px;line-height:1.55;font-weight:500}
 .tapbig{width:100%;padding:18px;font-size:16px;border-radius:14px}
+.dhikr-card,.dhikr-card .dhikr-acts,.dhikr-card button{touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+#dReset.arm{border-color:var(--warn);color:var(--warn)}#dReset.undo{border-color:var(--ac);color:var(--ac)}
 .trees{display:flex;gap:4px;margin:8px 0}.trees i{flex:1;height:6px;border-radius:99px;background:var(--s3)}.trees i.on{background:var(--ok)}.trees i.cur{background:linear-gradient(90deg,var(--ok) var(--p),var(--s3) var(--p))}
 .namecard{text-align:center;cursor:pointer;user-select:none}.namecard .ar{font-size:54px;line-height:1.3;color:var(--ac)}
 .namecard .rev{max-height:0;overflow:hidden;transition:max-height .45s var(--ease),opacity .3s;opacity:0;text-align:left}.namecard.on .rev{max-height:500px;opacity:1}
@@ -449,6 +451,35 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 .tk-toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.tk-toast button{border:0;background:var(--ac2);color:var(--ac);font-weight:700;border-radius:10px;padding:0 14px;min-height:36px;cursor:pointer;font-size:14px}
 @media (min-width:900px){.tk-toast{bottom:28px}}
 @media (prefers-reduced-motion:reduce){.tk-it.new{animation:none}.tk-toast{transition:none}}
+
+.tk-cs{display:flex;flex-wrap:wrap;gap:6px;width:100%;margin-top:2px}
+.tk-pl.tk-cg-rec,.tk-pl.tk-cg-inv,.tk-pl.tk-cg-call,.tk-pl.tk-cg-hsa,.tk-pl.tk-cg-ccrt,.tk-pl.tk-cg-g{font-size:11.5px;font-weight:650;padding:3px 9px;background:color-mix(in srgb,var(--k) 16%,transparent);color:var(--k)}
+.tk-cg-rec{--k:#7dd3fc}.tk-cg-inv{--k:#c4b5fd}.tk-cg-call{--k:#67e8f9}.tk-cg-hsa{--k:#fdba74}.tk-cg-ccrt{--k:#5eead4}.tk-cg-g{--k:#94a3b8}
+.tk-cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.tk-cats .tk-sg span{min-height:40px;font-size:12.5px;border-color:color-mix(in srgb,var(--k) 40%,transparent);background:color-mix(in srgb,var(--k) 10%,transparent);color:var(--k)}
+.tk-cats .tk-sg input:checked+span{background:var(--k);color:#0b0c10;border-color:transparent}
+.tk-acts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.tk-acts .tk-sg span{min-height:40px;font-size:13px;border-color:var(--bd2);background:var(--s2);color:var(--tx)}
+.tk-acts .tk-sg input:checked+span{background:var(--tx);color:#0b0c10;border-color:transparent}
+.tk-refw{display:flex;flex-direction:column;gap:4px}.tk-refw[hidden]{display:none}.tk-refw label{display:flex;flex-direction:column;gap:4px}.tk-refw label span{font-size:11.5px;font-weight:600;color:var(--mu);padding-left:2px}
+.tk-rh{margin:0;padding-left:2px}
+.tk-vw{display:inline-flex;align-self:flex-start;background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:3px;gap:2px}
+.tk-vw button{border:0;background:none;color:var(--mu);font-weight:600;font-size:13px;padding:7px 12px;border-radius:9px;cursor:pointer;min-height:34px}
+.tk-vw button[aria-pressed=true]{background:var(--s3);color:var(--tx)}
+.tk-fc.tk-cg-rec[aria-pressed=true],.tk-fc.tk-cg-inv[aria-pressed=true],.tk-fc.tk-cg-call[aria-pressed=true],.tk-fc.tk-cg-hsa[aria-pressed=true],.tk-fc.tk-cg-ccrt[aria-pressed=true],.tk-fc.tk-cg-g[aria-pressed=true]{background:color-mix(in srgb,var(--k) 16%,transparent);border-color:var(--k);color:var(--k)}
+.tk-fc.tk-cg-rec[aria-pressed=true] b,.tk-fc.tk-cg-inv[aria-pressed=true] b,.tk-fc.tk-cg-call[aria-pressed=true] b,.tk-fc.tk-cg-hsa[aria-pressed=true] b,.tk-fc.tk-cg-ccrt[aria-pressed=true] b,.tk-fc.tk-cg-g[aria-pressed=true] b{color:var(--k)}
+.tk-tag{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--k) 14%,transparent);color:var(--k);border:1px solid color-mix(in srgb,var(--k) 40%,transparent)}
+.tk-ch.tk-cg{border-color:color-mix(in srgb,var(--k) 40%,transparent);background:color-mix(in srgb,var(--k) 14%,transparent);color:var(--k)}
+.tk-ch.tk-cg:hover{background:color-mix(in srgb,var(--k) 24%,transparent)}
+.tk-rf{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--tx);background:var(--s3);padding:2px 8px;border-radius:8px}
+.tk-sec{margin:0 0 12px;padding:0;border:0;background:none}
+.tk-sec summary{cursor:pointer;font-weight:700;font-size:14.5px;color:var(--tx);padding:8px 2px;list-style:none;display:flex;align-items:center;gap:8px}
+.tk-sec summary::-webkit-details-marker{display:none}
+.tk-sec summary::before{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .2s;color:var(--mu)}
+.tk-sec[open] summary::before{transform:rotate(45deg)}
+.tk-sec summary b{background:var(--s3);border-radius:999px;padding:1px 9px;font-size:12px;font-weight:700;color:var(--mu)}
+.tk-sec .tk-ls{margin-top:8px}
+
 /* ================= PER-TAB THEMES (body[data-tab] + section scope) ================= */
 #hd,#tabbar{transition:background-color .35s,border-color .35s}
 body[data-tab=now]{--bg:#050506}
@@ -671,10 +702,10 @@ body[data-tab=world] #tabbar::after{background:linear-gradient(to left,rgba(26,8
  <div class="card w2"><div class="lbl">Quran tracker</div>
   <div class="row" style="justify-content:flex-start;gap:14px"><div class="pring" style="width:84px;height:84px"><svg class="ring" viewBox="0 0 84 84" width="84" height="84"><circle class="tr" cx="42" cy="42" r="36" stroke-width="7"/><circle class="pr" id="qArc" cx="42" cy="42" r="36" stroke-width="7" stroke-dasharray="226.2" stroke-dashoffset="226.2"/></svg><div class="c"><div class="t num" id="qPct" style="font-size:15px">0%</div></div></div>
    <div class="stack" style="flex:1"><div id="qpos" class="sm"></div><button class="btn pri" onclick="qOpen()">Read 1 page</button></div></div></div>
- <div class="card w2"><div class="lbl"><span>Dhikr</span><span class="xs mu">SubhanAllah / Selawat</span></div>
+ <div class="card w2 dhikr-card"><div class="lbl"><span>Dhikr</span><span class="xs mu">SubhanAllah / Selawat</span></div>
   <div class="row"><div class="big num" id="dCount">0</div><div class="xs mu" id="dsum" style="text-align:right"></div></div>
   <div class="trees" id="gd"></div>
-  <div class="row" style="gap:8px"><button class="btn pri tapbig" onclick="dTap()">Tap</button><button class="btn" style="padding:18px" onclick="dUndo()" aria-label="Undo one">−1</button></div></div>
+  <div class="row dhikr-acts" style="gap:8px"><button type="button" class="btn pri tapbig" id="dTapBtn" aria-label="Tap for SubhanAllah or Selawat">Tap</button><button type="button" class="btn" id="dReset" style="padding:18px" aria-label="Reset count">Reset</button></div></div>
  <div class="card w2" id="fastCard"><div class="lbl"><span>Fast</span><span class="pill" id="fastType">None today</span></div><div id="fast" class="sm mu">No fast flagged for today.</div></div>
  <div class="card w2 namecard" id="flip" role="button" tabindex="0" aria-label="Name of Allah, tap to reveal" onclick="this.classList.toggle('on')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('on')}">
   <div class="lbl"><span>Name of Allah</span><span class="xs mu">Tap to reveal</span></div><div class="ar" id="nAr"></div><div class="mid" id="nTr"></div>
@@ -958,8 +989,15 @@ function jClose(){$("jov").classList.remove("on")}
 let dc=LS("dhikr")||0;
 function dDraw(){const full=Math.floor(dc/100)%10,c=dc%100;let h="";for(let i=0;i<10;i++)h+=i<full?'<i class="on"></i>':i===full?`<i class="cur" style="--p:${c}%"></i>`:"<i></i>";
  $("gd").innerHTML=h;$("dCount").textContent=dc.toLocaleString("en-SG");$("dsum").innerHTML=`Plant ${full+1}: ${c}/100<br>Garden ${Math.floor(dc/1000)+1}`}
-function dTap(){dc++;LS("dhikr",dc);dDraw();if(navigator.vibrate)navigator.vibrate(dc%100?8:[60,40,60])}
-function dUndo(){if(dc>0){dc--;LS("dhikr",dc);dDraw()}}dDraw();
+let dArm="idle",dPrev=null,dArmT=null;
+function dArmSet(m){const b=$("dReset");if(!b)return;clearTimeout(dArmT);dArm=m;const px=b.classList.contains("b")||b.classList.contains("b2")||b.classList.contains("px"),L={idle:px?"RESET":"Reset",confirm:px?"TAP AGAIN TO RESET":"Tap again to reset",undo:px?"UNDO":"Undo"};
+ b.textContent=L[m]||L.idle;b.classList.toggle("arm",m==="confirm");b.classList.toggle("undo",m==="undo");
+ b.setAttribute("aria-label",m==="confirm"?"Tap again to confirm reset":m==="undo"?"Undo reset":"Reset count");
+ if(m==="confirm")dArmT=setTimeout(()=>dArmSet("idle"),3000);if(m==="undo")dArmT=setTimeout(()=>{dPrev=null;dArmSet("idle")},5000)}
+function dTap(){if(dArm==="confirm")dArmSet("idle");dc++;LS("dhikr",dc);dDraw();if(navigator.vibrate)navigator.vibrate(dc%100?8:[60,40,60])}
+function dDoReset(){if(dArm==="undo"){if(dPrev!=null){dc=dPrev;dPrev=null;LS("dhikr",dc);dDraw()}dArmSet("idle");return}if(!dc)return;if(dArm!=="confirm"){dArmSet("confirm");return}dPrev=dc;dc=0;LS("dhikr",0);dDraw();dArmSet("undo")}
+(function(){const hold=e=>{if(e.cancelable)e.preventDefault()};const bind=(id,fn)=>{const el=$(id);if(!el)return;el.addEventListener("pointerdown",e=>{if(e.button)return;hold(e);fn()});el.addEventListener("touchend",hold,{passive:false});el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();fn()}})};bind("dTapBtn",dTap);bind("dReset",dDoReset)})();
+dDraw();
 
 /* ================= REST (same storage: rest) ================= */
 const RL=["😵","😩","😐","🙂","😄"];
@@ -2433,8 +2471,12 @@ return{active:v=>v?enter():leave(),get S(){return S},KEY,EX,PLAN,_dbg:{diagram,s
 /* ================= TASKS · to-do list. Data lives in localStorage only (dash-tasks-v1), never in the repo ================= */
 const TASKS=(()=>{
 const root=document.getElementById("tkRoot");if(!root)return null;
-const KEY="dash-tasks-v1",NK="dash-tasks-notify-v1",NS="dash-tasks-notified-v1";
+const KEY="dash-tasks-v1",NK="dash-tasks-notify-v1",NS="dash-tasks-notified-v1",VK="dash-tasks-view-v1";
 const UL=["Urgent","Not so urgent","Not urgent"];
+const CATS=[{id:"rec",l:"Recommend",sec:"Cases to recommend"},{id:"inv",l:"Investigate",sec:"Cases to investigate"},{id:"call",l:"Call",sec:"Cases to call"},{id:"hsa",l:"HSA",sec:"HSA"},{id:"ccrt",l:"CCRT",sec:"CCRT"},{id:"g",l:"General",sec:"General"}];
+const CIDS=CATS.map(c=>c.id),CM=Object.fromEntries(CATS.map(c=>[c.id,c]));
+const ACTS={hsa:["send","collect"],ccrt:["send","view","collect"]},AL={send:"Send",collect:"Collect",view:"View"};
+const GALIAS={general:"g",g:"g",rec:"rec",recommend:"rec",inv:"inv",investigate:"inv",call:"call",hsa:"hsa",ccrt:"ccrt"};
 const RM=matchMedia("(prefers-reduced-motion: reduce)"),EASE=root.dataset.ease||"cubic-bezier(.2,.8,.2,1)",DUR=+root.dataset.dur||300;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const $=s=>root.querySelector(s),$$=s=>[...root.querySelectorAll(s)];
@@ -2443,7 +2485,8 @@ const IC={ed:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l
  ck:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4.5 4.5L19 7.5"/></svg>',
  al:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16v.01"/></svg>',
  ok:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>'};
-let T=[],ui={f:"all",q:"",ed:null,fe:false,dOpen:false,first:true},undo=null,tt=null;
+const loadView=()=>{try{return localStorage.getItem(VK)==="list"?"list":"cat"}catch(e){return"cat"}};
+let T=[],ui={f:"all",cg:"all",q:"",ed:null,fe:false,dOpen:false,first:true,vw:loadView(),sec:{}},undo=null,tt=null;
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const pad=n=>String(n).padStart(2,"0");
 const ymd=dt=>{dt=dt||new Date();return dt.getFullYear()+"-"+pad(dt.getMonth()+1)+"-"+pad(dt.getDate())};
@@ -2452,26 +2495,39 @@ const fmtD=s=>{const p=s.split("-").map(Number);return new Date(p[0],p[1]-1,p[2]
 const fmtT=s=>{const p=s.split(":").map(Number);return new Date(2000,0,1,p[0],p[1]).toLocaleTimeString("en-SG",{hour:"numeric",minute:"2-digit"}).replace(/\s/g," ").toUpperCase()};
 const dueMs=t=>t.d?new Date(t.d+"T"+(t.tm||"23:59:59")).getTime():Infinity;
 const isOd=t=>!t.dn&&!!t.d&&dueMs(t)<Date.now();
-function clean(a){return(Array.isArray(a)?a:[]).filter(x=>x&&typeof x.t==="string"&&x.t.trim()).map(x=>{const d=/^\d{4}-\d{2}-\d{2}$/.test(x.d||"")?x.d:"";return{id:String(x.id||uid()),t:x.t.trim().slice(0,200),n:String(x.n||"").slice(0,500),u:[0,1,2].includes(x.u)?x.u:1,d,tm:d&&/^\d{2}:\d{2}$/.test(x.tm||"")?x.tm:"",c:+x.c||Date.now(),dn:+x.dn||0}})}
+const normG=x=>{const k=String(x==null?"g":x).toLowerCase();return CIDS.includes(k)?k:(GALIAS[k]||"g")};
+const normAct=(g,a)=>{const opts=ACTS[g];if(!opts)return"";const k=String(a||"").toLowerCase();return opts.includes(k)?k:opts[0]};
+function clean(a){return(Array.isArray(a)?a:[]).filter(x=>x&&typeof x.t==="string"&&x.t.trim()).map(x=>{const d=/^\d{4}-\d{2}-\d{2}$/.test(x.d||"")?x.d:"",g=normG(x.g??x.cat??x.category);return{id:String(x.id||uid()),t:x.t.trim().slice(0,200),n:String(x.n||"").slice(0,500),u:[0,1,2].includes(x.u)?x.u:1,d,tm:d&&/^\d{2}:\d{2}$/.test(x.tm||"")?x.tm:"",c:+x.c||Date.now(),dn:+x.dn||0,g,act:normAct(g,x.act??x.action),rf:String(x.rf??x.ref??"").trim().slice(0,40)}})}
 function load(){try{const o=JSON.parse(localStorage.getItem(KEY)||"null");return clean(o&&(Array.isArray(o)?o:o.tasks))}catch(e){return[]}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify({v:1,tasks:T}))}catch(e){toast("Couldn't save: browser storage is full or blocked")}}
+function saveView(){try{localStorage.setItem(VK,ui.vw)}catch(e){}}
 /* priority: urgency (Urgent > Not so urgent > Not urgent), then soonest expiry (no date last), then oldest first */
 const cmp=(a,b)=>a.u-b.u||(dueMs(a)-dueMs(b))||a.c-b.c;
 function rel(t){if(!t.d)return null;const now=Date.now(),dd=dayNum(t.d)-dayNum(ymd()),ts=t.tm?" · "+fmtT(t.tm):"",ms=dueMs(t);
  if(ms<now){if(dd===0){const m=Math.max(1,Math.floor((now-ms)/6e4));return{x:"Overdue "+(m<60?m+"m":Math.floor(m/60)+"h"),k:"od"}}const n=-dd;return{x:"Overdue "+n+" day"+(n>1?"s":""),k:"od"}}
  if(dd===0)return{x:"Due today"+ts,k:"td"};if(dd===1)return{x:"Due tomorrow"+ts,k:""};if(dd<=45)return{x:"in "+dd+" days",k:""};return{x:"in "+Math.round(dd/7)+" weeks",k:""}}
 const seg=(nm,v,lab)=>`<div class="tk-seg" role="radiogroup" aria-label="${lab}">${UL.map((l,i)=>`<label class="tk-sg tk-u${i}"><input type="radio" name="${nm}" value="${i}"${i===v?" checked":""}><span>${l}</span></label>`).join("")}</div>`;
+const catSeg=(nm,v)=>`<div class="tk-cats" role="radiogroup" aria-label="Category">${CATS.map(c=>`<label class="tk-sg tk-cg-${c.id}"><input type="radio" name="${nm}" value="${c.id}"${c.id===v?" checked":""}><span>${c.l}</span></label>`).join("")}</div>`;
+function actHTML(nm,g,v){const opts=ACTS[g];if(!opts)return`<div class="tk-acts" hidden></div>`;const cur=opts.includes(v)?v:opts[0];return`<div class="tk-acts" role="radiogroup" aria-label="Action">${opts.map(a=>`<label class="tk-sg tk-act"><input type="radio" name="${nm}" value="${a}"${a===cur?" checked":""}><span>${AL[a]}</span></label>`).join("")}</div>`}
+const refHTML=(g,v)=>`<div class="tk-refw"${g==="g"?" hidden":""}><label><span>Case / ref no.</span><input class="tk-in" name="rf" maxlength="40" value="${esc(v||"")}" placeholder="e.g. IO-1234" autocomplete="off" aria-label="Case or reference number"></label><p class="tk-hint tk-rh">Saved only on this device</p></div>`;
+function syncForm(f){if(!f)return;const g=(f.querySelector('input[name="gA"]:checked,input[name="gE"]:checked')||{}).value||"g";const nm=f.id==="tkAdd"?"aA":"aE";const cur=(f.querySelector('input[name="'+nm+'"]:checked')||{}).value||"";const wrap=f.querySelector(".tk-acts");if(wrap){const tmp=document.createElement("div");tmp.innerHTML=actHTML(nm,g,cur);wrap.replaceWith(tmp.firstChild)}const rw=f.querySelector(".tk-refw");if(rw)rw.hidden=g==="g"}
 root.innerHTML=`<div class="tk">
  <div class="tk-sum" id="tkSum" aria-live="polite"></div>
  <form class="tk-add" id="tkAdd" autocomplete="off" aria-label="Add a task">
   <div class="tk-r1"><input class="tk-in" id="tkT" name="t" maxlength="200" placeholder="Add a task…" aria-label="Task title" enterkeyhint="done"><button class="tk-go" type="submit">Add</button></div>
   ${seg("uA",1,"Urgency")}
+  ${catSeg("gA","g")}
+  ${actHTML("aA","g","")}
+  ${refHTML("g","")}
   <div class="tk-r2"><label><span>Expiry date</span><input class="tk-in" type="date" name="d"></label><label><span>Time (optional)</span><input class="tk-in" type="time" name="tm" disabled></label></div>
   <div class="tk-qk" role="group" aria-label="Quick expiry dates"><button type="button" data-a="q" data-n="0">Today</button><button type="button" data-a="q" data-n="1">Tomorrow</button><button type="button" data-a="q" data-n="7">Next week</button></div>
   <input class="tk-in" name="n" maxlength="500" placeholder="Note (optional)" aria-label="Note">
  </form>
- <div class="tk-bar"><input class="tk-in tk-q" id="tkQ" type="search" placeholder="Search tasks" aria-label="Search tasks"><div class="tk-fl" id="tkFl" role="group" aria-label="Filter tasks"></div></div>
- <ul class="tk-ls" id="tkLs" aria-label="Tasks"></ul>
+ <div class="tk-bar"><input class="tk-in tk-q" id="tkQ" type="search" placeholder="Search tasks" aria-label="Search tasks">
+  <div class="tk-vw" role="group" aria-label="Task layout"><button type="button" data-a="vw" data-v="cat" aria-pressed="true">By category</button><button type="button" data-a="vw" data-v="list" aria-pressed="false">List</button></div>
+  <div class="tk-fl" id="tkFl" role="group" aria-label="Filter by urgency"></div>
+  <div class="tk-fl tk-flg" id="tkFlg" role="group" aria-label="Filter by category"></div></div>
+ <div id="tkLs"></div>
  <div id="tkDn"></div>
  <div class="tk-ft"><div class="tk-fb"><button type="button" data-a="exp">Export backup</button><button type="button" data-a="imp">Import backup</button><button type="button" data-a="nf" id="tkNf" aria-pressed="false">Remind me when due</button></div>
   <input type="file" id="tkFile" accept="application/json,.json" hidden aria-label="Import tasks backup file">
@@ -2480,59 +2536,75 @@ root.innerHTML=`<div class="tk">
 const toastEl=document.createElement("div");toastEl.className="tk-toast";toastEl.id="tkToast";toastEl.setAttribute("role","status");toastEl.setAttribute("aria-live","polite");document.body.appendChild(toastEl);
 function toast(msg,fn){clearTimeout(tt);undo=fn||null;toastEl.innerHTML=`<span>${esc(msg)}</span>${fn?'<button type="button" data-a="undo">Undo</button>':""}`;toastEl.classList.add("on");tt=setTimeout(()=>{toastEl.classList.remove("on");undo=null},fn?5000:2600)}
 toastEl.addEventListener("click",e=>{if(e.target.closest('[data-a="undo"]')&&undo){const f=undo;undo=null;clearTimeout(tt);toastEl.classList.remove("on");f()}});
-function itm(t){const r=rel(t),dn=!!t.dn,od=isOd(t);
+function catMark(t,grouped){if(t.g==="hsa"||t.g==="ccrt"){const lab=CM[t.g].l+" · "+AL[t.act];return`<button type="button" class="tk-ch tk-cg tk-cg-${t.g}" data-a="act" aria-label="${CM[t.g].l} action: ${AL[t.act]}. Tap to change.">${lab}</button>`}if(!grouped&&t.g!=="g")return`<span class="tk-tag tk-cg-${t.g}">${CM[t.g].l}</span>`;return""}
+function itm(t,grouped){const r=rel(t),dn=!!t.dn,od=isOd(t);
  return`<li class="tk-it tk-u${t.u}${od?" od":""}${dn?" dn":""}" data-id="${t.id}">
  <button type="button" class="tk-ck" role="checkbox" aria-checked="${dn}" data-a="ck" aria-label="${dn?"Mark not done":"Mark done"}: ${esc(t.t)}"><i>${IC.ck}</i></button>
  <div class="tk-bd"><div class="tk-tt">${esc(t.t)}</div>
-  <div class="tk-meta">${dn?`<span class="tk-due">Done ${fmtD(ymd(new Date(t.dn)))}</span>`:`<button type="button" class="tk-ch tk-u${t.u}" data-a="cyc" aria-label="Urgency: ${UL[t.u]}. Tap to change.">${UL[t.u]}</button>${r?`<span class="tk-due ${r.k}">${r.k==="od"?IC.al:""}${r.x}</span><span class="tk-abs">${fmtD(t.d)}</span>`:""}`}</div>
+  <div class="tk-meta">${dn?`<span class="tk-due">Done ${fmtD(ymd(new Date(t.dn)))}</span>`:`<button type="button" class="tk-ch tk-u${t.u}" data-a="cyc" aria-label="Urgency: ${UL[t.u]}. Tap to change.">${UL[t.u]}</button>`}${catMark(t,grouped)}${t.rf?`<span class="tk-rf">${esc(t.rf)}</span>`:""}${!dn&&r?`<span class="tk-due ${r.k}">${r.k==="od"?IC.al:""}${r.x}</span><span class="tk-abs">${fmtD(t.d)}</span>`:""}</div>
   ${t.n?`<div class="tk-nt">${esc(t.n)}</div>`:""}</div>
  <div class="tk-ac">${dn?"":`<button type="button" data-a="edit" aria-label="Edit task: ${esc(t.t)}" title="Edit">${IC.ed}</button>`}<button type="button" data-a="del" aria-label="Delete task: ${esc(t.t)}" title="Delete">${IC.del}</button></div></li>`}
 function edt(t){return`<li class="tk-it tk-ed tk-u${t.u}" data-id="${t.id}"><form class="tk-ef" autocomplete="off" aria-label="Edit task">
  <input class="tk-in" name="t" maxlength="200" value="${esc(t.t)}" aria-label="Task title">
- ${seg("uE"+t.id,t.u,"Urgency")}
+ ${seg("uE",t.u,"Urgency")}
+ ${catSeg("gE",t.g)}
+ ${actHTML("aE",t.g,t.act)}
+ ${refHTML(t.g,t.rf)}
  <div class="tk-r2"><label><span>Expiry date</span><input class="tk-in" type="date" name="d" value="${t.d}"></label><label><span>Time (optional)</span><input class="tk-in" type="time" name="tm" value="${t.tm}"${t.d?"":" disabled"}></label></div>
  <input class="tk-in" name="n" maxlength="500" value="${esc(t.n)}" placeholder="Note (optional)" aria-label="Note">
  <div class="tk-ea"><button type="button" data-a="cancel">Cancel</button><button type="submit" class="tk-go">Save</button></div></form></li>`}
+const emptyHTML=(T,act)=>`<div class="tk-empty">${IC.ok}<b>${!T.length?"Nothing to do":!act.length?"You're all caught up":"No tasks match"}</b><span>${!T.length?"Add your first task above. Urgent ones float to the top.":!act.length?"Finished tasks are in Done below.":"Try another filter or clear the search."}</span></div>`;
 function render(){
  const fa=document.activeElement,fi=fa&&fa.closest?fa.closest("#tkLs .tk-it:not(.tk-ed)"):null,fk=fi?{id:fi.dataset.id,a:fa.dataset.a}:null;
  const old=new Map();if(!RM.matches&&root.offsetWidth&&!ui.first)$$("#tkLs .tk-it").forEach(e=>old.set(e.dataset.id,e.getBoundingClientRect().top));
  const act=T.filter(t=>!t.dn).sort(cmp),dn=T.filter(t=>t.dn).sort((a,b)=>b.dn-a.dn);
  const c={all:act.length,0:act.filter(t=>t.u===0).length,1:act.filter(t=>t.u===1).length,2:act.filter(t=>t.u===2).length,od:act.filter(isOd).length};
- $("#tkSum").innerHTML=(c.all?`<span class="tk-ct"><b class="num">${c.all}</b> open</span>`:`<span class="tk-ct">${T.length?"All caught up":"No tasks yet"}</span>`)+(c[0]?`<span class="tk-pl tk-u0">${c[0]} urgent</span>`:"")+(c.od?`<span class="tk-pl od">${c.od} overdue</span>`:"");
+ CATS.forEach(x=>c[x.id]=act.filter(t=>t.g===x.id).length);
+ const catPills=CATS.filter(x=>c[x.id]).map(x=>`<span class="tk-pl tk-cg-${x.id}">${c[x.id]} ${x.l.toLowerCase()}</span>`).join("");
+ $("#tkSum").innerHTML=(c.all?`<span class="tk-ct"><b class="num">${c.all}</b> open</span>`:`<span class="tk-ct">${T.length?"All caught up":"No tasks yet"}</span>`)+(c[0]?`<span class="tk-pl tk-u0">${c[0]} urgent</span>`:"")+(c.od?`<span class="tk-pl od">${c.od} overdue</span>`:"")+(c.all?`<span class="tk-cs">${catPills}</span>`:"");
  $("#tkFl").innerHTML=[["all","All"],["0","Urgent"],["1","Not so urgent"],["2","Not urgent"],["od","Overdue"]].map(([k,l])=>`<button type="button" class="tk-fc${k==="0"||k==="1"||k==="2"?" tk-u"+k:k==="od"?" od":""}" data-a="f" data-f="${k}" aria-pressed="${ui.f===k}">${l} <b class="num">${c[k]}</b></button>`).join("");
- const q=ui.q.trim().toLowerCase(),mt=t=>!q||(t.t+" "+t.n).toLowerCase().includes(q);
- const vis=act.filter(t=>(ui.f==="all"||(ui.f==="od"?isOd(t):t.u===+ui.f))&&mt(t));
- $("#tkLs").innerHTML=vis.length?vis.map(t=>ui.ed===t.id?edt(t):itm(t)).join(""):
-  `<li class="tk-empty">${IC.ok}<b>${!T.length?"Nothing to do":!act.length?"You're all caught up":"No tasks match"}</b><span>${!T.length?"Add your first task above. Urgent ones float to the top.":!act.length?"Finished tasks are in Done below.":"Try another filter or clear the search."}</span></li>`;
- const dv=dn.filter(mt);
- $("#tkDn").innerHTML=dv.length?`<details class="tk-dn"${ui.dOpen?" open":""}><summary>Done <b class="num">${dv.length}</b></summary><ul class="tk-ls" aria-label="Done tasks">${dv.map(itm).join("")}</ul><button type="button" class="tk-clr" data-a="clr">Clear done</button></details>`:"";
+ $("#tkFlg").innerHTML=[["all","All"],...CATS.map(x=>[x.id,x.l])].map(([k,l])=>`<button type="button" class="tk-fc${k!=="all"?" tk-cg-"+k:""}" data-a="fg" data-g="${k}" aria-pressed="${ui.cg===k}">${l} <b class="num">${k==="all"?c.all:c[k]}</b></button>`).join("");
+ $$(".tk-vw button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===ui.vw)));
+ const q=ui.q.trim().toLowerCase(),mt=t=>!q||(t.t+" "+t.n+" "+(t.rf||"")).toLowerCase().includes(q);
+ const vis=act.filter(t=>(ui.f==="all"||(ui.f==="od"?isOd(t):t.u===+ui.f))&&(ui.cg==="all"||t.g===ui.cg)&&mt(t));
+ const grouped=ui.vw==="cat";
+ if(!vis.length)$("#tkLs").innerHTML=emptyHTML(T,act);
+ else if(!grouped)$("#tkLs").innerHTML=`<ul class="tk-ls" aria-label="Tasks">${vis.map(t=>ui.ed===t.id?edt(t):itm(t,false)).join("")}</ul>`;
+ else{$("#tkLs").innerHTML=CATS.map(x=>{const items=vis.filter(t=>t.g===x.id);if(!items.length)return"";const open=ui.sec[x.id]!==false;return`<details class="tk-sec" data-g="${x.id}"${open?" open":""}><summary>${x.sec} <b class="num">${items.length}</b></summary><ul class="tk-ls" aria-label="${x.sec}">${items.map(t=>ui.ed===t.id?edt(t):itm(t,true)).join("")}</ul></details>`}).join("")}
+ const dv=dn.filter(t=>(ui.cg==="all"||t.g===ui.cg)&&mt(t));
+ $("#tkDn").innerHTML=dv.length?`<details class="tk-dn"${ui.dOpen?" open":""}><summary>Done <b class="num">${dv.length}</b></summary><ul class="tk-ls" aria-label="Done tasks">${dv.map(t=>itm(t,false)).join("")}</ul><button type="button" class="tk-clr" data-a="clr">Clear done</button></details>`:"";
  if(old.size){const els=$$("#tkLs .tk-it"),mv=[];els.forEach(e=>{const p=old.get(e.dataset.id);if(p==null){e.classList.add("new");return}const dy=p-e.getBoundingClientRect().top;if(Math.abs(dy)>1){e.style.transition="none";e.style.transform=`translateY(${dy}px)`;mv.push(e)}});
   if(mv.length){void root.offsetWidth;mv.forEach(e=>{e.style.transition=`transform ${DUR}ms ${EASE}`;e.style.transform="";setTimeout(()=>{e.style.transition=""},DUR+50)})}}
  ui.first=false;
  if(ui.fe){ui.fe=false;const i=$("#tkLs .tk-ed input[name=t]");if(i){i.focus();i.select()}}
  else if(fk){const b=root.querySelector(`.tk-it[data-id="${fk.id}"] [data-a="${fk.a}"]`);if(b)b.focus({preventScroll:true})}}
 const find=id=>T.find(t=>t.id===id);
-function add(o){const t=clean([{t:o.t,n:o.n,u:o.u,d:o.d,tm:o.tm,c:Date.now()}])[0];if(!t)return null;T.push(t);save();render();return t}
+function fields(o){return{t:o.t,n:o.n,u:o.u,d:o.d,tm:o.tm,g:o.g,act:o.act,rf:o.rf,c:o.c}}
+function add(o){const t=clean([{...fields(o),c:Date.now()}])[0];if(!t)return null;T.push(t);save();render();return t}
 function del(t){const i=T.indexOf(t);T=T.filter(x=>x!==t);save();render();toast("Task deleted",()=>{T.splice(Math.min(i,T.length),0,t);save();render()})}
 function setDone(t,v){t.dn=v?Date.now():0;save();render();if(v)toast("Marked done",()=>{t.dn=0;save();render()})}
 root.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b||!root.contains(b))return;const a=b.dataset.a,li=b.closest(".tk-it"),t=li?find(li.dataset.id):null;
  if(a==="ck"&&t)setDone(t,!t.dn);
  else if(a==="cyc"&&t){t.u=(t.u+1)%3;save();render()}
+ else if(a==="act"&&t&&ACTS[t.g]){const opts=ACTS[t.g];t.act=opts[(opts.indexOf(t.act)+1)%opts.length];save();render()}
  else if(a==="edit"&&t){ui.ed=t.id;ui.fe=true;render()}
  else if(a==="cancel"){ui.ed=null;render()}
  else if(a==="del"&&t){if(ui.ed===t.id)ui.ed=null;del(t)}
  else if(a==="f"){ui.f=b.dataset.f;render()}
+ else if(a==="fg"){ui.cg=b.dataset.g;render()}
+ else if(a==="vw"){ui.vw=b.dataset.v;saveView();render()}
  else if(a==="q"){const f=b.closest("form"),d=new Date();d.setDate(d.getDate()+(+b.dataset.n));f.elements.d.value=ymd(d);f.elements.tm.disabled=false}
  else if(a==="clr"){const gone=T.filter(x=>x.dn);T=T.filter(x=>!x.dn);save();render();toast(gone.length+" done task"+(gone.length>1?"s":"")+" cleared",()=>{T=T.concat(gone);save();render()})}
  else if(a==="exp")exportJ();else if(a==="imp")$("#tkFile").click();else if(a==="nf")toggleNf()});
 root.addEventListener("input",e=>{const el=e.target;if(el.name==="d"){const tm=el.form.elements.tm;tm.disabled=!el.value;if(!el.value)tm.value=""}else if(el.id==="tkQ"){ui.q=el.value;render()}});
-root.addEventListener("toggle",e=>{if(e.target.classList&&e.target.classList.contains("tk-dn"))ui.dOpen=e.target.open},true);
+root.addEventListener("change",e=>{const el=e.target;if(el&&(el.name==="gA"||el.name==="gE"))syncForm(el.form)});
+root.addEventListener("toggle",e=>{const el=e.target;if(!el.classList)return;if(el.classList.contains("tk-dn"))ui.dOpen=el.open;else if(el.classList.contains("tk-sec")&&el.dataset.g)ui.sec[el.dataset.g]=el.open},true);
 root.addEventListener("keydown",e=>{if(e.key==="Escape"&&ui.ed){ui.ed=null;render();e.stopPropagation()}});
 root.addEventListener("submit",e=>{e.preventDefault();const f=e.target,fd=new FormData(f);
  if(f.id==="tkAdd"){const title=String(fd.get("t")||"").trim();if(!title){f.elements.t.focus();return}
-  add({t:title,n:fd.get("n"),u:+fd.get("uA"),d:fd.get("d"),tm:fd.get("tm")});f.reset();f.elements.tm.disabled=true;f.elements.t.focus()}
+  add({t:title,n:fd.get("n"),u:+fd.get("uA"),d:fd.get("d"),tm:fd.get("tm"),g:fd.get("gA"),act:fd.get("aA"),rf:fd.get("rf")});f.reset();f.elements.tm.disabled=true;syncForm(f);f.elements.t.focus()}
  else if(f.classList.contains("tk-ef")){const t=find(f.closest(".tk-it").dataset.id),title=String(fd.get("t")||"").trim();if(!t)return;if(!title){f.elements.t.focus();return}
-  const o=clean([{t:title,n:fd.get("n"),u:+fd.get([...f.elements].find(x=>x.type==="radio").name),d:fd.get("d"),tm:fd.get("tm")}])[0];t.t=o.t;t.n=o.n;t.u=o.u;t.d=o.d;t.tm=o.tm;ui.ed=null;save();render()}});
+  const o=clean([{t:title,n:fd.get("n"),u:+fd.get("uE"),d:fd.get("d"),tm:fd.get("tm"),g:fd.get("gE"),act:fd.get("aE"),rf:fd.get("rf")}])[0];t.t=o.t;t.n=o.n;t.u=o.u;t.d=o.d;t.tm=o.tm;t.g=o.g;t.act=o.act;t.rf=o.rf;ui.ed=null;save();render()}});
 function exportJ(){const b=new Blob([JSON.stringify({v:1,exported:new Date().toISOString(),tasks:T},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="tasks-backup-"+ymd()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);toast("Backup downloaded")}
 $("#tkFile").addEventListener("change",e=>{const f=e.target.files[0];e.target.value="";if(!f)return;const r=new FileReader();
  r.onload=()=>{try{const o=JSON.parse(r.result),a=clean(Array.isArray(o)?o:o.tasks);if(!a.length)throw 0;const m=new Map(T.map(t=>[t.id,t]));a.forEach(t=>m.set(t.id,t));T=[...m.values()];save();render();toast("Imported "+a.length+" task"+(a.length>1?"s":""))}catch(x){toast("That file isn't a task backup")}};
@@ -2547,10 +2619,10 @@ async function toggleNf(){if(typeof Notification==="undefined"){toast("This brow
 function nfCheck(){if(!nfOn())return;const today=ymd();let last="";try{last=localStorage.getItem(NS)||""}catch(e){}if(last===today)return;
  const act=T.filter(t=>!t.dn&&t.d),td=act.filter(t=>t.d===today).length,od=act.filter(isOd).length;if(!td&&!od)return;
  try{new Notification("Tasks",{body:(td?td+" due today":"")+(td&&od?" · ":"")+(od?od+" overdue":""),tag:"dash-tasks"});localStorage.setItem(NS,today)}catch(e){}}
-addEventListener("storage",e=>{if(e.key===KEY&&!ui.ed){T=load();render()}});
+addEventListener("storage",e=>{if(e.key===KEY&&!ui.ed){T=load();render()}if(e.key===VK){ui.vw=loadView();if(!ui.ed)render()}});
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&!ui.ed){render();nfCheck()}});
 setInterval(()=>{if(!ui.ed&&!document.hidden){render();nfCheck()}},60e3);
-T=load();render();nfUI();nfCheck();
+T=load();if(T.length)save();render();nfUI();nfCheck();
 return{render,add,get T(){return T}};
 })();
 
