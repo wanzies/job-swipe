@@ -297,6 +297,12 @@ input::placeholder{color:var(--fg);opacity:1}
   <p class="sub px">ONE PAGE AT A TIME</p>
   <div class="scroll">
    <div class="box"><div id="qpos"></div><button class="b" onclick="qOpen()">▶ READ 1 PAGE</button></div>
+   <div class="box" id="dataCard"><div class="lbl px">YOUR DATA</div>
+    <p class="px" style="font-size:8px;line-height:1.8">QURAN, SELAWAT AND TASKS STAY ON THIS DEVICE.</p>
+    <button type="button" class="b" id="bakExp">BACKUP ALL MY DATA</button>
+    <button type="button" class="b" id="bakImp">RESTORE BACKUP</button>
+    <input type="file" id="bakFile" accept="application/json,.json" hidden aria-label="Restore backup file">
+    <div id="bakMsg" role="status"></div></div>
   </div>
  </div>
 </section>
@@ -454,7 +460,47 @@ fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r
 (function(){const tick=()=>{const n=new Date(),sg=new Date(n.getTime()+(n.getTimezoneOffset()+480)*6e4);const nx=new Date(sg);{const h=sg.getHours();if(h<6)nx.setHours(6,0,0,0);else if(h<18)nx.setHours(18,0,0,0);else{nx.setDate(nx.getDate()+1);nx.setHours(6,0,0,0)}};const ms=nx-sg;if(ms<1000){location.reload();return}const h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);document.getElementById("nref").textContent=`NEXT REFRESH ${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`};tick();setInterval(tick,1000)})();
 </script>
 <script>
-const LS=(k,v)=>v===undefined?JSON.parse(localStorage.getItem(k)||"null"):localStorage.setItem(k,JSON.stringify(v));
+/* USER DATA KEYS — never rename/clear; migrate forward
+   Shared by index.html, retro.html and classic.html (same origin, same keys).
+   Future updates must read these first, migrate old names into them, and never
+   overwrite a saved value with a hardcoded default.
+   qpos                     Quran last-read {page, ref}  (also read, then migrate: quran, quranPos, lastRead)
+   quran-seed-2-256-v1      one-time seed flag for 2:256; do not reuse or delete
+   dhikr                    Selawat / dhikr tap count
+   dash-tasks-v1            Tasks list
+   dash-tasks-view-v1       Tasks layout (cat|list)
+   dash-tasks-notify-v1     Tasks reminder preference
+   dash-tasks-notified-v1   Last reminder day
+   rest                     Rest check scores
+   jobswipe-todo            Retro planner to-do
+   jobswipe-gym-v1          Gym
+   jobswipe-frigate-v1      Ship / frigate game
+   sheetUrl, pendLog        Optional sheet logging
+   Caches (not progress, safe to evict): ptCache, jobswipe-mag-v1
+*/
+const QPOS_KEY="qpos",QPOS_OLD=["quran","quranPos","lastRead","quran-progress","qProgress"],QSEED_KEY="quran-seed-2-256-v1",QSEED_POS={page:42,ref:"2:256"};
+const USER_KEYS=["qpos","quran-seed-2-256-v1","dhikr","dash-tasks-v1","dash-tasks-view-v1","dash-tasks-notify-v1","dash-tasks-notified-v1","rest","jobswipe-todo","jobswipe-gym-v1","jobswipe-frigate-v1","sheetUrl","pendLog"];
+function LS(k,v){if(v===undefined){try{const s=localStorage.getItem(k);return s==null?null:JSON.parse(s)}catch(e){return null}}try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}return v}
+function qAskPersist(){try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}}
+function qValid(raw){if(raw==null)return null;if(typeof raw==="string"){const m=raw.trim().match(/^(\d+)\s*[:：]\s*(\d+)$/);if(!m)return null;raw={ref:m[1]+":"+m[2]}}if(typeof raw!=="object")return null;
+ let ref=String(raw.ref||raw.next||raw.ayah||"").replace(/\s/g,"").replace("：",":");if(!/^\d+:\d+$/.test(ref))ref="";
+ let page=parseInt(raw.page,10);if(!(page>=1&&page<=604)){if(ref==="2:256")page=42;else return null}return{page,ref}}
+function qRefN(r){const m=String(r||"").match(/^(\d+):(\d+)$/);return m?(+m[1])*10000+(+m[2]):null}
+function qEarlier(a,b){const na=qRefN(a&&a.ref),nb=qRefN(b&&b.ref);if(na!=null&&nb!=null)return na<nb;return(a&&a.page||0)<(b&&b.page||0)}
+function qReadPos(){let p=qValid(LS(QPOS_KEY));if(p)return p;for(const k of QPOS_OLD){const v=qValid(LS(k));if(v){LS(QPOS_KEY,v);return v}}return null}
+function qApplySeed(){if(LS(QSEED_KEY))return;const cur=qReadPos();if(!cur||qEarlier(cur,QSEED_POS))LS(QPOS_KEY,QSEED_POS);LS(QSEED_KEY,1)}
+function bakMsg(t){const el=document.getElementById("bakMsg");if(el)el.textContent=t||""}
+function bakExport(){const data={};USER_KEYS.forEach(k=>{try{const s=localStorage.getItem(k);if(s!=null)data[k]=JSON.parse(s)}catch(e){try{data[k]=localStorage.getItem(k)}catch(_){}}});
+ const blob=new Blob([JSON.stringify({v:1,app:"job-swipe-progress",exported:new Date().toISOString(),data},null,2)],{type:"application/json"}),a=document.createElement("a");
+ const d=new Date();a.href=URL.createObjectURL(blob);a.download="daily-backup-"+d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")+".json";
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);bakMsg("Backup downloaded")}
+function bakImportFile(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result),data=o&&(o.data||o.progress||o);if(!data||typeof data!=="object")throw 0;
+  if(!confirm("Replace Quran progress, Selawat, tasks and other saved data on this device with this backup?"))return;
+  USER_KEYS.forEach(k=>{if(!(k in data))return;try{localStorage.setItem(k,JSON.stringify(data[k]))}catch(e){}});location.reload()}catch(e){bakMsg("That file isn't a Daily backup")}};
+ r.onerror=()=>bakMsg("Couldn't read that file");r.readAsText(f)}
+function bakBind(){const x=document.getElementById("bakExp"),i=document.getElementById("bakImp"),f=document.getElementById("bakFile");
+ if(x)x.addEventListener("click",bakExport);if(i)i.addEventListener("click",()=>f&&f.click());if(f)f.addEventListener("change",e=>{const file=e.target.files[0];e.target.value="";bakImportFile(file)})}
+qAskPersist();qApplySeed();bakBind();
 const sgDay=()=>new Date(Date.now()+(new Date().getTimezoneOffset()+480)*6e4).toISOString().slice(0,10);
 function logSheet(type,data){const u=LS("sheetUrl")||"https://script.google.com/macros/s/AKfycbwNvaaKWn5hJTDxX9PyTDDyEYJIeIJYGfmKHdMNnvX4jQp01SaP1H7ba9VLnVG6iWJjow/exec";const q=LS("pendLog")||[];q.push({type,ts:new Date().toISOString(),...data});if(!u){LS("pendLog",q);return}
  fetch(u,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain"},body:JSON.stringify(q)}).then(()=>LS("pendLog",[])).catch(()=>LS("pendLog",q))}
@@ -464,17 +510,17 @@ function setSheet(){const u=prompt("Paste your Google Sheet web app link",LS("sh
  $("bond").textContent=d+" DAYS";$("bondbar").style.width=Math.min(100,(now-st)/(end-st)*100)+"%";$("bondsub").textContent=`About ${Math.round(d/30.4)} months to go · free from Oct 2027`})();
 // quran reader
 const qr=$("qr");
-let qp=LS("qpos")||{page:39,ref:"2:238"};
-function qShow(){$("qpos").innerHTML=`Next: <b>Surah ${qp.ref.replace(":"," · verse ")}</b> · page ${qp.page}/604`}qShow();
+let qp=qReadPos()||{page:1,ref:"1:1"};
+function qShow(){$("qpos").innerHTML=`Next: <b>Surah ${String(qp.ref||"").replace(":"," · verse ")}</b> · page ${qp.page}/604`}qShow();
 async function qLoad(p){$("qhead").textContent="PAGE "+p+"/604";$("qbody").textContent="Loading…";try{
  const [a,e]=await Promise.all(["quran-uthmani","en.sahih"].map(ed=>fetch(`https://api.alquran.cloud/v1/page/${p}/${ed}`).then(r=>r.json())));
  const A=a.data.ayahs,E=e.data.ayahs;$("qbody").innerHTML=A.map((x,i)=>`<div class="ay${x.surah.number+":"+x.numberInSurah==qp.ref?" cur":""}"><div class="px" style="font-size:8px">${x.surah.englishName} ${x.surah.number}:${x.numberInSurah}</div><div class="ar">${x.text}</div><div class="en">${E[i].text}</div></div>`).join("");
  qr.last=A[A.length-1];qr.first=A[0];const c=document.querySelector(".ay.cur");if(c)c.scrollIntoView();else qr.scrollTop=0}catch(_){$("qbody").textContent="Couldn't load the page. Check your connection."}}
 function qOpen(){qr.classList.add("on");qr.p=qp.page;qLoad(qr.p);BOT.setMood("calm")}
 function qDone(){const l=qr.last;if(!l)return;logSheet("quran",{day:sgDay(),page:qr.p,upto:l.surah.number+":"+l.numberInSurah});
- qp={page:Math.min(604,qr.p+1),ref:qr.p>=604?"1:1":""};LS("qpos",qp)}
-function qGo(d){if(d>0){qDone();if(qr.p>=604)return qStop();qr.p++}else if(qr.p>1)qr.p--;qp.page=qr.p;qLoad(qr.p).then(()=>{if(qr.first){qp.ref=qr.first.surah.number+":"+qr.first.numberInSurah;LS("qpos",qp);qShow()}})}
-function qStop(){qr.classList.remove("on");LS("qpos",qp);qShow();logSheet("quran-stop",{day:sgDay(),page:qp.page,next:qp.ref})}
+ qp={page:Math.min(604,qr.p+1),ref:qr.p>=604?"1:1":(l.surah.number+":"+l.numberInSurah)};LS(QPOS_KEY,qp)}
+function qGo(d){if(d>0){qDone();if(qr.p>=604)return qStop();qr.p++}else if(qr.p>1)qr.p--;qp.page=qr.p;qLoad(qr.p).then(()=>{if(qr.first){qp.ref=qr.first.surah.number+":"+qr.first.numberInSurah;LS(QPOS_KEY,qp);qShow()}})}
+function qStop(){qr.classList.remove("on");LS(QPOS_KEY,qp);qShow();logSheet("quran-stop",{day:sgDay(),page:qp.page,next:qp.ref})}
 let tx=0,ty=0;qr.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY});qr.addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy))qGo(dx>0?1:-1)});
 // job deck overlay
 function jOpen(u){const f=$("jfr");if(f.getAttribute("src")!==u)f.src=u;$("jov").classList.add("on")}
