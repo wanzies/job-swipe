@@ -22,7 +22,6 @@ a{color:var(--ac);text-decoration:none}
 #hd .ttl{font-weight:700;font-size:20px;letter-spacing:-.02em}
 #hd .meta{font-size:12px;color:var(--mu);display:flex;align-items:center;gap:8px}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 3px var(--ac2);display:inline-block}
-.lockbtn{border:1px solid var(--bd2);background:var(--s1);border-radius:999px;padding:4px 10px;font-size:12px;cursor:pointer;color:var(--mu)}
 /* pager */
 #pager{grid-area:main;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
 #pager::-webkit-scrollbar{display:none}
@@ -390,80 +389,66 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 .gy-note{font-size:12.5px;color:#c9ccd6;background:var(--s2);border-radius:12px;padding:9px 11px;margin-top:10px}
 @media (min-width:600px){.gy-two{grid-template-columns:1fr 1fr}}
 .gy-f3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.gy-f3 label{min-width:0}.gy-f3 small{display:block;font-size:10.5px;color:var(--mu);margin:0 0 3px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gy-f3 .inp{width:100%;font-size:16px}
-/* kitchen (FridgeBot fridge) */
-#kitchen{padding-bottom:100px;--kx:var(--bad);--ko:#fb923c;--ky:var(--warn);--kg:var(--ok)}
-.k-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.k-st{border:1px solid var(--bd);background:var(--s2);border-radius:14px;padding:10px 10px 9px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:1px;transition:border-color .15s,background .15s}
-.k-st b{font-size:24px;font-weight:800;letter-spacing:-.03em;line-height:1.1}.k-st span{font-size:11.5px;color:var(--mu);font-weight:600}
-.k-st.x b{color:var(--kx)}.k-st.o b{color:var(--ko)}.k-st.on{border-color:var(--ac);background:var(--ac2)}
-.k-sync{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;font-size:12px;color:var(--mu);flex-wrap:wrap}
-.k-sync .dot{width:7px;height:7px}.k-sync .dot.w{background:var(--warn);box-shadow:0 0 0 3px rgba(251,191,36,.15)}.k-sync .dot.b{background:var(--bad);box-shadow:0 0 0 3px rgba(248,113,113,.15)}
-.k-sync>span{display:inline-flex;align-items:center;gap:7px}
-.k-bar{position:sticky;top:-4px;z-index:4;background:rgba(11,12,16,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:8px 2px;margin:-4px 0;display:flex;flex-direction:column;gap:8px}
-.k-srch{display:flex;gap:8px}.k-srch .inp{flex:1;font-size:16px;padding:9px 12px 9px 34px;background:var(--s1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a90a2' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 11px 50%/16px}
-.k-srch select{flex:0 0 auto;max-width:44%;font-size:14px}
-.k-sel{background:var(--s1);border:1px solid var(--bd2);border-radius:12px;padding:9px 10px;color:var(--tx);font:inherit;font-size:16px;outline:none;min-width:0}
-.k-seg{display:flex;gap:4px;background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:3px}
-.k-seg button{flex:1;border:0;background:none;color:var(--mu);font-weight:600;font-size:13px;padding:7px 4px;border-radius:9px;cursor:pointer;white-space:nowrap}
-.k-seg button[aria-pressed=true]{background:var(--s3);color:var(--tx)}
-.k-seg button small{font-size:11px;color:var(--mu2);margin-left:3px;font-weight:600}
-.k-list{padding:6px 0 4px}
-.k-gh{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mu);padding:12px 14px 4px;display:flex;justify-content:space-between}
-.k-gh:first-child{padding-top:6px}
-.k-it{position:relative;display:flex;align-items:center;gap:6px;padding:9px 10px 9px 16px;border-top:1px solid var(--bd)}
-.k-gh+.k-it{border-top:0}
-.k-it::before{content:"";position:absolute;left:6px;top:9px;bottom:9px;width:4px;border-radius:4px;background:var(--mu2)}
-.k-it.u-x::before{background:var(--kx)}.k-it.u-o::before{background:var(--ko)}.k-it.u-y::before{background:var(--ky)}.k-it.u-g::before{background:var(--kg)}
-.k-it.pend{opacity:.72}.k-it.pend .k-nm b::after{content:" · syncing";font-weight:500;font-size:11px;color:var(--mu)}
-.k-main{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:none;border:0;padding:2px 0;text-align:left;cursor:pointer;color:inherit}
-.k-em{font-size:22px;width:28px;text-align:center;flex:0 0 auto}
-.k-nm{flex:1;min-width:0;display:flex;flex-direction:column}.k-nm b{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.k-nm small{font-size:12px;color:var(--mu);white-space:nowrap;overflow:hidden;display:flex;align-items:center;gap:6px;margin-top:2px}.k-sub{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.k-lb{font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:6px;background:var(--s3);color:#c9ccd6;flex:0 0 auto}
-.k-lb.freezer{background:rgba(56,189,248,.14);color:#7dd3fc}.k-lb.pantry{background:rgba(251,191,36,.12);color:#fcd34d}
-.k-dl{flex:0 0 auto;font-size:11px;font-weight:700;padding:1px 7px;border-radius:999px;background:var(--s3);color:var(--mu);white-space:nowrap}
-.k-dl.u-x{background:rgba(248,113,113,.16);color:var(--kx)}.k-dl.u-o{background:rgba(251,146,60,.16);color:var(--ko)}.k-dl.u-y{background:rgba(251,191,36,.14);color:var(--ky)}.k-dl.u-g{background:rgba(52,211,153,.13);color:var(--kg)}
-.k-q{display:flex;gap:4px;flex:0 0 auto}
-.k-q button{width:36px;height:36px;border-radius:10px;border:1px solid var(--bd2);background:var(--s2);color:var(--tx);font-weight:700;font-size:13px;cursor:pointer;display:grid;place-items:center;padding:0}
-.k-q button:active{transform:scale(.94)}.k-q button.k-u{color:var(--ok)}.k-q button.k-r{color:var(--mu)}
-.k-q svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.k-empty{padding:26px 16px;text-align:center;color:var(--mu);font-size:14px}.k-empty b{display:block;color:var(--tx);font-size:16px;margin-bottom:4px}
-.k-g{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--bd)}.k-g:first-child{border-top:0}
-.k-ck{width:26px;height:26px;border-radius:8px;border:2px solid var(--bd2);background:none;display:grid;place-items:center;cursor:pointer;flex:0 0 auto;color:#05110f;padding:0}
-.k-ck svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0}
-.k-g.b .k-ck{background:var(--ac);border-color:var(--ac)}.k-g.b .k-ck svg{opacity:1}.k-g.b .k-gn b{text-decoration:line-through;color:var(--mu)}
-.k-gn{flex:1;min-width:0}.k-gn b{font-weight:500;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.k-gn small{font-size:11.5px;color:var(--mu)}
-.k-g .btn{flex:0 0 auto}.k-g.pend{opacity:.7}
-.k-ais{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mu2);margin:10px 0 0}
-.k-add{display:flex;gap:8px;margin-bottom:6px}.k-add .inp{flex:1;font-size:16px}.k-add .inp.n{flex:0 0 64px}
-.k-steps{margin:8px 0 0;padding-left:20px;font-size:13px;color:#c9ccd6}.k-steps li{margin:4px 0}.k-steps b{color:var(--tx)}
-.k-con .row{display:flex;gap:8px;margin-top:10px}.k-con .inp{flex:1;font-size:16px;min-width:0}
-.k-flash{animation:kfl 1.2s var(--ease)}@keyframes kfl{0%,40%{box-shadow:0 0 0 2px var(--ac)}100%{box-shadow:0 0 0 0 transparent}}
-#kFab{position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 80px);z-index:30;width:56px;height:56px;border-radius:18px;border:0;background:var(--ac);color:#05110f;box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06) inset;display:none;place-items:center;cursor:pointer}
-#kFab svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round}#kFab.on{display:grid;animation:rise .25s var(--ease)}#kFab:active{transform:scale(.94)}
-#kToast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 80px);z-index:61;width:min(92vw,440px);display:none;align-items:center;gap:10px;background:#20232d;border:1px solid var(--bd2);border-radius:14px;padding:10px 10px 10px 14px;box-shadow:0 12px 34px rgba(0,0,0,.5);font-size:14px;overflow:hidden}
-#kToast.on{display:flex;animation:rise .2s var(--ease)}#kToast span{flex:1;min-width:0}#kToast .btn{padding:7px 12px;color:var(--ac)}
-#kToast i{position:absolute;left:0;bottom:0;height:3px;background:var(--ac);width:100%;transform-origin:left}
-.k-sh{position:fixed;inset:0;z-index:60;display:none}.k-sh.on{display:block}
-.k-shb{position:absolute;inset:0;background:rgba(0,0,0,.55);animation:kfade .2s}
-@keyframes kfade{from{opacity:0}}
-.k-shp{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:560px;max-height:92dvh;overflow:auto;background:var(--s1);border:1px solid var(--bd2);border-bottom:0;border-radius:22px 22px 0 0;padding:8px 16px calc(env(safe-area-inset-bottom,0px) + 16px);animation:kup .28s var(--ease)}
-@keyframes kup{from{transform:translateY(40%);opacity:.4}}
-.k-grab{width:40px;height:5px;border-radius:9px;background:var(--s3);margin:2px auto 10px}
-.k-shp h3{margin:0 0 12px;font-size:18px;letter-spacing:-.01em;display:flex;justify-content:space-between;align-items:center}
-.k-fl{display:block;margin-bottom:10px}.k-fl>small{display:block;font-size:11.5px;color:var(--mu);font-weight:600;margin:0 0 4px 2px}
-.k-fl .inp,.k-fl .k-sel{width:100%;font-size:16px}
-.k-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.k-exp{display:flex;gap:6px;position:relative}.k-exp .inp{flex:1;letter-spacing:.04em}.k-exp .btn{padding:9px 12px}
-.k-exp input[type=date]{position:absolute;right:0;bottom:0;width:44px;height:40px;opacity:0;pointer-events:none}
-.k-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.k-chips button{border:1px solid var(--bd2);background:var(--s2);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600;cursor:pointer}
-.k-chips button.on{border-color:var(--ac);color:var(--ac);background:var(--ac2)}
-.k-shact{display:flex;gap:8px;margin-top:12px}.k-shact .btn{flex:1;padding:12px;font-size:15px}
-.k-shact2{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}.k-shact2 .btn{padding:10px 6px;font-size:13px}
-.k-shact2 .btn.bad{color:var(--bad)}
-.k-meta{font-size:11.5px;color:var(--mu);margin-top:10px}
-@media (min-width:900px){#kFab,#kToast{bottom:24px}#kFab{right:28px}}
-#kToast.on~#kFab{transform:translateY(-64px)}#kFab{transition:transform .2s var(--ease)}
+/* tasks (localStorage only) */
+#tasks{padding-bottom:120px}
+.tk{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.tk-u0{--c:#f87171}.tk-u1{--c:#fbbf24}.tk-u2{--c:#34d399}
+.tk-sum{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:4px 2px 0;min-height:40px}
+.tk-ct{font-size:14px;font-weight:600;color:var(--mu);display:inline-flex;align-items:baseline;gap:6px;margin-right:2px}.tk-ct b{font-size:30px;font-weight:800;letter-spacing:-.03em;color:var(--tx);line-height:1}
+.tk-pl{font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c)}
+.tk-pl.od{--c:#f87171;background:rgba(248,113,113,.16);color:#f87171}
+.tk-add{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:10px}
+.tk-in{background:var(--bg);border:1px solid var(--bd2);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;min-width:0;width:100%;outline:none;color:var(--tx);transition:border-color .15s;color-scheme:dark;min-height:44px}
+.tk-in:focus{border-color:var(--ac)}.tk-in::placeholder{color:var(--mu2)}.tk-in:disabled{opacity:.45}
+.tk-r1{display:flex;gap:8px}
+.tk-go{flex:0 0 auto;border:0;background:var(--tx);color:#0b0c10;font-weight:700;font-size:15px;border-radius:12px;padding:0 20px;min-height:44px;cursor:pointer;transition:transform .1s,filter .15s}.tk-go:hover{filter:brightness(1.08)}.tk-go:active{transform:scale(.97)}
+.tk-seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.tk-sg{position:relative;display:block}.tk-sg input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.tk-sg span{display:flex;align-items:center;justify-content:center;min-height:44px;padding:4px 6px;text-align:center;line-height:1.15;font-size:13px;font-weight:700;border-radius:12px;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);background:color-mix(in srgb,var(--c) 10%,transparent);color:var(--c);transition:background .15s,color .15s}
+.tk-sg input:checked+span{background:var(--c);color:#0b0c10;border-color:transparent}
+.tk-sg input:focus-visible+span,.tk button:focus-visible,.tk summary:focus-visible{outline:2px solid var(--tx);outline-offset:2px}
+.tk-r2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tk-r2 label{display:flex;flex-direction:column;gap:4px;min-width:0}.tk-r2 label span{font-size:11.5px;font-weight:600;color:var(--mu);padding-left:2px}
+.tk-qk{display:flex;gap:6px;flex-wrap:wrap}.tk-qk button,.tk-fb button{border:1px solid var(--bd2);background:var(--s2);color:var(--tx);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;cursor:pointer;min-height:32px}.tk-qk button:hover,.tk-fb button:hover{background:var(--s3)}
+.tk-bar{display:flex;flex-direction:column;gap:8px}
+.tk-q{background:var(--s1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a90a2' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 11px 50%/18px;padding-left:38px}
+.tk-fl{display:flex;flex-wrap:wrap;gap:6px}
+.tk-fc{border:1px solid var(--bd2);background:var(--s1);color:var(--mu);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;min-height:34px;transition:background .15s,color .15s,border-color .15s}
+.tk-fc b{margin-left:3px;color:var(--tx);font-weight:700}.tk-fc[aria-pressed=true]{background:var(--ac2);border-color:var(--ac);color:var(--ac)}.tk-fc[aria-pressed=true] b{color:var(--ac)}
+.tk-fc.od[aria-pressed=true]{background:rgba(248,113,113,.16);border-color:#f87171;color:#f87171}.tk-fc.od[aria-pressed=true] b{color:#f87171}
+.tk-ls{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.tk-it{display:flex;align-items:flex-start;gap:8px;background:var(--s1);border:1px solid var(--bd);border-left:4px solid var(--c);border-radius:14px;padding:11px 6px 11px 8px;position:relative}
+.tk-it.new{animation:rise .35s var(--ease) both}
+.tk-it.od{background:linear-gradient(90deg,rgba(248,113,113,.11),var(--s1) 75%);border-color:rgba(248,113,113,.45);border-left-color:var(--c)}
+.tk-ck{flex:0 0 40px;width:40px;height:40px;margin:-7px 0 -7px -6px;padding:0;background:none;border:0;display:grid;place-items:center;cursor:pointer}
+.tk-ck i{width:24px;height:24px;border-radius:50%;border:2px solid var(--mu2);display:grid;place-items:center;transition:background .15s,border-color .15s}.tk-ck:hover i{border-color:var(--ac)}
+.tk-ck svg{width:15px;height:15px;stroke:#05110f;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0;transition:opacity .15s}
+.tk-ck[aria-checked=true] i{background:var(--ac);border-color:var(--ac)}.tk-ck[aria-checked=true] svg{opacity:1}
+.tk-bd{flex:1;min-width:0}.tk-tt{font-weight:600;font-size:15px;line-height:1.35;word-break:break-word}
+.tk-meta{display:flex;flex-wrap:wrap;align-items:center;gap:5px 8px;margin-top:6px}
+.tk-ch{position:relative;border:1px solid color-mix(in srgb,var(--c) 40%,transparent);background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c);font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:999px;cursor:pointer;min-height:24px}
+.tk-ch::after{content:"";position:absolute;inset:-9px -4px}.tk-ch:hover{background:color-mix(in srgb,var(--c) 24%,transparent)}
+.tk-due{font-size:12px;font-weight:600;color:var(--mu);display:inline-flex;align-items:center;gap:4px}.tk-due svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+.tk-due.od{color:#fca5a5;font-weight:700}.tk-due.td{color:var(--warn)}.tk-abs{font-size:11.5px;color:var(--mu2)}
+.tk-nt{font-size:12.5px;color:#aeb3c2;margin-top:5px;white-space:pre-wrap;word-break:break-word}
+.tk-ac{display:flex;flex:0 0 auto}.tk-ac button{width:38px;height:38px;border:0;background:none;color:var(--mu);border-radius:10px;display:grid;place-items:center;cursor:pointer}
+.tk-ac button:hover{background:var(--s3);color:var(--tx)}.tk-ac button[data-a=del]:hover{color:var(--bad)}
+.tk-ac svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tk-it.dn{opacity:.7;border-left-color:var(--bd2)}.tk-it.dn .tk-tt{text-decoration:line-through;color:var(--mu)}
+.tk-ed{display:block;padding:12px;border-color:var(--bd2);border-left-color:var(--c)}.tk-ef{display:flex;flex-direction:column;gap:10px}
+.tk-ea{display:flex;gap:8px;justify-content:flex-end}.tk-ea button[data-a=cancel]{border:1px solid var(--bd2);background:var(--s2);color:var(--tx);border-radius:12px;padding:0 16px;min-height:44px;font-weight:600;font-size:14px;cursor:pointer}
+.tk-empty{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:34px 16px;border:1px dashed var(--bd2);border-radius:var(--r);color:var(--mu);font-size:13px}
+.tk-empty svg{width:40px;height:40px;stroke:var(--ac);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:6px;opacity:.8}.tk-empty b{font-size:16px;color:var(--tx)}
+.tk-dn{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:4px 10px 12px}
+.tk-dn summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--mu);padding:10px 2px;list-style:none;display:flex;align-items:center;gap:8px}.tk-dn summary::-webkit-details-marker{display:none}
+.tk-dn summary::before{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .2s}.tk-dn[open] summary::before{transform:rotate(45deg)}
+.tk-dn summary b{background:var(--s3);border-radius:999px;padding:1px 9px;font-size:12px;color:var(--tx)}
+.tk-clr{margin-top:10px;border:1px solid var(--bd2);background:var(--s2);color:var(--tx);border-radius:12px;padding:8px 14px;font-weight:600;font-size:13px;cursor:pointer;min-height:40px}.tk-clr:hover{background:var(--s3);color:var(--bad)}
+.tk-ft{display:flex;flex-direction:column;gap:8px;padding-top:4px}.tk-fb{display:flex;gap:6px;flex-wrap:wrap}.tk-fb button[aria-pressed=true]{background:var(--ac2);border-color:var(--ac);color:var(--ac)}
+.tk-hint{margin:0;font-size:11.5px;color:var(--mu2)}
+.tk-toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 84px);transform:translate(-50%,16px);background:#232733;color:var(--tx);border:1px solid var(--bd2);border-radius:14px;padding:6px 6px 6px 16px;display:flex;align-items:center;gap:12px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:70;max-width:calc(100vw - 24px)}
+.tk-toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.tk-toast button{border:0;background:var(--ac2);color:var(--ac);font-weight:700;border-radius:10px;padding:0 14px;min-height:36px;cursor:pointer;font-size:14px}
+@media (min-width:900px){.tk-toast{bottom:28px}}
+@media (prefers-reduced-motion:reduce){.tk-it.new{animation:none}.tk-toast{transition:none}}
 /* ================= PER-TAB THEMES (body[data-tab] + section scope) ================= */
 #hd,#tabbar{transition:background-color .35s,border-color .35s}
 body[data-tab=now]{--bg:#050506}
@@ -644,11 +629,11 @@ body[data-tab=world] #tabbar::after{background:linear-gradient(to left,rgba(26,8
 </style></head>
 <body data-tab="now">
 <!--
-  MODERN DASHBOARD · per-tab themes (Now = airport departures board, World = 80s city-pop magazine) · 7 screens (Now, Faith, Career, World, Ship, Gym, Kitchen), swipe sideways or use the tabs.
-  Kitchen (kitchen.enc.json) is decrypted in the browser only (PBKDF2 600k + AES-GCM).
-  No passcode or figures live in this file. Old 8-bit version: retro.html · older: classic.html
+  MODERN DASHBOARD · per-tab themes (Now = airport departures board, World = 80s city-pop magazine) · 7 screens (Now, Tasks, Faith, Career, World, Ship, Gym), swipe sideways or use the tabs.
+  Tasks are stored in this browser's localStorage only (dash-tasks-v1), never in the repo.
+  No passcode or personal figures live in this file. Old 8-bit version: retro.html · older: classic.html
 -->
-<header id="hd"><div class="ttl" id="hdT">Now</div><div class="meta"><span id="hdM" class="num"></span><button class="lockbtn" id="lockBtn" hidden onclick="lockAll()">Lock</button></div></header>
+<header id="hd"><div class="ttl" id="hdT">Now</div><div class="meta"><span id="hdM" class="num"></span></div></header>
 <main id="pager" aria-label="Dashboard screens">
 
 <!-- ============ NOW ============ -->
@@ -674,9 +659,12 @@ body[data-tab=world] #tabbar::after{background:linear-gradient(to left,rgba(26,8
  <div class="card w1" id="fastMini"><div class="lbl">Fasting</div><div class="sm skel">Loading…</div></div>
  <div class="card w1"><div class="lbl">Rest today</div><div class="rs" id="rs"></div><div id="rtrend" style="margin-top:10px"></div></div>
  <div class="card w1 tap" onclick="go(2)"><div class="lbl">SPF bond</div><div class="big num" id="bondMini">--</div><div class="xs mu">days to Oct 2027</div><div class="bar" style="margin-top:10px"><i id="bondMiniBar"></i></div></div>
- <div class="card w4 tap" id="verseMini" onclick="go(1)"><div class="lbl"><span>Ayah of the day</span><span class="xs mu" id="verseMiniRef"></span></div><div class="qline" id="verseMiniT">…</div></div>
+ <div class="card w4 tap" id="verseMini" onclick="go(2)"><div class="lbl"><span>Ayah of the day</span><span class="xs mu" id="verseMiniRef"></span></div><div class="qline" id="verseMiniT">…</div></div>
  <div class="w4 xs mu row" style="padding:2px 4px"><span class="num" id="nref"></span><button class="btn ghost sm" onclick="setSheet()">Sheet link</button></div>
 </div></section>
+
+<!-- ============ TASKS (to-do list; data in localStorage only, rendered by TASKS) ============ -->
+<section class="screen" id="tasks" aria-label="Tasks"><div id="tkRoot"></div></section>
 
 <!-- ============ FAITH ============ -->
 <section class="screen" id="faith" aria-label="Faith"><div class="grid">
@@ -755,19 +743,17 @@ body[data-tab=world] #tabbar::after{background:linear-gradient(to left,rgba(26,8
 <section class="screen" id="ship" aria-label="Ship"></section>
 <!-- ============ GYM (workouts; data in localStorage only, rendered by GYM while this tab is open) ============ -->
 <section class="screen" id="gym" aria-label="Gym"></section>
-<!-- ============ KITCHEN ============ -->
-<section class="screen" id="kitchen" aria-label="Kitchen"></section>
 </main>
 
 <div id="tabbar">
 <nav id="tabs" role="tablist" aria-label="Screens">
  <button role="tab" data-i="0" aria-selected="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Now</button>
- <button role="tab" data-i="1" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>Faith</button>
- <button role="tab" data-i="2" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/></svg>Career</button>
- <button role="tab" data-i="3" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>World</button>
- <button role="tab" data-i="4" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M5.5 15.5C4 17 3.5 20.5 3.5 20.5s3.5-.5 5-2"/><path d="M9 15l-3-3c1.6-4.2 5.3-8 13-9-1 7.7-4.8 11.4-9 13z"/><circle cx="14.5" cy="9.5" r="1.6"/><path d="M7.5 10.5H4.5l2-3h4M13.5 16.5v3l3-2v-4"/></svg>Ship</button>
- <button role="tab" data-i="5" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>Gym</button>
- <button role="tab" data-i="6" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="5.5" y="2.5" width="13" height="19" rx="2.5"/><path d="M5.5 9.5h13M9 5.5v1.5M9 12.5v3"/></svg>Kitchen</button>
+ <button role="tab" data-i="1" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="3"/><path d="M8 9l1.5 1.5L12 8M8 15l1.5 1.5L12 14M14.5 9.5H17M14.5 15.5H17"/></svg>Tasks</button>
+ <button role="tab" data-i="2" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>Faith</button>
+ <button role="tab" data-i="3" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 13h18"/></svg>Career</button>
+ <button role="tab" data-i="4" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>World</button>
+ <button role="tab" data-i="5" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M5.5 15.5C4 17 3.5 20.5 3.5 20.5s3.5-.5 5-2"/><path d="M9 15l-3-3c1.6-4.2 5.3-8 13-9-1 7.7-4.8 11.4-9 13z"/><circle cx="14.5" cy="9.5" r="1.6"/><path d="M7.5 10.5H4.5l2-3h4M13.5 16.5v3l3-2v-4"/></svg>Ship</button>
+ <button role="tab" data-i="6" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/></svg>Gym</button>
 </nav>
 </div>
 
@@ -803,7 +789,7 @@ function spark(vals,w,h,opt){opt=opt||{};if(!vals.length)return"";const mn=Math.
  return `<svg width="100%" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="display:block;height:${h}px" aria-hidden="true"><path d="${d} L${w} ${h} L0 ${h}Z" fill="var(--ac2)"/><path d="${d}" fill="none" stroke="var(--ac)" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>`}
 
 /* ================= NAV / PAGER ================= */
-const pager=$("pager"),tabsEl=$("tabs"),tabbar=$("tabbar"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Faith","Career","World","Ship","Gym","Kitchen"];
+const pager=$("pager"),tabsEl=$("tabs"),tabbar=$("tabbar"),SCR=[...document.querySelectorAll(".screen")],TABS=[...document.querySelectorAll("#tabs button")],NAMES=["Now","Tasks","Faith","Career","World","Ship","Gym"];
 let cur=0;const inited=new Set();
 function updateTabFades(){if(!tabbar||!tabsEl)return;const max=tabsEl.scrollWidth-tabsEl.clientWidth;tabbar.classList.toggle("fade-l",tabsEl.scrollLeft>4);tabbar.classList.toggle("fade-r",max>4&&tabsEl.scrollLeft<max-4)}
 function revealTab(i){const t=TABS[i];if(t)t.scrollIntoView({inline:"center",block:"nearest",behavior:RM?"auto":"smooth"});updateTabFades()}
@@ -811,7 +797,7 @@ function go(i,instant){i=Math.max(0,Math.min(SCR.length-1,i));pager.scrollTo({le
 const THEMEC={now:"#050506",world:"#1a0833"};
 function setTheme(id){document.body.dataset.tab=id;const m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",THEMEC[id]||"#0b0c10")}
 function setCur(i){if(i===cur&&inited.has(i))return;cur=i;TABS.forEach((t,k)=>t.setAttribute("aria-selected",k===i?"true":"false"));$("hdT").textContent=NAMES[i];setTheme(SCR[i].id);
- history.replaceState(null,"","#"+SCR[i].id);FRG.active(i===4);GYM.active(i===5);KIT.active(i===6);initScreen(i);if(i===3)MAG.touch();revealTab(i)}
+ history.replaceState(null,"","#"+SCR[i].id);FRG.active(i===5);GYM.active(i===6);initScreen(i);if(i===4)MAG.touch();revealTab(i)}
 TABS.forEach(t=>t.onclick=()=>go(+t.dataset.i));
 let sT;pager.addEventListener("scroll",()=>{clearTimeout(sT);sT=setTimeout(()=>{const i=Math.round(pager.scrollLeft/pager.clientWidth);if(i!==cur)setCur(i)},60)},{passive:true});
 tabsEl.addEventListener("scroll",updateTabFades,{passive:true});
@@ -822,7 +808,7 @@ addEventListener("keydown",e=>{if(document.querySelector(".shm.on,.cbt.on"))retu
  if(e.target.closest&&e.target.closest("input,textarea,select"))return;if(e.key==="ArrowRight")go(cur+1);else if(e.key==="ArrowLeft")go(cur-1)});
 function lazyFrames(root){root.querySelectorAll("iframe[data-src]").forEach(f=>{f.src=f.dataset.src;f.removeAttribute("data-src")})}
 function initScreen(i){if(i!==cur)return;lazyFrames(SCR[i]);if(inited.has(i))return;inited.add(i);
- if(i===2)loadJobs()}
+ if(i===3)loadJobs()}
 
 /* ================= CLOCK + TICK ================= */
 const PT={today:null,tom:null};let FASTT=null;
@@ -900,7 +886,7 @@ fetch("https://api.open-meteo.com/v1/forecast?latitude=1.35&longitude=103.82&cur
 let D={};
 function renderFast(f){$("fastType").textContent=f.type||"Today";$("fastType").className="pill ac";
  $("fast").className="sm";$("fast").innerHTML=`<div class="mid num" id="cd">…</div><div class="mu" id="cdw" style="margin:4px 0 8px"></div><div style="color:#c9ccd6">${esc(f.why)}</div><div class="xs mu" style="margin-top:6px">${esc(f.src)}${f.url?` · <a href="${safeUrl(f.url)}" target="_blank" rel="noopener">Source ↗</a>`:""}</div>`;
- $("fastMini").innerHTML=`<div class="lbl">Fasting</div><div class="mid num" id="cdm" style="font-size:18px">…</div><div class="xs mu" id="cdmw">${esc(f.type||"")}</div>`;$("fastMini").classList.add("tap");$("fastMini").onclick=()=>go(1);
+ $("fastMini").innerHTML=`<div class="lbl">Fasting</div><div class="mid num" id="cdm" style="font-size:18px">…</div><div class="xs mu" id="cdmw">${esc(f.type||"")}</div>`;$("fastMini").classList.add("tap");$("fastMini").onclick=()=>go(2);
  ptFetch(f.date).then(t=>{FASTT={st:ptAt(f.date,t.Imsak),en:ptAt(f.date,t.Maghrib),t};fastTick(Date.now())}).catch(()=>{$("cd").textContent=f.date})}
 function fastTick(n){if(!FASTT)return;const {st,en,t}=FASTT;let tgt,lbl,ml;
  if(n<st){tgt=st;lbl=`Starts at Imsak ${t.Imsak} (Subuh ${t.Fajr}), ends at Maghrib ${t.Maghrib} SGT.`;ml="Starts in"}
@@ -920,7 +906,7 @@ function renderWorld(W){$("wcar").innerHTML=W.map((x,i)=>{let viz="";
  else if(x.big)viz=`<div class="big">${esc(x.big)}</div>`;
  const vid=x.vid?`<div class="vid" style="margin:8px 0"><iframe data-src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${esc(String(x.vid).slice(2))}" title="${esc(x.src)}" loading="lazy" allowfullscreen></iframe></div>`:"";
  return `<div class="card ${x.vid?"w2":"w2"}" style="animation-delay:${i*40}ms"><div class="lbl">${esc(x.src)}</div>${viz}${vid}<div class="sm" style="color:#c9ccd6">${esc(x.text)}</div><div class="xs mu" style="margin-top:6px">${x.url?`<a href="${safeUrl(x.url)}" target="_blank" rel="noopener">Source ↗</a>`:esc(x.note||"")}</div></div>`}).join("");
- requestAnimationFrame(()=>$("wcar").querySelectorAll("[data-w]").forEach(b=>b.style.width=b.dataset.w+"%"));if(cur===3)lazyFrames(SCR[3])}
+ requestAnimationFrame(()=>$("wcar").querySelectorAll("[data-w]").forEach(b=>b.style.width=b.dataset.w+"%"));if(cur===4)lazyFrames(SCR[4])}
 fetch("daily/"+ymd+".json").then(r=>r.ok?r:fetch("daily/latest.json")).then(r=>r.json()).then(d=>{if(d.pm&&sgParts().h>=18)Object.assign(d,d.pm);D=d;
  $("hijri").textContent=d.hijri||"";
  if(d.fast&&typeof d.fast==="object")renderFast(d.fast);else if(d.fast){$("fastType").textContent="Today";$("fast").textContent=d.fast;$("fastMini").innerHTML=`<div class="lbl">Fasting</div><div class="sm">${esc(d.fast)}</div>`}
@@ -981,10 +967,6 @@ function rDraw(){const r=LS("rest")||{},t=sgDay();$("rs").innerHTML=RL.map((e,i)
  const days=[...Array(7)].map((_,i)=>sgDay(Date.now()-(6-i)*864e5));
  $("rtrend").innerHTML=`<svg width="100%" height="30" viewBox="0 0 140 30" preserveAspectRatio="none" aria-label="Rest, last 7 days">${days.map((d,i)=>{const v=r[d]||0,hh=v?v*5.4:2;return `<rect x="${i*20+3}" y="${30-hh}" width="14" height="${hh}" rx="3" fill="${v?"var(--ac)":"var(--s3)"}" opacity="${d===t?1:.6}"/>`}).join("")}</svg><div class="row xs mu"><span>7 days</span><span>today</span></div>`}
 function rSet(v){const r=LS("rest")||{};r[sgDay()]=v;LS("rest",r);rDraw();logSheet("rest",{day:sgDay(),score:v})}rDraw();
-
-/* ================= PASSCODE LOCK (Kitchen still uses sessionStorage.fpw) ================= */
-function showLock(){const lb=$("lockBtn");if(lb)lb.hidden=false}
-function lockAll(){sessionStorage.removeItem("fpw");sessionStorage.removeItem("fpwF");location.reload()}
 
 /* ================= CAREER · reads TOP / WL arrays from jobs.html (no changes to that file) ================= */
 function loadJobs(){fetch("jobs.html",{cache:"no-cache"}).then(r=>r.text()).then(s=>{const grab=n=>{const m=s.match(new RegExp("const "+n+"=(\\[[\\s\\S]*?\\]);\\n"));try{return m?JSON.parse(m[1]):[]}catch(_){return[]}};
@@ -1052,9 +1034,9 @@ const MAG=(()=>{const KEY="jobswipe-mag-v1",R2J="https://api.rss2json.com/v1/api
   catch(e){if(c)render(c,false,{sg:1,w:1});else render(null,false)}
   finally{busy=false}}
  function touch(){if(!last||Date.now()-last>30*6e4)load()}
- const root=$("mag");if(root)root.addEventListener("click",e=>{const j=e.target.closest("[data-jump]");if(j){const el=$(j.dataset.jump),sc=SCR[3];if(el&&sc)sc.scrollTo({top:el.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-44,behavior:RM?"auto":"smooth"});return}
+ const root=$("mag");if(root)root.addEventListener("click",e=>{const j=e.target.closest("[data-jump]");if(j){const el=$(j.dataset.jump),sc=SCR[4];if(el&&sc)sc.scrollTo({top:el.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-44,behavior:RM?"auto":"smooth"});return}
   if(e.target.closest("[data-mz-retry]")||e.target.closest("#mzRe"))load(true)});
- addEventListener("online",()=>{if(cur===3)load(true)});
+ addEventListener("online",()=>{if(cur===4)load(true)});
  return{load,touch,cached,_t:{txt,clip,mix,norm}}})();
 
 /* ================= SHIP · frigate companion game. Own storage key "jobswipe-frigate-v1"; not linked to to-dos, prayers or rest ================= */
@@ -2448,249 +2430,134 @@ document.addEventListener("visibilitychange",()=>{if(document.visibilityState===
 return{active:v=>v?enter():leave(),get S(){return S},KEY,EX,PLAN,_dbg:{diagram,solve,rxShow,rxTap,RX}};
 })();
 
-/* ================= KITCHEN · FridgeBot fridge (kitchen.enc.json, PBKDF2 600k + AES-GCM) =================
-   Read: box sync loop exports fridge.db -> kitchen.enc.json. Write: encrypted op batches -> kitchen_ops/ via the
-   GitHub contents API (fine-grained token, stored on this device only, encrypted with the dashboard passcode). */
-const KIT=(()=>{
-const API="https://api.github.com/repos/wanzies/job-swipe/contents/",PK="jobswipe-kitchen-pend-v1",TK="jobswipe-kitchen-tok-v1",CK="jobswipe-kitchen-cache-v1";
-const LOC=[["fridge","Fridge","🧊"],["freezer","Freezer","❄️"],["pantry","Pantry","🗄️"]],LN={fridge:"Fridge",freezer:"Freezer",pantry:"Pantry"};
-const CATS=["Dairy & Eggs","Meat & Poultry","Seafood","Vegetables","Fruits","Bread & Bakery","Frozen","Sauces & Condiments","Drinks","Snacks","Leftovers","Grains & Pantry","Other"];
-const CE={"Dairy & Eggs":"🥚","Meat & Poultry":"🍗","Seafood":"🐟","Vegetables":"🥬","Fruits":"🍎","Bread & Bakery":"🍞","Frozen":"🧊","Sauces & Condiments":"🫙","Drinks":"🧃","Snacks":"🍪","Leftovers":"🍱","Grains & Pantry":"🍚","Other":"📦"};
-const AIS={"Vegetables":"Fruit & Veg","Fruits":"Fruit & Veg","Meat & Poultry":"Meat & Seafood","Seafood":"Meat & Seafood","Dairy & Eggs":"Dairy, Eggs & Chilled","Leftovers":"Dairy, Eggs & Chilled","Bread & Bakery":"Bakery","Frozen":"Frozen","Grains & Pantry":"Rice, Noodles & Dry Goods","Sauces & Condiments":"Sauces, Spices & Condiments","Snacks":"Snacks & Drinks","Drinks":"Snacks & Drinks","Other":"Household & Other"};
-const SHELF={"Dairy & Eggs":[7,60,3],"Meat & Poultry":[2,90,0],"Seafood":[2,90,0],"Vegetables":[6,180,4],"Fruits":[7,180,4],"Bread & Bakery":[7,60,4],"Frozen":[2,120,0],"Sauces & Condiments":[90,180,180],"Drinks":[7,90,180],"Snacks":[30,90,60],"Leftovers":[3,60,0],"Grains & Pantry":[180,365,365],"Other":[7,90,90]};
-const UNITS=["","pcs","kg","g","L","ml","pack","bottle","can","tray","box","bag","loaf","bunch","jar","carton","dozen","slice","cup","tub"];
-const IC={chk:'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',x:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>',plus:'<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>'};
-let SNAP=null,PEND=[],TOK=null,on=false,built=false,loading=false,err="",sendErr="",flushing=false,lastFetch=0,pollT=null,flushT=null,toastT=null,sendSalt=null,sheet=null;
-const ui={loc:"all",cat:"all",q:"",urg:null},keyC=new Map();
-/* ---------- crypto (PBKDF2 600k + AES-GCM; key cached per salt) ---------- */
-const b64=u=>{u=new Uint8Array(u);let s="";for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)};
-const ub=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0)),rnd=n=>crypto.getRandomValues(new Uint8Array(n));
-let keyPw=null;
-async function dk(salt,pw){if(keyPw!==pw){keyC.clear();keyPw=pw}const id=salt;if(keyC.has(id))return keyC.get(id);const km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
- const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:ub(salt),iterations:600000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]);keyC.set(id,k);return k}
-async function dec(e,pw){const k=await dk(e.s,pw);return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:ub(e.iv)},k,ub(e.ct))))}
-async function enc(o,pw,salt){salt=salt||b64(rnd(16));const k=await dk(salt,pw),iv=rnd(12);return{s:salt,iv:b64(iv),ct:b64(await crypto.subtle.encrypt({name:"AES-GCM",iv},k,new TextEncoder().encode(JSON.stringify(o))))}}
-const pw=()=>sessionStorage.fpw||"";
-const oid=()=>"k"+Date.now().toString(36)+b64(rnd(6)).replace(/[^A-Za-z0-9]/g,"x");
-/* ---------- dates (SGT) ---------- */
-function todayU(){const p=sgParts();return Date.UTC(p.y,p.m-1,p.d)}
-function isoAdd(d){const t=new Date(todayU()+d*864e5);return t.toISOString().slice(0,10)}
-function dl(e){if(!e)return null;const [y,m,d]=e.slice(0,10).split("-").map(Number);if(!y)return null;return Math.round((Date.UTC(y,m-1,d)-todayU())/864e5)}
-const urg=n=>n==null?"n":n<0?"x":n<=2?"o":n<=5?"y":"g";
-function dlL(n,est){if(n==null)return"No date";const t=est?"~":"";if(n<0)return"Expired"+(n<-1?" "+(-n)+"d":"");if(n===0)return t+"Today";if(n===1)return t+"1 day";return t+n+" days"}
-const dmy=e=>{if(!e)return"";const [y,m,d]=e.slice(0,10).split("-");return d+"/"+m+"/"+y};
-function parseDMY(s){s=(s||"").trim();if(!s)return"";const m=s.match(/^(\d{1,2})[\/.\- ](\d{1,2})(?:[\/.\- ](\d{2,4}))?$/);if(!m)return null;let d=+m[1],mo=+m[2],y=m[3]?+m[3]:0;
- const p=sgParts();if(!y){y=p.y;if(Date.UTC(y,mo-1,d)<todayU()-60*864e5)y++}else if(y<100)y+=2000;
- const t=new Date(Date.UTC(y,mo-1,d));if(t.getUTCMonth()!==mo-1||t.getUTCDate()!==d||y<2020||y>2100)return null;return t.toISOString().slice(0,10)}
-const autoExp=(c,l)=>isoAdd((SHELF[c]||SHELF.Other)[["fridge","freezer","pantry"].indexOf(l||"fridge")]??7);
-const defLoc=c=>c==="Frozen"?"freezer":(c==="Grains & Pantry"||c==="Snacks")?"pantry":"fridge";
-function ago(t){if(!t)return"never";const s=(Date.now()-t)/1e3;if(s<60)return"just now";if(s<3600)return Math.round(s/60)+" min ago";if(s<86400)return Math.round(s/3600)+" h ago";return Math.round(s/86400)+" d ago"}
-const fq=(q,u)=>{if(q==null||q==="")return u||"";const n=+q;const s=Number.isInteger(n)?String(n):String(+n.toFixed(2));return u?s+" "+u:s};
-const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim().replace(/(es|s)$/,"");
-/* ---------- pending ops ---------- */
-function loadPend(){try{PEND=JSON.parse(localStorage.getItem(PK)||"[]");if(!Array.isArray(PEND))PEND=[]}catch(e){PEND=[]}}
-function savePend(){try{localStorage.setItem(PK,JSON.stringify(PEND))}catch(e){}}
-function reconcile(){if(!SNAP)return;const ap=SNAP.applied||{},gen=Date.parse(SNAP.gen||0)||0;
- PEND=PEND.filter(p=>!ap[p.op.op]&&!(p.sent&&p.sentAt&&Date.now()-p.sentAt>6*3600e3));savePend()}
-function view(){const S=SNAP||{items:[],recent:[],grocery:[],staples:[]};
- let all=[...S.items,...S.recent].map(x=>({...x})),groc=S.grocery.map(x=>({...x})),stap=S.staples.map(x=>({...x}));
- const fi=o=>o.id!=null?all.find(x=>x.id===o.id):all.find(x=>x._op===o.ref),fg=o=>o.id!=null?groc.find(x=>x.id===o.id):groc.find(x=>x._op===o.ref);
- for(const p of PEND){const o=p.op;let it;switch(o.t){
-  case"item_add":all.push({id:"p"+o.op,_op:o.op,name:o.name,qty:o.qty??1,unit:o.unit||"",category:o.category||"Other",location:o.location||"fridge",expiry:o.expiry||autoExp(o.category,o.location),expiry_estimated:o.expiry?(o.est?1:0):1,status:"active",added_by:"Dashboard",_p:1});
-   if(o.from_grocery){const g=groc.find(x=>x.id===o.from_grocery);if(g)g.status="cleared"}break;
-  case"item_edit":it=fi(o);if(it){Object.assign(it,o.f);if("est" in o.f)it.expiry_estimated=o.f.est?1:0;it._p=1}break;
-  case"item_use":it=fi(o);if(it){if(o.fraction==null||o.fraction>=1){it.qty=0;it.status="used"}else{it.qty=Math.round(it.qty*(1-o.fraction)*1000)/1000;it._p=1}it.updated_at=new Date().toISOString()}break;
-  case"item_remove":it=fi(o);if(it){it.status=o.status||"removed";it.updated_at=new Date().toISOString()}break;
-  case"item_restore":it=fi(o);if(it){it.status="active";if(o.qty!=null)it.qty=o.qty;it._p=1}break;
-  case"grocery_add":if(!groc.some(g=>g.status==="needed"&&norm(g.name)===norm(o.name)))groc.push({id:"p"+o.op,_op:o.op,name:o.name,qty:o.qty??null,unit:o.unit||"",category:o.category||"Other",aisle:AIS[o.category]||"Household & Other",status:"needed",_p:1});break;
-  case"grocery_set":it=fg(o);if(it){it.status=o.status;it._p=1}break;
-  case"grocery_clear_bought":groc.forEach(g=>{if(g.status==="bought")g.status="cleared"});break;
-  case"staple_set":{const s=stap.find(x=>norm(x.name)===norm(o.name));if(s){s.min_qty=o.min_qty;s.unit=o.unit||""}else stap.push({id:"p"+o.op,name:o.name,min_qty:o.min_qty,unit:o.unit||"",stock:0,_p:1});break}
-  case"staple_remove":stap=stap.filter(s=>s.id!==o.id);break}}
- const items=all.filter(x=>x.status==="active").map(x=>Object.assign(x,{_d:dl(x.expiry)})).sort((a,b)=>(a._d??1e9)-(b._d??1e9)||String(a.name).localeCompare(b.name));
- const recent=all.filter(x=>x.status!=="active").sort((a,b)=>String(b.updated_at||"").localeCompare(String(a.updated_at||"")));
- return{items,recent,groc:groc.filter(g=>g.status==="needed"||g.status==="bought"),stap}}
-const tgt=x=>x._op?{ref:x._op}:{id:x.id};
-function queue(op,label,undo){if(!TOK){needTok();return false}op.op=oid();const now=Date.now();PEND.push({op,at:now,due:now+(undo===false?400:5500),sent:0});savePend();render();
- if(undo!==false)toast(label,()=>{const gone=new Set([op.op]);PEND=PEND.filter(p=>{if(p.sent)return true;if(gone.has(p.op.op)||gone.has(p.op.ref)){gone.add(p.op.op);return false}return true});savePend();render();toast("Undone",null,1500)});
- else if(label)toast(label,null,2200);
- schedFlush();return op}
-function schedFlush(){clearTimeout(flushT);const u=PEND.filter(p=>!p.sent);if(!u.length)return;flushT=setTimeout(flush,Math.max(200,Math.min(...u.map(p=>p.due))-Date.now()+50))}
-async function flush(){if(flushing||!TOK||!pw())return;const now=Date.now(),batch=[];for(const p of PEND){if(p.sent)continue;if(p.due>now)break;batch.push(p)}
- if(!batch.length){schedFlush();return}flushing=true;
- try{sendSalt=sendSalt||b64(rnd(16));const env=await enc({v:1,ts:now,ops:batch.map(p=>p.op)},pw(),sendSalt),name="kitchen_ops/"+now+"-"+b64(rnd(6)).replace(/[^A-Za-z0-9]/g,"x")+".enc.json";
-  const r=await fetch(API+name,{method:"PUT",headers:{Authorization:"Bearer "+TOK,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:JSON.stringify({message:"Kitchen edit",content:btoa(JSON.stringify(env)),branch:"main"})});
-  if(r.ok){batch.forEach(p=>{p.sent=1;p.sentAt=Date.now()});sendErr="";savePend();[35e3,65e3,100e3].forEach(t=>setTimeout(()=>{if(PEND.some(p=>p.sent))load()},t))}
-  else sendErr=(r.status===401||r.status===403||r.status===404)?"token":"net"}
- catch(e){sendErr="net"}
- flushing=false;rHero();if(sendErr)flushT=setTimeout(flush,sendErr==="token"?6e4:15e3);else schedFlush()}
-/* ---------- token ---------- */
-async function loadTok(){if(TOK||!pw())return;const s=localStorage.getItem(TK);if(!s)return;try{TOK=(await dec(JSON.parse(s),pw())).t||null}catch(e){TOK=null}}
-async function connect(){const el=$("kTok"),m=$("kTokM"),t=(el.value||"").trim();if(!t)return;if(!/^(github_pat_|ghp_)[A-Za-z0-9_]{20,}$/.test(t)){m.textContent="That doesn't look like a GitHub token (it should start with github_pat_).";return}
- m.textContent="Checking…";try{const r=await fetch("https://api.github.com/repos/wanzies/job-swipe",{headers:{Authorization:"Bearer "+t,Accept:"application/vnd.github+json"}});
-  if(r.status===401){m.textContent="GitHub rejected that token. Check it was copied fully and hasn't expired.";return}
-  if(!r.ok){m.textContent="This token can't see wanzies/job-swipe. Under Repository access, pick that repo.";return}
-  const j=await r.json();if(!(j.permissions&&j.permissions.push)){m.textContent="The token is read-only. Set Contents to “Read and write”.";return}
-  localStorage.setItem(TK,JSON.stringify(await enc({t},pw())));TOK=t;el.value="";m.textContent="";sendErr="";render();toast("Editing connected on this device",null,2500);schedFlush();load()}
- catch(e){m.textContent="Couldn't reach GitHub. Check your connection and try again."}}
-function disconnect(){if(PEND.some(p=>!p.sent)&&!confirm("Some edits haven't been sent yet. Disconnect anyway?"))return;localStorage.removeItem(TK);TOK=null;PEND=PEND.filter(p=>p.sent);savePend();render()}
-function needTok(){toast("Connect editing first (one-time setup below)",null,2600);const c=$("kCon");if(c){c.scrollIntoView({behavior:RM?"auto":"smooth",block:"center"});c.classList.remove("k-flash");void c.offsetWidth;c.classList.add("k-flash")}}
-/* ---------- load ---------- */
-async function fetchEnv(){if(TOK){try{const r=await fetch(API+"kitchen.enc.json?ref=main",{headers:{Authorization:"Bearer "+TOK,Accept:"application/vnd.github.raw+json"},cache:"no-store"});if(r.ok)return await r.json();if(r.status===401)sendErr="token"}catch(e){}}
- const r=await fetch("kitchen.enc.json?"+Date.now(),{cache:"no-store"}).catch(()=>null);if(r&&r.ok)return r.json();const e=new Error(r?"missing":"net");e.missing=!!r&&r.status===404;throw e}
-async function load(manual){if(loading||!pw())return;loading=true;if(manual)rHero(true);
- try{await loadTok();const e=await fetchEnv(),d=await dec(e,pw());SNAP=d;err="";try{localStorage.setItem(CK,JSON.stringify(e))}catch(x){}reconcile()}
- catch(x){err=x.missing?"missing":x.name==="OperationError"?"pw":"net";if(!SNAP){const c=localStorage.getItem(CK);if(c)try{SNAP=await dec(JSON.parse(c),pw());reconcile()}catch(y){}}}
- loading=false;lastFetch=Date.now();render();if(PEND.some(p=>!p.sent))schedFlush()}
-async function unlockK(){const el=$("kPw"),e=$("kPwE"),p=el.value;if(!p)return;e.textContent="Unlocking…";
- try{const r=await fetch("kitchen.enc.json?"+Date.now(),{cache:"no-store"});if(!r.ok){e.textContent=r.status===404?"Kitchen data hasn't synced yet.":"Couldn't load the kitchen file.";return}
-  SNAP=await dec(await r.json(),p);sessionStorage.fpw=p;el.value="";e.textContent="";lastFetch=Date.now();reconcile();await loadTok();render();showLock();load()}
- catch(x){e.textContent=x.name==="OperationError"?"Wrong passcode":"Couldn't unlock right now."}}
-/* ---------- render ---------- */
-function build(){$("kitchen").innerHTML=`<div class="grid"><div class="card w4" id="kHero"></div>
- <div class="w4 k-bar" id="kBar"><div class="k-srch"><input class="inp" id="kQ" type="search" placeholder="Search" autocomplete="off" aria-label="Search items"><select class="k-sel" id="kCat" aria-label="Category"><option value="all">All categories</option>${CATS.map(c=>`<option value="${esc(c)}">${CE[c]} ${esc(c)}</option>`).join("")}</select></div>
-  <div class="k-seg" id="kLoc" role="group" aria-label="Location"></div></div>
- <div class="card w4 k-list" id="kList"></div><div class="card w2" id="kGro"></div><div class="card w2" id="kSta"></div><div class="card w2" id="kRec"></div><div class="card w2 k-con" id="kCon"></div>
- <div class="w4 xs mu" style="padding:2px 4px">Same list as @SheizyBeeFoodBot on Telegram. Colours: red expired · orange 0–2 days · yellow 3–5 · green later · “~” = estimated date.</div></div>`;
- const K=$("kitchen");K.addEventListener("click",onClick);K.addEventListener("submit",onSubmit);
- $("kQ").addEventListener("input",e=>{ui.q=e.target.value;rList()});$("kCat").addEventListener("change",e=>{ui.cat=e.target.value;rList()});
- document.body.insertAdjacentHTML("beforeend",`<div id="kToast" role="status" aria-live="polite"></div><button id="kFab" aria-label="Add item">${IC.plus}</button><div class="k-sh" id="kSh"><div class="k-shb" data-a="close"></div><div class="k-shp" role="dialog" aria-modal="true" aria-label="Item" id="kShp"></div></div>`);
- $("kFab").onclick=()=>openSheet(null);$("kSh").addEventListener("click",onSheet);$("kSh").addEventListener("submit",e=>{e.preventDefault();saveSheet()});$("kSh").addEventListener("input",onSheetInput);$("kSh").addEventListener("change",onSheetInput);
- $("kToast").addEventListener("click",e=>{const b=e.target.closest("button");if(b&&toastU){const u=toastU;toastU=null;hideToast();u()}});
- addEventListener("keydown",e=>{if(e.key==="Escape"&&$("kSh").classList.contains("on"))closeSheet()});
- built=true}
-function locked(){$("kitchen").innerHTML=`<div class="grid"><div class="card w4"><div class="lbl">🔒 Kitchen is locked</div><div class="sm mu" style="margin-bottom:10px">Your fridge list is encrypted on the public site. Use your dashboard passcode.</div>
- <form class="unlock" onsubmit="event.preventDefault();KIT.unlockK()"><input class="inp num" id="kPw" type="password" inputmode="numeric" autocomplete="off" placeholder="Passcode" aria-label="Dashboard passcode"><button class="btn pri" type="submit">Unlock</button></form><div class="err" id="kPwE"></div></div></div>`;built=false;$("kFab")&&$("kFab").classList.remove("on")}
-function render(){if(!$("kitchen"))return;if(!pw()){locked();return}if(!built||!$("kHero"))build();rHero();rLoc();rList();rGro();rSta();rRec();rCon();$("kFab").classList.toggle("on",on)}
-function stats(V){let x=0,o=0;V.items.forEach(i=>{if(i._d==null)return;if(i._d<0)x++;else if(i._d<=2)o++});return{x,o,n:V.items.length}}
-function rHero(busy){const h=$("kHero");if(!h)return;const V=view(),s=stats(V),gen=Date.parse(SNAP&&SNAP.gen||"")||0,pu=PEND.filter(p=>!p.sent).length,ps=PEND.filter(p=>p.sent).length;
- let st,dot="";if(!SNAP){st=err==="missing"?"Waiting for the first sync from the box":err==="pw"?"Kitchen file didn't open with this passcode":loading?"Loading…":"Couldn't load kitchen data";dot="w"}
- else if(sendErr==="token"){st="Editing token rejected · reconnect below";dot="b"}
- else if(sendErr==="net"&&pu){st=`${pu} edit${pu>1?"s":""} waiting for connection`;dot="w"}
- else if(pu||ps){st=pu?`Saving ${pu} edit${pu>1?"s":""}…`:`${ps} edit${ps>1?"s":""} syncing to FridgeBot…`;dot="w"}
- else st=`Updated ${ago(gen)}${err==="net"?" · offline copy":""}`;
- h.innerHTML=`<div class="k-stats"><button class="k-st x${ui.urg==="x"?" on":""}" data-a="urg" data-u="x"><b class="num">${s.x}</b><span>Expired</span></button><button class="k-st o${ui.urg==="o"?" on":""}" data-a="urg" data-u="o"><b class="num">${s.o}</b><span>Use soon</span></button><button class="k-st${!ui.urg?" on":""}" data-a="urg" data-u=""><b class="num">${s.n}</b><span>Items</span></button></div>
- <div class="k-sync"><span><i class="dot ${dot}"></i>${esc(st)}</span><span><span class="mu">${TOK?"✏️ Editing on":"👀 View only"}</span><button class="btn sm" data-a="refresh" ${busy||loading?"disabled":""}>${busy||loading?"Refreshing…":"↻ Refresh"}</button></span></div>`}
-function rLoc(){const V=view(),c={all:V.items.length};LOC.forEach(([k])=>c[k]=V.items.filter(i=>i.location===k).length);
- $("kLoc").innerHTML=[["all","All",""],...LOC].map(([k,n,e])=>`<button data-a="loc" data-l="${k}" aria-pressed="${ui.loc===k}">${e?e+" ":""}${n}<small>${c[k]}</small></button>`).join("")}
-function rowH(i){const u=urg(i._d),em=CE[i.category]||"📦",sub=[fq(i.qty,i.unit),i.category].filter(Boolean).join(" · ");
- return `<div class="k-it u-${u}${i._p?" pend":""}"><button class="k-main" data-a="edit" data-id="${esc(i.id)}"><span class="k-em" aria-hidden="true">${em}</span><span class="k-nm"><b>${esc(i.name)}</b><small><span class="k-dl u-${u}" title="${i.expiry?"Expiry "+dmy(i.expiry)+(i.expiry_estimated?" (estimated)":""):"No expiry"}">${esc(dlL(i._d,+i.expiry_estimated))}</span><span class="k-lb ${esc(i.location)}">${esc(LN[i.location]||i.location)}</span><span class="k-sub">${esc(sub)}</span></small></span></button>
- <div class="k-q"><button class="k-u" data-a="use" data-id="${esc(i.id)}" aria-label="Used up ${esc(i.name)}" title="Used up">${IC.chk}</button><button data-a="half" data-id="${esc(i.id)}" aria-label="Used half of ${esc(i.name)}" title="Used half">½</button><button class="k-r" data-a="rm" data-id="${esc(i.id)}" aria-label="Remove ${esc(i.name)}" title="Remove">${IC.x}</button></div></div>`}
-function rList(){const V=view(),q=norm(ui.q);let L=V.items.filter(i=>(ui.loc==="all"||i.location===ui.loc)&&(ui.cat==="all"||i.category===ui.cat)&&(!q||norm(i.name+" "+(i.brand||"")+" "+i.category).includes(q)));
- if(ui.urg==="x")L=L.filter(i=>i._d!=null&&i._d<0);else if(ui.urg==="o")L=L.filter(i=>i._d!=null&&i._d>=0&&i._d<=2);
- const el=$("kList");if(!SNAP){el.innerHTML=`<div class="k-empty"><b>${err==="missing"?"Not synced yet":"Loading your kitchen…"}</b>${err==="missing"?"The box hasn't published the kitchen file yet.":""}</div>`;return}
- if(!V.items.length){el.innerHTML=`<div class="k-empty"><b>The kitchen is empty</b>Tap + to add what's in the fridge, or tell @SheizyBeeFoodBot.</div>`;return}
- if(!L.length){el.innerHTML=`<div class="k-empty"><b>Nothing matches</b><button class="btn sm" data-a="clearf" style="margin-top:8px">Clear filters</button></div>`;return}
- const G=[["Expired",i=>i._d!=null&&i._d<0],["Use soon · 0–2 days",i=>i._d!=null&&i._d>=0&&i._d<=2],["This week · 3–5 days",i=>i._d!=null&&i._d>=3&&i._d<=5],["Later",i=>i._d==null||i._d>5]];
- el.innerHTML=G.map(([t,f])=>{const r=L.filter(f);return r.length?`<div class="k-gh"><span>${t}</span><span>${r.length}</span></div>`+r.map(rowH).join(""):""}).join("")}
-function rGro(){const V=view(),need=V.groc.filter(g=>g.status==="needed"),got=V.groc.filter(g=>g.status==="bought"),aisles=[...new Set(need.map(g=>g.aisle||"Household & Other"))];
- const gr=g=>`<div class="k-g${g.status==="bought"?" b":""}${g._p?" pend":""}"><button class="k-ck" data-a="gtick" data-id="${esc(g.id)}" aria-label="${g.status==="bought"?"Untick":"Tick"} ${esc(g.name)}">${IC.chk}</button><span class="k-gn"><b>${esc(g.name)}</b>${g.qty||g.unit?`<small>${esc(fq(g.qty,g.unit))}</small>`:""}</span>${g.status==="bought"?`<button class="btn sm" data-a="gmove" data-id="${esc(g.id)}">Put away</button>`:""}<button class="del" data-a="gdel" data-id="${esc(g.id)}" aria-label="Remove ${esc(g.name)} from list">×</button></div>`;
- $("kGro").innerHTML=`<div class="lbl">🛒 Grocery list <span class="pill${need.length?" ac":""}">${need.length} to buy</span></div>
- <form class="k-add" data-f="gadd"><input class="inp" id="kgN" placeholder="Add to the list…" maxlength="80" autocomplete="off" aria-label="Grocery item"><button class="btn pri" type="submit">Add</button></form>
- ${need.length?aisles.map(a=>`<div class="k-ais">${esc(a)}</div>`+need.filter(g=>(g.aisle||"Household & Other")===a).map(gr).join("")).join(""):`<div class="sm mu" style="padding:6px 0">Nothing on the list.</div>`}
- ${got.length?`<div class="k-ais" style="display:flex;justify-content:space-between;align-items:center">In the basket · ${got.length}<button class="btn sm" data-a="gclear">Clear ticked</button></div>${got.map(gr).join("")}<div class="xs mu" style="margin-top:6px">“Put away” moves it from the list into the kitchen.</div>`:""}`}
-function rSta(){const V=view();$("kSta").innerHTML=`<div class="lbl">⭐ Always keep <span class="pill">${V.stap.length}</span></div>
- ${V.stap.length?V.stap.map(s=>{const low=(+s.stock||0)<(+s.min_qty||1),onL=V.groc.some(g=>g.status==="needed"&&norm(g.name)===norm(s.name));return `<div class="k-g"><span class="k-gn"><b>${esc(s.name)}</b><small>have ${esc(fq(s.stock||0,s.unit))} · keep ${esc(fq(s.min_qty,s.unit))}</small></span>${low?(onL?'<span class="pill">On list</span>':`<span class="pill warn">Low</span>`):'<span class="pill ok">OK</span>'}${typeof s.id==="number"?`<button class="del" data-a="sdel" data-id="${s.id}" aria-label="Stop tracking ${esc(s.name)}">×</button>`:""}</div>`}).join(""):`<div class="sm mu" style="padding:2px 0 8px">Staples you always want at home. When stock drops below the minimum, FridgeBot adds them to the grocery list.</div>`}
- <form class="k-add" data-f="sadd" style="margin-top:8px"><input class="inp" id="ksN" placeholder="e.g. Eggs" maxlength="80" autocomplete="off" aria-label="Staple name"><input class="inp n num" id="ksQ" type="number" inputmode="decimal" min="0.1" step="any" value="1" aria-label="Minimum"><button class="btn" type="submit">Keep</button></form>`}
-function rRec(){const V=view(),R=V.recent.slice(0,12),W={used:"Used",removed:"Removed",discarded:"Tossed"};
- $("kRec").innerHTML=`<div class="lbl">↩️ Recently used or removed <span class="pill">3 days</span></div>${R.length?R.map(i=>`<div class="k-g"><span class="k-gn"><b>${esc(i.name)}</b><small>${esc(W[i.status]||i.status)}${i.updated_at?" · "+esc(ago(Date.parse(i.updated_at))):""}</small></span><button class="btn sm" data-a="restore" data-id="${esc(i.id)}">Restore</button></div>`).join(""):`<div class="sm mu">Nothing in the last 3 days.</div>`}`}
-function rCon(){const el=$("kCon");if(TOK){const pu=PEND.filter(p=>!p.sent).length;el.innerHTML=`<div class="lbl">✏️ Editing <span class="pill ok">Connected</span></div><div class="sm mu">Changes you make here go to FridgeBot within about a minute, and show up in Telegram and the Sheet.${sendErr==="token"?' <b style="color:var(--bad)">GitHub rejected the token (expired or revoked). Disconnect and paste a new one.</b>':""}${pu?` ${pu} waiting to send.`:""}</div><div class="row" style="margin-top:10px"><button class="btn sm" data-a="disc">Disconnect this device</button></div>`;return}
- el.innerHTML=`<div class="lbl">✏️ Connect editing <span class="pill">one-time, per device</span></div>
- <div class="sm" style="color:#c9ccd6">You can view everything now. To add, edit or tick things off here, give this phone a GitHub token that can only change this dashboard's files. It's stored on this device only, encrypted with your passcode.</div>
- <details style="margin-top:8px"><summary class="sm" style="cursor:pointer;color:var(--ac);font-weight:600">How to make the token (2 min)</summary><ol class="k-steps">
- <li>Open <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub › New fine-grained token</a>, signed in as <b>wanzies</b>.</li>
- <li><b>Token name:</b> Dashboard Kitchen. <b>Expiration:</b> whatever you like (e.g. 90 days or 1 year).</li>
- <li><b>Repository access:</b> Only select repositories › <b>wanzies/job-swipe</b>.</li>
- <li><b>Permissions › Repository permissions › Contents:</b> Read and write. Leave everything else as is (Metadata read-only is added automatically).</li>
- <li>Tap <b>Generate token</b>, copy it (starts with <code>github_pat_</code>) and paste it below.</li></ol></details>
- <form class="row" data-f="tok"><input class="inp" id="kTok" type="password" autocomplete="off" placeholder="github_pat_…" aria-label="GitHub token"><button class="btn pri" type="submit">Connect</button></form><div class="err" id="kTokM"></div>`}
-/* ---------- actions ---------- */
-const findV=id=>{const V=view();return V.items.find(i=>String(i.id)===id)||V.recent.find(i=>String(i.id)===id)},findG=id=>view().groc.find(g=>String(g.id)===id);
-function act(a,it){if(!it)return;const nm=it.name;
- if(a==="use")queue({t:"item_use",...tgt(it)},`Used up ${nm}`);
- else if(a==="half"){const left=Math.round(it.qty*500)/1000;queue({t:"item_use",...tgt(it),fraction:.5},`Used half of ${nm}${it.qty?` · ${fq(left,it.unit)} left`:""}`)}
- else if(a==="rm")queue({t:"item_remove",...tgt(it),status:"removed"},`Removed ${nm}`);
- else if(a==="toss")queue({t:"item_remove",...tgt(it),status:"discarded"},`Tossed ${nm}`)}
-function onClick(e){const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,id=b.dataset.id;
- if(a==="refresh")load(true);
- else if(a==="urg"){ui.urg=b.dataset.u||null;rHero();rList()}
- else if(a==="loc"){ui.loc=b.dataset.l;rLoc();rList()}
- else if(a==="clearf"){Object.assign(ui,{loc:"all",cat:"all",q:"",urg:null});$("kQ").value="";$("kCat").value="all";rHero();rLoc();rList()}
- else if(a==="edit")openSheet(findV(id));
- else if(a==="use"||a==="half"||a==="rm")act(a,findV(id));
- else if(a==="restore"){const it=findV(id);if(it)queue({t:"item_restore",...tgt(it),qty:+it.qty>0?+it.qty:1},`Restored ${it.name}`)}
- else if(a==="gtick"){const g=findG(id);if(!g)return;const s=g.status==="bought"?"needed":"bought",op=queue({t:"grocery_set",...tgt(g),status:s},s==="bought"?`Ticked ${g.name}`:`Back on the list: ${g.name}`)}
- else if(a==="gdel"){const g=findG(id);if(g)queue({t:"grocery_set",...tgt(g),status:"cleared"},`Removed ${g.name} from the list`)}
- else if(a==="gclear")queue({t:"grocery_clear_bought"},"Cleared ticked items");
- else if(a==="gmove"){const g=findG(id);if(g)openSheet(null,g)}
- else if(a==="sdel"){const V=view(),s=V.stap.find(x=>String(x.id)===id);if(s)queue({t:"staple_remove",id:s.id},`Stopped tracking ${s.name}`)}
- else if(a==="disc")disconnect()}
-function onSubmit(e){const f=e.target.dataset.f;if(!f)return;e.preventDefault();
- if(f==="tok")connect();
- else if(f==="gadd"){const el=$("kgN"),n=el.value.trim();if(!n)return;if(queue({t:"grocery_add",name:n},`Added ${n} to the list`,false))el.value=""}
- else if(f==="sadd"){const n=$("ksN").value.trim(),q=+$("ksQ").value||1;if(!n)return;if(queue({t:"staple_set",name:n,min_qty:q,unit:""},`Keeping at least ${fq(q)} ${n}`,false))$("ksN").value=""}}
-/* ---------- toast ---------- */
-let toastU=null;
-function toast(msg,undo,ms){const T=$("kToast");if(!T)return;clearTimeout(toastT);toastU=undo||null;ms=ms||(undo?5000:2400);
- T.innerHTML=`<span>${esc(msg)}</span>${undo?'<button class="btn sm">Undo</button>':""}<i></i>`;T.classList.remove("on");void T.offsetWidth;T.classList.add("on");
- const bar=T.querySelector("i");bar.animate([{transform:"scaleX(1)"},{transform:"scaleX(0)"}],{duration:ms,easing:"linear",fill:"forwards"});toastT=setTimeout(hideToast,ms)}
-function hideToast(){const T=$("kToast");T&&T.classList.remove("on");toastU=null}
-/* ---------- bottom sheet (add / edit) ---------- */
-function openSheet(it,fromG){if(!TOK){needTok();return}const ed=!!it,c=ed?it.category:fromG?(fromG.category||"Other"):"",l=ed?it.location:fromG?defLoc(fromG.category):"fridge";
- sheet={it,fromG,loc:l,est:ed?!!+it.expiry_estimated:false,auto:!ed};
- const V=view(),names=[...new Set([...V.recent,...V.items].map(i=>i.name))].slice(0,40);
- $("kShp").innerHTML=`<div class="k-grab"></div><form id="kF" autocomplete="off"><h3>${ed?"Edit item":fromG?"Put away":"Add to the kitchen"}<button type="button" class="btn sm" data-a="close">Close</button></h3>
- <label class="k-fl"><small>Name</small><input class="inp" id="kfN" maxlength="80" required list="kNames" value="${esc(ed?it.name:fromG?fromG.name:"")}" placeholder="e.g. Fresh milk"><datalist id="kNames">${names.map(n=>`<option value="${esc(n)}">`).join("")}</datalist></label>
- <div class="k-2"><label class="k-fl"><small>Quantity</small><input class="inp num" id="kfQ" type="number" inputmode="decimal" min="0" step="any" value="${esc(ed?+it.qty:fromG&&fromG.qty?+fromG.qty:1)}"></label>
- <label class="k-fl"><small>Unit</small><select class="k-sel" id="kfU">${UNITS.map(u=>`<option value="${u}"${(ed?it.unit:fromG?fromG.unit:"")===u?" selected":""}>${u||"—"}</option>`).join("")}</select></label></div>
- <div class="k-fl"><small>Where</small><div class="k-seg" id="kfL">${LOC.map(([k,n,e])=>`<button type="button" data-a="sloc" data-l="${k}" aria-pressed="${l===k}">${e} ${n}</button>`).join("")}</div></div>
- <label class="k-fl"><small>Category</small><select class="k-sel" id="kfC">${ed?"":`<option value="">✨ Auto (from the name)</option>`}${CATS.map(x=>`<option value="${esc(x)}"${c===x?" selected":""}>${CE[x]} ${esc(x)}</option>`).join("")}</select></label>
- <div class="k-fl"><small>Expiry date (DD/MM/YYYY)</small><div class="k-exp"><input class="inp num" id="kfE" inputmode="numeric" maxlength="10" placeholder="DD/MM/YYYY" value="${ed?dmy(it.expiry):""}" aria-label="Expiry DD/MM/YYYY"><button type="button" class="btn" data-a="pick" aria-label="Pick a date">📅</button><input type="date" id="kfD" tabindex="-1" aria-hidden="true"></div>
- <div class="k-chips"><button type="button" data-a="plus" data-d="3">+3 days</button><button type="button" data-a="plus" data-d="7">+7 days</button><button type="button" data-a="plus" data-d="14">+14 days</button><button type="button" data-a="plus" data-d="auto" class="${sheet.auto?"on":""}">~ Estimate</button></div>
- <div class="xs mu" id="kfH" style="margin-top:6px"></div></div>
- <div class="err" id="kfErr"></div>
- <div class="k-shact"><button class="btn pri" type="submit">${ed?"Save changes":fromG?"Add to kitchen":"Add item"}</button></div>
- ${ed?`<div class="k-shact2"><button type="button" class="btn" data-a="s-use">✓ Used up</button><button type="button" class="btn" data-a="s-half">½ Used half</button><button type="button" class="btn bad" data-a="s-${it._d!=null&&it._d<0?"toss":"rm"}">${it._d!=null&&it._d<0?"Toss (expired)":"Remove"}</button></div>
- <div class="k-meta">#${typeof it.id==="number"?it.id:"new"} · added by ${esc(it.added_by||"?")}${it.added_at?" · "+esc(dmy(it.added_at)):""}${it.halal&&it.halal!=="unknown"?" · halal: "+esc(it.halal):""}${it.notes?"<br>"+esc(it.notes):""}</div>`:""}</form>`;
- $("kSh").classList.add("on");hint();if(!ed&&!fromG)setTimeout(()=>$("kfN")&&$("kfN").focus(),60)}
-function closeSheet(){$("kSh").classList.remove("on");sheet=null}
-function hint(){const h=$("kfH");if(!h||!sheet)return;const raw=$("kfE").value.trim(),iso=parseDMY(raw);
- if(!raw){const c=$("kfC").value||(sheet.it?sheet.it.category:"Other");h.textContent=sheet.it?"No date set.":`Empty = FridgeBot estimates it (about ${dmy(autoExp(c||"Other",sheet.loc))}, shown with ~).`;return}
- if(iso===null){h.innerHTML='<span style="color:var(--bad)">Use DD/MM/YYYY, e.g. 24/11/2026</span>';return}
- const n=dl(iso),[y,m,d]=iso.split("-").map(Number);h.textContent=`${WD[new Date(Date.UTC(y,m-1,d)).getUTCDay()]} ${d} ${MO[m-1]} ${y} · ${n<0?`${-n} day${n<-1?"s":""} ago`:n===0?"today":`in ${n} day${n>1?"s":""}`}${sheet.est?" (estimated)":""}`}
-function onSheetInput(e){const t=e.target;if(!sheet)return;
- if(t.id==="kfE"&&e.type==="input"){let v=t.value.replace(/[^\d\/]/g,"");if(e.inputType&&!e.inputType.startsWith("delete")){if(/^\d{2}$/.test(v)||/^\d{1,2}\/\d{2}$/.test(v))v+="/"}t.value=v.slice(0,10);sheet.est=false;sheet.auto=false;chipsOn()}
- if(t.id==="kfD"&&t.value){$("kfE").value=dmy(t.value);sheet.est=false;sheet.auto=false;chipsOn()}
- hint()}
-function chipsOn(d){document.querySelectorAll("#kShp .k-chips button").forEach(b=>b.classList.toggle("on",d!=null?b.dataset.d===String(d):(b.dataset.d==="auto"&&sheet.auto)))}
-function onSheet(e){const b=e.target.closest("[data-a]");if(!b||!sheet)return;const a=b.dataset.a;
- if(a==="close"){closeSheet();return}
- if(a==="sloc"){sheet.loc=b.dataset.l;document.querySelectorAll("#kfL button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.l===sheet.loc));hint();return}
- if(a==="plus"){const d=b.dataset.d;if(d==="auto"){$("kfE").value=sheet.it?dmy(autoExp($("kfC").value||sheet.it.category,sheet.loc)):"";sheet.est=true;sheet.auto=true}else{$("kfE").value=dmy(isoAdd(+d));sheet.est=false;sheet.auto=false}chipsOn(d);hint();return}
- if(a==="pick"){const D=$("kfD"),iso=parseDMY($("kfE").value);D.value=iso||isoAdd(0);try{D.showPicker()}catch(x){D.focus();D.click()}return}
- const m={"s-use":"use","s-half":"half","s-rm":"rm","s-toss":"toss"}[a];if(m){const it=sheet.it;closeSheet();act(m,it)}}
-function saveSheet(){if(!sheet)return;const E=$("kfErr"),name=$("kfN").value.trim().replace(/\s+/g," "),qty=$("kfQ").value===""?1:+$("kfQ").value,unit=$("kfU").value,cat=$("kfC").value,raw=$("kfE").value.trim(),iso=parseDMY(raw);
- if(!name){E.textContent="Give it a name.";return}if(!(qty>=0&&qty<=100000)){E.textContent="Quantity looks off.";return}if(iso===null){E.textContent="Expiry must be DD/MM/YYYY.";return}
- const it=sheet.it,fromG=sheet.fromG,loc=sheet.loc,est=sheet.est;
- if(!it){const op={t:"item_add",name,qty,unit,category:cat||"",location:loc,expiry:iso||null,est:!!(iso&&est)};if(fromG&&typeof fromG.id==="number")op.from_grocery=fromG.id;closeSheet();queue(op,`Added ${name} to the ${LN[loc].toLowerCase()}`);return}
- const f={};if(name!==it.name)f.name=name;if(qty!==+it.qty)f.qty=qty;if(unit!==(it.unit||""))f.unit=unit;if(cat&&cat!==it.category)f.category=cat;if(loc!==it.location)f.location=loc;
- if((iso||null)!==(it.expiry||null)){f.expiry=iso||null;f.est=!!est}else if(!!est!==!!+it.expiry_estimated&&iso)f.est=!!est;
- closeSheet();if(!Object.keys(f).length){toast("No changes",null,1500);return}queue({t:"item_edit",...tgt(it),f},`Saved ${name}`)}
-/* ---------- lifecycle ---------- */
-function enter(){on=true;if(!pw()){locked();return}if(!built)build();render();if(!SNAP||Date.now()-lastFetch>20e3)load();clearInterval(pollT);pollT=setInterval(()=>{if(document.visibilityState==="visible")load()},30e3)}
-function leave(){on=false;clearInterval(pollT);const f=$("kFab");f&&f.classList.remove("on");if($("kSh")&&$("kSh").classList.contains("on"))closeSheet()}
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&on&&pw()&&Date.now()-lastFetch>20e3)load()});
-addEventListener("online",()=>{sendErr="";schedFlush()});
-setInterval(()=>{if(on&&SNAP)rHero()},30e3);
-loadPend();if(pw()&&PEND.some(p=>!p.sent))loadTok().then(schedFlush);
-return{active:v=>v?enter():leave(),unlockK,load,get S(){return SNAP},get P(){return PEND},_dbg:{parseDMY,dl,view}};
+/* ================= TASKS · to-do list. Data lives in localStorage only (dash-tasks-v1), never in the repo ================= */
+const TASKS=(()=>{
+const root=document.getElementById("tkRoot");if(!root)return null;
+const KEY="dash-tasks-v1",NK="dash-tasks-notify-v1",NS="dash-tasks-notified-v1";
+const UL=["Urgent","Not so urgent","Not urgent"];
+const RM=matchMedia("(prefers-reduced-motion: reduce)"),EASE=root.dataset.ease||"cubic-bezier(.2,.8,.2,1)",DUR=+root.dataset.dur||300;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $=s=>root.querySelector(s),$$=s=>[...root.querySelectorAll(s)];
+const IC={ed:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>',
+ del:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5"/></svg>',
+ ck:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4.5 4.5L19 7.5"/></svg>',
+ al:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16v.01"/></svg>',
+ ok:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>'};
+let T=[],ui={f:"all",q:"",ed:null,fe:false,dOpen:false,first:true},undo=null,tt=null;
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const pad=n=>String(n).padStart(2,"0");
+const ymd=dt=>{dt=dt||new Date();return dt.getFullYear()+"-"+pad(dt.getMonth()+1)+"-"+pad(dt.getDate())};
+const dayNum=s=>{const p=s.split("-").map(Number);return Math.round(Date.UTC(p[0],p[1]-1,p[2])/864e5)};
+const fmtD=s=>{const p=s.split("-").map(Number);return new Date(p[0],p[1]-1,p[2]).toLocaleDateString("en-SG",{weekday:"short",day:"numeric",month:"short"})};
+const fmtT=s=>{const p=s.split(":").map(Number);return new Date(2000,0,1,p[0],p[1]).toLocaleTimeString("en-SG",{hour:"numeric",minute:"2-digit"}).replace(/\s/g," ").toUpperCase()};
+const dueMs=t=>t.d?new Date(t.d+"T"+(t.tm||"23:59:59")).getTime():Infinity;
+const isOd=t=>!t.dn&&!!t.d&&dueMs(t)<Date.now();
+function clean(a){return(Array.isArray(a)?a:[]).filter(x=>x&&typeof x.t==="string"&&x.t.trim()).map(x=>{const d=/^\d{4}-\d{2}-\d{2}$/.test(x.d||"")?x.d:"";return{id:String(x.id||uid()),t:x.t.trim().slice(0,200),n:String(x.n||"").slice(0,500),u:[0,1,2].includes(x.u)?x.u:1,d,tm:d&&/^\d{2}:\d{2}$/.test(x.tm||"")?x.tm:"",c:+x.c||Date.now(),dn:+x.dn||0}})}
+function load(){try{const o=JSON.parse(localStorage.getItem(KEY)||"null");return clean(o&&(Array.isArray(o)?o:o.tasks))}catch(e){return[]}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({v:1,tasks:T}))}catch(e){toast("Couldn't save: browser storage is full or blocked")}}
+/* priority: urgency (Urgent > Not so urgent > Not urgent), then soonest expiry (no date last), then oldest first */
+const cmp=(a,b)=>a.u-b.u||(dueMs(a)-dueMs(b))||a.c-b.c;
+function rel(t){if(!t.d)return null;const now=Date.now(),dd=dayNum(t.d)-dayNum(ymd()),ts=t.tm?" · "+fmtT(t.tm):"",ms=dueMs(t);
+ if(ms<now){if(dd===0){const m=Math.max(1,Math.floor((now-ms)/6e4));return{x:"Overdue "+(m<60?m+"m":Math.floor(m/60)+"h"),k:"od"}}const n=-dd;return{x:"Overdue "+n+" day"+(n>1?"s":""),k:"od"}}
+ if(dd===0)return{x:"Due today"+ts,k:"td"};if(dd===1)return{x:"Due tomorrow"+ts,k:""};if(dd<=45)return{x:"in "+dd+" days",k:""};return{x:"in "+Math.round(dd/7)+" weeks",k:""}}
+const seg=(nm,v,lab)=>`<div class="tk-seg" role="radiogroup" aria-label="${lab}">${UL.map((l,i)=>`<label class="tk-sg tk-u${i}"><input type="radio" name="${nm}" value="${i}"${i===v?" checked":""}><span>${l}</span></label>`).join("")}</div>`;
+root.innerHTML=`<div class="tk">
+ <div class="tk-sum" id="tkSum" aria-live="polite"></div>
+ <form class="tk-add" id="tkAdd" autocomplete="off" aria-label="Add a task">
+  <div class="tk-r1"><input class="tk-in" id="tkT" name="t" maxlength="200" placeholder="Add a task…" aria-label="Task title" enterkeyhint="done"><button class="tk-go" type="submit">Add</button></div>
+  ${seg("uA",1,"Urgency")}
+  <div class="tk-r2"><label><span>Expiry date</span><input class="tk-in" type="date" name="d"></label><label><span>Time (optional)</span><input class="tk-in" type="time" name="tm" disabled></label></div>
+  <div class="tk-qk" role="group" aria-label="Quick expiry dates"><button type="button" data-a="q" data-n="0">Today</button><button type="button" data-a="q" data-n="1">Tomorrow</button><button type="button" data-a="q" data-n="7">Next week</button></div>
+  <input class="tk-in" name="n" maxlength="500" placeholder="Note (optional)" aria-label="Note">
+ </form>
+ <div class="tk-bar"><input class="tk-in tk-q" id="tkQ" type="search" placeholder="Search tasks" aria-label="Search tasks"><div class="tk-fl" id="tkFl" role="group" aria-label="Filter tasks"></div></div>
+ <ul class="tk-ls" id="tkLs" aria-label="Tasks"></ul>
+ <div id="tkDn"></div>
+ <div class="tk-ft"><div class="tk-fb"><button type="button" data-a="exp">Export backup</button><button type="button" data-a="imp">Import backup</button><button type="button" data-a="nf" id="tkNf" aria-pressed="false">Remind me when due</button></div>
+  <input type="file" id="tkFile" accept="application/json,.json" hidden aria-label="Import tasks backup file">
+  <p class="tk-hint">Saved on this device only (not synced or uploaded). Export a backup now and then. Reminders show while this page is open.</p></div>
+</div>`;
+const toastEl=document.createElement("div");toastEl.className="tk-toast";toastEl.id="tkToast";toastEl.setAttribute("role","status");toastEl.setAttribute("aria-live","polite");document.body.appendChild(toastEl);
+function toast(msg,fn){clearTimeout(tt);undo=fn||null;toastEl.innerHTML=`<span>${esc(msg)}</span>${fn?'<button type="button" data-a="undo">Undo</button>':""}`;toastEl.classList.add("on");tt=setTimeout(()=>{toastEl.classList.remove("on");undo=null},fn?5000:2600)}
+toastEl.addEventListener("click",e=>{if(e.target.closest('[data-a="undo"]')&&undo){const f=undo;undo=null;clearTimeout(tt);toastEl.classList.remove("on");f()}});
+function itm(t){const r=rel(t),dn=!!t.dn,od=isOd(t);
+ return`<li class="tk-it tk-u${t.u}${od?" od":""}${dn?" dn":""}" data-id="${t.id}">
+ <button type="button" class="tk-ck" role="checkbox" aria-checked="${dn}" data-a="ck" aria-label="${dn?"Mark not done":"Mark done"}: ${esc(t.t)}"><i>${IC.ck}</i></button>
+ <div class="tk-bd"><div class="tk-tt">${esc(t.t)}</div>
+  <div class="tk-meta">${dn?`<span class="tk-due">Done ${fmtD(ymd(new Date(t.dn)))}</span>`:`<button type="button" class="tk-ch tk-u${t.u}" data-a="cyc" aria-label="Urgency: ${UL[t.u]}. Tap to change.">${UL[t.u]}</button>${r?`<span class="tk-due ${r.k}">${r.k==="od"?IC.al:""}${r.x}</span><span class="tk-abs">${fmtD(t.d)}</span>`:""}`}</div>
+  ${t.n?`<div class="tk-nt">${esc(t.n)}</div>`:""}</div>
+ <div class="tk-ac">${dn?"":`<button type="button" data-a="edit" aria-label="Edit task: ${esc(t.t)}" title="Edit">${IC.ed}</button>`}<button type="button" data-a="del" aria-label="Delete task: ${esc(t.t)}" title="Delete">${IC.del}</button></div></li>`}
+function edt(t){return`<li class="tk-it tk-ed tk-u${t.u}" data-id="${t.id}"><form class="tk-ef" autocomplete="off" aria-label="Edit task">
+ <input class="tk-in" name="t" maxlength="200" value="${esc(t.t)}" aria-label="Task title">
+ ${seg("uE"+t.id,t.u,"Urgency")}
+ <div class="tk-r2"><label><span>Expiry date</span><input class="tk-in" type="date" name="d" value="${t.d}"></label><label><span>Time (optional)</span><input class="tk-in" type="time" name="tm" value="${t.tm}"${t.d?"":" disabled"}></label></div>
+ <input class="tk-in" name="n" maxlength="500" value="${esc(t.n)}" placeholder="Note (optional)" aria-label="Note">
+ <div class="tk-ea"><button type="button" data-a="cancel">Cancel</button><button type="submit" class="tk-go">Save</button></div></form></li>`}
+function render(){
+ const fa=document.activeElement,fi=fa&&fa.closest?fa.closest("#tkLs .tk-it:not(.tk-ed)"):null,fk=fi?{id:fi.dataset.id,a:fa.dataset.a}:null;
+ const old=new Map();if(!RM.matches&&root.offsetWidth&&!ui.first)$$("#tkLs .tk-it").forEach(e=>old.set(e.dataset.id,e.getBoundingClientRect().top));
+ const act=T.filter(t=>!t.dn).sort(cmp),dn=T.filter(t=>t.dn).sort((a,b)=>b.dn-a.dn);
+ const c={all:act.length,0:act.filter(t=>t.u===0).length,1:act.filter(t=>t.u===1).length,2:act.filter(t=>t.u===2).length,od:act.filter(isOd).length};
+ $("#tkSum").innerHTML=(c.all?`<span class="tk-ct"><b class="num">${c.all}</b> open</span>`:`<span class="tk-ct">${T.length?"All caught up":"No tasks yet"}</span>`)+(c[0]?`<span class="tk-pl tk-u0">${c[0]} urgent</span>`:"")+(c.od?`<span class="tk-pl od">${c.od} overdue</span>`:"");
+ $("#tkFl").innerHTML=[["all","All"],["0","Urgent"],["1","Not so urgent"],["2","Not urgent"],["od","Overdue"]].map(([k,l])=>`<button type="button" class="tk-fc${k==="0"||k==="1"||k==="2"?" tk-u"+k:k==="od"?" od":""}" data-a="f" data-f="${k}" aria-pressed="${ui.f===k}">${l} <b class="num">${c[k]}</b></button>`).join("");
+ const q=ui.q.trim().toLowerCase(),mt=t=>!q||(t.t+" "+t.n).toLowerCase().includes(q);
+ const vis=act.filter(t=>(ui.f==="all"||(ui.f==="od"?isOd(t):t.u===+ui.f))&&mt(t));
+ $("#tkLs").innerHTML=vis.length?vis.map(t=>ui.ed===t.id?edt(t):itm(t)).join(""):
+  `<li class="tk-empty">${IC.ok}<b>${!T.length?"Nothing to do":!act.length?"You're all caught up":"No tasks match"}</b><span>${!T.length?"Add your first task above. Urgent ones float to the top.":!act.length?"Finished tasks are in Done below.":"Try another filter or clear the search."}</span></li>`;
+ const dv=dn.filter(mt);
+ $("#tkDn").innerHTML=dv.length?`<details class="tk-dn"${ui.dOpen?" open":""}><summary>Done <b class="num">${dv.length}</b></summary><ul class="tk-ls" aria-label="Done tasks">${dv.map(itm).join("")}</ul><button type="button" class="tk-clr" data-a="clr">Clear done</button></details>`:"";
+ if(old.size){const els=$$("#tkLs .tk-it"),mv=[];els.forEach(e=>{const p=old.get(e.dataset.id);if(p==null){e.classList.add("new");return}const dy=p-e.getBoundingClientRect().top;if(Math.abs(dy)>1){e.style.transition="none";e.style.transform=`translateY(${dy}px)`;mv.push(e)}});
+  if(mv.length){void root.offsetWidth;mv.forEach(e=>{e.style.transition=`transform ${DUR}ms ${EASE}`;e.style.transform="";setTimeout(()=>{e.style.transition=""},DUR+50)})}}
+ ui.first=false;
+ if(ui.fe){ui.fe=false;const i=$("#tkLs .tk-ed input[name=t]");if(i){i.focus();i.select()}}
+ else if(fk){const b=root.querySelector(`.tk-it[data-id="${fk.id}"] [data-a="${fk.a}"]`);if(b)b.focus({preventScroll:true})}}
+const find=id=>T.find(t=>t.id===id);
+function add(o){const t=clean([{t:o.t,n:o.n,u:o.u,d:o.d,tm:o.tm,c:Date.now()}])[0];if(!t)return null;T.push(t);save();render();return t}
+function del(t){const i=T.indexOf(t);T=T.filter(x=>x!==t);save();render();toast("Task deleted",()=>{T.splice(Math.min(i,T.length),0,t);save();render()})}
+function setDone(t,v){t.dn=v?Date.now():0;save();render();if(v)toast("Marked done",()=>{t.dn=0;save();render()})}
+root.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b||!root.contains(b))return;const a=b.dataset.a,li=b.closest(".tk-it"),t=li?find(li.dataset.id):null;
+ if(a==="ck"&&t)setDone(t,!t.dn);
+ else if(a==="cyc"&&t){t.u=(t.u+1)%3;save();render()}
+ else if(a==="edit"&&t){ui.ed=t.id;ui.fe=true;render()}
+ else if(a==="cancel"){ui.ed=null;render()}
+ else if(a==="del"&&t){if(ui.ed===t.id)ui.ed=null;del(t)}
+ else if(a==="f"){ui.f=b.dataset.f;render()}
+ else if(a==="q"){const f=b.closest("form"),d=new Date();d.setDate(d.getDate()+(+b.dataset.n));f.elements.d.value=ymd(d);f.elements.tm.disabled=false}
+ else if(a==="clr"){const gone=T.filter(x=>x.dn);T=T.filter(x=>!x.dn);save();render();toast(gone.length+" done task"+(gone.length>1?"s":"")+" cleared",()=>{T=T.concat(gone);save();render()})}
+ else if(a==="exp")exportJ();else if(a==="imp")$("#tkFile").click();else if(a==="nf")toggleNf()});
+root.addEventListener("input",e=>{const el=e.target;if(el.name==="d"){const tm=el.form.elements.tm;tm.disabled=!el.value;if(!el.value)tm.value=""}else if(el.id==="tkQ"){ui.q=el.value;render()}});
+root.addEventListener("toggle",e=>{if(e.target.classList&&e.target.classList.contains("tk-dn"))ui.dOpen=e.target.open},true);
+root.addEventListener("keydown",e=>{if(e.key==="Escape"&&ui.ed){ui.ed=null;render();e.stopPropagation()}});
+root.addEventListener("submit",e=>{e.preventDefault();const f=e.target,fd=new FormData(f);
+ if(f.id==="tkAdd"){const title=String(fd.get("t")||"").trim();if(!title){f.elements.t.focus();return}
+  add({t:title,n:fd.get("n"),u:+fd.get("uA"),d:fd.get("d"),tm:fd.get("tm")});f.reset();f.elements.tm.disabled=true;f.elements.t.focus()}
+ else if(f.classList.contains("tk-ef")){const t=find(f.closest(".tk-it").dataset.id),title=String(fd.get("t")||"").trim();if(!t)return;if(!title){f.elements.t.focus();return}
+  const o=clean([{t:title,n:fd.get("n"),u:+fd.get([...f.elements].find(x=>x.type==="radio").name),d:fd.get("d"),tm:fd.get("tm")}])[0];t.t=o.t;t.n=o.n;t.u=o.u;t.d=o.d;t.tm=o.tm;ui.ed=null;save();render()}});
+function exportJ(){const b=new Blob([JSON.stringify({v:1,exported:new Date().toISOString(),tasks:T},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="tasks-backup-"+ymd()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);toast("Backup downloaded")}
+$("#tkFile").addEventListener("change",e=>{const f=e.target.files[0];e.target.value="";if(!f)return;const r=new FileReader();
+ r.onload=()=>{try{const o=JSON.parse(r.result),a=clean(Array.isArray(o)?o:o.tasks);if(!a.length)throw 0;const m=new Map(T.map(t=>[t.id,t]));a.forEach(t=>m.set(t.id,t));T=[...m.values()];save();render();toast("Imported "+a.length+" task"+(a.length>1?"s":""))}catch(x){toast("That file isn't a task backup")}};
+ r.onerror=()=>toast("Couldn't read that file");r.readAsText(f)});
+/* reminders: one notification a day for tasks due today / overdue, only while the page is open */
+const nfOn=()=>{try{return localStorage.getItem(NK)==="1"&&typeof Notification!=="undefined"&&Notification.permission==="granted"}catch(e){return false}};
+function nfUI(){const b=$("#tkNf");if(b)b.setAttribute("aria-pressed",String(nfOn()))}
+async function toggleNf(){if(typeof Notification==="undefined"){toast("This browser doesn't support notifications");return}
+ if(nfOn()){try{localStorage.setItem(NK,"0")}catch(e){}nfUI();toast("Reminders off");return}
+ let p=Notification.permission;if(p==="default"){try{p=await Notification.requestPermission()}catch(e){}}
+ if(p==="granted"){try{localStorage.setItem(NK,"1")}catch(e){}nfUI();toast("Reminders on");nfCheck()}else toast("Notifications are blocked in this browser")}
+function nfCheck(){if(!nfOn())return;const today=ymd();let last="";try{last=localStorage.getItem(NS)||""}catch(e){}if(last===today)return;
+ const act=T.filter(t=>!t.dn&&t.d),td=act.filter(t=>t.d===today).length,od=act.filter(isOd).length;if(!td&&!od)return;
+ try{new Notification("Tasks",{body:(td?td+" due today":"")+(td&&od?" · ":"")+(od?od+" overdue":""),tag:"dash-tasks"});localStorage.setItem(NS,today)}catch(e){}}
+addEventListener("storage",e=>{if(e.key===KEY&&!ui.ed){T=load();render()}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&!ui.ed){render();nfCheck()}});
+setInterval(()=>{if(!ui.ed&&!document.hidden){render();nfCheck()}},60e3);
+T=load();render();nfUI();nfCheck();
+return{render,add,get T(){return T}};
 })();
 
 /* ================= START ================= */
-(function(){const alias={today:0,plannerS:0,todoS:0,todo:0,calS:0,cal:0,calendar:0,schedule:0,restS:0,now:0,faith:1,fastS:1,quranS:1,dhikrS:1,verseS:1,namesS:1,scholarS:1,watchS:1,money:0,finS:0,career:2,bondS:2,jobsS:2,world:3,worldS:3,newsS:3,ship:4,shipS:4,frigate:4,game:4,gym:5,gymS:5,workout:5,fitness:5,ippt:5,kitchen:6,kitchenS:6,fridge:6,grocery:6,groceries:6},i=alias[location.hash.slice(1)]??0;
+(function(){const alias={today:0,plannerS:0,todoS:0,todo:0,calS:0,cal:0,calendar:0,schedule:0,restS:0,now:0,money:0,finS:0,tasks:1,tasksS:1,taskS:1,task:1,tasklist:1,faith:2,fastS:2,quranS:2,dhikrS:2,verseS:2,namesS:2,scholarS:2,watchS:2,career:3,bondS:3,jobsS:3,world:4,worldS:4,newsS:4,ship:5,shipS:5,frigate:5,game:5,gym:6,gymS:6,workout:6,fitness:6,ippt:6},i=alias[location.hash.slice(1)]??0;
  cur=-1;requestAnimationFrame(()=>{go(i,true);requestAnimationFrame(()=>revealTab(i))})})();
 tick();setInterval(tick,1000);
-if(sessionStorage.fpw)showLock()
 if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 </script>
 </body></html>

@@ -121,6 +121,64 @@ input::placeholder{color:var(--fg);opacity:1}
  *,*::before,*::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
 }
 @media (min-width:700px){.inner{max-width:720px;margin:0 auto}}
+/* ---------- tasks (localStorage only) ---------- */
+.tk{display:flex;flex-direction:column;gap:12px;font-size:13px}
+.tk button,.tk input{font:inherit}
+.tk-u0{--m:#E5001F}.tk-u1{--m:#FFB000}.tk-u2{--m:#00A650}
+.tk-sum{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:"Press Start 2P",ui-monospace,monospace;font-size:10px;line-height:1.6}
+.tk-ct b{font-size:20px;margin-right:4px}
+.tk-pl{background:var(--fg);color:var(--bg);padding:4px 8px}
+.tk-add,.tk-ef{display:flex;flex-direction:column;gap:10px}
+.tk-in{width:100%;min-height:44px;font-size:16px}
+.tk-r1{display:flex;gap:8px}
+.tk-go,.tk-ea button,.tk-qk button,.tk-fb button,.tk-clr,.tk-toast button{font-family:"Press Start 2P",ui-monospace,monospace;font-size:9px;line-height:1.4;background:var(--fg);color:var(--bg);border:0;padding:12px;min-height:44px;cursor:pointer;box-shadow:3px 3px 0 0 var(--sh),0 0 0 2px var(--fg);touch-action:manipulation}
+.tk-go:active,.tk-ea button:active,.tk-qk button:active,.tk-fb button:active,.tk-clr:active{transform:translate(2px,2px);box-shadow:1px 1px 0 0 var(--sh),0 0 0 2px var(--fg)}
+.tk-qk,.tk-fb,.tk-fl{display:flex;flex-wrap:wrap;gap:8px}
+.tk-qk button,.tk-fb button{padding:8px 10px;min-height:36px;font-size:8px}
+.tk-fb button[aria-pressed=true]{background:var(--bg);color:var(--fg);box-shadow:inset 0 0 0 3px var(--fg)}
+.tk-seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tk-sg{position:relative;display:block}
+.tk-sg input{position:absolute;inset:0;width:100%;height:100%;min-height:0;margin:0;padding:0;opacity:0;box-shadow:none;cursor:pointer}
+.tk-sg span{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:6px;text-align:center;font-family:"Press Start 2P",ui-monospace,monospace;font-size:8px;line-height:1.5;box-shadow:inset 0 0 0 3px var(--fg)}
+.tk-sg span::before{content:"";flex:0 0 12px;height:12px;background:var(--m);box-shadow:0 0 0 2px var(--fg)}
+.tk-sg input:checked+span{background:var(--fg);color:var(--bg)}
+.tk-sg input:focus-visible+span,.tk button:focus-visible,.tk summary:focus-visible{outline:3px dashed var(--fg);outline-offset:3px}
+.tk-r2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tk-r2 label{display:flex;flex-direction:column;gap:4px;min-width:0}.tk-r2 label span{font-family:"Press Start 2P",ui-monospace,monospace;font-size:8px}
+.tk-in:disabled{opacity:.5}
+.tk-bar{display:flex;flex-direction:column;gap:10px}
+.tk-fc{font-family:"Press Start 2P",ui-monospace,monospace;font-size:8px;line-height:1.4;background:var(--bg);color:var(--fg);border:0;padding:9px 8px;min-height:40px;cursor:pointer;box-shadow:inset 0 0 0 3px var(--fg)}
+.tk-fc[aria-pressed=true]{background:var(--fg);color:var(--bg)}
+.tk-fc::before{content:"";display:inline-block;width:8px;height:8px;margin-right:6px;background:var(--m,transparent);box-shadow:0 0 0 2px currentColor}
+.tk-fc:not([class*=tk-u])::before{display:none}.tk-fc.od::before{display:none}
+.tk-ls{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.tk-it{display:flex;align-items:flex-start;gap:8px;padding:10px 6px 10px 8px;box-shadow:0 0 0 3px var(--fg);position:relative}
+.tk-it::before{content:"";position:absolute;left:-3px;top:-3px;bottom:-3px;width:10px;background:var(--m);box-shadow:0 0 0 3px var(--fg)}
+.tk-it>*{position:relative}.tk-ck{margin-left:8px}
+.tk-it.od{background:repeating-linear-gradient(135deg,transparent 0 8px,color-mix(in srgb,var(--fg) 12%,transparent) 8px 10px)}
+.tk-ed::before{display:none}.tk-ed{display:block;padding:12px}
+.tk-ck{flex:0 0 44px;width:44px;height:44px;margin:-6px 0 -6px 6px;padding:0;background:none;border:0;display:grid;place-items:center;cursor:pointer}
+.tk-ck i{width:24px;height:24px;display:grid;place-items:center;box-shadow:0 0 0 3px var(--fg);background:var(--bg)}
+.tk-ck svg{width:16px;height:16px;stroke:var(--bg);fill:none;stroke-width:4;stroke-linecap:square;opacity:0;shape-rendering:crispEdges}
+.tk-ck[aria-checked=true] i{background:var(--fg)}.tk-ck[aria-checked=true] svg{opacity:1}
+.tk-bd{flex:1;min-width:0}.tk-tt{font-weight:700;font-size:14px;line-height:1.4;word-break:break-word}
+.tk-meta{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:6px}
+.tk-ch{font-family:"Press Start 2P",ui-monospace,monospace;font-size:8px;line-height:1.4;background:var(--bg);color:var(--fg);border:0;padding:5px 7px;cursor:pointer;box-shadow:0 0 0 2px var(--fg);position:relative;display:inline-flex;align-items:center;gap:6px}
+.tk-ch::before{content:"";width:8px;height:8px;background:var(--m);box-shadow:0 0 0 2px var(--fg)}.tk-ch::after{content:"";position:absolute;inset:-10px -4px}
+.tk-due{font-family:"Press Start 2P",ui-monospace,monospace;font-size:8px;line-height:1.5;display:inline-flex;align-items:center;gap:4px}.tk-due svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:3;shape-rendering:crispEdges}
+.tk-due.od{background:var(--fg);color:var(--bg);padding:3px 6px}.tk-due.td{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.tk-abs{font-size:11px}.tk-nt{font-size:12px;margin-top:6px;white-space:pre-wrap;word-break:break-word;border-top:2px dashed var(--fg);padding-top:5px}
+.tk-ac{display:flex;flex:0 0 auto}.tk-ac button{width:40px;height:44px;border:0;background:none;color:var(--fg);display:grid;place-items:center;cursor:pointer}
+.tk-ac svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:square;stroke-linejoin:miter;shape-rendering:crispEdges}
+.tk-it.dn{opacity:.75}.tk-it.dn .tk-tt{text-decoration:line-through;text-decoration-thickness:3px}
+.tk-ea{display:flex;gap:8px;justify-content:flex-end}
+.tk-empty{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:20px 10px;box-shadow:0 0 0 3px var(--fg);border-radius:0}
+.tk-empty svg{width:36px;height:36px;stroke:currentColor;fill:none;stroke-width:3;shape-rendering:crispEdges}.tk-empty b{font-family:"Press Start 2P",ui-monospace,monospace;font-size:10px;line-height:1.6}
+.tk-dn summary{font-family:"Press Start 2P",ui-monospace,monospace;font-size:10px;cursor:pointer;padding:10px 0;list-style:none}.tk-dn summary::-webkit-details-marker{display:none}.tk-dn summary::before{content:"▶ "}.tk-dn[open] summary::before{content:"▼ "}
+.tk-dn summary b{background:var(--fg);color:var(--bg);padding:1px 6px}
+.tk-clr{margin-top:10px}
+.tk-ft{display:flex;flex-direction:column;gap:8px}.tk-hint{margin:0;font-size:11px}
+.tk-toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 52px);transform:translate(-50%,16px);background:#fff;color:#000;display:flex;align-items:center;gap:12px;padding:10px 10px 10px 14px;box-shadow:0 0 0 3px #000,6px 6px 0 0 #000;font-size:13px;opacity:0;pointer-events:none;z-index:70;max-width:calc(100vw - 24px)}
+.tk-toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.tk-toast button{background:#000;color:#fff;box-shadow:none}
 </style></head><body>
 <!--
   HOW TO EDIT A SCREEN
@@ -142,6 +200,18 @@ input::placeholder{color:var(--fg);opacity:1}
    <div class="box" style="min-height:76px"><div class="sky" id="sky"></div><div class="px" id="wx" style="font-size:10px;padding-right:76px;line-height:2">LOADING WEATHER…</div></div>
    <p class="px" id="nref" style="font-size:9px"></p>
    <p class="px" style="font-size:8px;line-height:2">◀ SWIPE ▶ · ▲▼ · ARROW KEYS · TAP THE DOTS</p>
+  </div>
+ </div>
+</section>
+
+<!-- 02 TASKS · to-do list sorted by urgency then expiry · data in localStorage only (dash-tasks-v1) · mood: focused -->
+<section class="slide" id="tasksS" data-bg="#3DFF9A" data-fg="#000000" data-mood="focused" aria-label="Tasks">
+ <div class="inner">
+  <div class="top px"><span class="ico">✅</span><span class="cnt"></span></div>
+  <h2 class="ttl px">TASKS</h2>
+  <p class="sub px">URGENT FIRST · SOONEST DUE</p>
+  <div class="scroll">
+   <div class="box tk-ui" id="tkRoot" data-ease="steps(5,end)" data-dur="280"></div>
   </div>
  </div>
 </section>
@@ -556,6 +626,131 @@ const BOT=(()=>{const cv=$("bot"),c=cv.getContext("2d");c.imageSmoothingEnabled=
 window.BOT=BOT;
 </script>
 <script>
+/* ================= TASKS · to-do list. Data lives in localStorage only (dash-tasks-v1), never in the repo ================= */
+const TASKS=(()=>{
+const root=document.getElementById("tkRoot");if(!root)return null;
+const KEY="dash-tasks-v1",NK="dash-tasks-notify-v1",NS="dash-tasks-notified-v1";
+const UL=["Urgent","Not so urgent","Not urgent"];
+const RM=matchMedia("(prefers-reduced-motion: reduce)"),EASE=root.dataset.ease||"cubic-bezier(.2,.8,.2,1)",DUR=+root.dataset.dur||300;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $=s=>root.querySelector(s),$$=s=>[...root.querySelectorAll(s)];
+const IC={ed:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>',
+ del:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12M10 11v5M14 11v5"/></svg>',
+ ck:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4.5 4.5L19 7.5"/></svg>',
+ al:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16v.01"/></svg>',
+ ok:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>'};
+let T=[],ui={f:"all",q:"",ed:null,fe:false,dOpen:false,first:true},undo=null,tt=null;
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const pad=n=>String(n).padStart(2,"0");
+const ymd=dt=>{dt=dt||new Date();return dt.getFullYear()+"-"+pad(dt.getMonth()+1)+"-"+pad(dt.getDate())};
+const dayNum=s=>{const p=s.split("-").map(Number);return Math.round(Date.UTC(p[0],p[1]-1,p[2])/864e5)};
+const fmtD=s=>{const p=s.split("-").map(Number);return new Date(p[0],p[1]-1,p[2]).toLocaleDateString("en-SG",{weekday:"short",day:"numeric",month:"short"})};
+const fmtT=s=>{const p=s.split(":").map(Number);return new Date(2000,0,1,p[0],p[1]).toLocaleTimeString("en-SG",{hour:"numeric",minute:"2-digit"}).replace(/\s/g," ").toUpperCase()};
+const dueMs=t=>t.d?new Date(t.d+"T"+(t.tm||"23:59:59")).getTime():Infinity;
+const isOd=t=>!t.dn&&!!t.d&&dueMs(t)<Date.now();
+function clean(a){return(Array.isArray(a)?a:[]).filter(x=>x&&typeof x.t==="string"&&x.t.trim()).map(x=>{const d=/^\d{4}-\d{2}-\d{2}$/.test(x.d||"")?x.d:"";return{id:String(x.id||uid()),t:x.t.trim().slice(0,200),n:String(x.n||"").slice(0,500),u:[0,1,2].includes(x.u)?x.u:1,d,tm:d&&/^\d{2}:\d{2}$/.test(x.tm||"")?x.tm:"",c:+x.c||Date.now(),dn:+x.dn||0}})}
+function load(){try{const o=JSON.parse(localStorage.getItem(KEY)||"null");return clean(o&&(Array.isArray(o)?o:o.tasks))}catch(e){return[]}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({v:1,tasks:T}))}catch(e){toast("Couldn't save: browser storage is full or blocked")}}
+/* priority: urgency (Urgent > Not so urgent > Not urgent), then soonest expiry (no date last), then oldest first */
+const cmp=(a,b)=>a.u-b.u||(dueMs(a)-dueMs(b))||a.c-b.c;
+function rel(t){if(!t.d)return null;const now=Date.now(),dd=dayNum(t.d)-dayNum(ymd()),ts=t.tm?" · "+fmtT(t.tm):"",ms=dueMs(t);
+ if(ms<now){if(dd===0){const m=Math.max(1,Math.floor((now-ms)/6e4));return{x:"Overdue "+(m<60?m+"m":Math.floor(m/60)+"h"),k:"od"}}const n=-dd;return{x:"Overdue "+n+" day"+(n>1?"s":""),k:"od"}}
+ if(dd===0)return{x:"Due today"+ts,k:"td"};if(dd===1)return{x:"Due tomorrow"+ts,k:""};if(dd<=45)return{x:"in "+dd+" days",k:""};return{x:"in "+Math.round(dd/7)+" weeks",k:""}}
+const seg=(nm,v,lab)=>`<div class="tk-seg" role="radiogroup" aria-label="${lab}">${UL.map((l,i)=>`<label class="tk-sg tk-u${i}"><input type="radio" name="${nm}" value="${i}"${i===v?" checked":""}><span>${l}</span></label>`).join("")}</div>`;
+root.innerHTML=`<div class="tk">
+ <div class="tk-sum" id="tkSum" aria-live="polite"></div>
+ <form class="tk-add" id="tkAdd" autocomplete="off" aria-label="Add a task">
+  <div class="tk-r1"><input class="tk-in" id="tkT" name="t" maxlength="200" placeholder="Add a task…" aria-label="Task title" enterkeyhint="done"><button class="tk-go" type="submit">Add</button></div>
+  ${seg("uA",1,"Urgency")}
+  <div class="tk-r2"><label><span>Expiry date</span><input class="tk-in" type="date" name="d"></label><label><span>Time (optional)</span><input class="tk-in" type="time" name="tm" disabled></label></div>
+  <div class="tk-qk" role="group" aria-label="Quick expiry dates"><button type="button" data-a="q" data-n="0">Today</button><button type="button" data-a="q" data-n="1">Tomorrow</button><button type="button" data-a="q" data-n="7">Next week</button></div>
+  <input class="tk-in" name="n" maxlength="500" placeholder="Note (optional)" aria-label="Note">
+ </form>
+ <div class="tk-bar"><input class="tk-in tk-q" id="tkQ" type="search" placeholder="Search tasks" aria-label="Search tasks"><div class="tk-fl" id="tkFl" role="group" aria-label="Filter tasks"></div></div>
+ <ul class="tk-ls" id="tkLs" aria-label="Tasks"></ul>
+ <div id="tkDn"></div>
+ <div class="tk-ft"><div class="tk-fb"><button type="button" data-a="exp">Export backup</button><button type="button" data-a="imp">Import backup</button><button type="button" data-a="nf" id="tkNf" aria-pressed="false">Remind me when due</button></div>
+  <input type="file" id="tkFile" accept="application/json,.json" hidden aria-label="Import tasks backup file">
+  <p class="tk-hint">Saved on this device only (not synced or uploaded). Export a backup now and then. Reminders show while this page is open.</p></div>
+</div>`;
+const toastEl=document.createElement("div");toastEl.className="tk-toast";toastEl.id="tkToast";toastEl.setAttribute("role","status");toastEl.setAttribute("aria-live","polite");document.body.appendChild(toastEl);
+function toast(msg,fn){clearTimeout(tt);undo=fn||null;toastEl.innerHTML=`<span>${esc(msg)}</span>${fn?'<button type="button" data-a="undo">Undo</button>':""}`;toastEl.classList.add("on");tt=setTimeout(()=>{toastEl.classList.remove("on");undo=null},fn?5000:2600)}
+toastEl.addEventListener("click",e=>{if(e.target.closest('[data-a="undo"]')&&undo){const f=undo;undo=null;clearTimeout(tt);toastEl.classList.remove("on");f()}});
+function itm(t){const r=rel(t),dn=!!t.dn,od=isOd(t);
+ return`<li class="tk-it tk-u${t.u}${od?" od":""}${dn?" dn":""}" data-id="${t.id}">
+ <button type="button" class="tk-ck" role="checkbox" aria-checked="${dn}" data-a="ck" aria-label="${dn?"Mark not done":"Mark done"}: ${esc(t.t)}"><i>${IC.ck}</i></button>
+ <div class="tk-bd"><div class="tk-tt">${esc(t.t)}</div>
+  <div class="tk-meta">${dn?`<span class="tk-due">Done ${fmtD(ymd(new Date(t.dn)))}</span>`:`<button type="button" class="tk-ch tk-u${t.u}" data-a="cyc" aria-label="Urgency: ${UL[t.u]}. Tap to change.">${UL[t.u]}</button>${r?`<span class="tk-due ${r.k}">${r.k==="od"?IC.al:""}${r.x}</span><span class="tk-abs">${fmtD(t.d)}</span>`:""}`}</div>
+  ${t.n?`<div class="tk-nt">${esc(t.n)}</div>`:""}</div>
+ <div class="tk-ac">${dn?"":`<button type="button" data-a="edit" aria-label="Edit task: ${esc(t.t)}" title="Edit">${IC.ed}</button>`}<button type="button" data-a="del" aria-label="Delete task: ${esc(t.t)}" title="Delete">${IC.del}</button></div></li>`}
+function edt(t){return`<li class="tk-it tk-ed tk-u${t.u}" data-id="${t.id}"><form class="tk-ef" autocomplete="off" aria-label="Edit task">
+ <input class="tk-in" name="t" maxlength="200" value="${esc(t.t)}" aria-label="Task title">
+ ${seg("uE"+t.id,t.u,"Urgency")}
+ <div class="tk-r2"><label><span>Expiry date</span><input class="tk-in" type="date" name="d" value="${t.d}"></label><label><span>Time (optional)</span><input class="tk-in" type="time" name="tm" value="${t.tm}"${t.d?"":" disabled"}></label></div>
+ <input class="tk-in" name="n" maxlength="500" value="${esc(t.n)}" placeholder="Note (optional)" aria-label="Note">
+ <div class="tk-ea"><button type="button" data-a="cancel">Cancel</button><button type="submit" class="tk-go">Save</button></div></form></li>`}
+function render(){
+ const fa=document.activeElement,fi=fa&&fa.closest?fa.closest("#tkLs .tk-it:not(.tk-ed)"):null,fk=fi?{id:fi.dataset.id,a:fa.dataset.a}:null;
+ const old=new Map();if(!RM.matches&&root.offsetWidth&&!ui.first)$$("#tkLs .tk-it").forEach(e=>old.set(e.dataset.id,e.getBoundingClientRect().top));
+ const act=T.filter(t=>!t.dn).sort(cmp),dn=T.filter(t=>t.dn).sort((a,b)=>b.dn-a.dn);
+ const c={all:act.length,0:act.filter(t=>t.u===0).length,1:act.filter(t=>t.u===1).length,2:act.filter(t=>t.u===2).length,od:act.filter(isOd).length};
+ $("#tkSum").innerHTML=(c.all?`<span class="tk-ct"><b class="num">${c.all}</b> open</span>`:`<span class="tk-ct">${T.length?"All caught up":"No tasks yet"}</span>`)+(c[0]?`<span class="tk-pl tk-u0">${c[0]} urgent</span>`:"")+(c.od?`<span class="tk-pl od">${c.od} overdue</span>`:"");
+ $("#tkFl").innerHTML=[["all","All"],["0","Urgent"],["1","Not so urgent"],["2","Not urgent"],["od","Overdue"]].map(([k,l])=>`<button type="button" class="tk-fc${k==="0"||k==="1"||k==="2"?" tk-u"+k:k==="od"?" od":""}" data-a="f" data-f="${k}" aria-pressed="${ui.f===k}">${l} <b class="num">${c[k]}</b></button>`).join("");
+ const q=ui.q.trim().toLowerCase(),mt=t=>!q||(t.t+" "+t.n).toLowerCase().includes(q);
+ const vis=act.filter(t=>(ui.f==="all"||(ui.f==="od"?isOd(t):t.u===+ui.f))&&mt(t));
+ $("#tkLs").innerHTML=vis.length?vis.map(t=>ui.ed===t.id?edt(t):itm(t)).join(""):
+  `<li class="tk-empty">${IC.ok}<b>${!T.length?"Nothing to do":!act.length?"You're all caught up":"No tasks match"}</b><span>${!T.length?"Add your first task above. Urgent ones float to the top.":!act.length?"Finished tasks are in Done below.":"Try another filter or clear the search."}</span></li>`;
+ const dv=dn.filter(mt);
+ $("#tkDn").innerHTML=dv.length?`<details class="tk-dn"${ui.dOpen?" open":""}><summary>Done <b class="num">${dv.length}</b></summary><ul class="tk-ls" aria-label="Done tasks">${dv.map(itm).join("")}</ul><button type="button" class="tk-clr" data-a="clr">Clear done</button></details>`:"";
+ if(old.size){const els=$$("#tkLs .tk-it"),mv=[];els.forEach(e=>{const p=old.get(e.dataset.id);if(p==null){e.classList.add("new");return}const dy=p-e.getBoundingClientRect().top;if(Math.abs(dy)>1){e.style.transition="none";e.style.transform=`translateY(${dy}px)`;mv.push(e)}});
+  if(mv.length){void root.offsetWidth;mv.forEach(e=>{e.style.transition=`transform ${DUR}ms ${EASE}`;e.style.transform="";setTimeout(()=>{e.style.transition=""},DUR+50)})}}
+ ui.first=false;
+ if(ui.fe){ui.fe=false;const i=$("#tkLs .tk-ed input[name=t]");if(i){i.focus();i.select()}}
+ else if(fk){const b=root.querySelector(`.tk-it[data-id="${fk.id}"] [data-a="${fk.a}"]`);if(b)b.focus({preventScroll:true})}}
+const find=id=>T.find(t=>t.id===id);
+function add(o){const t=clean([{t:o.t,n:o.n,u:o.u,d:o.d,tm:o.tm,c:Date.now()}])[0];if(!t)return null;T.push(t);save();render();return t}
+function del(t){const i=T.indexOf(t);T=T.filter(x=>x!==t);save();render();toast("Task deleted",()=>{T.splice(Math.min(i,T.length),0,t);save();render()})}
+function setDone(t,v){t.dn=v?Date.now():0;save();render();if(v)toast("Marked done",()=>{t.dn=0;save();render()})}
+root.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b||!root.contains(b))return;const a=b.dataset.a,li=b.closest(".tk-it"),t=li?find(li.dataset.id):null;
+ if(a==="ck"&&t)setDone(t,!t.dn);
+ else if(a==="cyc"&&t){t.u=(t.u+1)%3;save();render()}
+ else if(a==="edit"&&t){ui.ed=t.id;ui.fe=true;render()}
+ else if(a==="cancel"){ui.ed=null;render()}
+ else if(a==="del"&&t){if(ui.ed===t.id)ui.ed=null;del(t)}
+ else if(a==="f"){ui.f=b.dataset.f;render()}
+ else if(a==="q"){const f=b.closest("form"),d=new Date();d.setDate(d.getDate()+(+b.dataset.n));f.elements.d.value=ymd(d);f.elements.tm.disabled=false}
+ else if(a==="clr"){const gone=T.filter(x=>x.dn);T=T.filter(x=>!x.dn);save();render();toast(gone.length+" done task"+(gone.length>1?"s":"")+" cleared",()=>{T=T.concat(gone);save();render()})}
+ else if(a==="exp")exportJ();else if(a==="imp")$("#tkFile").click();else if(a==="nf")toggleNf()});
+root.addEventListener("input",e=>{const el=e.target;if(el.name==="d"){const tm=el.form.elements.tm;tm.disabled=!el.value;if(!el.value)tm.value=""}else if(el.id==="tkQ"){ui.q=el.value;render()}});
+root.addEventListener("toggle",e=>{if(e.target.classList&&e.target.classList.contains("tk-dn"))ui.dOpen=e.target.open},true);
+root.addEventListener("keydown",e=>{if(e.key==="Escape"&&ui.ed){ui.ed=null;render();e.stopPropagation()}});
+root.addEventListener("submit",e=>{e.preventDefault();const f=e.target,fd=new FormData(f);
+ if(f.id==="tkAdd"){const title=String(fd.get("t")||"").trim();if(!title){f.elements.t.focus();return}
+  add({t:title,n:fd.get("n"),u:+fd.get("uA"),d:fd.get("d"),tm:fd.get("tm")});f.reset();f.elements.tm.disabled=true;f.elements.t.focus()}
+ else if(f.classList.contains("tk-ef")){const t=find(f.closest(".tk-it").dataset.id),title=String(fd.get("t")||"").trim();if(!t)return;if(!title){f.elements.t.focus();return}
+  const o=clean([{t:title,n:fd.get("n"),u:+fd.get([...f.elements].find(x=>x.type==="radio").name),d:fd.get("d"),tm:fd.get("tm")}])[0];t.t=o.t;t.n=o.n;t.u=o.u;t.d=o.d;t.tm=o.tm;ui.ed=null;save();render()}});
+function exportJ(){const b=new Blob([JSON.stringify({v:1,exported:new Date().toISOString(),tasks:T},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="tasks-backup-"+ymd()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);toast("Backup downloaded")}
+$("#tkFile").addEventListener("change",e=>{const f=e.target.files[0];e.target.value="";if(!f)return;const r=new FileReader();
+ r.onload=()=>{try{const o=JSON.parse(r.result),a=clean(Array.isArray(o)?o:o.tasks);if(!a.length)throw 0;const m=new Map(T.map(t=>[t.id,t]));a.forEach(t=>m.set(t.id,t));T=[...m.values()];save();render();toast("Imported "+a.length+" task"+(a.length>1?"s":""))}catch(x){toast("That file isn't a task backup")}};
+ r.onerror=()=>toast("Couldn't read that file");r.readAsText(f)});
+/* reminders: one notification a day for tasks due today / overdue, only while the page is open */
+const nfOn=()=>{try{return localStorage.getItem(NK)==="1"&&typeof Notification!=="undefined"&&Notification.permission==="granted"}catch(e){return false}};
+function nfUI(){const b=$("#tkNf");if(b)b.setAttribute("aria-pressed",String(nfOn()))}
+async function toggleNf(){if(typeof Notification==="undefined"){toast("This browser doesn't support notifications");return}
+ if(nfOn()){try{localStorage.setItem(NK,"0")}catch(e){}nfUI();toast("Reminders off");return}
+ let p=Notification.permission;if(p==="default"){try{p=await Notification.requestPermission()}catch(e){}}
+ if(p==="granted"){try{localStorage.setItem(NK,"1")}catch(e){}nfUI();toast("Reminders on");nfCheck()}else toast("Notifications are blocked in this browser")}
+function nfCheck(){if(!nfOn())return;const today=ymd();let last="";try{last=localStorage.getItem(NS)||""}catch(e){}if(last===today)return;
+ const act=T.filter(t=>!t.dn&&t.d),td=act.filter(t=>t.d===today).length,od=act.filter(isOd).length;if(!td&&!od)return;
+ try{new Notification("Tasks",{body:(td?td+" due today":"")+(td&&od?" · ":"")+(od?od+" overdue":""),tag:"dash-tasks"});localStorage.setItem(NS,today)}catch(e){}}
+addEventListener("storage",e=>{if(e.key===KEY&&!ui.ed){T=load();render()}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&!ui.ed){render();nfCheck()}});
+setInterval(()=>{if(!ui.ed&&!document.hidden){render();nfCheck()}},60e3);
+T=load();render();nfUI();nfCheck();
+return{render,add,get T(){return T}};
+})();
+</script>
+<script>
 /* ===== DECK · full-screen slides, swipe / drag / arrow keys / dots / wheel ===== */
 const DECK=(()=>{const deck=$("deck"),S=[...deck.querySelectorAll(".slide")],N=S.length,dots=$("dots"),RM=matchMedia("(prefers-reduced-motion: reduce)");
  const EASE="cubic-bezier(.22,.9,.24,1)",dur=()=>RM.matches?0:620;let cur=0,cleanup=null;
@@ -589,7 +784,7 @@ const DECK=(()=>{const deck=$("deck"),S=[...deck.querySelectorAll(".slide")],N=S
  let st=null,ax=null,nb=null,nbDir=0,dragged=false;
  const W=()=>innerWidth,H=()=>innerHeight;
  const busyOverlay=()=>!!document.querySelector(".ov.on");
- function start(x,y,target,mouse){if(busyOverlay())return;if(target.closest("input,textarea,select,iframe,.todo-ui,.plan-ui,.week-ui,button.chk,button.del,summary"))return;
+ function start(x,y,target,mouse){if(busyOverlay())return;if(target.closest("input,textarea,select,iframe,.tk-ui,.todo-ui,.plan-ui,.week-ui,button.chk,button.del,summary"))return;
   settle();const sc=target.closest(".scroll");st={x,y,t:performance.now(),sc,top:sc?sc.scrollTop<=0:true,bot:sc?sc.scrollTop+sc.clientHeight>=sc.scrollHeight-1:true,mouse};ax=null;nb=null;dragged=false}
  function move(x,y,e){if(!st)return false;const dx=x-st.x,dy=y-st.y;
   if(!ax){if(Math.hypot(dx,dy)<9)return false;
@@ -627,7 +822,7 @@ const DECK=(()=>{const deck=$("deck"),S=[...deck.querySelectorAll(".slide")],N=S
   else if(k==="ArrowDown"){go(cur+1,"y");e.preventDefault()}else if(k==="ArrowUp"){go(cur-1,"y");e.preventDefault()}
   else if(k==="Home"){go(0,"x");e.preventDefault()}else if(k==="End"){go(N-1,"x");e.preventDefault()}});
  /* start on the screen named in the URL hash (e.g. retro.html#today) */
- const alias={todoS:"plannerS",calS:"plannerS",finS:"today",money:"today"},h=alias[location.hash.slice(1)]||location.hash.slice(1),hi=S.findIndex(s=>s.id===h);cur=hi>0?hi:0;S[cur].classList.add("on");chrome();BOT.setMood(S[cur].dataset.mood);
+ const alias={tasks:"tasksS",task:"tasksS",todoS:"plannerS",calS:"plannerS",finS:"today",money:"today"},h=alias[location.hash.slice(1)]||location.hash.slice(1),hi=S.findIndex(s=>s.id===h);cur=hi>0?hi:0;S[cur].classList.add("on");chrome();BOT.setMood(S[cur].dataset.mood);
  return{go,cur:()=>cur,idx:id=>S.findIndex(s=>s.id===id),lazy,N}})();
 window.DECK=DECK;
 if(sessionStorage.fpw)fUnlock(sessionStorage.fpw);
