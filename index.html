@@ -458,6 +458,24 @@ details summary::before{content:"›";display:inline-block;margin-right:6px;tran
 .tk-clr{margin-top:10px;border:1px solid var(--bd2);background:var(--s2);color:var(--tx);border-radius:12px;padding:8px 14px;font-weight:600;font-size:13px;cursor:pointer;min-height:40px}.tk-clr:hover{background:var(--s3);color:var(--bad)}
 .tk-ft{display:flex;flex-direction:column;gap:8px;padding-top:4px}.tk-fb{display:flex;gap:6px;flex-wrap:wrap}.tk-fb button[aria-pressed=true]{background:var(--ac2);border-color:var(--ac);color:var(--ac)}
 .tk-hint{margin:0;font-size:11.5px;color:var(--mu2)}
+.tk-tg{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:0 12px;min-width:0;max-width:100%}
+.tk-tg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:48px;font-weight:700;font-size:14px;color:var(--tx)}
+.tk-tg>summary::-webkit-details-marker{display:none}.tk-tg>summary::before{display:none}
+.tk-tg>summary .tg-ic{width:28px;height:28px;border-radius:50%;background:#229ED9;display:grid;place-items:center;flex:0 0 auto}.tk-tg>summary .tg-ic svg{width:16px;height:16px;fill:#fff}
+.tk-tg>summary .tg-s{margin-left:auto;font-size:12px;font-weight:600;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.tk-tg>summary .tg-s.ok{color:var(--ok)}.tk-tg>summary .tg-s.bad{color:var(--bad)}
+.tg-bd{display:flex;flex-direction:column;gap:10px;padding:2px 0 14px;min-width:0}
+.tg-row{display:flex;gap:8px;min-width:0}.tg-row[hidden]{display:none}.tg-row .tk-in{flex:1 1 auto;width:auto;min-width:0}
+.tg-row button,.tg-acts button{flex:0 0 auto;border:1px solid var(--bd2);background:var(--s2);color:var(--tx);border-radius:12px;padding:0 14px;min-height:44px;font-weight:700;font-size:13.5px;cursor:pointer}
+.tg-row button.pri{background:var(--tx);color:#0b0c10;border-color:transparent}
+.tg-acts{display:flex;gap:8px;flex-wrap:wrap}
+.tg-sw{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;font-size:14px;font-weight:600;cursor:pointer}
+.tg-sw small{display:block;font-size:11.5px;font-weight:500;color:var(--mu)}
+.tg-sw input{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:46px;height:28px;border-radius:999px;background:var(--s3);position:relative;cursor:pointer;transition:background .15s;margin:0}
+.tg-sw input::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .18s var(--ease)}
+.tg-sw input:checked{background:var(--ac)}.tg-sw input:checked::after{transform:translateX(18px)}
+.tg-sw input:disabled{opacity:.4}.tg-sw input:focus-visible{outline:2px solid var(--tx);outline-offset:2px}
+.tg-st{margin:0;font-size:12.5px;color:var(--mu);overflow-wrap:anywhere}.tg-st b{color:var(--tx);font-weight:600}.tg-st.bad b{color:var(--bad)}
 .tk-toast{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 84px);transform:translateY(16px);background:#232733;color:var(--tx);border:1px solid var(--bd2);border-radius:14px;padding:6px 6px 6px 16px;display:flex;align-items:center;gap:12px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:70;max-width:calc(100vw - 24px)}
 .tk-toast.on{opacity:1;transform:translateY(0);pointer-events:auto}.tk-toast button{border:0;background:var(--ac2);color:var(--ac);font-weight:700;border-radius:10px;padding:0 14px;min-height:36px;cursor:pointer;font-size:14px}
 @media (min-width:900px){.tk-toast{bottom:28px}}
@@ -828,6 +846,8 @@ const safeUrl=u=>/^https?:\/\//i.test(u||"")?esc(u):"#";
    dash-tasks-view-v1       Tasks layout (cat|list)
    dash-tasks-notify-v1     Tasks reminder preference
    dash-tasks-notified-v1   Last reminder day
+   dash-tasks-tg-v1         Telegram reminders {k: sync key, on, dg, last}. Holds the sync key, so it is
+                            deliberately NOT in USER_KEYS / data backups. Never commit a key.
    rest                     Rest check scores
    jobswipe-todo            Retro planner to-do
    jobswipe-gym-v1          Gym
@@ -2567,7 +2587,7 @@ const normG=x=>{const k=String(x==null?"g":x).toLowerCase();return CIDS.includes
 const normAct=(g,a)=>{const opts=ACTS[g];if(!opts)return"";const k=String(a||"").toLowerCase();return opts.includes(k)?k:opts[0]};
 function clean(a){return(Array.isArray(a)?a:[]).filter(x=>x&&typeof x.t==="string"&&x.t.trim()).map(x=>{const d=/^\d{4}-\d{2}-\d{2}$/.test(x.d||"")?x.d:"",g=normG(x.g??x.cat??x.category);return{id:String(x.id||uid()),t:x.t.trim().slice(0,200),n:String(x.n||"").slice(0,500),u:[0,1,2].includes(x.u)?x.u:1,d,tm:d&&/^\d{2}:\d{2}$/.test(x.tm||"")?x.tm:"",c:+x.c||Date.now(),dn:+x.dn||0,g,act:normAct(g,x.act??x.action),rf:String(x.rf??x.ref??"").trim().slice(0,40)}})}
 function load(){try{const o=JSON.parse(localStorage.getItem(KEY)||"null");return clean(o&&(Array.isArray(o)?o:o.tasks))}catch(e){return[]}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify({v:1,tasks:T}))}catch(e){toast("Couldn't save: browser storage is full or blocked")}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({v:1,tasks:T}))}catch(e){toast("Couldn't save: browser storage is full or blocked")}tgQueue()}
 function saveView(){try{localStorage.setItem(VK,ui.vw)}catch(e){}}
 /* priority: urgency (Urgent > Not so urgent > Not urgent), then soonest expiry (no date last), then oldest first */
 const cmp=(a,b)=>a.u-b.u||(dueMs(a)-dueMs(b))||a.c-b.c;
@@ -2599,7 +2619,17 @@ root.innerHTML=`<div class="tk">
  <div id="tkDn"></div>
  <div class="tk-ft"><div class="tk-fb"><button type="button" data-a="exp">Export backup</button><button type="button" data-a="imp">Import backup</button><button type="button" data-a="nf" id="tkNf" aria-pressed="false">Remind me when due</button></div>
   <input type="file" id="tkFile" accept="application/json,.json" hidden aria-label="Import tasks backup file">
-  <p class="tk-hint">Saved on this device only (not synced or uploaded). Export a backup now and then. Reminders show while this page is open.</p></div>
+  <p class="tk-hint" id="tkHint">Saved on this device only (not synced or uploaded). Export a backup now and then. Reminders show while this page is open.</p>
+  <details class="tk-tg" id="tkTg"><summary><span class="tg-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 4.3 2.9 11.5c-1.3.5-1.2 1.3-.2 1.6l4.8 1.5 1.8 5.6c.2.7.4.9.9.9.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.4-1.5zM9.1 14.2l9-5.7c.4-.3.8-.1.5.2l-7.5 6.8-.3 3.2z"/></svg></span>Telegram reminders<span class="tg-s" id="tgS">Off</span></summary>
+   <div class="tg-bd">
+    <div class="tg-row" id="tgKeyRow"><input class="tk-in" id="tgKey" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste sync key" aria-label="Sync key"><button type="button" class="pri" data-tg="save">Save</button></div>
+    <div class="tg-row" id="tgKeyOk" hidden><p class="tg-st" style="flex:1;align-self:center">Sync key saved on this device</p><button type="button" data-tg="forget">Remove key</button></div>
+    <label class="tg-sw"><span>Reminders<small>Day before, morning of, ~2h before, once if overdue</small></span><input type="checkbox" id="tgOn" role="switch"></label>
+    <label class="tg-sw"><span>Daily 8am digest<small>Overdue, today, tomorrow and urgent in one message</small></span><input type="checkbox" id="tgDg" role="switch"></label>
+    <div class="tg-acts"><button type="button" data-tg="test">Send test message</button><button type="button" data-tg="sync">Sync now</button></div>
+    <p class="tg-st" id="tgSt" aria-live="polite"></p>
+    <p class="tk-hint">Messages come from @Wanziebot_bot. Only open tasks are sent: title, due date and time, urgency, category and case ref. Notes stay on this device.</p>
+   </div></details></div>
 </div>`;
 const toastEl=document.createElement("div");toastEl.className="tk-toast";toastEl.id="tkToast";toastEl.setAttribute("role","status");toastEl.setAttribute("aria-live","polite");document.body.appendChild(toastEl);
 function toast(msg,fn){clearTimeout(tt);undo=fn||null;toastEl.innerHTML=`<span>${esc(msg)}</span>${fn?'<button type="button" data-a="undo">Undo</button>':""}`;toastEl.classList.add("on");tt=setTimeout(()=>{toastEl.classList.remove("on");undo=null},fn?5000:2600)}
@@ -2687,10 +2717,45 @@ async function toggleNf(){if(typeof Notification==="undefined"){toast("This brow
 function nfCheck(){if(!nfOn())return;const today=ymd();let last="";try{last=localStorage.getItem(NS)||""}catch(e){}if(last===today)return;
  const act=T.filter(t=>!t.dn&&t.d),td=act.filter(t=>t.d===today).length,od=act.filter(isOd).length;if(!td&&!od)return;
  try{new Notification("Tasks",{body:(td?td+" due today":"")+(td&&od?" · ":"")+(od?od+" overdue":""),tag:"dash-tasks"});localStorage.setItem(NS,today)}catch(e){}}
+/* Telegram reminders: open tasks (no notes) go to the owner's Apps Script web app, which messages @Wanziebot_bot hourly.
+   The URL is useless without the sync key; the key lives only in this browser (dash-tasks-tg-v1), never in the repo. */
+const TGK="dash-tasks-tg-v1",TGURL="https://script.google.com/macros/s/AKfycbzRpKMVLUDE2fPWlyEazS41EJQ4s9qm80xWV3msj6P05sqkN9cQ80YQRuYmnXMLsDGvSg/exec";
+let tg=(()=>{try{const o=JSON.parse(localStorage.getItem(TGK)||"null");if(o&&typeof o==="object")return{k:String(o.k||""),on:o.on!==false,dg:o.dg!==false,last:+o.last||0,err:String(o.err||"")}}catch(e){}return{k:"",on:true,dg:true,last:0,err:""}})();
+let tgT=null,tgBusy=false,tgAgain=false;
+function tgSave(){try{localStorage.setItem(TGK,JSON.stringify(tg))}catch(e){}}
+const tgAgo=ms=>{const m=Math.floor((Date.now()-ms)/6e4);if(m<1)return"just now";if(m<60)return m+" min ago";const d=new Date(ms);return(ymd(d)===ymd()?"today ":fmtD(ymd(d))+", ")+d.toLocaleTimeString("en-SG",{hour:"numeric",minute:"2-digit"}).toUpperCase()};
+function tgUI(){const $k=id=>document.getElementById(id),has=!!tg.k;if(!$k("tgS"))return;
+ $k("tgKeyRow").hidden=has;$k("tgKeyOk").hidden=!has;$k("tgOn").checked=has&&tg.on;$k("tgDg").checked=tg.dg;$k("tgOn").disabled=!has;$k("tgDg").disabled=!has;
+ root.querySelectorAll("[data-tg=test],[data-tg=sync]").forEach(b=>b.disabled=!has);
+ const s=$k("tgS"),st=$k("tgSt");s.className="tg-s";
+ if(!has){s.textContent="Not set up";st.className="tg-st";st.innerHTML="Paste the sync key once to turn on Telegram reminders on this device."}
+ else if(tg.err){s.textContent="Needs attention";s.classList.add("bad");st.className="tg-st bad";st.innerHTML="<b>"+esc(tg.err)+"</b>"+(tg.last?" · last synced "+esc(tgAgo(tg.last)):"")}
+ else{s.textContent=tg.on?"On":"Paused";if(tg.on)s.classList.add("ok");st.className="tg-st";st.innerHTML=tg.last?"<b>"+(tg.on?"On":"Paused")+"</b> · last synced "+esc(tgAgo(tg.last)):"<b>Not synced yet</b>"}
+ const h=$k("tkHint");if(h)h.textContent=has&&tg.on?"Saved on this device. Telegram reminders send open tasks (no notes) to your own Google script. Export a backup now and then.":"Saved on this device only (not synced or uploaded). Export a backup now and then. Reminders show while this page is open."}
+async function tgPost(body){const r=await fetch(TGURL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body),redirect:"follow"});const j=await r.json().catch(()=>null);if(!j)throw new Error("Reminder service didn't answer");return j}
+const tgErr=j=>j&&j.err==="auth"?"Sync key not accepted":(j&&j.err)||"Sync failed";
+async function tgSync(){if(!tg.k)return;if(tgBusy){tgAgain=true;return}tgBusy=true;clearTimeout(tgT);
+ const tasks=T.filter(t=>!t.dn).map(t=>({id:t.id,t:t.t,d:t.d,tm:t.tm,u:t.u,g:t.g,act:t.act,rf:t.rf}));
+ try{const j=await tgPost({a:"sync",k:tg.k,tasks,enabled:tg.on,digest:tg.dg});if(j.ok){tg.last=Date.now();tg.err=""}else tg.err=tgErr(j)}
+ catch(e){tg.err=navigator.onLine===false?"Offline · will sync when back online":"Couldn't reach the reminder service"}
+ tgBusy=false;tgSave();tgUI();if(tgAgain){tgAgain=false;tgQueue()}}
+function tgQueue(){if(!tg.k)return;clearTimeout(tgT);tgT=setTimeout(tgSync,1500)}
+root.querySelector("#tkTg").addEventListener("click",async e=>{const b=e.target.closest("[data-tg]");if(!b)return;const a=b.dataset.tg;
+ if(a==="save"){const v=root.querySelector("#tgKey").value.trim();if(v.length<20){toast("That doesn't look like a sync key");return}
+  tg.k=v;tg.err="";tg.on=true;root.querySelector("#tgKey").value="";tgSave();tgUI();await tgSync();toast(tg.err?tg.err:"Telegram reminders on");if(tg.err==="Sync key not accepted"){tg.k="";tgSave();tgUI()}}
+ else if(a==="forget"){if(!confirm("Remove the sync key from this device? Telegram reminders will stop."))return;try{await tgPost({a:"sync",k:tg.k,tasks:[],enabled:false,digest:tg.dg})}catch(x){}tg={k:"",on:true,dg:tg.dg,last:0,err:""};tgSave();tgUI();toast("Sync key removed")}
+ else if(a==="sync"){b.disabled=true;await tgSync();b.disabled=false;toast(tg.err||"Synced")}
+ else if(a==="test"){b.disabled=true;try{const j=await tgPost({a:"test",k:tg.k});toast(j.ok?"Test message sent to Telegram":tgErr(j));if(!j.ok&&j.err==="auth"){tg.err=tgErr(j);tgSave();tgUI()}}catch(x){toast("Couldn't reach the reminder service")}b.disabled=false}});
+root.querySelector("#tgOn").addEventListener("change",e=>{tg.on=e.target.checked;tgSave();tgUI();tgSync()});
+root.querySelector("#tgDg").addEventListener("change",e=>{tg.dg=e.target.checked;tgSave();tgUI();tgSync()});
+root.querySelector("#tgKey").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();root.querySelector('[data-tg="save"]').click()}});
+addEventListener("online",()=>{if(tg.k&&tg.err)tgSync()});
+addEventListener("storage",e=>{if(e.key===TGK){try{const o=JSON.parse(e.newValue||"null");if(o)tg=Object.assign(tg,o)}catch(x){}tgUI()}});
+setInterval(()=>{if(!document.hidden)tgUI()},60e3);
 addEventListener("storage",e=>{if(e.key===KEY&&!ui.ed){T=load();render()}if(e.key===VK){ui.vw=loadView();if(!ui.ed)render()}});
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&!ui.ed){render();nfCheck()}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&!ui.ed){render();nfCheck();if(tg.k&&(tg.err||Date.now()-tg.last>18e5))tgQueue()}});
 setInterval(()=>{if(!ui.ed&&!document.hidden){render();nfCheck()}},60e3);
-T=load();if(T.length)save();render();nfUI();nfCheck();
+T=load();if(T.length)save();render();nfUI();nfCheck();tgUI();if(tg.k)tgQueue();
 return{render,add,get T(){return T}};
 })();
 
