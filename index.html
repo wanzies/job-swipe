@@ -2721,8 +2721,13 @@ function nfCheck(){if(!nfOn())return;const today=ymd();let last="";try{last=loca
    The URL is useless without the sync key; the key lives only in this browser (dash-tasks-tg-v1), never in the repo. */
 const TGK="dash-tasks-tg-v1",TGURL="https://script.google.com/macros/s/AKfycbzRpKMVLUDE2fPWlyEazS41EJQ4s9qm80xWV3msj6P05sqkN9cQ80YQRuYmnXMLsDGvSg/exec";
 let tg=(()=>{try{const o=JSON.parse(localStorage.getItem(TGK)||"null");if(o&&typeof o==="object")return{k:String(o.k||""),on:o.on!==false,dg:o.dg!==false,last:+o.last||0,err:String(o.err||"")}}catch(e){}return{k:"",on:true,dg:true,last:0,err:""}})();
-let tgT=null,tgBusy=false,tgAgain=false;
+let tgT=null,tgBusy=false,tgAgain=false,tgFromLink=false;
 function tgSave(){try{localStorage.setItem(TGK,JSON.stringify(tg))}catch(e){}}
+/* One-tap setup: #tgkey=<key> is a fragment, so it never reaches GitHub Pages. Save it, then strip it from the URL and history. */
+(function(){const m=location.hash.match(/^#tgkey=([^&]+)/);if(!m)return;
+ const k=decodeURIComponent(m[1]).trim();
+ try{history.replaceState(null,"",location.pathname+location.search+"#tasks")}catch(e){location.hash="tasks"}
+ if(k.length>=20){tg.k=k;tg.err="";tg.on=true;tgFromLink=true;tgSave()}})();
 const tgAgo=ms=>{const m=Math.floor((Date.now()-ms)/6e4);if(m<1)return"just now";if(m<60)return m+" min ago";const d=new Date(ms);return(ymd(d)===ymd()?"today ":fmtD(ymd(d))+", ")+d.toLocaleTimeString("en-SG",{hour:"numeric",minute:"2-digit"}).toUpperCase()};
 function tgUI(){const $k=id=>document.getElementById(id),has=!!tg.k;if(!$k("tgS"))return;
  $k("tgKeyRow").hidden=has;$k("tgKeyOk").hidden=!has;$k("tgOn").checked=has&&tg.on;$k("tgDg").checked=tg.dg;$k("tgOn").disabled=!has;$k("tgDg").disabled=!has;
@@ -2755,7 +2760,7 @@ setInterval(()=>{if(!document.hidden)tgUI()},60e3);
 addEventListener("storage",e=>{if(e.key===KEY&&!ui.ed){T=load();render()}if(e.key===VK){ui.vw=loadView();if(!ui.ed)render()}});
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&!ui.ed){render();nfCheck();if(tg.k&&(tg.err||Date.now()-tg.last>18e5))tgQueue()}});
 setInterval(()=>{if(!ui.ed&&!document.hidden){render();nfCheck()}},60e3);
-T=load();if(T.length)save();render();nfUI();nfCheck();tgUI();if(tg.k)tgQueue();
+T=load();if(T.length)save();render();nfUI();nfCheck();tgUI();if(tg.k)tgQueue();if(tgFromLink){const p=$("#tkTg");if(p)p.open=true;toast("Telegram reminders on")}
 return{render,add,get T(){return T}};
 })();
 
